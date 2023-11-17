@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import withoutAuth from '@/helpers/withoutAuth';
 
 const SignupPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -82,4 +83,4 @@ const SignupPage: React.FC = () => {
   );
 };
 
-export default SignupPage;
+export default withoutAuth(SignupPage);
