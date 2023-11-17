@@ -108,23 +108,6 @@ withoutAuth(Login);
 withoutAuth(Signup);
 ```
 
-### MainLayout.tsx
-
-Within this file contains a `MainLayout` component, rather than calling `Footer`, `Sidebar`, `TopBar` component on every file manually, all you have to do is first invoke the `<MainLayout>` component inside any page before adding the children of that page.
-
-for eg
-
-```js
-import Link from 'next/link';
-import MainLayout from '../components/Layout/MainLayout';
-
-function Home() {
-  return (
-    <MainLayout activePage="home" showDashboardSidebar showTopbar>
-      <p className="text-dark-100">Home Page</p>
-    </MainLayout>
-  );
-}
 
 export default Home;
 ```
