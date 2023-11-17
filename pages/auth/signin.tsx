@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
+import Button from '@/components/ui/Button';
+import Input from '@/components/ui/Input';
 import withoutAuth from '@/helpers/withoutAuth';
 
 const SigninPage: React.FC = () => {
@@ -20,7 +22,7 @@ const SigninPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
+    <div className="min-h-screen flex items-center justify-center bg-blue-500">
       <Head>
         <title>Sign In</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
@@ -29,39 +31,29 @@ const SigninPage: React.FC = () => {
         <h2 className="text-3xl font-bold mb-4 text-gray-800">Sign In</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            />
+            <Input label="Email" placeholder="Enter Email" errorText="Field is required" error required />
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
+            <Input
+              label="password"
+              placeholder="Enter password"
+              errorText="Field is required"
+              error
+              required
               value={formData.password}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
+              className="w-[200px]"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+          <Button
+            handleClick={() => {}}
+            styles={'w-full bg-violet-500'}
+            type={'submit'}
+            title={'submit'}
+            disabled={false}
           >
             Sign In
-          </button>
+          </Button>
         </form>
       </div>
     </div>
