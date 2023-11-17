@@ -21,7 +21,7 @@ const IndexPage: React.FC = () => {
       <animated.div style={animationProps}>
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">Coming Soon</h1>
-          <p className="text-lg mb-8">We're working hard to bring you something amazing!</p>
+          <p className="text-lg mb-8">We&apos;re working hard to bring you something amazing!</p>
           <Image src="/next.svg" alt="Under Construction" width={150} height={150} className="w-48 mx-auto mb-8" />
           <p className="text-sm">&copy; 2023 Your Website. All rights reserved.</p>
         </div>
