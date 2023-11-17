@@ -1,11 +1,24 @@
-<<<<<<< HEAD
-# evento-fe
-=======
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Evento Apprenticeship Frontend
 
-## Getting Started
+This is a `Nextjs, Typescript and Tailwindcss` project.
 
-First, run the development server:
+## Getting Starte
+
+This project uses `yarn workspaces` as default monorepo architecture.
+
+### First clone the repo
+
+```bash
+git clone https://github.com/hngx-org/evento-fe.git
+```
+
+#### Install all dependencies
+
+```bash
+npm install
+```
+
+#### Run the development server
 
 ```bash
 npm run dev
@@ -13,28 +26,107 @@ npm run dev
 yarn dev
 # or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Types
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+As you know by now that this is a typescript based project. Please all types must be created separately in the `type` or `@types` directly outside of the components folder. If your components require a custom type, create them inside a folder called `types` or `@types` and export it to be used somewhere else.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Commit Standards
 
-## Learn More
+## Branches
 
-To learn more about Next.js, take a look at the following resources:
+- **dev** -> pr this branch for everything `frontend` related
+- **main** -> **dont touch** this branch, this is what is running in production.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributions
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Evento is open to contributions, but I recommend creating an issue or replying in a comment to let us know what you are working on first that way we don't overwrite each other.
 
-## Deploy on Vercel
+## Contribution Guidelines
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repo `git clone https://github.com/hngx-org/evento-fe.git`.
+2. Open your terminal & set the origin branch: `git remote add origin https://github.com/hngx-org/evento-fe.git`
+3. Pull origin `git pull origin dev`
+4. Create a new branch for the task you were assigned to, eg `TicketNumber/(Feat/Bug/Fix/Chore)/Ticket-title` : `git checkout -b ZA-001/Feat/Sign-Up-from`
+5. After making changes, do `git add .`
+6. Commit your changes with a descriptive commit message : `git commit -m "your commit message"`.
+7. To make sure there are no conflicts, run `git pull origin dev`.
+8. Push changes to your new branch, run `git push -u origin ZA-001/Feat/Sign-Up-from`.
+9. Create a pull request to the `dev` branch not `main`.
+10. Ensure to describe your pull request.
+11. > If you've added code that should be tested, add some test examples.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
->>>>>>> b9fc0590201486d1788cb8576fc05ff011b672cc
+## Merging
+
+Under any circumstances should you merge a pull requests on a specific branch to the `dev` or `main` branch
+
+### _Commit CheatSheet_
+
+| Type     |                          | Description                                                                                                 |
+| -------- | ------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| feat     | Features                 | A new feature                                                                                               |
+| fix      | Bug Fixes                | A bug fix                                                                                                   |
+| docs     | Documentation            | Documentation only changes                                                                                  |
+| style    | Styles                   | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)      |
+| refactor | Code Refactoring         | A code change that neither fixes a bug nor adds a feature                                                   |
+| perf     | Performance Improvements | A code change that improves performance                                                                     |
+| test     | Tests                    | Adding missing tests or correcting existing tests                                                           |
+| build    | Builds                   | Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)         |
+| ci       | Continuous Integrations  | Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs) |
+| chore    | Chores                   | Other changes that don't modify , frontend or test files                                                    |
+| revert   | Reverts                  | Reverts a previous commit                                                                                   |
+
+> _Sample Commit Messages_
+
+- `chore: Updated README file` := `chore` is used because the commit didn't make any changes to the , frontend or test folders in any way.
+- `feat: Added plugin info endpoints` := `feat` is used here because the feature was non-existent before the commit.
+
+## Code Explanation
+
+### API Calls
+
+A separate folder called `http` which contains `axios.ts` and `index.ts` files where created to handle any outgoing or incoming http request/response. the `index.ts` file should contain all outgoing `API` calls to the backend server.
+
+> ❗❗Do not create any custom http calls inside a page or components. Whatever calls that need to be processed by the server should be called within the `index.ts` file.
+
+### Custom Authentication Handler
+
+Within the `helpers` folder contains **two** different files called `withAuth.tsx` and `withoutAuth.tsx`.
+
+- **WithAuth.tsx** :- is a `HOF` function which wraps every components that needs protection or protected route components. for eg `Dashboard` or any other page that require the user to be loggedIn. All you have to do is import the cusstom handler and wrap your component inside it. i.e
+
+```js
+withAuth(Dashboard);
+withAuth(Promotion);
+```
+
+- **WithoutAuth.tsx** :- is the opposite of `withAuth.tsx` HOF. It only meant to be used to prevent loggedIn users from redirecting or navigating to a page. i.e when a user is loggedIn and you dont want them to view a certain page, use this function.
+
+```js
+withoutAuth(Login);
+withoutAuth(Signup);
+```
+
+### MainLayout.tsx
+
+Within this file contains a `MainLayout` component, rather than calling `Footer`, `Sidebar`, `TopBar` component on every file manually, all you have to do is first invoke the `<MainLayout>` component inside any page before adding the children of that page.
+
+for eg
+
+```js
+import Link from 'next/link';
+import MainLayout from '../components/Layout/MainLayout';
+
+function Home() {
+  return (
+    <MainLayout activePage="home" showDashboardSidebar showTopbar>
+      <p className="text-dark-100">Home Page</p>
+    </MainLayout>
+  );
+}
+
+export default Home;
+```
+
+you also get to decide whether to show the footer or sidebar using the available props.
