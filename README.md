@@ -107,9 +107,3 @@ withAuth(Promotion);
 withoutAuth(Login);
 withoutAuth(Signup);
 ```
-
-
-export default Home;
-```
-
-you also get to decide whether to show the footer or sidebar using the available props.
