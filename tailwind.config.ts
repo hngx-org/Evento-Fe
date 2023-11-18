@@ -164,6 +164,12 @@ const config: Config = {
           300: '#8D9290',
           400: '#737876',
         },
+        primary: {
+          100: '#E0580C',
+        },
+        secondary: {
+          100: '#FCEEE7',
+        },
       },
       fontFamily: {
         Worksans: ['Work Sans', 'sans-serif'],

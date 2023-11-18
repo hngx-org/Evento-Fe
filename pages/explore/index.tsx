@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import HomeLayout from '@/layout/Homelayout';
+import ExploreLayout from '@/layout/Explorelayout';
 import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({
@@ -10,7 +10,7 @@ const workSans = Work_Sans({
 
 export default function Home() {
   return (
-    <HomeLayout>
+    <ExploreLayout>
       <div className={workSans.className}>
         <h1 className={workSans.className}>Hello Next.js!</h1>
         <p className={workSans.className}>
@@ -30,6 +30,6 @@ export default function Home() {
           </a>
         </p>
       </div>
-    </HomeLayout>
+    </ExploreLayout>
   );
 }
