@@ -9,6 +9,9 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        black: {
+          fot: '#282828',
+        },
         Grey: {
           G0: '#fdfdfd',
           G10: '#fafafa',
@@ -163,6 +166,9 @@ const config: Config = {
           200: '#3f4550',
           300: '#8D9290',
           400: '#737876',
+          500: '#667185',
+          alt: '#E4E7EC',
+          fot: '#535353',
         },
         primary: {
           100: '#E0580C',
