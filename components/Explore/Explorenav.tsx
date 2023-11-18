@@ -13,8 +13,8 @@ function ExploreNav() {
   const router = useRouter();
   const activeLink = (path: string) =>
     router.pathname === path
-      ? 'text-green-950 group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
-      : 'text-gray-600 text-base font-semibold  leading-normal tracking-tight';
+      ? 'text-black group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
+      : 'text-black text-base font-semibold  leading-normal tracking-tight';
   return (
     <nav className="w-full py-4 justify-between items-center px-4  z-[10000] relative ">
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
@@ -146,7 +146,7 @@ function ExploreNav() {
             <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
               <Link
                 href={'/'}
-                className="text-center  text-base font-bold leading-normal tracking-tight px-6 py-3 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
+                className="text-center  text-base font-semibold leading-normal tracking-tight px-6 py-3 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
               >
                 Create event
               </Link>
