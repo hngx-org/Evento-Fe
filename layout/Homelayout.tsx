@@ -1,4 +1,5 @@
 import Homenav from '@/components/Home/homenav';
+import Homefooter from '@/components/Home/homefooter';
 import { Work_Sans } from 'next/font/google';
 
 const workSans = Work_Sans({
@@ -12,6 +13,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
     <main className={workSans.variable}>
       <Homenav />
       {children}
+      <Homefooter />
     </main>
   );
 }
