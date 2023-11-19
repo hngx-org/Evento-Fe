@@ -48,7 +48,7 @@ function Error404() {
             <h2 className=" text-2xl md:text-[32px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold ">
               {title}
             </h2>
-            <p className="text-Grey-G300 max-w-[623px]  text-sm sm:text-2xl  text-center  ">{text}</p>
+            <p className="text-Grey-G300 max-w-[623px] text-sm sm:text-2xl  text-center  ">{text}</p>
             <Link href={''}>
               <Button
                 styles={
