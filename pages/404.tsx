@@ -49,7 +49,7 @@ function Error404() {
               {title}
             </h2>
             <p className="text-Grey-G300 max-w-[623px] text-sm sm:text-2xl  text-center  ">{text}</p>
-            <Link href={''}>
+            <Link href="/">
               <Button
                 styles={
                   ' w-[200px] h-auto py-4 rounded-lg item-center justify-center  flex gap-2 text-white-100 text-base mt-3'
