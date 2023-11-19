@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
 
