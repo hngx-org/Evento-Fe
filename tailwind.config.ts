@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         black: {
           fot: '#282828',
+          main: '#000000',
         },
         Grey: {
           G0: '#fdfdfd',
