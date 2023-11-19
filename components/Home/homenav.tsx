@@ -16,7 +16,7 @@ function Homenav() {
       ? 'text-green-950 group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
       : 'text-gray-600 text-base font-semibold  leading-normal tracking-tight';
   return (
-    <nav className="w-full py-2  bg-white-100 justify-between items-center px-4  z-[10000] relative ">
+    <nav className="w-full py-4  bg-white-100 justify-between items-center px-4  z-[10000] relative ">
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
         <div className=" flex gap-14">
           <Image className="object-contain" width={120} height={15} src={logo} alt="Evento logo" />

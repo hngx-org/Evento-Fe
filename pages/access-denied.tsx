@@ -14,7 +14,6 @@ function AccessDenied() {
   return (
     <main className=" bg-white-100 min-h-screen">
       <PlainHeader />
-      <div className=" border-b border-white-115 border-style: solid" />
 
       <section
         className=" flex flex-col gap-9 sm:gap-[72px] min-h-[calc(100vh-105px)]  
@@ -31,7 +30,10 @@ function AccessDenied() {
           </h2>
           <p className="text-Grey-G300 max-w-[623px]  text-sm sm:text-2xl font-semibold text-left  ">
             {text} <br />
-            <span className="text-primary-100">Support@evento.com</span>
+            <span className="text-primary-100">
+              {' '}
+              <Link href={'/'}>Support@evento.com</Link>{' '}
+            </span>
           </p>
         </div>
       </section>
