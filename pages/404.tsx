@@ -17,8 +17,8 @@ function Error404() {
     <>
       {' '}
       <Head>
-        <link rel="icon" href="/assets/zuriLogo.svg" />
-        <title>Zuri Portfolio - 404</title>
+        <link rel="icon" href="/" />
+        <title>Evento - 404</title>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-title" content="Evento" />
         <meta itemProp="name" content="Evento - 404" />
@@ -42,7 +42,7 @@ function Error404() {
           <Image
             src={oops}
             alt="oops"
-            className="w-[100px] h-[100px] sm:w-[280px] sm:h-[280px] xl:w-[480px] xl:h-[480px]"
+            className="w-[300px] h-[300px] sm:w-[480px] sm:h-[480px] xl:w-[480px] xl:h-[480px]"
           />
           <div className=" flex flex-col justify-center items-center xl:items-start gap-6">
             <h2 className=" text-2xl md:text-[32px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold ">
