@@ -61,7 +61,7 @@ const AllCategories = () => {
         <div className="grid grid-cols-5 items-center gap-8 py-7">
           {categories.map((category, index) => (
             <Link
-              href="/explore/all-categories"
+              href={`/explore/category/${category.topic}`}
               key={index}
               className="flex flex-col items-center bg-[#FEFEFE] border border-Grey-G20 rounded-md p-5"
             >
