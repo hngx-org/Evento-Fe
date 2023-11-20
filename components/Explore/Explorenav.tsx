@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from '../../public/logo.png';
+import logo from '../../public/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -14,14 +14,14 @@ function ExploreNav() {
   const activeLink = (path: string) =>
     router.pathname === path
       ? 'text-black group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
-      : 'text-black text-base font-semibold  leading-normal tracking-tight';
+      : 'text-black text-base font-semibold leading-normal tracking-tight';
   return (
-    <nav className="w-full py-4 justify-between items-center px-4  z-[10000] relative ">
-      <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
-        <div className=" flex gap-14">
-          <Image className="object-contain" width={126} height={24} src={logo} alt="Zuri Portfolio Logo" />
-          <div className=" hidden lg:flex gap-10 items-start">
-            <div className="group h flex flex-col ali justify-center items-center gap-1">
+    <nav className="w-full py-4 justify-between items-center px-4 z-[10000] relative ">
+      <div className="max-w-[1240px] mx-auto flex items-center justify-between">
+        <div className="flex items-center gap-16">
+          <Image src={logo} width={84} height={32} alt="Evento Logo" />
+          <div className="hidden lg:flex gap-10">
+            <div className="group flex flex-col ali justify-center items-center gap-1">
               <Link className={activeLink('/')} href={'/'}>
                 Events
               </Link>
