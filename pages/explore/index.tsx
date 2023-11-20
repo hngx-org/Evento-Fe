@@ -3,6 +3,7 @@ import Image from 'next/image';
 import ExploreLayout from '@/layout/Explorelayout';
 import { Work_Sans } from 'next/font/google';
 import { IoIosArrowDropright } from 'react-icons/io';
+import { City } from '@/@types';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -11,11 +12,6 @@ const workSans = Work_Sans({
 });
 
 export default function Home() {
-  type City = {
-    name: string;
-    image: string;
-  };
-
   const cities: City[] = [
     {
       name: 'Lagos',
