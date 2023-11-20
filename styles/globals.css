@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .bg-custom-linear {
+    background: linear-gradient(180deg, #daebf3 0%, #eef2f4 46.35%, #f5f8fa 76.56%, #fcfbf6 100%);
+  }
+}
