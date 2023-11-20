@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from 'public/logo.svg';
@@ -23,9 +23,18 @@ function AuthenticatedHeader() {
   const { ref: profileRef, isVisible: profileDropdown, setIsVisible: setProfileDropdown } = useVisible();
   const { ref: searchRef, isVisible: searchDropdown, setIsVisible: setSearchDropdown } = useVisible();
 
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (toggle) {
+      body?.classList.add('mobile-menu-open');
+    } else {
+      body?.classList.remove('mobile-menu-open');
+    }
+  }, [toggle]);
+
   return (
-    <header className="max-w-[1240px] mx-auto bg-white-N0 border-b border-b-Grey-G30 relative">
-      <nav className="relative py-6 px-8">
+    <header className="w-full bg-white-N0 border-b border-b-Grey-G30 relative">
+      <nav className="relative max-w-[1240px] p-4 mx-auto">
         <div className="flex items-center justify-between">
           <Link href={'/'}>
             <Image src={logo} alt="logo" width={84} height={32} />
@@ -83,9 +92,9 @@ function AuthenticatedHeader() {
         </div>
         {/* Mobile dropdown */}
         <div
-          className={`lg:hidden absolute w-full h-[calc(100vh-75px)] bg-primary-100 z-30 ${
+          className={`lg:hidden absolute w-full h-[calc(100vh-58px)] bg-primary-100 z-30 ${
             toggle ? 'left-0' : '-left-[100%]'
-          } top-[75px] transition-all ease-in-out duration-500 px-8 py-6 flex flex-col gap-5`}
+          } top-[58px] transition-all ease-in-out duration-500 px-4 py-6 flex flex-col gap-5`}
         >
           <Link href="/explore" className="text-white-100 font-medium text-lg flex items-center gap-3">
             <Star size={22} color="#fff" />
@@ -121,7 +130,7 @@ function AuthenticatedHeader() {
         <div
           ref={profileRef}
           style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
-          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[92px]"
+          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
@@ -150,7 +159,7 @@ function AuthenticatedHeader() {
         <div
           ref={searchRef}
           style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
-          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[92px]"
+          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
         >
           <Input placeholder="Search anything" className="border border-Grey-G60 rounded-lg bg-white-N0" />
         </div>
