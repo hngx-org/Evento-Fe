@@ -99,16 +99,20 @@ export default function Home() {
         <div className="flex items-center justify-between">
           <h4 className="text-[28px] font-medium">Categories To Explore</h4>
           <Link href="/explore/all-categories">
-            <IoIosArrowDropright className="text-[#E0580C] text-4xl cursor-pointer" />
+            <IoIosArrowDropright className="text-primary-100 text-4xl cursor-pointer" />
           </Link>
         </div>
 
         <div className="grid grid-cols-5 items-center gap-8 py-7">
           {categories.slice(0, 5).map((category, index) => (
-            <div key={index} className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
+            <Link
+              href="/explore"
+              key={index}
+              className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5"
+            >
               <Image src={category.image} width={50} height={50} alt={category.topic} />
               <p className="text-[28px] font-medium">{category.topic}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
@@ -118,7 +122,7 @@ export default function Home() {
 
         <div className="grid grid-cols-3 items-center gap-8 py-7">
           {cities.map((city, index) => (
-            <div key={index} className="relative border border-[#F5F5F5] rounded-md">
+            <Link href="/explore/cities" key={index} className="relative border border-Grey-G20 rounded-md">
               <Image
                 src={city.image}
                 width={300}
@@ -126,10 +130,10 @@ export default function Home() {
                 alt={`Image of ${city.name}`}
                 className="relative w-full h-full"
               />
-              <p className="text-[18px] font-medium text-[#ffff] absolute top-5 left-5 py-2 px-5 rounded-full bg-[#00000066]">
+              <p className="text-[18px] font-medium text-white-100 absolute top-5 left-5 py-2 px-5 rounded-full bg-[#00000066]">
                 {city.name}
               </p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
