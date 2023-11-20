@@ -14,7 +14,7 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-function EventHero({ banner, label, title }: { banner: string; label: string; title: string }) {
+function EventHero({ banner, label, title }: { banner: string; label: string; title: string | string[] | undefined }) {
   return (
     <div style={{ backgroundImage: `url('/assets/${banner}')` }}>
       <ExploreNav />

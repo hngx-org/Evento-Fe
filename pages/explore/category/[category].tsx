@@ -6,6 +6,7 @@ import ExploreNav from '@/components/Explore/Explorenav';
 import EventCard from '@/components/components/card/event';
 import EventHero from '@/components/components/event-hero/event-hero';
 import EventGrids from '@/components/components/event-grids/event-grids';
+import { useRouter } from 'next/router';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -77,11 +78,12 @@ const upcoming_events = [
 ];
 
 function Category() {
+  const router = useRouter();
   return (
     <div className={workSans.className}>
-      <EventHero label="Category" title="Tech Events" banner="hero-section-tech.png" />
+      <EventHero label="Category" title={router?.query?.category} banner="hero-section-tech.png" />
       <div className="container mx-auto pt-16 pb-10">
-        <h4 className="mb-8 flex justify-between items-center">
+        <h4 className="mb-8 max-w-[1240px] mx-auto flex justify-between items-center">
           <span className={`${montserrat.className} text-3xl font-semibold text-Grey-G800`}>Events</span>
           <div className="w-fit py-2.5 px-5  text-black-main border border-[#D7D7D7] rounded-xl">
             <select name="" id="" className="focus:outline-none">

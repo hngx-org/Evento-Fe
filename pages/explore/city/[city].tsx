@@ -7,6 +7,7 @@ import EventCard from '@/components/components/card/event';
 import EventHero from '@/components/components/event-hero/event-hero';
 import EventGrids from '@/components/components/event-grids/event-grids';
 import EventFilter from '@/components/components/modal/event-filder';
+import { useRouter } from 'next/router';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -56,9 +57,11 @@ const upcoming_events = [
 ];
 
 function City() {
+  const router = useRouter();
+
   return (
     <div className={workSans.className}>
-      <EventHero label="City" title="Lagos" banner="hero-section-lagos.png" />
+      <EventHero label="City" title={router?.query?.city} banner="hero-section-lagos.png" />
       <div className="container mx-auto pt-16 pb-10">
         <h4 className="max-w-[1240px] mx-auto mb-8 flex justify-between items-center">
           <span className={`${montserrat.className} text-3xl font-semibold text-Grey-G800`}>Events</span>
