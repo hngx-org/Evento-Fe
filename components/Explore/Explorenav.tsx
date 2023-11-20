@@ -1,27 +1,39 @@
-import React, { useState } from 'react';
-import logo from '../../public/logo.png';
+import React, { useEffect, useState } from 'react';
+import logo from '../../public/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Calendar, Star, Ticket, Profile, Setting4, Add } from 'iconsax-react';
 
 function ExploreNav() {
   const [toggle, setToggle] = useState(false);
   const handleToggle = () => {
     setToggle(!toggle);
-    console.log('toggle', toggle);
+    // console.log('toggle', toggle);
   };
+
   const router = useRouter();
   const activeLink = (path: string) =>
     router.pathname === path
       ? 'text-black group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
-      : 'text-black text-base font-semibold  leading-normal tracking-tight';
+      : 'text-black text-base font-semibold leading-normal tracking-tight';
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (toggle) {
+      body?.classList.add('mobile-menu-open');
+    } else {
+      body?.classList.remove('mobile-menu-open');
+    }
+  }, [toggle]);
+
   return (
-    <nav className="w-full py-4 justify-between items-center px-4  z-[10000] relative ">
-      <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
-        <div className=" flex gap-14">
-          <Image className="object-contain" width={126} height={24} src={logo} alt="Zuri Portfolio Logo" />
-          <div className=" hidden lg:flex gap-10 items-start">
-            <div className="group h flex flex-col ali justify-center items-center gap-1">
+    <nav className="w-full z-[10000] relative">
+      <div className="max-w-[1240px] mx-auto flex items-center justify-between py-4 px-4">
+        <div className="flex items-center gap-16">
+          <Image src={logo} width={84} height={32} alt="Evento Logo" />
+          <div className="hidden lg:flex gap-10">
+            <div className="group flex flex-col ali justify-center items-center gap-1">
               <Link className={activeLink('/')} href={'/'}>
                 Events
               </Link>
@@ -44,33 +56,9 @@ function ExploreNav() {
 
         {/* Right Items */}
 
-        <div
-          className={`flex items-center gap-4 lg:static absolute lg:flex-row flex-col ${
-            toggle ? 'left-0' : 'left-[-100dvw]'
-          }  bg-white-100 w-[100%] py-8 lg:py-0 lg:w-auto lg:opacity-100 transition-all ease-in-out duration-500 top-[9vh]  z-[1]`}
-        >
-          <div className="w-[267px] h-16 p-2 justify-center items-center gap-4 lg:flex-row flex flex-col mt-20  lg:mt-0">
-            <div className=" flex flex-col lg:hidden gap-5 ">
-              <div className="group h flex flex-col ali justify-center items-center gap-1">
-                <Link className={activeLink('/')} href={'/'}>
-                  Events
-                </Link>
-                {router.pathname === '/' ? <div className="w-6 h-0.5 bg-emerald-600 rounded-lg" /> : null}
-              </div>
-              <div className=" group flex flex-col ali justify-center items-center gap-1 ">
-                <Link className={activeLink('/')} href={'/'}>
-                  Calendar
-                </Link>
-                {router.pathname === '/' ? <div className="w-6 h-0.5 bg-emerald-600 rounded-lg" /> : null}
-              </div>
-              <div className=" group flex flex-col ali justify-center items-center gap-1 ">
-                <Link className={activeLink('/')} href={'/'}>
-                  Explore other Events
-                </Link>
-                {router.pathname === '/' ? <div className="w-6 h-0.5 bg-emerald-600 rounded-lg" /> : null}
-              </div>
-            </div>
-            <div className="w-6 h-6 justify-center items-center flex  gap-6 pr-9">
+        <div className={`hidden lg:flex items-center gap-4`}>
+          <div className="flex items-center gap-6">
+            <div className="w-6 h-6 justify-center items-center flex gap-6 pr-9">
               <div className="w-6 h-6">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -96,7 +84,6 @@ function ExploreNav() {
                   />
                 </svg>
               </div>
-              <span className=" lg:hidden">Notification</span>
               <div className="w-6 h-6">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -115,7 +102,6 @@ function ExploreNav() {
                   />
                 </svg>
               </div>
-              <span className=" lg:hidden">Search</span>
               <div className="w-6 h-6">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -141,9 +127,8 @@ function ExploreNav() {
                   />
                 </svg>
               </div>
-              <span className=" lg:hidden">Profile</span>
             </div>
-            <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
+            <div className="">
               <Link
                 href={'/'}
                 className="text-center  text-base font-semibold leading-normal tracking-tight px-6 py-3 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
@@ -154,6 +139,40 @@ function ExploreNav() {
           </div>
         </div>
         <MenuIcon toggle={toggle} style="lg:hidden" toggler={handleToggle} />
+      </div>
+      {/* Mobile Dropdown */}
+      <div
+        className={`lg:hidden absolute w-full h-[calc(100vh-60px)] bg-primary-100 z-30 ${
+          toggle ? 'left-0' : '-left-[100%]'
+        } top-[65px] transition-all ease-in-out duration-500 px-4 py-6 flex flex-col gap-5 overflow-hidden`}
+      >
+        <Link href="/explore" className="text-white-100 font-medium text-lg flex items-center gap-3">
+          <Ticket size={22} color="#fff" />
+          Events
+        </Link>
+        <Link href="/explore" className="text-white-100 font-medium text-lg flex items-center gap-3">
+          <Calendar size={22} color="#fff" />
+          Calendar
+        </Link>
+        <Link
+          href="/explore"
+          className="text-white-100 font-medium text-lg flex items-center gap-3 border-b border-b-gray-50/50 pb-5"
+        >
+          <Star size={22} color="#fff" />
+          Explore other Events
+        </Link>
+        <div className="flex items-center gap-3">
+          <Profile size={22} color="#fff" />
+          <p className="text-white-100 font-medium text-lg">View profile</p>
+        </div>
+        <div className="flex items-center gap-3 border-b border-b-gray-50/50 pb-5">
+          <Setting4 size={22} color="#fff" />
+          <p className="text-white-100 font-medium text-lg">Settings</p>
+        </div>
+        <Link href="/create-event" className="text-white-100 font-medium text-lg flex items-center gap-3">
+          <Add size={22} color="#fff" />
+          Create Event
+        </Link>
       </div>
     </nav>
   );
