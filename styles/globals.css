@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .filter-btn {
+    @apply border border-Grey-G60 text-start p-4 bg-Grey-G10/40 first:rounded-t-lg last:rounded-b-lg border-b-0 last:border-b text-Grey-G900;
+  }
+}
