@@ -4,6 +4,8 @@ import ExploreLayout from '@/layout/Explorelayout';
 import { Work_Sans } from 'next/font/google';
 import { IoIosArrowDropright } from 'react-icons/io';
 import { City } from '@/@types';
+import { Category } from '@/@types';
+import Link from 'next/link';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -38,6 +40,50 @@ export default function Home() {
       image: '/img/warri.png',
     },
   ];
+
+  const categories: Category[] = [
+    {
+      topic: 'Tech',
+      image: '/img/tech.png',
+    },
+    {
+      topic: 'Career',
+      image: '/img/career.png',
+    },
+    {
+      topic: 'Arts',
+      image: '/img/arts.png',
+    },
+    {
+      topic: 'Concert',
+      image: '/img/concert.png',
+    },
+    {
+      topic: 'Business',
+      image: '/img/business.png',
+    },
+    {
+      topic: 'Warri',
+      image: '/img/warri.png',
+    },
+    {
+      topic: 'Sport',
+      image: '/img/sport.png',
+    },
+    {
+      topic: 'Movies',
+      image: '/img/movies.png',
+    },
+    {
+      topic: 'Charity',
+      image: '/img/charity.png',
+    },
+    {
+      topic: 'Learning',
+      image: '/img/learning.png',
+    },
+  ];
+
   return (
     <ExploreLayout>
       <section className="relative bg-custom-linear h-[80vh] w-full flex flex-col items-center justify-center">
@@ -52,34 +98,18 @@ export default function Home() {
       <section className="p-10">
         <div className="flex items-center justify-between">
           <h4 className="text-[28px] font-medium">Categories To Explore</h4>
-          <IoIosArrowDropright className="text-[#E0580C] text-3xl cursor-pointer" />
+          <Link href="/explore/all-categories">
+            <IoIosArrowDropright className="text-[#E0580C] text-4xl cursor-pointer" />
+          </Link>
         </div>
 
         <div className="grid grid-cols-5 items-center gap-8 py-7">
-          <div className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
-            <Image src="/img/tech.png" width={50} height={50} alt="cities" />
-            <p className="text-[28px] font-medium">Tech</p>
-          </div>
-
-          <div className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
-            <Image src="/img/career.png" width={50} height={50} alt="cities" />
-            <p className="text-[28px] font-medium">Career</p>
-          </div>
-
-          <div className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
-            <Image src="/img/arts.png" width={50} height={50} alt="cities" />
-            <p className="text-[28px] font-medium">Arts</p>
-          </div>
-
-          <div className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
-            <Image src="/img/concert.png" width={50} height={50} alt="cities" />
-            <p className="text-[28px] font-medium">Concert</p>
-          </div>
-
-          <div className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
-            <Image src="/img/business.png" width={50} height={50} alt="cities" />
-            <p className="text-[28px] font-medium">Business</p>
-          </div>
+          {categories.slice(0, 5).map((category, index) => (
+            <div key={index} className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5">
+              <Image src={category.image} width={50} height={50} alt={category.topic} />
+              <p className="text-[28px] font-medium">{category.topic}</p>
+            </div>
+          ))}
         </div>
       </section>
 
