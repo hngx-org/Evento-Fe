@@ -1,11 +1,8 @@
 'use client';
 import Button from '@ui/Button';
 import Image from 'next/image';
-import top from 'public/Home/home1.svg';
 import mid from 'public/Home/homev21.svg';
-import but from 'public/Home/home3.svg';
-import butt from 'public/Home/homev22.svg';
-import butd from 'public/Home/home5.svg';
+import butd from 'public/Home/homev22.svg';
 import Link from 'next/link';
 import { ArrowRight2 } from 'iconsax-react';
 
@@ -13,24 +10,27 @@ const title = `Evento`;
 const title1 = `Create a memorable event today, invite friends and sell tickets.`;
 const text = `Create your event`;
 const btnText = `Explore other events`;
-function Mainsec() {
+function Homev2() {
   return (
     <section
       className=" flex flex-col gap-9 sm:gap-[72px] min-h-[calc(100vh-105px)]  
       sm:mx-[105] items-center justify-center xl:flex-row-reverse xl:gap-[162px]"
     >
-      <div className="flex flex-row space-x-4">
-        <div className="flex flex-col space-y-4">
-          <Image src={top} alt="img" width={300} height={100} />
-          <Image src={mid} alt="img" width={300} height={280} />
-          <Image src={but} alt="img" width={300} height={100} />
-        </div>
-        <div className="flex flex-col space-y-4">
-          <Image src={butt} alt="img" width={280} height={265} />
-          <Image src={butd} alt="img" width={280} height={265} />
+      <div className="flex item-center justify-center flex-col">
+        <div className="relative">
+          <Image src={butd} width={400} height={376} alt="illustration " />
+          <div className=" top-0 left-0 w-full h-full z-10 flex items-center justify-center">
+            <Image
+              src={mid}
+              width={400}
+              height={376}
+              alt="illustration"
+              className="transform -translate-x-1/2 -translate-y-1/2"
+            />
+          </div>
         </div>
       </div>
-      <div className=" flex flex-col justify-center items-center xl:items-start gap-6">
+      <div className=" flex flex-col top-0 gap-6">
         <Link href={'/explore'}>
           <Button
             styles={
@@ -62,4 +62,4 @@ function Mainsec() {
     </section>
   );
 }
-export default Mainsec;
+export default Homev2;
