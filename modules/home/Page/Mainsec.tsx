@@ -1,11 +1,11 @@
 'use client';
 import Button from '@ui/Button';
 import Image from 'next/image';
-import top from 'public/Home/Home3.png';
-import mid from 'public/Home/Home1.png';
-import but from 'public/Home/Home5.png';
-import butt from 'public/Home/Home2.png';
-import butd from 'public/Home/Home4.png';
+import top from 'public/Home/home1.svg';
+import mid from 'public/Home/homev21.svg';
+import but from 'public/Home/home3.svg';
+import butt from 'public/Home/homev22.svg';
+import butd from 'public/Home/home5.svg';
 import Link from 'next/link';
 import { ArrowRight2 } from 'iconsax-react';
 
@@ -31,7 +31,7 @@ function Mainsec() {
         </div>
       </div>
       <div className=" flex flex-col justify-center items-center xl:items-start gap-6">
-        <Link href={''}>
+        <Link href={'/explore'}>
           <Button
             styles={
               ' w-[250px] h-auto py-4 rounded-lg item-center bg-white-100 justify-center font-semibold border border-primary-100 flex gap-2 text-primary-100'
@@ -48,14 +48,16 @@ function Mainsec() {
           Where moments becomes memory
         </h2>
         <h1 className="text-xl max-w-[504px]">{title1}</h1>
-        <Button
-          styles={
-            ' w-[350px] h-auto py-6 rounded-lg item-center justify-center font-semibold  bg-primary-100 flex gap-2 text-white-100'
-          }
-          title={''}
-        >
-          {text}
-        </Button>
+        <Link href={'/create-event'}>
+          <Button
+            styles={
+              ' w-[400px] h-auto py-4 rounded-lg item-center justify-center font-semibold  bg-primary-100 flex gap-2 text-white-100'
+            }
+            title={''}
+          >
+            {text}
+          </Button>
+        </Link>
       </div>
     </section>
   );

@@ -92,6 +92,7 @@ const config: Config = {
           10: '#F4FBF6',
         },
         white: {
+          N0: '#FEFEFE',
           100: '#fff',
           110: '#EEEEEE',
           115: '#EBEEEF',
