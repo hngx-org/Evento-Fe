@@ -106,7 +106,7 @@ export default function Home() {
         <div className="grid grid-cols-5 items-center gap-8 py-7">
           {categories.slice(0, 5).map((category, index) => (
             <Link
-              href="/explore"
+              href={`/explore/category/${category.topic}`}
               key={index}
               className="flex flex-col items-center bg-[#FEFEFE] border border-[#F5F5F5] rounded-md p-5"
             >
@@ -122,7 +122,11 @@ export default function Home() {
 
         <div className="grid grid-cols-3 items-center gap-8 py-7">
           {cities.map((city, index) => (
-            <Link href="/explore/cities" key={index} className="relative border border-Grey-G20 rounded-md">
+            <Link
+              href={`/explore/city/${city.name}`}
+              key={index}
+              className="relative border border-Grey-G20 rounded-md"
+            >
               <Image
                 src={city.image}
                 width={300}

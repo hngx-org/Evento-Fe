@@ -6,9 +6,31 @@
   .bg-custom-linear {
     background: linear-gradient(180deg, #daebf3 0%, #eef2f4 46.35%, #f5f8fa 76.56%, #fcfbf6 100%);
   }
+  .filter-btn {
+    @apply border border-Grey-G60 text-start p-4 bg-Grey-G10/40 first:rounded-t-lg last:rounded-b-lg border-b-0 last:border-b text-Grey-G900;
+  }
 }
 
 body.mobile-menu-open {
   overflow: hidden;
   height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e0580c;
+  border-radius: 8px;
+}
+
+::selection {
+  color: white;
+  background: #e0580c;
 }
