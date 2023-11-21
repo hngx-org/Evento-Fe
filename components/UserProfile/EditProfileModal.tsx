@@ -11,11 +11,11 @@ interface EditProfileModalProps {
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const workSans = Work_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-work-sans',
-});
+// const workSans = Work_Sans({
+//   subsets: ['latin'],
+//   display: 'swap',
+//   variable: '--font-work-sans',${workSans.className}
+// });
 
 const EditProfileModal: React.FC<EditProfileModalProps> = ({ isModalOpen, setIsModalOpen }) => {
   const closeModal = () => {
@@ -24,7 +24,7 @@ const EditProfileModal: React.FC<EditProfileModalProps> = ({ isModalOpen, setIsM
 
   return (
     <form
-      className={` ${workSans.className}  ${
+      className={`   ${
         isModalOpen ? '' : '!hidden'
       } flex justify-center w-full  bg-[#F5F5F5]  py-[107px] flex-col items-center gap-y-[32px] absolute z-50`}
     >

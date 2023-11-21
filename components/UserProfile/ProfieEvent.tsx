@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import NoEvent from './NoEvent';
+import Events from './Events';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -64,7 +65,7 @@ const ProfieEvent: React.FC = () => {
         <div className="w-[50%] h-full bg-primary-100 " />
       </div> */}
       <div className="swiper-container w-full relative">
-        <div className="swiper-pagination w-full flex h-[60px] bg-[#F5F5F5] !relative mb-[32px] ">
+        <div className="swiper-pagination md:w-full flex h-[60px] bg-[#F5F5F5] !relative mb-[32px] ">
           <div className="w-[50%] items-center justify-center flex font-bold text-xl create-events cursor-pointer transition border-b-[3px] border-[#C0C0C0] !border-primary-100 ">
             Create Events
           </div>
@@ -74,7 +75,7 @@ const ProfieEvent: React.FC = () => {
         </div>
         <div className="swiper-wrapper w-full relative ">
           <div className="swiper-slide" style={{ width: '100%' }}>
-            <NoEvent type="create" />
+            <Events type="create" />
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
             <NoEvent type="attend" />

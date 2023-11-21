@@ -8,7 +8,7 @@ interface NoEventProps {
 
 const NoEvent: React.FC<NoEventProps> = ({ type }) => {
   return (
-    <div className="noevent bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 ">
+    <div className="noevent bg-white-100 flex flex-col justify-center items-center md:w-full h-fit p-[64px] gap-y-4 ">
       <div
         className="rounded-[50%] w-[160px] h-[160px] bg-secondary-100 flex justify-center items-center
       "
