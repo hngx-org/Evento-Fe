@@ -162,6 +162,7 @@ yarn-error.log*
 
 # vercel
 .vercel
+.babelrc
 
 # typescript
 *.tsbuildinfo
