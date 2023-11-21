@@ -76,9 +76,9 @@ function EventDashboard({ imagePath, date, title, location, price, tag, tag_imag
           </div>
         </h4>
         <div className="flex flex-col mb-32 gap-8">
-          {events?.upcoming_events?.map((item) => {
+          {events?.upcoming_events?.map((item, index) => {
             return (
-              <div className={`bg-[#FCF9F7] -6 rounded-lg flex flex-row justify-between`}>
+              <div className={`bg-[#FCF9F7] -6 rounded-lg flex flex-row justify-between`} key={index}>
                 <div className="py-6 px-8 flex flex-col justify-center gap-4">
                   <span className={`${montserrat.className} font-bold text text-[#E0580C]`}>{item.date}</span>
                   <h2 className={`${montserrat.className} text-Grey-G800 text-2xl font-bold pt-1`}>{item.title}</h2>
