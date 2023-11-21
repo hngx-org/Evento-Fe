@@ -394,7 +394,7 @@ export default function HomeFooter() {
             Terms of Service
           </Link>
           <Link href={''} className="text-gray-500 font-medium">
-            Terms of Service
+            Privacy Policy
           </Link>
         </div>
       </div>
