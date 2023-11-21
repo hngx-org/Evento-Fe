@@ -2,42 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+@layer utilities {
+  .bg-custom-linear {
+    background: linear-gradient(180deg, #daebf3 0%, #eef2f4 46.35%, #f5f8fa 76.56%, #fcfbf6 100%);
+  }
+  .filter-btn {
+    @apply border border-Grey-G60 text-start p-4 bg-Grey-G10/40 first:rounded-t-lg last:rounded-b-lg border-b-0 last:border-b text-Grey-G900;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-/* styles/globals.css */
-
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-
-html,
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+body.mobile-menu-open {
+  overflow: hidden;
+  height: 100vh;
 }
