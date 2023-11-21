@@ -52,11 +52,11 @@ const events = {
 };
 
 interface EventProps {
-  imagePath: string;
-  date: string;
-  title: string;
-  location: string;
-  price: number | string;
+  imagePath?: string;
+  date?: string;
+  title?: string;
+  location?: string;
+  price?: number | string;
   tag?: string;
   tag_image?: string;
 }
