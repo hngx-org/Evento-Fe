@@ -7,13 +7,7 @@ function App() {
       <div className="max-w-4xl mx-auto py-20">
         <div className="grid grid-cols-4 gap-8">
           <Input label="Your name" required />
-          <Input
-            label="Your name"
-            placeholder="Error State"
-            errorText="Field is required"
-            error
-            required
-          />
+          <Input label="Your name" placeholder="Error State" errorText="Field is required" error required />
           <Input label="Your name" placeholder="Success State" valid />
           <Input label="Your name" placeholder="Disabled" disabled />
 
