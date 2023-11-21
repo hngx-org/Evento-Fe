@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import ExploreLayout from '@/layout/Explorelayout';
 import { Work_Sans, Nunito, Montserrat } from 'next/font/google';
-import { useRouter } from 'next/router';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -62,7 +60,6 @@ interface EventProps {
 }
 
 function EventDashboard({ imagePath, date, title, location, price, tag, tag_image }: EventProps) {
-  const router = useRouter();
   const [images] = useState(['/assets/attend3.jpg', '/assets/attend1.jpg', '/assets/attend2.jpg']);
   return (
     <div className={workSans.className}>
