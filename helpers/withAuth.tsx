@@ -12,7 +12,7 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
       const token = localStorage.getItem('authToken');
       const isLoggedIn = isAuthenticated(token as string);
       if (!isLoggedIn) {
-        router.push('/auth/login');
+        router.push('/access-denied');
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

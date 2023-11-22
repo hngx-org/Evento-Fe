@@ -5,10 +5,7 @@ import Input from '@/components/ui/Input';
 import { Work_Sans } from 'next/font/google';
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
-
 import { Edit } from 'iconsax-react';
-import withoutAuth from '@/helpers/withoutAuth';
-
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import EditProfileModal from '@/components/UserProfile/EditProfileModal';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
@@ -90,4 +87,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default withoutAuth(UserProfile);
+export default withAuth(UserProfile);

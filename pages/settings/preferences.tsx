@@ -5,6 +5,7 @@ import lightTheme from 'public/assets/settings/light-theme.png';
 import darkTheme from 'public/assets/settings/dark-theme.png';
 import systemTheme from 'public/assets/settings/system-theme.png';
 import Image from 'next/image';
+import withAuth from '@/helpers/withAuth';
 
 const themes = [
   {
@@ -71,4 +72,4 @@ function Preferences() {
   );
 }
 
-export default Preferences;
+export default withAuth(Preferences);

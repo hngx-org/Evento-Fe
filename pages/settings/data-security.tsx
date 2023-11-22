@@ -4,6 +4,7 @@ import { Montserrat, Nunito } from 'next/font/google';
 import Input from '@/components/UserProfile/Input';
 import Button from '@/components/ui/Button';
 import { ArrowRight2 } from 'iconsax-react';
+import withAuth from '@/helpers/withAuth';
 
 const devices = [
   {
@@ -123,4 +124,4 @@ function DataSecurity() {
   );
 }
 
-export default DataSecurity;
+export default withAuth(DataSecurity);
