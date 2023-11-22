@@ -4,6 +4,7 @@ import { Montserrat, Nunito } from 'next/font/google';
 import Input from '@/components/UserProfile/Input';
 import Button from '@/components/ui/Button';
 import { ArrowRight2 } from 'iconsax-react';
+import Switch from '@/components/Settings/Switch';
 
 const devices = [
   {
@@ -32,7 +33,7 @@ const nunito = Nunito({
   variable: '--font-nunito',
 });
 
-function DataSecurity() {
+function DataAndSecurity() {
   const [twoFactor, setTwoFactor] = useState(false);
   return (
     <Settingslayout>
@@ -65,13 +66,7 @@ function DataSecurity() {
         </div>
         <div className="flex items-center justify-between">
           <p className="text-Grey-G600">2 Factor Authentication (code)</p>
-          <div
-            className="w-[2.44rem] h-6 bg-Grey-G50 rounded-xl flex items-center cursor-pointer"
-            onClick={() => setTwoFactor(twoFactor ? false : true)}
-          >
-            <div className={`${twoFactor ? 'bg-Grey-G50' : 'bg-white-N0'} w-5 h-5 rounded-full`}></div>
-            <div className={`${twoFactor ? 'bg-primary-100' : 'bg-Grey-G50'} w-5 h-5 rounded-full`}></div>
-          </div>
+          <Switch defaultValue={false} />
         </div>
       </div>
       {/* manage devices */}
@@ -123,4 +118,4 @@ function DataSecurity() {
   );
 }
 
-export default DataSecurity;
+export default DataAndSecurity;

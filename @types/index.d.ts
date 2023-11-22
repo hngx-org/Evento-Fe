@@ -15,3 +15,12 @@ export type Events = {
   amount: string;
   eventType: string;
 };
+
+export type Select = {
+  options: { name: string }[];
+  color: 'light' | 'dark';
+};
+
+export type Switch = {
+  defaultValue: boolean;
+};

@@ -1,6 +1,6 @@
+import Checkbox from '@/components/Settings/Checkbox';
 import Settingslayout from '@/layout/Settingslayout';
 import { Montserrat, Nunito } from 'next/font/google';
-import { useState } from 'react';
 
 const notifications = [
   {
@@ -106,23 +106,11 @@ const nunito = Nunito({
 });
 
 function Notifications() {
-  const [checkboxes, setCheckboxes] = useState<string[]>([]);
-
-  function handleClick(id: string) {
-    if (checkboxes.includes(id)) {
-      const index = checkboxes.indexOf(id);
-      checkboxes.splice(index, 1);
-      setCheckboxes([...checkboxes]);
-    } else {
-      setCheckboxes((prev) => [...prev, id]);
-    }
-  }
-
   return (
     <Settingslayout>
       <div className="space-y-3">
         <h2 className={`${montserrat.className} text-Grey-G700 text-[2rem] font-semibold`}>Notifications</h2>
-        <p className="text-Grey-G100 text-xl">Customize your notifications to suit your alerts</p>
+        <p className={`${nunito.className} text-Grey-G100 text-xl`}>Customize your notifications to suit your alerts</p>
       </div>
       <div className={`${nunito.className} space-y-6`}>
         <div className="mt-8 flex flex-col gap-20">
@@ -143,90 +131,15 @@ function Notifications() {
                   <div className="flex gap-[3.31rem]">
                     {/* in-app */}
                     <div className="w-[3.2rem] flex justify-center">
-                      <div
-                        className={`w-6 h-6 rounded-md cursor-pointer ${
-                          checkboxes.includes(`${item.group}&${item.id}&inApp`)
-                            ? 'bg-primary-100 border border-primary-100'
-                            : 'border border-Grey-G50'
-                        } flex items-center justify-center`}
-                        onClick={() => handleClick(`${item.group}&${item.id}&inApp`)}
-                      >
-                        {checkboxes.includes(`${item.group}&${item.id}&inApp`) && (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 18 18"
-                            fill="none"
-                          >
-                            <path
-                              d="M14.5994 4.7998L6.89941 12.4998L3.39941 8.9998"
-                              stroke="white"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        )}
-                      </div>
+                      <Checkbox />
                     </div>
                     {/* email */}
                     <div className="w-[2.7rem] flex justify-center">
-                      <div
-                        className={`w-6 h-6 rounded-md cursor-pointer ${
-                          checkboxes.includes(`${item.group}&${item.id}&email`)
-                            ? 'bg-primary-100 border border-primary-100'
-                            : 'border border-Grey-G50'
-                        } flex items-center justify-center`}
-                        onClick={() => handleClick(`${item.group}&${item.id}&email`)}
-                      >
-                        {checkboxes.includes(`${item.group}&${item.id}&email`) && (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 18 18"
-                            fill="none"
-                          >
-                            <path
-                              d="M14.5994 4.7998L6.89941 12.4998L3.39941 8.9998"
-                              stroke="white"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        )}
-                      </div>
+                      <Checkbox />
                     </div>
                     {/* push */}
                     <div className="w-[2.4rem] flex justify-center">
-                      <div
-                        className={`w-6 h-6 rounded-md cursor-pointer ${
-                          checkboxes.includes(`${item.group}&${item.id}&push`)
-                            ? 'bg-primary-100 border border-primary-100'
-                            : 'border border-Grey-G50'
-                        } flex items-center justify-center`}
-                        onClick={() => handleClick(`${item.group}&${item.id}&push`)}
-                      >
-                        {checkboxes.includes(`${item.group}&${item.id}&push`) && (
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            viewBox="0 0 18 18"
-                            fill="none"
-                          >
-                            <path
-                              d="M14.5994 4.7998L6.89941 12.4998L3.39941 8.9998"
-                              stroke="white"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        )}
-                      </div>
+                      <Checkbox />
                     </div>
                   </div>
                 </div>
