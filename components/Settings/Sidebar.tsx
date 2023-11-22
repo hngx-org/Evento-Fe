@@ -12,7 +12,7 @@ const nav = [
   {
     id: 2,
     name: 'Data & Security',
-    path: '/settings/data-security',
+    path: '/settings/data-and-security',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const nav = [
   {
     id: 5,
     name: 'Plans & Billing',
-    path: '/settings/plans&billing',
+    path: '/settings/plans-and-billings',
   },
   {
     id: 6,
