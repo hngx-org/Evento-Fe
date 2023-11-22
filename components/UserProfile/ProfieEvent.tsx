@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import NoEvent from './NoEvent';
+import Events from './Events';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -77,7 +78,7 @@ const ProfieEvent: React.FC = () => {
             <NoEvent type="create" />
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
-            <NoEvent type="attend" />
+            <Events type="attend" />
           </div>
         </div>
       </div>
