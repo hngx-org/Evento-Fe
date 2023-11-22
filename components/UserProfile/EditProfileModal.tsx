@@ -20,13 +20,17 @@ const workSans = Work_Sans({
 const EditProfileModal: React.FC<EditProfileModalProps> = ({ isModalOpen, setIsModalOpen }) => {
   const closeModal = () => {
     setIsModalOpen(false);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
     <form
       className={` ${workSans.className}  ${
         isModalOpen ? '' : '!hidden'
-      } flex justify-center w-full  bg-[#F5F5F5]  py-[107px] flex-col items-center gap-y-[32px] absolute z-50`}
+      } flex justify-center w-full h-fit min-h-screen bg-[#F5F5F5]  py-[107px] flex-col items-center gap-y-[32px] absolute z-[100]`}
     >
       <section className=" w-[842px] bg-white-100 relative  p-[64px] flex flex-col gap-y-[24px] ">
         <div className="ppcontainer rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center mb-2">

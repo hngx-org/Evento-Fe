@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import { Work_Sans } from 'next/font/google';
+import Image from 'next/image';
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
 import { Edit } from 'iconsax-react';
@@ -17,17 +18,43 @@ const workSans = Work_Sans({
 });
 // add a userlayout later
 const UserProfile: React.FC = () => {
+  // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  // profile pic state
+  const [profilePicURL, setProfilePicURL] = useState('');
   const openModal = () => {
     setIsModalOpen(true);
   };
 
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files && event.target.files[0];
+
+    if (selectedImage) {
+      // Log the name of the selected image file
+      console.log('Selected image:', selectedImage.name);
+      const imageUrl = URL.createObjectURL(selectedImage);
+      setProfilePicURL(imageUrl);
+
+      const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
+
+      const profilePicContainer = document.getElementById('profilePicContainer');
+
+      if (profilePicContainer) {
+        profilePicContainer.innerHTML = tempProfilPic;
+      }
+    }
+
+    // handle the posting here
+  };
+
   return (
     <AuthLayout>
-      <div className={` ${workSans.className} flex justify-center bg-[#F5F5F5]  `}>
-        <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-
+      <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <div
+        className={` ${workSans.className} ${
+          !isModalOpen ? '' : '!hidden'
+        } flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}
+      >
         <section className="w-full h-[240px] bg-secondary-100 absolute">
           <Button
             handleClick={() => {}}
@@ -36,14 +63,25 @@ const UserProfile: React.FC = () => {
             title={'edit profile card'}
             disabled={true}
           >
-            <Edit color="#FCEEE7" fontSize={20} />
+            <Edit color="#FCEEE7" fontSize={20} className="" />
           </Button>
         </section>
 
-        <section className=" w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
+        <section className="min-w-[358px] w-[90%] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
           <div className="w-full flex flex-col gap-y-6  bg-white-100 rounded-[12px] p-6">
-            <div className="ppcontainer rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center">
-              <Edit />
+            <div
+              id="profilePicContainer"
+              className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
+            >
+              <Edit onClick={() => {}} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(event) => {
+                  handleImageChange(event);
+                }}
+                className=" absolute w-6 h-6 opacity-0"
+              />
             </div>
 
             <div className="info flex flex-col gap-4">
