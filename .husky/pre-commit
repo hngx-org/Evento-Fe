@@ -15,7 +15,11 @@ npm run check-format ||
     false;
 )
 
+echo ''
+
 echo '🏗️👷 checking for eslint errors' 🔍🧐
+
+echo ''
 
 # Check ESLint Standards
 npm run check-lint ||
@@ -25,7 +29,11 @@ npm run check-lint ||
         false; 
 )
 
+echo ''
+
 echo '🏗️👷 Wait fess,checking for typescript errors' 🔍🧐
+
+
 
 # Check tsconfig standards
 npm run check-types ||
@@ -35,11 +43,16 @@ npm run check-types ||
     false;
 )
 
+echo ''
+
 npm run format
- 
+
+echo ''
+
 # If no beans, then... Now we can commit
 echo '✅✅✅✅ You win this time... I am committing this now. ✅✅✅✅'
- 
+
+
 npm run lint-staged
 
 echo '✅✅ Awesome work! ✅✅'
