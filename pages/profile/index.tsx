@@ -7,7 +7,6 @@ import { Work_Sans } from 'next/font/google';
 import { Edit } from 'iconsax-react';
 import withoutAuth from '@/helpers/withoutAuth';
 
-import NoEvent from '@/components/UserProfile/NoEvent';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import EditProfileModal from '@/components/UserProfile/EditProfileModal';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
