@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FacebookIcon, InstagramIcon, TwitterIcon, LinkedinIcon } from '@/public/Home//Socialicons/socialIcons';
