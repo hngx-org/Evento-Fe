@@ -61,22 +61,22 @@ function Homenav() {
         >
           <div className="w-[267px] h-16 p-2 justify-center items-center gap-4 lg:flex-row flex flex-col mt-20  lg:mt-0">
             <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
-              <Link
-                href={'/'}
+              <button
                 className="text-center text-primary-100 text-base font-bold leading-normal tracking-tight px-6 py-3 bg-secondary-100 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
+                onClick={openSignInModal}
               >
                 Sign In
-              </Link>
+              </button>
 
-              <Link
+              <button
+                onClick={openSignUpModal}
                 style={{
                   color: 'white',
                 }}
-                href={'/'}
                 className="px-6 py-3 bg-primary-100 rounded-lg justify-center items-center gap-4 flex text-center  text-base font-bold  leading-normal tracking-tight text-white lg:w-auto w-[100%]"
               >
                 Create Event
-              </Link>
+              </button>
             </div>
           </div>
         </div>
