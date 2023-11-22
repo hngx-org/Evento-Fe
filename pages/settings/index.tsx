@@ -4,6 +4,7 @@ import Settingslayout from '@/layout/Settingslayout';
 import { Montserrat, Nunito } from 'next/font/google';
 import Image from 'next/image';
 import profile from 'public/profileB.svg';
+import withAuth from '@/helpers/withAuth';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -96,4 +97,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default withAuth(Settings);

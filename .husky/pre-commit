@@ -6,15 +6,54 @@ echo ''
 echo '🏗️👷 Styling your project before committing👷‍♂️🏗️'
 echo ''
 echo 'please be patient, this may take a while...'
- 
-# Check ESLint Standards
-npm run lint ||
+
+# Check Prettier standards
+npm run check-format ||
 (
-    echo '🔨❌ Yoo, you have a problem in your code. Check linter 🔨❌
-          Run npm run lint, add changes and try commit again.';
+    echo '🤢🤮🤢🤮 Its so ugly!! - Your styling looks disgusting. 🤢🤮🤢🤮
+            Prettier Check Failed. Run npm run format, add changes and try commit again.';
     false;
 )
- 
-echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
- 
+
+echo ''
+
+echo '🏗️👷 checking for eslint errors' 🔍🧐
+
+echo ''
+
+# Check ESLint Standards
+npm run check-lint ||
+(
+        echo '😤🏀👋😤 Get that beans code out of here! 😤🏀👋😤 
+                ESLint Check Failed. Make the required changes listed above, add changes and try to commit again.'
+        false; 
+)
+
+echo ''
+
+echo '🏗️👷 Wait fess,checking for typescript errors' 🔍🧐
+
+
+
+# Check tsconfig standards
+npm run check-types ||
+(
+    echo '🤡😂❌🤡 Omo, I Don See Beans. 🤡😂❌🤡
+            Are you seriously trying to write that? Make the changes required above.'
+    false;
+)
+
+echo ''
+
+npm run format
+
+echo ''
+
+# If no beans, then... Now we can commit
+echo '✅✅✅✅ You win this time... I am committing this now. ✅✅✅✅'
+
+
 npm run lint-staged
+
+echo '✅✅ Awesome work! ✅✅'
+echo '🚀⛅ Run git push to upload your changes to the remote repository ⛅🚀'

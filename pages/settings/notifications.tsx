@@ -1,6 +1,7 @@
 import Settingslayout from '@/layout/Settingslayout';
 import { Montserrat, Nunito } from 'next/font/google';
 import { useState } from 'react';
+import withAuth from '@/helpers/withAuth';
 
 const notifications = [
   {
@@ -239,4 +240,4 @@ function Notifications() {
   );
 }
 
-export default Notifications;
+export default withAuth(Notifications);
