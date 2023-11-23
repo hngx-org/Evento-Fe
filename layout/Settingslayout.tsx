@@ -8,7 +8,7 @@ function Settingslayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <AuthenticatedHeader />
-      <main className="bg-[#F5F5F5] min-h-screen">
+      <main className="bg-white-N0 min-h-screen">
         <div style={{ padding: '96px 10px 96px 10px' }} className="flex gap-16 max-w-[1240px] mx-auto">
           <Sidebar />
           <div
