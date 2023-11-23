@@ -4,7 +4,7 @@ import { ArrowDown2 } from 'iconsax-react';
 import { MdCheck } from 'react-icons/md';
 import { Select } from '@/@types';
 
-function Select({ options, color }: Select) {
+function Select({ options, color, type = 'normal' }: Select) {
   const [selected, setSelected] = useState(options[0]);
 
   return (
@@ -12,15 +12,15 @@ function Select({ options, color }: Select) {
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button
-            className={`w-full h-14 cursor-default rounded-lg ${
+            className={`w-full h-14 cursor-default ${type === 'normal' ? 'rounded-lg' : 'rounded-l-lg'} ${
               color === 'light' ? 'bg-white-N0' : 'bg-Grey-G20'
             } border border-Grey-G60 pl-4 text-left`}
           >
-            <span className={`${color === 'light' ? 'text-Grey-G50' : 'text-Grey-G600'} font-medium text-base`}>
+            <span className={`${type === 'normal' ? 'text-Grey-G50' : 'text-Grey-G600'} font-medium text-base`}>
               {selected.name}
             </span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-              <ArrowDown2 color="#868686" size={20} aria-hidden="true" />
+              <ArrowDown2 color="#868686" size={type === 'normal' ? 20 : 24} aria-hidden="true" />
             </span>
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">

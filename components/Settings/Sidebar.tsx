@@ -1,4 +1,4 @@
-import { Montserrat, Work_Sans } from 'next/font/google';
+import { Montserrat, Nunito } from 'next/font/google';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
@@ -29,16 +29,11 @@ const nav = [
     name: 'Plans & Billing',
     path: '/settings/plans-and-billings',
   },
-  {
-    id: 6,
-    name: 'Integrations',
-    path: '/settings/integrations',
-  },
-  {
-    id: 7,
-    name: 'Delete Account',
-    path: '/settings/delete-account',
-  },
+  // {
+  //   id: 6,
+  //   name: 'Integrations',
+  //   path: '/settings/integrations',
+  // },
 ];
 
 const montserrat = Montserrat({
@@ -47,15 +42,15 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-const workSans = Work_Sans({
+const nunito = Nunito({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-work-sans',
+  variable: '--font-nunito',
 });
 
-function Sidebar() {
+function Sidebar({ onOpen }: { onOpen: () => void }) {
   const router = useRouter();
-  const activeLink = (path: string) => (router.pathname === path ? 'bg-secondary-100' : '');
+  const activeLink = (path: string) => (router.pathname === path ? 'bg-secondary-100 rounded-lg' : '');
   return (
     <div className="">
       <div className="flex items-center gap-2">
@@ -64,7 +59,7 @@ function Sidebar() {
           <path d="M1 1H62" stroke="#3C3C3C" stroke-linecap="round" />
         </svg>
       </div>
-      <div className={`mt-16 flex flex-col gap-3 ${workSans.className}`}>
+      <div className={`mt-16 flex flex-col gap-3 ${nunito.className}`}>
         {nav.map((item) => (
           <Link
             href={item.path}
@@ -76,6 +71,12 @@ function Sidebar() {
             {item.name}
           </Link>
         ))}
+      </div>
+      <div
+        className={`${nunito.className} py-[0.875rem] px-5 text-xl font-normal -tracking-[0.0125rem] text-Errors-E300 mt-3 cursor-pointer`}
+        onClick={onOpen}
+      >
+        Delete Account
       </div>
     </div>
   );
