@@ -5,7 +5,7 @@ import EventManagementHeader from '@/components/event-management/EventManagement
 export default function EventManagementLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthLayout>
-      <div className="container mx-auto my-20">
+      <div className="container mx-auto py-20">
         <EventManagementHeader />
         {children}
       </div>
