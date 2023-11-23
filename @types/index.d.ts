@@ -16,6 +16,15 @@ export type Events = {
   eventType: string;
 };
 
+export type Select = {
+  options: { name: string }[];
+  color: 'light' | 'dark';
+  type: 'tel' | 'normal';
+};
+
+export type Switch = {
+  defaultValue: boolean;
+};
 export interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -42,3 +51,9 @@ export interface ToastProps {
   theme?: ToastTheme;
   type?: ToastVariant;
 }
+
+export type Data = {
+  title: string;
+  description: string;
+  buttonText: string;
+};
