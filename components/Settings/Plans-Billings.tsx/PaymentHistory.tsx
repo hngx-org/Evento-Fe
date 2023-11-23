@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import premiumPlanWhite from 'public/assets/settings/flash-white.svg';
-import basicPlan from 'public/assets/settings/basic-plan.svg';
+import basicPlanWhite from 'public/assets/settings/basic-plan_white.svg';
 import enterprisePlan from 'public/assets/settings/enterprise-plan.svg';
 
 const paymentHistory = [
@@ -15,7 +15,7 @@ const paymentHistory = [
     id: 2,
     name: 'Basic',
     date: '12-10-23',
-    icon: basicPlan,
+    icon: basicPlanWhite,
   },
 ];
 
