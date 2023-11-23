@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { FacebookIcon, InstagramIcon, TwitterIcon, LinkedinIcon } from '@/public/Home//Socialicons/socialIcons';
@@ -394,7 +393,7 @@ export default function HomeFooter() {
             Terms of Service
           </Link>
           <Link href={''} className="text-gray-500 font-medium">
-            Terms of Service
+            Privacy Policy
           </Link>
         </div>
       </div>

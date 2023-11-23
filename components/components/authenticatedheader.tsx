@@ -92,36 +92,44 @@ function AuthenticatedHeader() {
         </div>
         {/* Mobile dropdown */}
         <div
-          className={`lg:hidden absolute w-full h-[calc(100vh-58px)] bg-primary-100 z-30 ${
-            toggle ? 'left-0' : '-left-[100%]'
-          } top-[58px] transition-all ease-in-out duration-500 px-4 py-6 flex flex-col gap-5`}
+          style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
+          className={`lg:hidden absolute z-30 ${
+            toggle ? 'right-4' : '-left-[100%]'
+          } top-[63px] transition-all ease-in-out duration-500 bg-white-N0 rounded-lg w-[15rem] p-3`}
         >
-          <Link href="/explore" className="text-white-100 font-medium text-lg flex items-center gap-3">
-            <Star size={22} color="#fff" />
-            Explore
-          </Link>
-          <Link href="/manage-events" className="text-white-100 font-medium text-lg flex items-center gap-3">
-            <Notepad size={22} color="#fff" />
-            Manage Events
-          </Link>
-          <Link
-            href="/create-event"
-            className="text-white-100 font-medium text-lg flex items-center gap-3 border-b border-b-gray-50/50 pb-5"
-          >
-            <Add size={22} color="#fff" />
-            Create Event
-          </Link>
-          <div className="flex items-center gap-3">
-            <Profile size={22} color="#fff" />
-            <p className="text-white-100 font-medium text-lg">View profile</p>
-          </div>
-          <div className="flex items-center gap-3 border-b border-b-gray-50/50 pb-5">
-            <Setting4 size={22} color="#fff" />
-            <p className="text-white-100 font-medium text-lg">Settings</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <LogoutCurve size={18} color="#fff" />
-            <p className="text-white-100 font-medium text-lg">Logout</p>
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
+              <Image src={profile} alt="profile" width={40} height={40} />
+              <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
+            </div>
+            <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
+              <Link href="/explore" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+                <Profile size={16} color="#3C3C3C" />
+                Explore
+              </Link>
+              <Link href="/manage-events" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+                <Profile size={16} color="#3C3C3C" />
+                Manage Events
+              </Link>
+              <Link href="/create-event" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+                <Add size={16} color="#3C3C3C" />
+                Create Event
+              </Link>
+            </div>
+            <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
+              <Link href="/profile" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+                <Profile size={16} color="#3C3C3C" />
+                View Profile
+              </Link>
+              <Link href="/settings" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+                <Setting4 size={16} color="#3C3C3C" />
+                Settings
+              </Link>
+            </div>
+            <Link href="/logout" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2 py-2">
+              <LogoutCurve size={16} color="#3C3C3C" />
+              Logout
+            </Link>
           </div>
         </div>
       </nav>
