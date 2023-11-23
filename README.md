@@ -4,7 +4,7 @@ This is a `Nextjs, Typescript and Tailwindcss` project.
 
 ## Getting Starte
 
-This project uses `yarn workspaces` as default monorepo architecture.
+This project uses `npm workspaces` as default monorepo architecture.
 
 ### First clone the repo
 
