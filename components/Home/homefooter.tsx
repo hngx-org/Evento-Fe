@@ -24,32 +24,32 @@ const socials = [
 export default function HomeFooter() {
   return (
     <footer className="max-w-[1240px] mx-auto p-4 py-12">
-      <div className="flex items-center justify-between border-b border-b-Grey-G30 pb-6">
-        <div className="flex items-center gap-12">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-0 border-b border-b-Grey-G30 pb-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-12">
           <div>
             <Link className="" href={''}>
               <h3 className="text-xl font-montserrat font-bold">Evento</h3>
             </Link>
           </div>
           <div className="flex gap-6">
-            <Link href={''} className="text-gray-fot text-lg font-medium">
+            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Explore
             </Link>
-            <Link href={''} className="text-gray-fot text-lg font-medium">
+            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               New
             </Link>
-            <Link href={''} className="text-gray-fot text-lg font-medium">
+            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Price
             </Link>
-            <Link href={''} className="text-gray-fot text-lg font-medium">
+            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Help
             </Link>
-            <Link href={''} className="text-gray-fot text-lg font-medium">
+            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Contact us
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col lg:items-center gap-1">
           <p className="text-black-fot font-semibold text-sm">Download the app</p>
           <div className="flex gap-3">
             <Link href={''}>
@@ -373,7 +373,20 @@ export default function HomeFooter() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-0 pt-6">
+        <div className="flex gap-6 md:hidden">
+          {socials.map((social) => {
+            return (
+              <Link
+                key={social.href}
+                href={social.href}
+                className="w-10 h-10 flex items-center justify-center rounded-full"
+              >
+                <social.icon />
+              </Link>
+            );
+          })}
+        </div>
         <p className="text-sm font-semibold text-primary-100">© 2023 Evento. All rights reserved.</p>
         <div>
           <Link href={''} className="pr-4 text-gray-500 font-medium">
@@ -383,7 +396,7 @@ export default function HomeFooter() {
             Privacy Policy
           </Link>
         </div>
-        <div className="flex gap-6">
+        <div className="hidden md:flex gap-4 lg:gap-6">
           {socials.map((social) => {
             return (
               <Link

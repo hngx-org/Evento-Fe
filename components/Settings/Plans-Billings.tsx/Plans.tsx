@@ -179,7 +179,9 @@ function Plans() {
                   <div>
                     <p className="text-Grey-600 font-medium">{plan.name}</p>
                     <p className={`text-Grey-G400 text-[0.625rem] space-x-2`}>
-                      {plan.originalPrice && <span className="line-through">{plan.originalPrice}</span>}
+                      {plan.originalPrice && selectedPlan === 'Yearly Billing' && (
+                        <span className="line-through">{plan.originalPrice}</span>
+                      )}
                       <span className="et text-Success-S300">
                         {selectedPlan === 'Monthly Billing' ? plan.price : plan.yearlyPrice}
                       </span>
