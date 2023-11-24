@@ -1,0 +1,80 @@
+.formControl {
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+  /* font-weight: bold; */
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+}
+
+.checkboxChecked {
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 1px solid #c0c0c0;
+  border-radius: 6px;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+}
+
+.formControl {
+  margin-top: 1em;
+}
+
+.checkboxChecked::before {
+  content: '';
+  width: 1em;
+  height: 1em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em black;
+
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+
+  transform-origin: bottom left;
+  clip-path: polygon(
+    80% 27%,
+    78% 31%,
+    74% 33%,
+    69% 38%,
+    65% 42%,
+    60% 46%,
+    56% 52%,
+    52% 58%,
+    49% 65%,
+    45% 72%,
+    40% 74%,
+    35% 69%,
+    32% 63%,
+    27% 57%,
+    21% 53%,
+    20% 48%,
+    27% 45%,
+    32% 45%,
+    35% 48%,
+    37% 50%,
+    40% 52%,
+    43% 47%,
+    49% 43%,
+    54% 39%,
+    60% 35%,
+    65% 32%,
+    70% 28%,
+    76% 26%,
+    47% 68%,
+    51% 63%
+  );
+}
+.checkboxChecked:checked::before {
+  transform: scale(1);
+}
+
+.checkboxChecked:focus {
+}
