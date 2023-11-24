@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from '../Select';
 
 const languages = [
@@ -20,6 +20,7 @@ const languages = [
 ];
 
 function Language() {
+  const [selected, setSelected] = useState(languages[0]);
   return (
     <div className="flex flex-col gap-9">
       <div className={`space-y-2`}>
@@ -27,7 +28,14 @@ function Language() {
         <p className="text-Grey-G100 text-sm">Select the language contents will be written in</p>
       </div>
       <div>
-        <Select options={languages} color="light" type="normal" />
+        <Select
+          options={languages}
+          color="light"
+          type="normal"
+          selected={selected}
+          setSelected={setSelected}
+          handleSelect={setSelected}
+        />
       </div>
     </div>
   );

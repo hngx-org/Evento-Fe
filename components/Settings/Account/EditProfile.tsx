@@ -28,7 +28,7 @@ function EditProfile() {
         <Input label="Full Name" placeholder="John Doe" inputHeight="h-[3.5rem]" backgroundColor="bg-white-N0" />
         <Input
           label="Short bio "
-          inputHeight="min-h-[104px]"
+          inputHeight="h-[9.5rem] lg:min-h-[104px]"
           backgroundColor="bg-white-N0"
           textArea={true}
           placeholder="Lorem ipsum dolor sit amet consectetur. Elit ultricies in fermentum enim cursus convallis etiam consectetur potenti."

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from './Select';
 
 const tel = [
@@ -17,12 +17,20 @@ const tel = [
 ];
 
 function TelInput() {
+  const [selected, setSelected] = useState(tel[0]);
   return (
     <div className="space-y-1">
       <p className="text-Grey-G600 font-medium">Phone Number</p>
       <div className="w-full h-14 flex items-center">
-        <div className="w-[18%] shrink-0">
-          <Select type="tel" color="light" options={tel} />
+        <div className="w-[35%] md:w-[18%] shrink-0">
+          <Select
+            type="tel"
+            color="light"
+            options={tel}
+            selected={selected}
+            setSelected={setSelected}
+            handleSelect={setSelected}
+          />
         </div>
         <div className="w-full mt-1">
           <input

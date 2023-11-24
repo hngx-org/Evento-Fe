@@ -22,8 +22,10 @@ const nunito = Nunito({
 function DataAndSecurity() {
   return (
     <Settingslayout>
-      <h2 className={`${montserrat.className} text-Grey-G700 text-[2rem] font-semibold`}>Data & Security</h2>
-      <div className={`${nunito.className} flex flex-col gap-8`}>
+      <h2 className={`${montserrat.className} text-Grey-G700 text-2xl lg:text-[2rem] font-semibold`}>
+        Data & Security
+      </h2>
+      <div className={`${nunito.className} flex flex-col gap-8 -mt-4 lg:-mt-0`}>
         <Password />
         <TwoFA />
         <ManageDevices />

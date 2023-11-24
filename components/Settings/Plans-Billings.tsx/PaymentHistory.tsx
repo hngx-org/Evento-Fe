@@ -21,7 +21,7 @@ const paymentHistory = [
 
 function PaymentHistory() {
   return (
-    <div className="flex flex-col gap-9">
+    <div className="flex flex-col gap-9 mt-5 md:mt-0">
       <div className={`space-y-2`}>
         <h3 className="text-Grey-G700 text-xl font-medium">Payment History</h3>
         <p className="text-Grey-G100 text-sm">View payments history of all purchases done by evento</p>

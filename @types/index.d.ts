@@ -20,6 +20,14 @@ export type Select = {
   options: { name: string }[];
   color: 'light' | 'dark';
   type: 'tel' | 'normal';
+  selected: { name: string; path?: string };
+  setSelected: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      path?: string;
+    }>
+  >;
+  handleSelect: Function;
 };
 
 export type Switch = {

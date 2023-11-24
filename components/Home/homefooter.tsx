@@ -23,33 +23,35 @@ const socials = [
 
 export default function HomeFooter() {
   return (
-    <footer className="max-w-7xl mx-auto p-4 xl:px-0 xl:py-14">
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-36 mb-12">
-        <Link className="lg:max-w-sm" href={''}>
-          <h3 className="text-xl font-montserrat font-bold mb-6">Evento</h3>
-        </Link>
-        <div className="flex-grow grid grid-cols-5  md:grid-cols-5">
-          <Link href={''} className="text-gray-fot text-lg font-medium">
-            Explore
-          </Link>
-
-          <Link href={''} className="text-gray-fot text-lg font-medium">
-            New
-          </Link>
-
-          <Link href={''} className="text-gray-fot text-lg font-medium">
-            Price
-          </Link>
-          <Link href={''} className="text-gray-fot text-lg font-medium">
-            Help
-          </Link>
-          <Link href={''} className="text-gray-fot text-lg font-medium">
-            Contact us
-          </Link>
+    <footer className="max-w-[1240px] mx-auto p-4 py-12">
+      <div className="flex items-center justify-between border-b border-b-Grey-G30 pb-6">
+        <div className="flex items-center gap-12">
+          <div>
+            <Link className="" href={''}>
+              <h3 className="text-xl font-montserrat font-bold">Evento</h3>
+            </Link>
+          </div>
+          <div className="flex gap-6">
+            <Link href={''} className="text-gray-fot text-lg font-medium">
+              Explore
+            </Link>
+            <Link href={''} className="text-gray-fot text-lg font-medium">
+              New
+            </Link>
+            <Link href={''} className="text-gray-fot text-lg font-medium">
+              Price
+            </Link>
+            <Link href={''} className="text-gray-fot text-lg font-medium">
+              Help
+            </Link>
+            <Link href={''} className="text-gray-fot text-lg font-medium">
+              Contact us
+            </Link>
+          </div>
         </div>
-        <div className="space-y-4">
-          <p className="text-black-fot font-semibold text-lg">Download the app</p>
-          <div className="flex-grow grid grid-cols-2">
+        <div className="flex flex-col items-center gap-1">
+          <p className="text-black-fot font-semibold text-sm">Download the app</p>
+          <div className="flex gap-3">
             <Link href={''}>
               <svg width="122" height="41" viewBox="0 0 122 41" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.50625" y="0.50625" width="120.488" height="39.4875" rx="6.58125" fill="black" />
@@ -371,23 +373,8 @@ export default function HomeFooter() {
         </div>
       </div>
 
-      <div className="border-b mb-9 border-grey-alt"></div>
-
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        <div className="flex gap-4  justify-center w-3/12">
-          {socials.map((social) => {
-            const Icon = social.icon;
-            return (
-              <Link
-                key={social.href}
-                href={social.href}
-                className="w-10 h-10 flex items-center justify-center rounded-full"
-              >
-                {<Icon />}
-              </Link>
-            );
-          })}
-        </div>
+      <div className="flex items-center justify-between pt-6">
+        <p className="text-sm font-semibold text-primary-100">© 2023 Evento. All rights reserved.</p>
         <div>
           <Link href={''} className="pr-4 text-gray-500 font-medium">
             Terms of Service
@@ -395,6 +382,19 @@ export default function HomeFooter() {
           <Link href={''} className="text-gray-500 font-medium">
             Privacy Policy
           </Link>
+        </div>
+        <div className="flex gap-6">
+          {socials.map((social) => {
+            return (
+              <Link
+                key={social.href}
+                href={social.href}
+                className="w-10 h-10 flex items-center justify-center rounded-full"
+              >
+                <social.icon />
+              </Link>
+            );
+          })}
         </div>
       </div>
     </footer>

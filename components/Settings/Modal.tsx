@@ -33,7 +33,7 @@ function Modal({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 bg-Grey-G700 opacity-10" />
+            <div className="fixed inset-0 bg-Grey-G700 opacity-20" />
           </Transition.Child>
           <div className="fixed inset-0 overflow-y-auto flex justify-center items-center">
             <div className="flex">
