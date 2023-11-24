@@ -5,7 +5,7 @@ import EventManagementHeader from '@/components/event-management/EventManagement
 export default function EventManagementLayout({ children }: { children: React.ReactNode }) {
   return (
     <AuthLayout>
-      <div className="max-w-[1062px] w-full mx-auto px-5 py-20">
+      <div className="max-w-[1062px] w-full mx-auto px-4 py-20">
         <EventManagementHeader />
         {children}
       </div>

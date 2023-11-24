@@ -34,7 +34,7 @@ export default function Index() {
   return (
     <EventManagementLayout>
       {/* End Image */}
-      <div className="mt-10 relative">
+      <div className="mt-[52px] sm:mt-10 relative">
         <button className="absolute top-4 left-4 px-4 py-[6px] rounded-md bg-Grey-G40 text-xl font-semibold">
           {event?.type}
         </button>
@@ -42,12 +42,12 @@ export default function Index() {
         <div className="w-ful h-[433px] bg-Grey-G20 rounded-2xl border border-Grey-G40"></div>
       </div>
 
-      <h1 className="mt-10 text-[32px] font-bold text-Grey-G600">{event?.name}</h1>
+      <h1 className="mt-8 sm:mt-10 text-2xl sm:text-[32px] font-bold text-Grey-G600">{event?.name}</h1>
 
-      <p className="mt-6 text-xl text-Grey-G500">{event?.description}</p>
+      <p className="mt-4 sm:mt-6 text-xl text-Grey-G500">{event?.description}</p>
 
       {/* Start and End */}
-      <div className="mt-11 grid grid-cols-2 gap-6">
+      <div className="mt-8 sm:mt-11 grid sm:grid-cols-2 gap-8 sm:gap-6">
         {/* Start */}
         <div>
           <div className="flex gap-1 items-center">
@@ -82,26 +82,34 @@ export default function Index() {
             <p className="mt-2 text-Grey-G70">{event?.end_time}</p>
           </div>
         </div>
+        {/* Location */}
+        <div className="sm:hidden flex items-start gap-2">
+          <Image src={'/event-management/location.svg'} width={24} height={24} className="mt-2" alt="Calender Icon" />
+          <div>
+            <h3 className="text-2xl font-medium text-primary-100">Location of event:</h3>
+            <p className="mt-2 text-xl text-gray-fot">{event?.location}</p>
+          </div>
+        </div>
       </div>
 
       {/* Category, Capacity, Type */}
-      <div className="mt-10 grid grid-cols-3 sm:grid-cols-4 gap-6">
+      <div className="mt-8 sm:mt-10 grid grid-cols-2 sm:grid-cols-4 gap-8 sm:gap-6 text-center sm:text-left">
         <div>
-          <h5 className="text-2xl font-medium text-Grey-G70">Event category</h5>
+          <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event category</h5>
           <p className="mt-2 text-xl text-gray-fot">{event?.category}</p>
         </div>
         <div>
-          <h5 className="text-2xl font-medium text-Grey-G70">Event capacity</h5>
+          <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event capacity</h5>
           <p className="mt-2 text-xl text-gray-fot">{event?.capacity}</p>
         </div>
-        <div>
-          <h5 className="text-2xl font-medium text-Grey-G70">Event Ticket type</h5>
+        <div className="col-span-2 sm:col-auto">
+          <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event Ticket type</h5>
           <p className="mt-2 text-xl text-gray-fot">{event?.type}</p>
         </div>
       </div>
 
       {/* Location */}
-      <div className="mt-10 flex items-start gap-2">
+      <div className="mt-10 hidden sm:flex items-start gap-2">
         <Image src={'/event-management/location.svg'} width={24} height={24} className="mt-2" alt="Calender Icon" />
         <div>
           <h3 className="text-2xl font-medium text-Grey-G70">Location of event:</h3>
@@ -109,8 +117,8 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="mt-11 flex gap-6">
-        <div className="max-w-[302px] w-full">
+      <div className="mt-8 sm:mt-11 flex flex-col sm:flex-row gap-8 sm:gap-6">
+        <div className="sm:max-w-[302px] w-full">
           <h5 className="text-primary-100 text-xl font-semibold">Event link:</h5>
           <div className="mt-4 relative">
             <input
@@ -131,7 +139,7 @@ export default function Index() {
             </button>
           </div>
         </div>
-        <div className="max-w-[302px] w-full">
+        <div className="sm:max-w-[302px] w-full">
           <h5 className="text-primary-100 text-xl font-semibold">Host:</h5>
           <div className="mt-[14px] font-semibold">
             <h4 className="text-xl text-gray-fot">{event?.host_name}</h4>
@@ -140,7 +148,7 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="mt-20 grid grid-cols-2 gap-6 items-center">
+      <div className="mt-8 sm:mt-20 grid sm:grid-cols-2 gap-4 sm:gap-6 items-center">
         <button className="py-3 px-[18px] text-primary-100 bg-white-N0 border border-primary-100 rounded-lg flex justify-center items-center gap-2 font-bold">
           <Image src={'/event-management/edit-2.svg'} width={20} height={20} alt="Edit" />
           <span>Edit Event</span>

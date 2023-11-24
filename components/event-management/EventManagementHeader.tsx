@@ -21,7 +21,7 @@ export default function EventManagementHeader() {
   const pathname = usePathname();
 
   return (
-    <div className="w-full flex justify-between gap-1">
+    <div className="max-w-[1062px] w-full flex justify-between gap-1">
       {links?.map((item, index) => (
         <Link
           key={index}
@@ -30,7 +30,7 @@ export default function EventManagementHeader() {
             pathname.toLowerCase() === item.href.toLowerCase()
               ? 'border-primary-100 text-Grey-G700'
               : 'text-Grey-G50 border-Grey-G50'
-          } w-1/3 flex justify-center items-center text-center py-4 px-2 border-b-[3px] text-lg font-bold`}
+          } w-1/3 flex justify-center items-center text-center py-2 sm:py-4 sm:px-2 border-b-[3px] sm:text-lg font-semibold sm:font-bold`}
         >
           {item.name}
         </Link>
