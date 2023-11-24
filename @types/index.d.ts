@@ -19,6 +19,7 @@ export type Events = {
 export type Select = {
   options: { name: string }[];
   color: 'light' | 'dark';
+  type: 'tel' | 'normal';
 };
 
 export type Switch = {
@@ -50,3 +51,9 @@ export interface ToastProps {
   theme?: ToastTheme;
   type?: ToastVariant;
 }
+
+export type Data = {
+  title: string;
+  description: string;
+  buttonText: string;
+};
