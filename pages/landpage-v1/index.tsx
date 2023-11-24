@@ -1,6 +1,7 @@
 import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
 import Langpageversiontwo from '@/modules/home/Page/landPageV1/Hero';
+import Hpmenewv1 from '@/modules/home/Page/landPageV1/Updated';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -12,7 +13,7 @@ export default function Home() {
   return (
     <HomeLayout>
       <div className={workSans.className}>
-        <Langpageversiontwo />
+        <Hpmenewv1 />
       </div>
     </HomeLayout>
   );

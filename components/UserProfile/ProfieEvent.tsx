@@ -4,6 +4,7 @@ import Events from './Events';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import FilterModal from './FilterModal';
 
 interface SwiperElement extends Element {
   swiper?: Swiper; // Define 'swiper' as a property of the Element
