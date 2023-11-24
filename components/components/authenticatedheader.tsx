@@ -33,7 +33,7 @@ function AuthenticatedHeader() {
   }, [toggle]);
 
   return (
-    <header className="w-full bg-white-N0 border-b border-b-Grey-G30 relative">
+    <header className="w-full bg-white-N0 border-b border-b-Grey-G30">
       <nav className="relative max-w-[1240px] p-4 mx-auto">
         <div className="flex items-center justify-between">
           <Link href={'/'}>
@@ -132,46 +132,46 @@ function AuthenticatedHeader() {
             </Link>
           </div>
         </div>
-      </nav>
-      {/* Profile Dropdown Container */}
-      {profileDropdown && (
-        <div
-          ref={profileRef}
-          style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
-          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
-        >
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
-              <Image src={profile} alt="profile" width={40} height={40} />
-              <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
-            </div>
-            <div className="space-y-2 border-b border-b-Grey-G30 pb-4">
-              <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-                <Profile size={18} color="#3C3C3C" />
-                <p className="text-Grey-G500 font-medium text-sm">View profile</p>
+        {/* Profile Dropdown Container */}
+        {profileDropdown && (
+          <div
+            ref={profileRef}
+            style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
+            className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
+          >
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
+                <Image src={profile} alt="profile" width={40} height={40} />
+                <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
+              </div>
+              <div className="space-y-2 border-b border-b-Grey-G30 pb-4">
+                <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
+                  <Profile size={18} color="#3C3C3C" />
+                  <p className="text-Grey-G500 font-medium text-sm">View profile</p>
+                </div>
+                <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
+                  <Setting4 size={18} color="#3C3C3C" />
+                  <p className="text-Grey-G500 font-medium text-sm">Settings</p>
+                </div>
               </div>
               <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-                <Setting4 size={18} color="#3C3C3C" />
-                <p className="text-Grey-G500 font-medium text-sm">Settings</p>
+                <LogoutCurve size={18} color="#3C3C3C" />
+                <p className="text-Grey-G500 font-medium text-sm">Logout</p>
               </div>
-            </div>
-            <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-              <LogoutCurve size={18} color="#3C3C3C" />
-              <p className="text-Grey-G500 font-medium text-sm">Logout</p>
             </div>
           </div>
-        </div>
-      )}
-      {/* Search Dropdown Container */}
-      {searchDropdown && (
-        <div
-          ref={searchRef}
-          style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
-          className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
-        >
-          <Input placeholder="Search anything" className="border border-Grey-G60 rounded-lg bg-white-N0" />
-        </div>
-      )}
+        )}
+        {/* Search Dropdown Container */}
+        {searchDropdown && (
+          <div
+            ref={searchRef}
+            style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
+            className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
+          >
+            <Input placeholder="Search anything" className="border border-Grey-G60 rounded-lg bg-white-N0" />
+          </div>
+        )}
+      </nav>
     </header>
   );
 }
