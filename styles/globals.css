@@ -25,6 +25,17 @@ body.mobile-menu-open {
   background: transparent;
 }
 
+#parent {
+  position: relative !important;
+}
+
+.hero {
+  background-image: url('../public//blob.svg');
+  background-repeat: no-repeat;
+  object-fit: contain;
+  height: 100%;
+  width: 100%;
+}
 ::-webkit-scrollbar-thumb {
   background: #e0580c;
   border-radius: 8px;

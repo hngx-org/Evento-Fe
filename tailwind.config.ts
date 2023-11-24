@@ -182,6 +182,9 @@ const config: Config = {
       fontFamily: {
         Worksans: ['Work Sans', 'sans-serif'],
       },
+      content: {
+        brush: "url('./public/brush.png')",
+      },
     },
   },
   plugins: [],
