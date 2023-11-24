@@ -21,12 +21,12 @@ function Home() {
           {/* <div className="-ml-8">
             <Image src={FrameA} alt="" width={300} height={300} />
           </div> */}
-          <div className="flex items-center flex-row">
-            <div className="mt-20 w-1/2 pr-8">
+          <div className="flex mt-24 items-center flex-col sm:flex-row">
+            <div className="sm:w-1/2 sm:pr-8">
               <h1 className="text-[3.25rem] font-bold text-Grey-G700 tracking-[-0.125rem]">
                 Crafting Experiences <br /> One <span className="text-primary-100">Event</span> at a Time
               </h1>
-              <p className="text-Grey-G100 w-[70%]">
+              <p className="text-Grey-G100 sm:w-[70%]">
                 Bring your events to life effortlessly. Evento empowers you to create, organize, and manage your events
                 easily
               </p>
@@ -34,7 +34,7 @@ function Home() {
                 Create an Event
               </Button>
             </div>
-            <div className="mt-24 w-1/2">
+            <div className="mt-8 sm:mt-0 sm:w-1/2">
               <Image src={top} alt="" width={730} height={726} />
             </div>
           </div>
