@@ -25,7 +25,12 @@ function SignUpForm() {
             <Image src="/google.svg" alt="Google icon" width={20} height={20} />
             <span className="text-center text-stone-900 text-base font-normal leading-normal">Sign in with Google</span>
           </button>
-          <div className="pt-6">
+          <div className="flex items-center gap-[10px] my-6">
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+            <div className="text-center text-neutral-500 text-sm font-normal leading-tight">OR</div>
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+          </div>
+          <div>
             <label htmlFor="full-name">Full name</label>
             <input
               type="text"
