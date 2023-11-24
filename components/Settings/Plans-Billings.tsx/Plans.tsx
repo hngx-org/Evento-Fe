@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import Button from '@/components/ui/Button';
 import premiumPlan from 'public/assets/settings/premium-plan.svg';
+import premiumPlanWhite from 'public/assets/settings/flash-white.svg';
 import basicPlan from 'public/assets/settings/basic-plan.svg';
+import basicPlanWhite from 'public/assets/settings/basic-plan_white.svg';
 import enterprisePlan from 'public/assets/settings/enterprise-plan.svg';
+import enterprisePlanWhite from 'public/assets/settings/enterprise-white.svg';
 import Image from 'next/image';
 import { FaRegCircleCheck } from 'react-icons/fa6';
 import { Montserrat } from 'next/font/google';
@@ -25,7 +28,9 @@ const plans = [
     id: 1,
     name: 'Basic',
     price: '$0',
+    yearlyPrice: '$0',
     icon: basicPlan,
+    whiteIcon: basicPlanWhite,
     width: 16,
     height: 16,
     popular: false,
@@ -52,7 +57,10 @@ const plans = [
     id: 2,
     name: 'Premium',
     price: '$10',
+    yearlyPrice: '$102',
+    originalPrice: '$120',
     icon: premiumPlan,
+    whiteIcon: premiumPlanWhite,
     width: 20,
     height: 20,
     popular: true,
@@ -79,7 +87,10 @@ const plans = [
     id: 3,
     name: 'Enterprise',
     price: '$20',
+    yearlyPrice: '$170',
+    originalPrice: '$200',
     icon: enterprisePlan,
+    whiteIcon: enterprisePlanWhite,
     width: 16,
     height: 16,
     popular: false,
@@ -111,21 +122,22 @@ const montserrat = Montserrat({
 });
 
 function Plans() {
-  const [selectedPlan, setSelectedPlans] = useState('');
+  const [selectedPlan, setSelectedPlans] = useState('Monthly Billing');
   return (
     <div className={`flex flex-col gap-9`}>
       <div className={`space-y-2`}>
         <h3 className="text-Grey-G700 text-xl font-medium">Plans</h3>
         <div className="flex gap-1">
           <p className="text-Grey-G100 text-sm">
-            Choose your preferred plan either monthly or go yearly to save more money.
+            Choose your preferred plan either monthly or go yearly to save more money.{' '}
+            <span className="text-primary-100 text-sm cursor-pointer">View plan details</span>
           </p>
-          <div className="text-primary-100 text-sm cursor-pointer">View plan details</div>
+          {/* <div className="text-primary-100 text-sm cursor-pointer">View plan details</div> */}
         </div>
       </div>
-      <div className="space-y-5">
+      <div className="flex flex-col gap-5">
         {billings.map((plan) => (
-          <div key={plan.id} className="flex items-center gap-5">
+          <div key={plan.id} className="flex items-center gap-3 md:gap-5">
             <div
               className={`h-4 w-4 rounded-full border ${
                 selectedPlan === plan.name ? 'border-primary-100' : 'border-Grey-G50'
@@ -141,7 +153,46 @@ function Plans() {
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-3 items-center">
+      <div className="md:hidden flex flex-col gap-9 mt-5">
+        <h3 className="text-Grey-G700 text-xl font-medium">
+          {selectedPlan === 'Monthly Billing' ? 'Monthly plans' : 'Yearly plans'}
+        </h3>
+        <div className="flex flex-col gap-8">
+          {plans.map((plan) => (
+            <div key={plan.id}>
+              <div
+                key={plan.id}
+                className={`flex items-center justify-between ${
+                  plan.id !== plans.length ? 'border-b border-b-Grey-G40 pb-8' : ''
+                }`}
+              >
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`w-9 h-9 rounded border border-Grey-G30 ${
+                      plan.name === 'Premium' ? 'bg-[#BB9BF2]' : ''
+                    } ${plan.name === 'Basic' ? 'bg-[#F2BB9B]' : ''} ${
+                      plan.name === 'Enterprise' ? 'bg-Errors-E75' : ''
+                    } flex items-center justify-center`}
+                  >
+                    <Image src={plan.whiteIcon} alt="" width={20} height={20} />
+                  </div>
+                  <div>
+                    <p className="text-Grey-600 font-medium">{plan.name}</p>
+                    <p className={`text-Grey-G400 text-[0.625rem] space-x-2`}>
+                      {plan.originalPrice && <span className="line-through">{plan.originalPrice}</span>}
+                      <span className="et text-Success-S300">
+                        {selectedPlan === 'Monthly Billing' ? plan.price : plan.yearlyPrice}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+                <div className="text-sm text-primary-100 font-normal cursor-pointer">Get Plan</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="hidden md:grid grid-cols-3 items-center">
         {plans.map((plan) => (
           <div
             key={plan.id}
@@ -167,8 +218,20 @@ function Plans() {
                 className={`border-b ${plan.name === 'Premium' ? 'border-b-Grey-G50' : 'border-b-Grey-G30'} pb-3 -mt-2`}
               >
                 <div className="flex gap-2 items-center">
-                  <h3 className={`${montserrat.className} text-[2rem] text-Grey-G300 font-medium`}>{plan.price}</h3>
-                  <p className="text-Grey-G200 font-medium text-xs">per month</p>
+                  <h3
+                    className={`${montserrat.className} text-[2rem] ${
+                      selectedPlan === 'Monthly Billing'
+                        ? 'text-Grey-G300'
+                        : plan.name !== 'Basic'
+                          ? 'text-Success-S300'
+                          : ''
+                    } font-medium`}
+                  >
+                    {selectedPlan === 'Monthly Billing' ? plan.price : plan.yearlyPrice}
+                  </h3>
+                  <p className="text-Grey-G200 font-medium text-xs">
+                    {selectedPlan === 'Monthly Billing' ? 'per month' : 'per year'}
+                  </p>
                 </div>
                 {plan.popular && <p className="text-[#9E72ED] text-sm mt-3">Popular</p>}
               </div>

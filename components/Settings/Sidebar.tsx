@@ -52,7 +52,7 @@ function Sidebar({ onOpen }: { onOpen: () => void }) {
   const router = useRouter();
   const activeLink = (path: string) => (router.pathname === path ? 'bg-secondary-100 rounded-lg' : '');
   return (
-    <div className="">
+    <div className="hidden lg:flex flex-col">
       <div className="flex items-center gap-2">
         <h1 className={`${montserrat.className} text-Grey-G700 text-5xl font-semibold`}>Settings</h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="63" height="2" viewBox="0 0 63 2" fill="none">

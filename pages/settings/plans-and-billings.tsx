@@ -20,7 +20,9 @@ const nunito = Nunito({
 function PlansAndBillings() {
   return (
     <Settingslayout>
-      <h2 className={`${montserrat.className} text-Grey-G700 text-[2rem] font-semibold`}>Plans & Billings</h2>
+      <h2 className={`${montserrat.className} text-Grey-G700 text-2xl lg:text-[2rem] font-semibold mt-5 lg:mt-0`}>
+        Plans & Billings
+      </h2>
       <div className={`${nunito.className} flex flex-col gap-10`}>
         <Plans />
         {/* <CardInfo /> */}

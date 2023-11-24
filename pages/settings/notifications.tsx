@@ -19,8 +19,12 @@ function Notifications() {
   return (
     <Settingslayout>
       <div className="space-y-3">
-        <h2 className={`${montserrat.className} text-Grey-G700 text-[2rem] font-semibold`}>Notifications</h2>
-        <p className={`${nunito.className} text-Grey-G100 text-xl`}>Customize your notifications to suit your alerts</p>
+        <h2 className={`${montserrat.className} text-Grey-G700 text-2xl lg:text-[2rem] font-semibold`}>
+          Notifications
+        </h2>
+        <p className={`${nunito.className} text-Grey-G100 text-base lg:text-xl`}>
+          Customize your notifications to suit your alerts
+        </p>
       </div>
       <div className={`${nunito.className}`}>
         <Notification />

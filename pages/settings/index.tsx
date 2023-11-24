@@ -20,7 +20,9 @@ const nunito = Nunito({
 function Account() {
   return (
     <Settingslayout>
-      <h2 className={`${montserrat.className} text-Grey-G700 text-[2rem] font-semibold`}>Account</h2>
+      <h2 className={`${montserrat.className} text-Grey-G700 text-2xl lg:text-[2rem] font-semibold mt-3 lg:mt-0`}>
+        Account
+      </h2>
       <div className={`${nunito.className} flex flex-col gap-8`}>
         <EditProfile />
         <Contact />
