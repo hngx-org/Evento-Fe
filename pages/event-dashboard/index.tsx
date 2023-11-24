@@ -1,33 +1,85 @@
+'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
 import AuthLayout from '@/layout/Authlayout';
 import withAuth from '@/helpers/withAuth';
+import EventCard from '@/components/components/card/event';
 
 const events = {
   upcoming_events: [
     {
       id: 'event1',
-      banner: '/assets/banner1.png',
+      banner: '/assets/hngevent.svg',
       date: 'Today, 30 May',
       title: 'Tech simplified for beginners',
       location: 'Zoom meeting',
       time: '2pm',
+      price: 100,
     },
     {
       id: 'event2',
-      banner: '/assets/banner2.png',
+      banner: '/assets/hngevent.svg',
       date: '2nd June, 2023',
       title: 'Balancing Law and tech',
       location: 'Zoom meeting',
       time: '2pm',
+      price: 100,
     },
     {
       id: 'event3',
-      banner: '/assets/banner3.jpg',
+      banner: '/assets/hngevent.svg',
       date: 'Mon. Oct 30, 3:00PM WAT',
       title: 'Data analysis simplified',
       location: 'Zoom meeting',
       time: '2pm',
+      price: 100,
+    },
+    {
+      id: 'event4',
+      banner: '/assets/hngevent.svg',
+      date: 'Mon. Oct 30, 3:00PM WAT',
+      title: 'Data analysis simplified',
+      location: 'Zoom meeting',
+      time: '2pm',
+      price: 100,
+    },
+  ],
+  past_events: [
+    {
+      id: 'event1',
+      banner: '/assets/hngevent.svg',
+      date: 'Today, 30 May',
+      title: 'Tech simplified for beginners',
+      location: 'Zoom meeting',
+      time: '2pm',
+      price: 200,
+    },
+    {
+      id: 'event2',
+      banner: '/assets/hngevent.svg',
+      date: '2nd June, 2023',
+      title: 'Balancing Law and tech',
+      location: 'Zoom meeting',
+      time: '2pm',
+      price: 100,
+    },
+    {
+      id: 'event3',
+      banner: '/assets/hngevent.svg',
+      date: 'Mon. Oct 30, 3:00PM WAT',
+      title: 'Data analysis simplified',
+      location: 'Zoom meeting',
+      time: '2pm',
+      price: 100,
+    },
+    {
+      id: 'event4',
+      banner: '/assets/hngevent.svg',
+      date: 'Mon. Oct 30, 3:00PM WAT',
+      title: 'Data analysis simplified',
+      location: 'Zoom meeting',
+      time: '2pm',
+      price: 100,
     },
   ],
 };
@@ -42,71 +94,73 @@ interface EventProps {
   tag_image?: string;
 }
 
-function EventDashboard({ imagePath, date, title, location, price, tag, tag_image }: EventProps) {
-  const [images] = useState(['/assets/attend3.jpg', '/assets/attend1.jpg', '/assets/attend2.jpg']);
+function EventDashboard({ tag, tag_image }: EventProps) {
+  const [event, setEvent] = useState(true);
+
+  function changeEvent() {
+    setEvent(!event);
+  }
 
   return (
     <AuthLayout>
-      <div>
-        <div className="container mx-auto pt-16 pb-10 lg:px-14">
-          <h4 className="mb-8 max-w-[1240px] mx-auto flex justify-between items-center">
-            <span className="font-montserrat text-3xl font-semibold capitalize text-Grey-G800">Events</span>
-            <div className="w-fit bg-[#EAEDF6] px-0.5 py-0.5 flex flex-row justify-between items-center text-black-main border border-[#D7D7D7] rounded-lg">
-              <div className="bg-[#E0580C] py-3 px-4 rounded-lg text-[#fff] w-fit">
-                <p>Upcoming</p>
-              </div>
-              <div className="py-3 px-3">
-                <p className="px-4">Past</p>
+      <div className="">
+        <div className="w-full border-b-[0.2px] border-Grey-G50 py-12 px-10 lg:px-24 bg-gradient-to-b from-[#e05a0c3b] to-[#ffffff]">
+          <h4 className="font-montserrat text-3xl font-semibold uppercase text-[#1E1E1E]">Events</h4>
+        </div>
+        <div className="w-full max-w-[1240px] mx-auto pb-10 md:px-14 lg:px-20">
+          <div className="lg:px-20 text-center flex flex-row py-10 items-center justify-center">
+            <div
+              className={`${
+                event ? 'border-primary-100 text-Grey-G700' : 'text-Grey-G60 border-Grey-G50'
+              } w-full flex justify-center items-center text-center pb-4 sm:px-2 border-b-[3px] sm:text-lg font-semibold sm:font-bold cursor-pointer transition-colors ease-in-out`}
+              onClick={changeEvent}
+            >
+              <p className="">Upcoming</p>
+            </div>
+            <div
+              className={`${
+                !event ? 'border-primary-100 text-Grey-G700' : 'text-Grey-G50 border-Grey-G50'
+              } w-full flex justify-center items-center text-center pb-4 sm:px-2 border-b-[3px] sm:text-lg font-semibold sm:font-bold cursor-pointer transition-colors ease-linear`}
+              onClick={changeEvent}
+            >
+              <p className="">Past</p>
+            </div>
+          </div>
+          <div className="lg:px-20 py-6 lg:pt-14 flex flex-row justify-between items-center">
+            <p>Filter by </p>
+            <div className="flex gap-2 items-center">
+              <Image src="/assets/listview-icon.svg" alt="list view icon" width={30} height={30} />
+              <div className="bg-[#FCEEE7] rounded p-2">
+                <Image src="/assets/gridview-icon.svg" alt="grid view icon" width="18" height={18} />
               </div>
             </div>
-          </h4>
-          <div className="flex flex-col mb-32 gap-8">
-            {events?.upcoming_events?.map((item) => {
-              return (
-                <div key={item.id} className={`bg-[#FCF9F7] -6 rounded-lg flex flex-row justify-between`}>
-                  <div className="py-6 px-8 flex flex-col justify-center gap-4">
-                    <span className="font-montserrat font-bold text text-[#E0580C]">{item.date}</span>
-                    <h2 className="font-montserrat text-Grey-G800 text-2xl font-bold pt-1">{item.title}</h2>
-                    <p className="font-nunito text-Grey-G200 flex items-center gap-3">
-                      {item.location}
-                      <span className="font-nunito font-medium">{item.time}</span>
-                    </p>
-                    <div className="font-nunito flex items-center">
-                      <div className="flex items-center">
-                        {images.map((image, index) => {
-                          return (
-                            <div
-                              key={index}
-                              className="h-9 w-9 -ml-1.5 border-2 border-Grey-G40 rounded-full overflow-hidden"
-                            >
-                              <Image
-                                src={image}
-                                height={36}
-                                width={36}
-                                alt="Attendant"
-                                className="object-top object-cover"
-                              />
-                            </div>
-                          );
-                        })}
-                        <span className="px-2 text-gray-700">30 confirmed attendees</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="relative w-[30%] rounded-lg overflow-hidden">
-                    <Image src={item.banner} fill alt="Event Image" className="object-cover w-[30%]" />
-                    <div className="h-full w-full bg-black-main/50 absolute top-0 left-0 p-4">
-                      {tag_image && (
-                        <span className="flex items-center px-4 font-bold gap-2 tracking-[-0.5px] py-1 bg-black-main/40 w-fit rounded-full p-2 text-white-100">
-                          <Image src={tag_image} height={24} width={24} alt="Tag Icon" />
-                          <span className="font-nunito">{tag}</span>
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          </div>
+          <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-x-8 gap-y-6 lg:gap-x-10 lg:gap-y-16 mb-8 px-4 sm:px-12 md:px-16 lg:px-20 lg:py-10">
+            {event
+              ? events?.upcoming_events?.map((item, index) => {
+                  return (
+                    <EventCard
+                      key={index}
+                      date={item.date}
+                      title={item.title}
+                      location={item.location}
+                      imagePath={item.banner}
+                      price={item.price}
+                    />
+                  );
+                })
+              : events?.past_events?.map((item, index) => {
+                  return (
+                    <EventCard
+                      key={index}
+                      date={item.date}
+                      title={item.title}
+                      location={item.location}
+                      imagePath={item.banner}
+                      price={item.price}
+                    />
+                  );
+                })}
           </div>
         </div>
       </div>
