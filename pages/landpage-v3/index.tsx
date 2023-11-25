@@ -5,6 +5,8 @@ import Image from 'next/image';
 import FrameA from 'public/Home/homev31.svg';
 import HeroImg from 'public/Home/homev32.svg';
 import Button from '@/components/ui/Button';
+import SignUp from '@/components/components/modal/auth/SignUP';
+import useDisclosure from '@/hooks/useDisclosure';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -37,6 +39,12 @@ function Home() {
           <Image src={HeroImg} alt="" width={730} height={726} />
         </div>
       </div>
+      <SignUp
+        isOpen={false}
+        onClose={function (): void {
+          throw new Error('Function not implemented.');
+        }}
+      />
     </HomeLayout>
   );
 }
