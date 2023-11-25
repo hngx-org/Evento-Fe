@@ -65,3 +65,19 @@ export type Data = {
   description: string;
   buttonText: string;
 };
+
+// Password interface
+export interface PasswordPopoverProps {
+  password: string;
+  children: React.ReactNode;
+}
+
+export interface PasswordRequirementProps {
+  meets: boolean;
+  label: string;
+}
+
+export interface ProgressBarProps {
+  color: string;
+  value: number;
+}
