@@ -18,9 +18,6 @@ function Home() {
     <HomeLayout>
       <div className={`${montserrat.className} flex justify-between mb-10 max-w-[1240px] mx-auto`}>
         <div>
-          {/* <div className="-ml-8">
-            <Image src={FrameA} alt="" width={300} height={300} />
-          </div> */}
           <div className="flex mt-24 items-center flex-col sm:flex-row">
             <div className="sm:w-1/2 sm:pr-8">
               <h1 className="text-[3.25rem] font-bold text-Grey-G700 tracking-[-0.125rem]">

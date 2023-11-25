@@ -4,8 +4,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import AuthModal from '../components/modal/auth/AuthModal';
+import SignUp from '../components/modal/auth/SignUP';
+import useDisclosure from '@/hooks/useDisclosure';
+import Button from '@ui/NewButton';
 
 function Homenav() {
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const [isToggle, setToggle] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<'signin' | 'signup'>('signin');
@@ -31,7 +35,7 @@ function Homenav() {
       ? 'text-green-950 group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
       : 'text-gray-600 text-base font-semibold  leading-normal tracking-tight';
   return (
-    <nav className="w-full py-4  bg-white-100 justify-between items-center px-4  z-[10000] relative ">
+    <nav className="w-full py-3  bg-white-100 justify-between items-center px-4  relative ">
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
         <div className=" flex gap-14">
           <Image className="object-contain" width={120} height={15} src={logo} alt="Evento logo" />
@@ -45,12 +49,13 @@ function Homenav() {
               Sign in
             </button>
 
-            <button
-              onClick={openSignUpModal}
+            <Button
+              onClick={onOpen}
+              type="button"
               className="py-3 px-7 border border-primary-100 hover:border-primary-100 z-10  rounded-lg font-bold  text-white-100 transition-all duration-300 ease-in-out bg-primary-100"
             >
               Create Event
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -83,6 +88,7 @@ function Homenav() {
         <MenuIcon toggle={isToggle} style="lg:hidden md:hidden" toggler={handleToggle} />
       </div>
       <AuthModal visible={modalVisible} type={modalType} onCancel={() => setModalVisible(false)} />
+      <SignUp isOpen={isOpen} onClose={onClose} />
     </nav>
   );
 }
