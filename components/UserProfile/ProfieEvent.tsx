@@ -73,8 +73,8 @@ const ProfileEvent: React.FC = () => {
         </div>
         <div className="swiper-wrapper w-full relative ">
           <div className="swiper-slide" style={{ width: '100%' }}>
-            {/* <NoEvent type="create" /> */}
-            <Events type="create" />
+            <NoEvent type="create" />
+            {/* <Events type="create" /> */}
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
             <Events type="attend" />
