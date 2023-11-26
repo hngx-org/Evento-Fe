@@ -33,8 +33,19 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const { email, password, firstName, lastName } = formData;
+
+    try {
+      setLoading(true);
+      await signUpUser({ email, password, firstName, lastName });
+    } catch (error) {
+      console.error('Error during sign-up:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -122,6 +133,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
             <div>
               <Button
                 type="submit"
+                isLoading={loading}
                 className={`$ bg-primary-100 w-full font-bold text-white-100 p-2 rounded-md hover:bg-orange-500 transition-all`}
                 disabled={!isChecked}
               >

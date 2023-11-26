@@ -12,19 +12,15 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const isClose = () => setOpen(false);
 
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        setLoading(!loading);
-      }, 2000);
-    }
-  }, [loading]);
 
   const handleGoogleSignInClick = async () => {
     try {
+      setLoading(true);
       await signUpWithGoogle();
     } catch (error) {
       console.error('Error during Google sign-in:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,8 +46,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
         </div>
         <Button
-          isLoading={loading}
-          spinnerColor="#000"
           onClick={onOpen}
           className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center"
         >
