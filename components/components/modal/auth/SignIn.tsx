@@ -30,7 +30,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
         <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
       </button>
       <div className="p-4 ">
-        <AuthTitle heading="Welcome to Evento" subHeading="Sign up to Continue using Evento" />
+        <AuthTitle heading="Welcome to Evento" subHeading="Sign In to Continue using Evento" />
         <Button
           isLoading={loading}
           spinnerColor="#000"

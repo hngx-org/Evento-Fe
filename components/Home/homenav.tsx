@@ -16,7 +16,7 @@ function Homenav() {
   const [modalType, setModalType] = useState<'signin' | 'signup'>('signin');
 
   const [modOpen, setOpen] = useState(false);
-  const doOpen = () => setOpen(true);
+  const Openmod = () => setOpen(true);
   const isClose = () => setOpen(false);
 
   const openSignInModal = () => {
@@ -48,7 +48,7 @@ function Homenav() {
         <div className="hidden lg:block md:block">
           <div className="flex gap-7">
             <button
-              onClick={doOpen}
+              onClick={Openmod}
               className="py-3 px-10 border-primary-100 border bg-white text-primary-100 z-10 hover:bg-white hover:text-secondary-300 rounded-lg font-bold  transition-all duration-300 ease-in-out"
             >
               Sign in
@@ -73,13 +73,13 @@ function Homenav() {
             <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
               <button
                 className="text-center text-primary-100 text-base font-bold leading-normal tracking-tight px-6 py-3 bg-secondary-100 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
-                onClick={openSignInModal}
+                onClick={Openmod}
               >
                 Sign In
               </button>
 
               <button
-                onClick={openSignUpModal}
+                onClick={onOpen}
                 style={{
                   color: 'white',
                 }}
