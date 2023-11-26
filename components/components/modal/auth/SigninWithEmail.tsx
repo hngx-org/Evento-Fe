@@ -4,8 +4,10 @@ import Modal from '@/components/ui/Modal';
 import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
+import { useRouter } from 'next/navigation';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     if (loading) {
@@ -36,7 +38,12 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
 
     try {
       setLoading(true);
-      await loginUser({ email, password });
+      const response = await loginUser({ email, password });
+      if (response && response.status === 200) {
+        router.push('/dashboard');
+      } else {
+        console.error('Unexpected response:', response);
+      }
     } catch (error) {
       console.error('Error during sign-up:', error);
     } finally {
@@ -51,7 +58,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
         </button>
         <div>
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Sign Up</h2>
+          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">
@@ -101,7 +108,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 className={`$ bg-primary-100 w-full font-bold text-white-100 p-2 rounded-md hover:bg-orange-500 transition-all`}
                 disabled={!isChecked}
               >
-                Sign Up
+                Sign In
               </Button>
             </div>
           </form>
