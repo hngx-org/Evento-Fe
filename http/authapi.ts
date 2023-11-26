@@ -8,6 +8,9 @@ const $AuthHttp = AuthInstance(BaseUrl);
 export const signUpUser = async (props: { firstName: string; lastName: string; email: string; password: string }) => {
   try {
     const res = await $AuthHttp.post('/register', props);
+    if (res?.status === 200) {
+      toast.success('Registration successful!');
+    }
     return res?.data;
   } catch (e: any) {
     console.log('signup call error from api call', e);
