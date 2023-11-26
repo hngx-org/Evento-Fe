@@ -8,7 +8,7 @@ const $AuthHttp = AuthInstance(BaseUrl);
 export const signUpUser = async (props: { firstName: string; lastName: string; email: string; password: string }) => {
   try {
     const res = await $AuthHttp.post('/register', props);
-    if (res?.status === 200) {
+    if (res?.status === 201) {
       toast.success('Registration successful!');
     }
     return res?.data;
@@ -21,10 +21,10 @@ export const signUpUser = async (props: { firstName: string; lastName: string; e
           toast.error(validationErrors[errorKey]);
         }
       } else {
-        toast.error('Invalid input. Please check your details and try again.');
+        toast.error('User already exist. Please signin to continue.');
       }
     } else if (e?.response?.status === 409) {
-      toast.error('Email is already registered. Please use a different email.');
+      toast.error('Invalid Inputs');
     } else {
       toast.error('An error occurred during registration. Please try again later.');
     }
@@ -35,10 +35,15 @@ export const signUpUser = async (props: { firstName: string; lastName: string; e
 export const loginUser = async (props: { email: string; password: string }) => {
   try {
     const res = await $AuthHttp.post('/login', props);
+
+    if (res.status === 200) {
+      console.log('Login successful');
+      toast.success('Login successful');
+    }
     console.log('Login response', res);
     return res?.data;
   } catch (e: any) {
-    console.log('login call error from api call', e);
+    console.log('Login call error from API call', e);
     if (e?.response?.status === 401) {
       toast.error('Invalid credentials. Please check your email and password.');
     } else if (!e?.response) {
@@ -50,16 +55,8 @@ export const loginUser = async (props: { email: string; password: string }) => {
   }
 };
 
-export const signUpWithGoogle = async (): Promise<void> => {
-  try {
-    const res = await $AuthHttp.get('/google');
-    const { authenticationUrl } = res.data;
-    window.location.href = authenticationUrl;
-  } catch (e: any) {
-    console.log('Error redirecting to Google sign-in:', e);
-    toast.error('Failed to redirect to Google. Please try again later.');
-    throw e;
-  }
+export const signUpWithGoogle = () => {
+  return $AuthHttp.get('/google');
 };
 
 export const revalidateAuth = async (props: { token: string }) => {
@@ -67,6 +64,28 @@ export const revalidateAuth = async (props: { token: string }) => {
     const res = await $AuthHttp.get(`/authorize/${props.token}`);
     return res?.data;
   } catch (e: any) {
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    const res = await $AuthHttp.get('/logout');
+
+    if (res.status === 302) {
+      console.log('Logout successful');
+      toast.success('Logout successful');
+    }
+
+    console.log('Logout response', res);
+    return res?.data;
+  } catch (e: any) {
+    console.log('Logout call error from API call', e);
+    if (e?.response?.status === 401) {
+      toast.error('Unauthorized. Please log in.');
+    } else {
+      toast.error('An error occurred during logout. Please try again later.');
+    }
     throw e?.response?.data || { message: e.message };
   }
 };
