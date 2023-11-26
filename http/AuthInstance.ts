@@ -6,10 +6,10 @@ const AuthInstance = (baseURL: string): AxiosInstance => {
     timeout: 300000,
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
+    //  'Access-Control-Allow-Origin': '*',
       credentials: 'include',
     },
-  //  withCredentials: true,
+    withCredentials: true,
   });
 };
 
