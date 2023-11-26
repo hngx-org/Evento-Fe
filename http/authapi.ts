@@ -34,14 +34,24 @@ export const signUpUser = async (props: { firstName: string; lastName: string; e
 
 export const loginUser = async (props: { email: string; password: string }) => {
   try {
-    const res = await $AuthHttp.post('/login', props);
+    const loginResponse = await $AuthHttp.post('/login', props);
 
-    if (res.status === 200) {
+    if (loginResponse.status === 200) {
       console.log('Login successful');
       toast.success('Login successful');
+      const token = await fetchAuthToken();
+
+      if (token) {
+        console.log('Token:', token);
+        localStorage.setItem('authToken', token);
+      } else {
+        console.error('Error fetching token after login.');
+        toast.error('An error occurred while fetching the token.');
+      }
     }
-    console.log('Login response', res);
-    return res?.data;
+
+    console.log('Login response', loginResponse);
+    return loginResponse?.data;
   } catch (e: any) {
     console.log('Login call error from API call', e);
     if (e?.response?.status === 401) {
@@ -51,6 +61,26 @@ export const loginUser = async (props: { email: string; password: string }) => {
     } else {
       toast.error('An error occurred during login. Please try again later.');
     }
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+const fetchAuthToken = async () => {
+  try {
+    const authResponse = await $AuthHttp.get('/authorize');
+
+    if (authResponse.status === 200) {
+      console.log('Authorization successful');
+      return authResponse.data.token;
+    } else if (authResponse.status === 401) {
+      console.error('User not logged in.');
+      toast.error('User not logged in.');
+    }
+
+    console.log('Authorization response', authResponse);
+    return null;
+  } catch (e: any) {
+    console.log('Authorization call error from API call', e);
     throw e?.response?.data || { message: e.message };
   }
 };

@@ -7,12 +7,17 @@ import AuthModal from '../components/modal/auth/AuthModal';
 import SignUp from '../components/modal/auth/SignUP';
 import useDisclosure from '@/hooks/useDisclosure';
 import Button from '@ui/NewButton';
+import SignIn from '../components/modal/auth/SignIn';
 
 function Homenav() {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [isToggle, setToggle] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalType, setModalType] = useState<'signin' | 'signup'>('signin');
+
+  const [modOpen, setOpen] = useState(false);
+  const Openmod = () => setOpen(true);
+  const isClose = () => setOpen(false);
 
   const openSignInModal = () => {
     setModalVisible(true);
@@ -43,7 +48,7 @@ function Homenav() {
         <div className="hidden lg:block md:block">
           <div className="flex gap-7">
             <button
-              onClick={openSignInModal}
+              onClick={Openmod}
               className="py-3 px-10 border-primary-100 border bg-white text-primary-100 z-10 hover:bg-white hover:text-secondary-300 rounded-lg font-bold  transition-all duration-300 ease-in-out"
             >
               Sign in
@@ -68,13 +73,13 @@ function Homenav() {
             <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
               <button
                 className="text-center text-primary-100 text-base font-bold leading-normal tracking-tight px-6 py-3 bg-secondary-100 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
-                onClick={openSignInModal}
+                onClick={Openmod}
               >
                 Sign In
               </button>
 
               <button
-                onClick={openSignUpModal}
+                onClick={onOpen}
                 style={{
                   color: 'white',
                 }}
@@ -89,6 +94,7 @@ function Homenav() {
       </div>
       <AuthModal visible={modalVisible} type={modalType} onCancel={() => setModalVisible(false)} />
       <SignUp isOpen={isOpen} onClose={onClose} />
+      <SignIn isOpen={modOpen} onClose={isClose} />
     </nav>
   );
 }
