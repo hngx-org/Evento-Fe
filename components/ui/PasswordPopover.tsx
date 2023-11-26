@@ -11,7 +11,7 @@ function PasswordRequirement({ meets, label }: PasswordRequirementProps) {
 }
 
 function ProgressBar({ color, value }: ProgressBarProps) {
-  const bgColor = color === 'teal' ? 'bg-brand-green-primary' : color === 'yellow' ? 'bg-yellow-500' : 'bg-red-300';
+  const bgColor = color === 'teal' ? 'bg-green-500' : color === 'yellow' ? 'bg-yellow-500' : 'bg-red-300';
 
   return (
     <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2.5 mb-2.5">
