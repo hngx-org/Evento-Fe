@@ -37,16 +37,17 @@ export const loginUser = async (props: { email: string; password: string }) => {
     const loginResponse = await $AuthHttp.post('/login', props);
 
     if (loginResponse.status === 200) {
+      console.log(loginResponse);
       console.log('Login successful');
       toast.success('Login successful');
-      const token = await fetchAuthToken();
+      const token = loginResponse.data.data.token;
 
       if (token) {
         console.log('Token:', token);
         localStorage.setItem('authToken', token);
       } else {
-        console.error('Error fetching token after login.');
-        toast.error('An error occurred while fetching the token.');
+        console.error('Error extracting token from login response.');
+        toast.error('An error occurred while extracting the token.');
       }
     }
 
@@ -65,7 +66,7 @@ export const loginUser = async (props: { email: string; password: string }) => {
   }
 };
 
-const fetchAuthToken = async () => {
+export const fetchAuthToken = async () => {
   try {
     const authResponse = await $AuthHttp.get('/authorize');
 

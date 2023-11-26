@@ -11,17 +11,13 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const onOpen = () => setOpen(true);
   const isClose = () => setOpen(false);
 
-  const [loading, setLoading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
-  const handleGoogleSignInClick = async () => {
-    try {
-      setLoading(true);
-      await signUpWithGoogle();
-    } catch (error) {
-      console.error('Error during Google sign-in:', error);
-    } finally {
-      setLoading(false);
-    }
+  const handleLinkClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
+    }, 5000);
   };
 
   return (
@@ -32,10 +28,11 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
       <div className="p-4 ">
         <AuthTitle heading="Welcome to Evento" subHeading="Sign In to Continue using Evento" />
         <Button
-          isLoading={loading}
+          isLoading={isloading}
           spinnerColor="#000"
           className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center mt-12"
-          onClick={handleGoogleSignInClick}
+          onClick={handleLinkClick}
+          //   href='https://evento-qo6d.onrender.com/api/v1/google'
         >
           <Image src="/google.svg" alt="Google icon" width={20} height={20} />
           <span className="text-center text-stone-900 text-base font-medium leading-normal">Signin with Google</span>

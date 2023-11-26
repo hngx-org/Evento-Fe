@@ -9,7 +9,7 @@ const AuthInstance = (baseURL: string): AxiosInstance => {
       'Access-Control-Allow-Origin': '*',
       credentials: 'include',
     },
-//    withCredentials: true,
+    //    withCredentials: true,
   });
 };
 
