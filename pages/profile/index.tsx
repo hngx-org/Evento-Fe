@@ -10,6 +10,7 @@ import { Edit } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import EditProfileModal from '@/components/UserProfile/EditProfileModal';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
+import { useRouter } from 'next/router';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -18,13 +19,9 @@ const workSans = Work_Sans({
 });
 // add a userlayout later
 const UserProfile: React.FC = () => {
-  // modal state
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // profile pic state
   const [profilePicURL, setProfilePicURL] = useState('');
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
+
+  const router = useRouter();
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImage = event.target.files && event.target.files[0];
@@ -49,12 +46,8 @@ const UserProfile: React.FC = () => {
 
   return (
     <AuthLayout>
-      <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <div
-        className={` ${workSans.className} ${
-          !isModalOpen ? '' : '!hidden'
-        } flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}
-      >
+      {/* <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} /> */}
+      <div className={` ${workSans.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
         <section className="w-full h-[240px] bg-secondary-100 absolute">
           <Button
             handleClick={() => {}}
@@ -67,7 +60,7 @@ const UserProfile: React.FC = () => {
           </Button>
         </section>
 
-        <section className="min-w-[358px] w-[90%] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
+        <section className="w-[358px] md:w-[634px] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
           <div className="w-full flex flex-col gap-y-6  bg-white-100 rounded-[12px] p-6">
             <div
               id="profilePicContainer"
@@ -86,22 +79,24 @@ const UserProfile: React.FC = () => {
 
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
-                <h6 className="text-2xl font-bold">Brooklyn Simeons</h6>
+                <h6 className="text-xl md:text-2xl font-bold whitespace-nowrap">Brooklyn Simeons</h6>
                 <Button
                   handleClick={() => {
-                    openModal();
+                    router.push('/profile/edit');
                     console.log('open Modal');
                   }}
-                  styles={'!bg-white-100 flex gap-2 text-primary-100 border border-primary-100 py-2 px-3'}
+                  styles={
+                    '!bg-white-100 flex items-center whitespace-nowrap gap-2 text-primary-100 border border-primary-100 py-2 px-3 !text-[12px]'
+                  }
                   type={'button'}
                   title={'edit profile'}
                   disabled={false}
                 >
-                  <Edit />
+                  <Edit className="h-4 w-4" />
                   Edit Profile
                 </Button>
               </div>
-              <p className="text-base line-clamp-3">
+              <p className=" text-xs md:text-base line-clamp-3">
                 Lorem ipsum dolor sit amet consectetur. Dis non diam neque at ac fringilla in consequat. Facilisis velit
                 in cum lorem feugiat. Libero elementum donec at nulla. Sed auctor nunc phasellus tristique porttitor
                 tortor fames natoque.

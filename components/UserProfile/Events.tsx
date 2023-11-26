@@ -60,7 +60,7 @@ const Events: React.FC<EventProps> = ({ type }) => {
   };
 
   return (
-    <div className="w-full h-fit p-[32px] flex flex-col bg-white-100 gap-y-[48px]" id="events">
+    <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[48px]" id="events">
       <div className="flex justify-between ">
         <div className="flex gap-2 text-xl font-semibold items-center relative">
           Filter By
@@ -117,12 +117,12 @@ const Events: React.FC<EventProps> = ({ type }) => {
 
       <div className="transition duration-1000">
         {listView ? (
-          <div className="listView flex flex-col gap-6 transition duration-1000">
+          <div className="listView flex flex-col gap-8 transition duration-1000">
             <ListEventCard />
             <ListEventCard /> <ListEventCard /> <ListEventCard /> <ListEventCard /> <ListEventCard />
           </div>
         ) : (
-          <div className="gridView w-full h-full grid grid-cols-2 gap-6 transition duration-1000">
+          <div className="gridView w-full h-full grid md:grid-cols-2 gap-6 transition duration-1000">
             <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard />{' '}
             <GridEventCard />
           </div>
