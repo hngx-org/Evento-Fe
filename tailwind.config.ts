@@ -33,7 +33,7 @@ const config: Config = {
           G10: '#fafafa',
           G20: '#f5f5f5',
           G30: '#ebebeb',
-          G40: '#dedede',
+          G40: '#DEDEDE',
           G50: '#c0c0c0',
           G60: '#b1b1b1',
           G70: '#a4a4a4',
