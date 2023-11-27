@@ -9,6 +9,21 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        dark: {
+          100: '#131418',
+          105: '#26242b',
+          110: '#2E3130',
+          115: '#292e32',
+          200: '#1E1E22',
+          300: '#181920',
+          400: '#12151A',
+          405: 'rgb(18, 21, 26,.5)',
+          500: '#20222C',
+          600: 'rgba(0,0,0,.5)',
+          700: 'rgba(0,0,0,.9)',
+          800: 'rgba(19, 20, 24, .8)',
+          900: 'rgba(19, 20, 24, .4)',
+        },
         black: {
           fot: '#282828',
           main: '#000000',
@@ -18,7 +33,7 @@ const config: Config = {
           G10: '#fafafa',
           G20: '#f5f5f5',
           G30: '#ebebeb',
-          G40: '#dedede',
+          G40: '#DEDEDE',
           G50: '#c0c0c0',
           G60: '#b1b1b1',
           G70: '#a4a4a4',
@@ -51,6 +66,16 @@ const config: Config = {
           W300: '#f79009',
           W400: '#ad6506',
           W500: '#975805',
+        },
+        brand: {
+          disabled: '#E1E3E2',
+          disabled2: '#C4C7C6',
+          red: {
+            primary: '#FF2E2E',
+            hover: '#FF5C5C',
+            focused: '#FF2E2E',
+            pressed: '#FF2E2E',
+          },
         },
         Success: {
           S50: '#e7f8f0',

@@ -1,6 +1,6 @@
 import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
-import Landpage from '@/modules/home/Page/landPageV4/Landpage-v4';
+import Landpage from '@/modules/home/Page/landPageV4/updated4';
 
 const workSans = Work_Sans({
   subsets: ['latin'],

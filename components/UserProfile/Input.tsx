@@ -14,6 +14,7 @@ interface BaseInputProps {
   errorText?: string;
   rounded?: 'none' | 'sm' | 'md' | 'lg';
   inputHeight?: string;
+  backgroundColor?: string;
   textArea?: boolean;
   [key: string]: any;
 }
@@ -30,6 +31,7 @@ const Input: React.FC<BaseInputProps> = (props) => {
     errorText = '',
     rounded = 'lg',
     inputHeight,
+    backgroundColor,
     textArea = false,
     ...rest
   } = props;
@@ -37,7 +39,7 @@ const Input: React.FC<BaseInputProps> = (props) => {
   const id = useId();
 
   const styles = {
-    base: ' flex-1 appearance-none  w-full py-2 px-4 bg-white text-gray-700  shadow-sm text-base focus:outline-none focus:ring-2 focus:border-transparent',
+    base: ' flex-1 appearance-none  w-full py-4 px-4 bg-white text-gray-700  shadow-sm text-base focus:outline-none focus:ring-2 focus:border-transparent',
     state: {
       normal: 'placeholder-gray-400 border border-gray-300 focus:ring-purple-600',
       error: 'border border-red-200 focus:ring-red-200',
@@ -72,6 +74,7 @@ const Input: React.FC<BaseInputProps> = (props) => {
               disabled && styles.state.disabled,
             ],
             inputHeight,
+            backgroundColor,
           )}
           disabled={disabled}
           required={required}
@@ -90,6 +93,7 @@ const Input: React.FC<BaseInputProps> = (props) => {
               disabled && styles.state.disabled,
             ],
             inputHeight,
+            backgroundColor,
           )}
           disabled={disabled}
           required={required}
