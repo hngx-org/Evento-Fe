@@ -46,7 +46,7 @@ function AuthenticatedHeader() {
             <Link href="/manage-events" className="text-Grey-G500 font-medium text-base">
               Manage Events
             </Link>
-            <Link href="/create-event" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
+            <Link href="/create-events" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
               Create Event
               <Add size={20} color="#3C3C3C" />
             </Link>
