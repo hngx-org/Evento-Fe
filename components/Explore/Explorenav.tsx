@@ -45,12 +45,12 @@ function ExploreNav() {
               </Link>
               {router.pathname === '/' ? <div className="w-6 h-0.5 bg-emerald-600 rounded-lg" /> : null}
             </div>
-            <div className=" group flex flex-col ali justify-center items-center gap-1 ">
+            {/* <div className=" group flex flex-col ali justify-center items-center gap-1 ">
               <Link className={activeLink('/')} href={'/'}>
                 Explore other Events
               </Link>
               {router.pathname === '/' ? <div className="w-6 h-0.5 bg-emerald-600 rounded-lg" /> : null}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -58,7 +58,7 @@ function ExploreNav() {
 
         <div className={`hidden lg:flex items-center gap-4`}>
           <div className="flex items-center gap-6">
-            <div className="w-6 h-6 justify-center items-center flex gap-6 pr-9">
+            {/* <div className="w-6 h-6 justify-center items-center flex gap-6 pr-9">
               <div className="w-6 h-6">
                 <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -127,14 +127,16 @@ function ExploreNav() {
                   />
                 </svg>
               </div>
-            </div>
+            </div> */}
             <div className="">
-              <Link
-                href={'/'}
-                className="text-center  text-base font-semibold leading-normal tracking-tight px-6 py-3 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
-              >
-                Create event
-              </Link>
+              <button className="bg-primary-100 rounded-lg">
+                <Link
+                  href={'/'}
+                  className="text-center text-white-100 text-base font-semibold leading-normal tracking-tight px-6 py-3 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
+                >
+                  Create event
+                </Link>
+              </button>
             </div>
           </div>
         </div>
