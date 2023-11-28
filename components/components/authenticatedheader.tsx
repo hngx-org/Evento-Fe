@@ -54,7 +54,7 @@ function AuthenticatedHeader() {
     <header className="w-full bg-white-N0 border-b border-b-Grey-G30">
       <nav className="relative max-w-[1240px] p-4 mx-auto">
         <div className="flex items-center justify-between">
-          <Link href={'/'}>
+          <Link href="/event-dashboard">
             <Image src={logo} alt="logo" width={84} height={32} />
           </Link>
           <div className="hidden lg:flex items-center gap-8">

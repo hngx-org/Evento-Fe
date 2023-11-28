@@ -3,14 +3,12 @@ import Button from '@ui/NewButton';
 import Modal from '@/components/ui/Modal';
 import AuthTitle from '@/components/components/authTitle';
 import Image from 'next/image';
-import { signUpWithGoogle } from '@/http/authapi';
 import SigninWithEmail from './SigninWithEmail';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [modOpen, setOpen] = useState(false);
   const onOpen = () => setOpen(true);
   const isClose = () => setOpen(false);
-
   const [isloading, setIsLoading] = useState(false);
 
   const handleLinkClick = () => {
