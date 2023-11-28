@@ -61,7 +61,7 @@ function AuthenticatedHeader() {
             <Link href="/explore" className="text-Grey-G500 font-medium text-base">
               Explore
             </Link>
-            <Link href="/manage-events" className="text-Grey-G500 font-medium text-base">
+            <Link href="/event-management" className="text-Grey-G500 font-medium text-base">
               Manage Events
             </Link>
             <Link href="/create-events" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
