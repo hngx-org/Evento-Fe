@@ -47,11 +47,11 @@ const EditProfileModal: React.FC = () => {
             <div className="flex flex-col md:flex-row gap-y-8 justify-between ">
               <div className=" md:w-[277px] lg:w-[341px] ">
                 {' '}
-                <Input label="First Name " placeholder="Enter Firstname"></Input>
+                <Input label="First name " placeholder="Enter Firstname"></Input>
               </div>
               <div className=" md:w-[277px] lg:w-[341px] ">
                 {' '}
-                <Input label="Surname" placeholder="Enter Surname"></Input>
+                <Input label="Last name" placeholder="Enter Last name"></Input>
               </div>
             </div>
             {/* <div className="w-[380px] ">

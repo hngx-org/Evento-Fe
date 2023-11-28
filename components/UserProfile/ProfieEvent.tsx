@@ -61,7 +61,7 @@ const ProfileEvent: React.FC = () => {
             id="create-events"
             onClick={slideToCreateEvents}
           >
-            Create Events
+            Created Events
           </div>
           <div
             className="w-[50%] items-center justify-center flex font-bold text-base lg:text-xl cursor-pointer transition border-b-[3px] border-[#C0C0C0]"

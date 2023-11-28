@@ -62,7 +62,7 @@ const Events: React.FC<EventProps> = ({ type }) => {
   return (
     <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[48px]" id="events">
       <div className="flex justify-between ">
-        <div className="flex gap-2 text-xl font-semibold items-center relative">
+        <div className="flex font-bold gap-2 text-xl  items-center relative">
           Filter By
           <ArrowUp2
             size="16"

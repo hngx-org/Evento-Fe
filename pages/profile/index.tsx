@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
-import { Work_Sans } from 'next/font/google';
-import Image from 'next/image';
+import { Montserrat, Nunito } from 'next/font/google';
+
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
 import { Edit } from 'iconsax-react';
@@ -11,11 +11,18 @@ import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import EditProfileModal from '@/components/UserProfile/EditProfileModal';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
+import withoutAuth from '@/helpers/withoutAuth';
 
-const workSans = Work_Sans({
+const nunito = Nunito({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-work-sans',
+  variable: '--font-nunito',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
 });
 // add a userlayout later
 const UserProfile: React.FC = () => {
@@ -47,11 +54,11 @@ const UserProfile: React.FC = () => {
   return (
     <AuthLayout>
       {/* <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} /> */}
-      <div className={` ${workSans.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
+      <div className={` ${nunito.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
         <section className="w-full h-[240px] bg-secondary-100 absolute">
           <Button
             handleClick={() => {}}
-            styles={'!rounded-[50%] border border-[#ED9E72] relative right-20 top-6 float-right'}
+            styles={'  !rounded-[50%] border border-[#ED9E72] relative right-20 top-6 float-right'}
             type={'button'}
             title={'edit profile card'}
             disabled={true}
@@ -79,15 +86,15 @@ const UserProfile: React.FC = () => {
 
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
-                <h6 className="text-xl md:text-2xl font-bold whitespace-nowrap">Brooklyn Simeons</h6>
+                <h6 className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 `}>
+                  Brooklyn Simeons
+                </h6>
                 <Button
                   handleClick={() => {
                     router.push('/profile/edit');
                     console.log('open Modal');
                   }}
-                  styles={
-                    '!bg-white-100 flex items-center whitespace-nowrap gap-2 text-primary-100 border border-primary-100 py-2 px-3 !text-[12px]'
-                  }
+                  styles={`${nunito.className} !font-bold !bg-white-100 flex items-center whitespace-nowrap gap-2 text-primary-100 border border-primary-100 py-2 px-3 lg:text-[14px] text-[12px]`}
                   type={'button'}
                   title={'edit profile'}
                   disabled={false}
@@ -120,4 +127,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default withAuth(UserProfile);
+export default withoutAuth(UserProfile);

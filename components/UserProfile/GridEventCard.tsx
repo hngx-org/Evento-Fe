@@ -3,6 +3,13 @@ import sampleImage from '@/public/assets/profile/imageCard.svg';
 import React from 'react';
 import { Global, Location, Timer1 } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
+import { Montserrat } from 'next/font/google';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
 
 const GridEventCard = () => {
   return (
@@ -15,7 +22,9 @@ const GridEventCard = () => {
             <span className="px-3 py-1 bg-secondary-100">$100</span>
           </div>
 
-          <h6 className="text-base md:text-xl lg:text-2xl font-semibold line-clamp-2 md:line-clamp-1 ">
+          <h6
+            className={` ${montserrat.className}  text-base md:text-xl lg:text-2xl font-semibold line-clamp-2 md:line-clamp-1 `}
+          >
             HNG Finalist Meetup
           </h6>
 
@@ -38,9 +47,9 @@ const GridEventCard = () => {
             <span className="md:flex hidden text-[10px] lg:text-base"> +32 People registered</span>
           </div>
 
-          <div className="hidden lg:flex gap-x-1 items-center text-xs text-[#868686] font-medium">
+          {/* <div className="hidden lg:flex gap-x-1 items-center text-xs text-[#868686] font-medium">
             <Global size="12" color="#303030" /> Public
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
