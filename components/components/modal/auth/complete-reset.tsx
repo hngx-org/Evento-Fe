@@ -5,6 +5,7 @@ import Button from '@ui/NewButton';
 import { Input } from '@ui/NewInput';
 import Image from 'next/image';
 import { Work_Sans, Nunito, Montserrat } from 'next/font/google';
+import { Eye, EyeSlash } from 'iconsax-react';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -24,7 +25,8 @@ const workSans = Work_Sans({
   variable: '--font-work-sans',
 });
 
-function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+function CompleteReset({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
   const [email, setEmail] = useState<string>('');
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,10 +65,8 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
           </button>
         </div>
-        <h1 className={`${montserrat.className} text-black-main text-2xl font-semibold`}>Forgot your Password?</h1>
-        <p className={`${nunito.className} mt-2 w-[370px;] text-sm font-medium`}>
-          Enter your registered Email address to receive reset instructions.
-        </p>
+        <h1 className={`${montserrat.className} text-black-main text-2xl font-semibold`}>Enter New Password?</h1>
+        <p className={`${nunito.className} mt-2 w-[370px;] text-sm font-medium`}>Complete Your Password Reset</p>
         <form>
           <div className="pt-4">
             <label htmlFor="email" className={`${nunito.className} mt-2 w-[370px;] text-md font-medium`}>
@@ -92,4 +92,4 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     </Modal>
   );
 }
-export default ForgetPassword;
+export default CompleteReset;
