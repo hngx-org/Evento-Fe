@@ -133,7 +133,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
             <div>
               <Button
                 type="submit"
-                isLoading={loading}
                 className={`$ bg-primary-100 w-full font-bold text-white-100 p-2 rounded-md hover:bg-orange-500 transition-all`}
                 disabled={!isChecked}
               >

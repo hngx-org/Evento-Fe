@@ -16,12 +16,17 @@ import {
 } from 'iconsax-react';
 import useVisible from '@/hooks/useVisible';
 import Input from '../ui/Input';
+import logoutUser from '@/hooks/logout';
+import Button from '@ui/NewButton';
+import { useRouter } from 'next/navigation';
 
 function AuthenticatedHeader() {
   const [toggle, setToggle] = useState(false);
 
   const { ref: profileRef, isVisible: profileDropdown, setIsVisible: setProfileDropdown } = useVisible();
   const { ref: searchRef, isVisible: searchDropdown, setIsVisible: setSearchDropdown } = useVisible();
+  const [isloading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const body = document.querySelector('body');
@@ -31,6 +36,19 @@ function AuthenticatedHeader() {
       body?.classList.remove('mobile-menu-open');
     }
   }, [toggle]);
+
+  // const handleLogout = () => {
+  //   // Call the function when the button is clicked
+  //   Logout();
+  // };
+
+  const handleLogout = () => {
+    logoutUser();
+    setIsLoading(true);
+    setTimeout(() => {
+      window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
+    }, 5000);
+  };
 
   return (
     <header className="w-full bg-white-N0 border-b border-b-Grey-G30">
@@ -126,9 +144,11 @@ function AuthenticatedHeader() {
                 Settings
               </Link>
             </div>
-            <Link href="/logout" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2 py-2">
-              <LogoutCurve size={16} color="#3C3C3C" />
-              Logout
+            <Link href="/" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2 py-2">
+              <Button onClick={handleLogout} isLoading={isloading}>
+                <LogoutCurve size={16} color="#3C3C3C" />
+                Logout
+              </Button>
             </Link>
           </div>
         </div>
@@ -155,8 +175,12 @@ function AuthenticatedHeader() {
                 </div>
               </div>
               <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-                <LogoutCurve size={18} color="#3C3C3C" />
-                <p className="text-Grey-G500 font-medium text-sm">Logout</p>
+                <Link href="/">
+                  <Button onClick={handleLogout} isLoading={isloading}>
+                    <LogoutCurve size={18} color="#3C3C3C" />
+                    <p className="text-Grey-G500 font-medium text-sm">Logout</p>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ const montserrat = Montserrat({
 
 function Home() {
   return (
-    <HomeLayout>
+    <>
       <div className={`${montserrat.className} flex justify-between mb-10 max-w-[1240px] mx-auto`}>
         <div>
           <div className="-ml-8">
@@ -39,13 +39,13 @@ function Home() {
           <Image src={HeroImg} alt="" width={730} height={726} />
         </div>
       </div>
-      <SignUp
+      {/* <SignUp
         isOpen={false}
         onClose={function (): void {
           throw new Error('Function not implemented.');
         }}
-      />
-    </HomeLayout>
+      /> */}
+    </>
   );
 }
 

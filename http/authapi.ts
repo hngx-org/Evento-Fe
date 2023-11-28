@@ -41,10 +41,13 @@ export const loginUser = async (props: { email: string; password: string }) => {
       console.log('Login successful');
       toast.success('Login successful');
       const token = loginResponse.data.data.token;
+      const userId = loginResponse.data.data.userId;
 
-      if (token) {
+      if (token && userId) {
+        console.log('User ID:', userId);
         console.log('Token:', token);
         localStorage.setItem('authToken', token);
+        localStorage.setItem('userId', userId);
       } else {
         console.error('Error extracting token from login response.');
         toast.error('An error occurred while extracting the token.');
