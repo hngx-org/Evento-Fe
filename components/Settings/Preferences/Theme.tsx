@@ -39,6 +39,7 @@ function Theme() {
             className={`w-full h-40 md:h-48 rounded-lg border ${
               selectedTheme === theme.name ? 'border-primary-100' : 'border-Grey-G60'
             } bg-Grey-G20 flex flex-col`}
+            onClick={() => setSelectedTheme(theme.name === selectedTheme ? '' : theme.name)}
           >
             <div className="mt-5 md:mt-9 border-b border-b-[#CBCBCB] pb-2">
               <Image src={theme.src} alt="theme" width={145} height={98} className="mx-auto" />
@@ -48,7 +49,7 @@ function Theme() {
                 className={`h-4 w-4 rounded-full border ${
                   selectedTheme === theme.name ? 'border-primary-100' : 'border-Grey-G50'
                 } bg-white-N0 cursor-pointer flex items-center justify-center`}
-                onClick={() => setSelectedTheme(theme.name === selectedTheme ? '' : theme.name)}
+                // onClick={() => setSelectedTheme(theme.name === selectedTheme ? '' : theme.name)}
               >
                 {theme.name === selectedTheme && <div className="w-2 h-2 bg-primary-100 rounded-full"></div>}
               </div>

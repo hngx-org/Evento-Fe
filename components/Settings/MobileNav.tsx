@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Line from 'public/assets/settings/line.svg';
 import React, { useEffect, useState } from 'react';
 import Select from './Select';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 const paths = [
   {
@@ -69,18 +69,29 @@ const montserrat = Montserrat({
 function MobileNav() {
   const [selected, setSelected] = useState(nav[0]);
   const router = useRouter();
+  const pathname = router.pathname;
+
+  useEffect(() => {
+    if (pathname === '/settings') {
+      setSelected(nav[0]);
+    } else if (pathname === '/settings/data-and-security') {
+      setSelected(nav[1]);
+    } else if (pathname === '/settings/notifications') {
+      setSelected(nav[2]);
+    } else if (pathname === '/settings/preferences') {
+      setSelected(nav[3]);
+    } else if (pathname === '/settings/plans-and-billings') {
+      setSelected(nav[4]);
+    } else if (pathname === '/settings/delete-account') {
+      setSelected(nav[6]);
+    }
+  }, [pathname]);
 
   function handleSelect(e: { name: string; path: string }) {
     setSelected(e);
     router.push(e.path);
   }
 
-  //   useEffect(() => {
-  //     if (selected?.path) {
-  //       router.push(selected.path);
-  //     }
-  //   }, [selected]);
-  //   console.log(selected);
   return (
     <div className="lg:hidden space-y-2">
       <div className="flex items-center gap-2">

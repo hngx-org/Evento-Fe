@@ -25,7 +25,7 @@ function Account() {
       </h2>
       <div className={`${nunito.className} flex flex-col gap-8`}>
         <EditProfile />
-        <Contact />
+        {/* <Contact /> */}
         <SociaMedia />
       </div>
     </Settingslayout>
