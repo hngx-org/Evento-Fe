@@ -6,8 +6,12 @@ import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeSlash } from 'iconsax-react';
+import ForgetPassword from './forgetPassword';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [modOpen, setOpen] = useState(false);
+  const onOpen = () => setOpen(true);
+  const isClose = () => setOpen(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
@@ -101,7 +105,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 required
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-6 flex justify-between">
               <label className="flex items-center">
                 <input
                   type="checkbox"
@@ -112,6 +116,12 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 />
                 <span className="text-md font-medium text-gray-600">Remeber Me</span>
               </label>
+              <button
+                className="text-orange-600 text-base  hover:underline font-normal leading-normal"
+                onClick={onOpen}
+              >
+                Forgot password?
+              </button>
             </div>
             <div>
               <Button
@@ -126,6 +136,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           </form>
         </div>
       </div>
+      <ForgetPassword isOpen={modOpen} onClose={isClose} />
     </Modal>
   );
 }
