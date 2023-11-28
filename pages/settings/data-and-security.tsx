@@ -28,7 +28,7 @@ function DataAndSecurity() {
       <div className={`${nunito.className} flex flex-col gap-8 -mt-4 lg:-mt-0`}>
         <Password />
         <TwoFA />
-        <ManageDevices />
+        {/* <ManageDevices /> */}
         {/* export data */}
         <DataAction
           title="Export Data"
