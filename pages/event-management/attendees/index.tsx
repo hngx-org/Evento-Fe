@@ -333,7 +333,7 @@ export default function Index() {
                         </button>
                       </div>
                     </li>
-                    <li className=" border-b border-[#B1B1B1] mb-10 ml-2 cursor-pointer mb-10 flex justify-start items-center p-[1rem]">
+                    <li className=" border-b border-[#B1B1B1] mb-10 ml-2 cursor-pointer flex justify-start items-center p-[1rem]">
                       <div className="  flex justify-start items-center w-[13rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
