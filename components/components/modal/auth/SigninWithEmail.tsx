@@ -5,22 +5,27 @@ import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
+import { Eye, EyeSlash } from 'iconsax-react';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        setLoading(!loading);
-      }, 2000);
-    }
-  }, [loading]);
+  const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
 
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    rememberMe: false,
   });
+
+  const handleChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  };
 
   const [isChecked, setIsChecked] = useState(false);
 
@@ -79,12 +84,19 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 Password:
               </label>
               <Input
-                type="password"
+                type={defaultInpType}
                 placeholder="Enter Password"
                 id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
+                rightIcon={
+                  defaultInpType === 'text' ? (
+                    <Eye color="#777" onClick={() => setDefaultInpType('password')} />
+                  ) : (
+                    <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
+                  )
+                }
                 className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
                 required
               />
@@ -93,9 +105,9 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  name="agreeToTerms"
-                  checked={isChecked}
-                  onChange={() => setIsChecked(!isChecked)}
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleChanged}
                   className="mr-2   accent-primary-100"
                 />
                 <span className="text-md font-medium text-gray-600">Remeber Me</span>
