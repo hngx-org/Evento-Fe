@@ -61,6 +61,11 @@ function Homenav() {
             >
               Create Event
             </Button>
+            <Link href="/verify-email">
+              <Button className="py-3 px-7 border border-primary-100 hover:border-primary-100 z-10  rounded-lg font-bold  text-white-100 transition-all duration-300 ease-in-out bg-primary-100">
+                Verify Email
+              </Button>
+            </Link>
           </div>
         </div>
 
