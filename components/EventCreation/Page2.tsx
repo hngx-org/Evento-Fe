@@ -1,11 +1,12 @@
-import React, { SetStateAction, useState } from 'react';
+import React, { PropsWithChildren, SetStateAction, useState } from 'react';
 
 import { ArrowDown2, ArrowUp2, GalleryEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { FaXmark } from 'react-icons/fa6';
 
-interface Page2Props {
+interface Page2Props extends PropsWithChildren<any> {
   onNext: () => void;
+  onPrevious: () => void;
 }
 
 interface EventType {
@@ -23,7 +24,7 @@ interface TicketType {
 
 interface Props {}
 
-const Page2: React.FC<Page2Props> = ({ onNext }) => {
+const Page2: React.FC<Page2Props> = (props) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
   const [isDropdownTicketTypeOpen, setIsDropdownTicketTypeOpen] = useState(false);
@@ -161,11 +162,34 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
           <div className="h1 w-full mb-12 max-sm:mb-6 ">
             <h1 className=" font-semibold text-3xl max-sm:text-xl leading-10 text-[#000000]">Hey Pal, Almost done!</h1>
           </div>
-          <div className="relative w-full h-[278px] border-[1px] border-[#d7d7d7] rounded-3xl mb-12 max-sm:mb-6 ">
+          <div className="relative w-full h-auto border-[1px] border-[#d7d7d7] rounded-3xl mb-12 max-sm:mb-6 ">
+            {!selectedFile && (
+              <Image
+                className="w-full h-[278px] object-fill"
+                src={'../../Create-Events/Event Image.svg'}
+                alt="event-image"
+                width={1280}
+                height={800}
+                layout="responsive"
+              />
+            )}
+
+            {/* {selectedFile && isValidFileType && (
+              <div className="w-full h-full">
+                <Image
+                  src={selectedFile}
+                  width={500}
+                  height={278}
+                  alt="Uploaded"
+                  className="w-full rounded-3xl h-full object-cover"
+                />
+              </div>
+            )} */}
+
             <GalleryEdit
-              className="absolute bottom-4 right-4 cursor-pointer"
+              className="absolute bottom-[13px] right-4 cursor-pointer"
               size={24}
-              color="#020202"
+              color="#fefefe"
               onClick={openImageModal}
             />
 
@@ -239,7 +263,7 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Select event Category</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
                 placeholder="Choose Event type"
                 type="text"
                 value={selectedEventType}
@@ -273,7 +297,7 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Input capacity Level</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
                 placeholder="Choose capacity Limit"
                 type="text"
                 value={selectedCapacity}
@@ -307,7 +331,7 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Ticket type</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
                 placeholder="Select Ticket type"
                 type="text"
                 value={selectedTicketType}
@@ -345,7 +369,7 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
               </label>
               <input
                 id="ticketPrice"
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
                 placeholder=""
                 type="text"
                 value={ticketPrice}
@@ -354,10 +378,16 @@ const Page2: React.FC<Page2Props> = ({ onNext }) => {
             </div>
           )}
           <button
-            onClick={onNext}
+            onClick={props.onNext}
             className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg"
           >
             Create event
+          </button>
+          <button
+            onClick={props.onPrevious}
+            className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold mt-3 rounded-lg"
+          >
+            Go back
           </button>
         </div>
       </section>

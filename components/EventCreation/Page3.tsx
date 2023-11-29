@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { PropsWithChildren, useState } from 'react';
 
 import { Copy } from 'iconsax-react';
 import Image from 'next/image';
 
+interface Page3Props extends PropsWithChildren<any> {
+  onNext: () => void;
+  onPrevious: () => void;
+}
+
 interface Props {}
 
-const Page3 = () => {
+const Page3: React.FC<Page3Props> = (props) => {
   const [isLinkContainerVisible, setLinkContainerVisible] = useState(false);
 
   const handleButtonClick = () => {
@@ -19,18 +24,24 @@ const Page3 = () => {
           <div className="w-full mb-12 text-center">
             <h1 className=" font-semibold text-3xl max-sm:text-xl leading-10">Event Created Successfully!</h1>
           </div>
-          <div className="w-full mb-10">
-            <Image src={'/Create-Events/17924 1.png'} height={500} width={1280} layout="responsive" alt="" />
+          <div className=" w-[350px] h-[350px] flex content-center items-center justify-center mx-auto mb-10">
+            <Image src={'/Create-Events/17924 1.png'} height={300} width={300} layout="responsive" alt="" />
           </div>
-          <div className="w-full flex flex-col content-center items-center justify-center">
-            <button className=" w-[144px] max-sm:w-full text-center font-semibold text-[#fdfdfd] text-base leading-6 mb-3 py-4 px-5 bg-[#e0580c] rounded-lg">
+          <div className="w-full flex flex-col content-center ">
+            <button className=" w-full max-sm:w-full text-center font-semibold text-[#fdfdfd] text-base leading-6 mb-3 py-4 px-5 bg-[#e0580c] rounded-lg">
               See all events
             </button>
             <button
               onClick={handleButtonClick}
-              className=" w-[144px] text-center max-sm:w-full font-semibold text-base leading-6 py-4 px-1 mb-6 max-sm:mb-0 bg-[#fefefe] border-[1px] border-[#e0580c] text-[#e0580c] rounded-lg"
+              className=" w-full text-center max-sm:w-full font-semibold text-base leading-6 py-4 px-1 mb-3 max-sm:mb-0 bg-[#e0580c] text-[#fefefe] rounded-lg"
             >
               Copy event link
+            </button>
+            <button
+              onClick={props.onPrevious}
+              className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold rounded-lg"
+            >
+              Go back
             </button>
           </div>
         </div>

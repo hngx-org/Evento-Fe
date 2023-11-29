@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } from 'react';
 
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import Page1 from '@/components/EventCreation/Page1';
@@ -7,21 +7,35 @@ import Page3 from '@/components/EventCreation/Page3';
 
 interface Props {}
 
-const CreateEvents = () => {
+interface CreateEventsProps extends PropsWithChildren<any> {
+  onNext: () => void;
+  onPrevious: () => void;
+}
+
+const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const [page, setPage] = useState(1);
+  const [completedSteps, setCompletedSteps] = useState(0);
+
+  const progressBarRef = useRef<HTMLInputElement | null>(null);
 
   const nextPage = () => {
     setPage((prevPage) => prevPage + 1);
+    updateProgressBar();
   };
 
-  useEffect(() => {
+  const prevPage = () => {
+    setPage((prevPage) => prevPage - 1);
+    updateProgressBar();
+  };
+
+  const updateProgressBar = useCallback(() => {
     const progressBar = document.getElementById('progress-bar') as HTMLInputElement;
 
     let progress = 0;
 
     if (progressBar) {
       if (page === 1) {
-        progress = 33;
+        progress = 0;
       } else if (page === 2) {
         progress = 80;
       } else if (page === 3) {
@@ -32,6 +46,10 @@ const CreateEvents = () => {
     }
   }, [page]);
 
+  useEffect(() => {
+    updateProgressBar();
+  }, [page, updateProgressBar]);
+
   return (
     <div>
       <AuthenticatedHeader />
@@ -39,12 +57,20 @@ const CreateEvents = () => {
         <div className="progress-bar lg:px-[0px] md:px-0 max-sm:px-0 w-full flex flex-col">
           <div className="w-full flex justify-between content-center">
             <label htmlFor="progress-bar">Progress</label>
-            <p>{page === 1 ? '33%' : page === 2 ? '80%' : '100%'}</p>
+            {/* <p>{page === 1 ? '0%' : page === 2 ? '80%' : '100%'}</p> */}
           </div>
-          <input id="progress-bar" className=" accent-[#0d804a]" min={0} max={100} type="range" readOnly />
+          <input
+            ref={progressBarRef}
+            id="progress-bar"
+            className=" accent-[#0d804a]"
+            min={0}
+            max={100}
+            type="range"
+            readOnly
+          />
           {page === 1 && <Page1 onNext={nextPage} />}
-          {page === 2 && <Page2 onNext={nextPage} />}
-          {page === 3 && <Page3 />}
+          {page === 2 && <Page2 onNext={nextPage} onPrevious={prevPage} />}
+          {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
         </div>
       </div>
     </div>
@@ -52,6 +78,3 @@ const CreateEvents = () => {
 };
 
 export default CreateEvents;
-// function setIsModalLocationOpen(arg0: boolean) {
-//   throw new Error('Function not implemented.');
-// }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { ArrowDown2, ArrowUp2 } from 'iconsax-react';
+import Link from 'next/link';
 
 interface Page1Props {
   onNext: () => void;
@@ -29,6 +30,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
     // For demonstration purposes, let's use a static list of suggestions
     const staticSuggestions = [
       'Lagos, Nigeria',
+      'Abuja, Nigeria',
       'New York, USA',
       'Tokyo, Japan',
       'London, UK',
@@ -172,7 +174,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="event-name w-full ">
             <input
-              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#020202]"
+              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
               placeholder="Event Name"
               type="text"
               value={eventName}
@@ -181,7 +183,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
           </div>
           <div className="event-description w-full my-6">
             <input
-              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#020202]"
+              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
               placeholder="Description"
               type="text"
               value={eventDescription}
@@ -194,7 +196,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
               <div className=" w-full flex flex-row gap-1">
                 <div className="w-full">
                   <input
-                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px]"
+                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f] "
                     placeholder="Wed, Oct, 08"
                     type="date"
                     value={eventStartDate}
@@ -203,7 +205,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
                 </div>
                 <div className="w-full">
                   <input
-                    className="border-[#d7d7d7] w-full text-sm px-2 py-3 border-[1px] rounded-lg"
+                    className="border-[#d7d7d7] w-full text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
                     placeholder="Wed, Oct, 08"
                     type="time"
                     value={eventStartTime}
@@ -217,7 +219,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">
                   <input
-                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px]"
+                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f]"
                     placeholder="Wed, Oct, 08"
                     type="date"
                     value={eventEndDate}
@@ -226,7 +228,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
                 </div>
                 <div className="w-full">
                   <input
-                    className="w-full border-[#d7d7d7] text-sm px-2 py-3 border-[1px] rounded-lg"
+                    className="w-full border-[#d7d7d7] text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
                     placeholder="Wed, Oct, 08"
                     type="time"
                     value={eventEndTime}
@@ -240,7 +242,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
             <h2 className=" font-semibold leading-6 text-xl text-[#303030]">Add Location</h2>
             <div className="relative mt-2 inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] text-base text-[#303030] font-medium p-4"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4"
                 placeholder="Choose event location"
                 type="text"
                 value={selectedLocationType}
@@ -277,7 +279,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
               <h2 className="font-semibold leading-6 text-xl text-[#303030]">Enter Link</h2>
               <div className="relative mt-2 inline-block w-full">
                 <input
-                  className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] text-base text-[#303030] font-medium p-4"
+                  className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4"
                   placeholder="www.qwertyuiop[.url"
                   type="url"
                 />
@@ -291,7 +293,7 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
               <h2 className="font-semibold leading-6 text-xl text-[#303030]">Enter Location</h2>
               <div className="relative mt-2 inline-block w-full">
                 <input
-                  className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] text-base text-[#303030] font-medium p-4"
+                  className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4"
                   placeholder="Lagos state, Nigeria"
                   type="text"
                   value={inputValue}
@@ -318,10 +320,15 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
           )}
           <button
             onClick={onNext}
-            className=" text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg"
+            className=" text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg font-semibold"
           >
             Next
           </button>
+          <Link href={'/event-dashboard'}>
+            <button className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold mt-3 rounded-lg">
+              Go back
+            </button>
+          </Link>
         </div>
       </section>
     </>
