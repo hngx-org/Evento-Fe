@@ -2,6 +2,7 @@ import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
 import Mainsec from '@/modules/home/Page/Mainsec';
 import Home2 from './landpage-v1';
+import withoutAuth from '@/helpers/withoutAuth';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -9,7 +10,7 @@ const workSans = Work_Sans({
   variable: '--font-work-sans',
 });
 
-export default function Home() {
+function Home() {
   return (
     <HomeLayout>
       <div className={workSans.className}>
@@ -19,3 +20,5 @@ export default function Home() {
     </HomeLayout>
   );
 }
+
+export default withoutAuth(Home);
