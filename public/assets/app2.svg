@@ -13,7 +13,7 @@
 <rect x="0.431818" y="1.34091" width="23.3182" height="23.3182" rx="11.6591" fill="url(#pattern11)"/>
 <rect x="0.431818" y="1.34091" width="23.3182" height="23.3182" rx="11.6591" fill="url(#pattern12)"/>
 <rect x="0.431818" y="1.34091" width="23.3182" height="23.3182" rx="11.6591" fill="url(#pattern13)"/>
-<rect x="0.431818" y="1.34091" width="23.3182" height="23.3182" rx="11.6591" stroke="#FEFEFE" stroke-width="0.863636"/>
+<rect x="0.431818" y="1.34091" width="23.3182" height="23.3182" rx="11.6591" stroke="#FEFEFE" strokeWidth="0.863636"/>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_1586_16320" transform="translate(0 -0.125) scale(0.0025)"/>

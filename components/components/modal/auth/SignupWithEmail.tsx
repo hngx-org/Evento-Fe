@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@ui/NewButton';
 import Modal from '@/components/ui/Modal';
-import AuthTitle from '@/components/components/authTitle';
 import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import PasswordPopover from '@ui/PasswordPopover';
 import { signUpUser } from '@/http/authapi';
+import useInputError from '@/hooks/useInputError';
+import InputError from '@modules/InputError';
+import { inputErrorMessage } from '@/@types';
+import getInputError from '@/helpers/getInputErrors';
+import { Eye, EyeSlash } from 'iconsax-react';
 
 function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [loading, setLoading] = useState(false);
+  // const [isPasswordSame, setIsPasswordSame] = useState(false);
+  // const [inputErrors, setInputErrors] = useState<inputErrorMessage[]>();
+  const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
+
   useEffect(() => {
     if (loading) {
       setTimeout(() => {
@@ -35,6 +43,17 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    //   const FormData = formData
+
+    //   // turns formData to an object
+    //   const formValuesObj = Object.fromEntries(FormData));
+
+    //   // turn the formValues object to an array for easy mapping
+    //   const formValuesArray = Object.entries(formValuesObj);
+    //   const validFormValues = formValuesArray.map((value) => getInputError(value[0], value[1] as string));
+    //   setInputErrors(validFormValues);
+    //   console.log(validFormValues);
+    // };
 
     const { email, password, firstName, lastName } = formData;
 
@@ -77,7 +96,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
               </label>
               <PasswordPopover password={formData.password}>
                 <Input
-                  type="password"
+                  type={defaultInpType}
                   placeholder="Enter Password"
                   id="password"
                   name="password"
@@ -85,8 +104,16 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                   onChange={handleChange}
                   className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
                   required
+                  rightIcon={
+                    defaultInpType === 'text' ? (
+                      <Eye color="#777" onClick={() => setDefaultInpType('password')} />
+                    ) : (
+                      <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
+                    )
+                  }
                 />
               </PasswordPopover>
+              {/* <InputError inputError={inputErrors} inputName="password" /> */}
             </div>
             <div className="mb-4">
               <label htmlFor="firstName" className="block text-sm font-medium text-gray-600">
@@ -102,6 +129,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
                 required
               />
+              {/* <InputError inputError={inputErrors} inputName="firstName" /> */}
             </div>
             <div className="mb-6">
               <label htmlFor="lastName" className="block text-sm font-medium text-gray-600">
@@ -117,6 +145,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 className="mt-1 w-full font-medium text-black-main border rounded-md"
                 required
               />
+              {/* <InputError inputError={inputErrors} inputName="lastName" /> */}
             </div>
             <div className="mb-6">
               <label className="flex items-center">

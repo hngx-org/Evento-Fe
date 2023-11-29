@@ -15,7 +15,6 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',

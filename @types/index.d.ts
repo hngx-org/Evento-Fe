@@ -81,3 +81,9 @@ export interface ProgressBarProps {
   color: string;
   value: number;
 }
+
+export type inputErrorMessage = {
+  errorMessage: string;
+  inputName: string;
+  isValid: boolean;
+};
