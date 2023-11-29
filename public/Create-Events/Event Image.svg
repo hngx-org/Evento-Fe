@@ -1,11 +1,11 @@
 <svg width="512" height="278" viewBox="0 0 512 278" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <rect width="512" height="278" rx="8" fill="url(#pattern0)"/>
 <rect width="512" height="278" rx="8" fill="black" fill-opacity="0.4"/>
-<path d="M479 249.5C480.105 249.5 481 248.605 481 247.5C481 246.395 480.105 245.5 479 245.5C477.895 245.5 477 246.395 477 247.5C477 248.605 477.895 249.5 479 249.5Z" stroke="#FEFEFE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M483 241.5H479C474 241.5 472 243.5 472 248.5V254.5C472 259.5 474 261.5 479 261.5H485C490 261.5 492 259.5 492 254.5V249.5" stroke="#FEFEFE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M489.139 242.09L485.509 245.72C485.369 245.86 485.229 246.13 485.209 246.33L485.009 247.72C484.939 248.22 485.289 248.57 485.789 248.5L487.179 248.3C487.369 248.27 487.649 248.14 487.789 248L491.419 244.37C492.049 243.74 492.339 243.02 491.419 242.1C490.489 241.16 489.769 241.46 489.139 242.09Z" stroke="#FEFEFE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M488.621 242.61C488.931 243.71 489.791 244.57 490.891 244.88" stroke="#FEFEFE" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M472.672 258.45L477.602 255.14C478.392 254.61 479.532 254.67 480.242 255.28L480.572 255.57C481.352 256.24 482.612 256.24 483.392 255.57L487.552 252C488.332 251.33 489.592 251.33 490.372 252L492.002 253.4" stroke="#FEFEFE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M479 249.5C480.105 249.5 481 248.605 481 247.5C481 246.395 480.105 245.5 479 245.5C477.895 245.5 477 246.395 477 247.5C477 248.605 477.895 249.5 479 249.5Z" stroke="#FEFEFE" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M483 241.5H479C474 241.5 472 243.5 472 248.5V254.5C472 259.5 474 261.5 479 261.5H485C490 261.5 492 259.5 492 254.5V249.5" stroke="#FEFEFE" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M489.139 242.09L485.509 245.72C485.369 245.86 485.229 246.13 485.209 246.33L485.009 247.72C484.939 248.22 485.289 248.57 485.789 248.5L487.179 248.3C487.369 248.27 487.649 248.14 487.789 248L491.419 244.37C492.049 243.74 492.339 243.02 491.419 242.1C490.489 241.16 489.769 241.46 489.139 242.09Z" stroke="#FEFEFE" strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M488.621 242.61C488.931 243.71 489.791 244.57 490.891 244.88" stroke="#FEFEFE" strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M472.672 258.45L477.602 255.14C478.392 254.61 479.532 254.67 480.242 255.28L480.572 255.57C481.352 256.24 482.612 256.24 483.392 255.57L487.552 252C488.332 251.33 489.592 251.33 490.372 252L492.002 253.4" stroke="#FEFEFE" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0_870_10076" transform="matrix(0.000934579 0 0 0.00172124 0 -0.113622)"/>

@@ -112,24 +112,24 @@ export default function Index() {
                             <path
                               d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M3 22H21"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
@@ -177,24 +177,24 @@ export default function Index() {
                             <path
                               d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M3 22H21"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
@@ -241,24 +241,24 @@ export default function Index() {
                             <path
                               d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M3 22H21"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
@@ -305,24 +305,24 @@ export default function Index() {
                             <path
                               d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M3 22H21"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
@@ -369,24 +369,24 @@ export default function Index() {
                             <path
                               d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />
                             <path
                               d="M3 22H21"
                               stroke="#292D32"
-                              stroke-width="1.5"
-                              stroke-miterlimit="10"
+                              strokeWidth="1.5"
+                              strokeMiterlimit="10"
                               stroke-linecap="round"
                               stroke-linejoin="round"
                             />

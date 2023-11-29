@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@ui/NewButton';
 import Modal from '@/components/ui/Modal';
-import AuthTitle from '@/components/components/authTitle';
 import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import PasswordPopover from '@ui/PasswordPopover';

@@ -4,8 +4,8 @@ import { Montserrat, Work_Sans } from 'next/font/google';
 import Image from 'next/image';
 import FrameA from 'public/Home/homev31.svg';
 import HeroImg from 'public/Home/homev32.svg';
-import Button from '@/components/ui/Button';
-import SignUp from '@/components/components/modal/auth/SignUP';
+import Button from '@/components/ui/NewButton';
+import CompleteReset from '@/components/components/modal/auth/complete-reset';
 import useDisclosure from '@/hooks/useDisclosure';
 
 const montserrat = Montserrat({
@@ -15,6 +15,8 @@ const montserrat = Montserrat({
 });
 
 function Home() {
+  const { isOpen, onClose, onOpen } = useDisclosure();
+
   return (
     <>
       <div className={`${montserrat.className} flex justify-between mb-10 max-w-[1240px] mx-auto`}>
@@ -30,7 +32,11 @@ function Home() {
               Bring your events to life effortlessly. Evento empowers you to create, organize, and manage your events
               easily
             </p>
-            <Button type="button" title="upload-button" styles="text-white-N0 font-bold text-sm mt-10 px-5 py-4">
+            <Button
+              type="button"
+              onClick={onOpen}
+              className="text-white-N0 bg-primary-100 font-bold text-sm mt-10 px-5 py-4"
+            >
               Create an Event
             </Button>
           </div>
@@ -45,6 +51,7 @@ function Home() {
           throw new Error('Function not implemented.');
         }}
       /> */}
+      <CompleteReset isOpen={isOpen} onClose={onClose} />
     </>
   );
 }
