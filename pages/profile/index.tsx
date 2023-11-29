@@ -127,4 +127,4 @@ const UserProfile: React.FC = () => {
   );
 };
 
-export default withoutAuth(UserProfile);
+export default withAuth(UserProfile);
