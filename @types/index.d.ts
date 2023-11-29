@@ -7,6 +7,8 @@ export type Category = {
   image: string;
 };
 
+declare module 'nprogress';
+
 export type Events = {
   image: string;
   date: string;
@@ -87,3 +89,15 @@ export type inputErrorMessage = {
   inputName: string;
   isValid: boolean;
 };
+
+export interface Notification {
+  id: number;
+  text: string;
+  read: boolean;
+  date: string;
+}
+
+export interface NotificationsProps {
+  unreadNotifications: (count: number) => void;
+  notificationsRef: React.RefObject<HTMLDivElement>;
+}

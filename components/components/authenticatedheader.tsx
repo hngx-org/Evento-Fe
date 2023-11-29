@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import logo from 'public/logo.svg';
@@ -19,10 +19,13 @@ import Input from '../ui/Input';
 import logoutUser from '@/hooks/logout';
 import Button from '@ui/NewButton';
 import { useRouter } from 'next/navigation';
+import Notifications from '../ui/notification';
 
 function AuthenticatedHeader() {
   const [toggle, setToggle] = useState(false);
-
+  const notificationsRef = useRef<HTMLDivElement | null>(null);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [notificationMenu, setNotificationMenu] = useState(false);
   const { ref: profileRef, isVisible: profileDropdown, setIsVisible: setProfileDropdown } = useVisible();
   const { ref: searchRef, isVisible: searchDropdown, setIsVisible: setSearchDropdown } = useVisible();
   const [isloading, setIsLoading] = useState(false);
@@ -42,11 +45,35 @@ function AuthenticatedHeader() {
   //   Logout();
   // };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      const targetNode = event.target as Node | null;
+      if (notificationsRef.current && !notificationsRef.current.contains(targetNode)) {
+        console.log(notificationsRef.current);
+        setNotificationMenu(false);
+      }
+    }
+
+    if (toggle || notificationMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [toggle, notificationMenu]);
+
+  const handleNotificationsToggle = () => {
+    setNotificationMenu(!notificationMenu);
+  };
+
   const handleLogout = () => {
     logoutUser();
     setIsLoading(true);
     setTimeout(() => {
-      window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
+      //    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
     }, 5000);
   };
 
@@ -74,7 +101,9 @@ function AuthenticatedHeader() {
               <SearchNormal1 size={22} color="#3C3C3C" />
             </div>
             <div className="cursor-pointer">
-              <Notification size={22} color="#3C3C3C" />
+              <button onClick={handleNotificationsToggle} draggable={false}>
+                <Notification size={22} color="#3C3C3C" />
+              </button>
             </div>
             <div className="cursor-pointer" onClick={() => setProfileDropdown(true)}>
               <Image src={profile} alt="profile" width={32} height={32} />
@@ -125,11 +154,14 @@ function AuthenticatedHeader() {
                 <Profile size={16} color="#3C3C3C" />
                 Explore
               </Link>
-              <Link href="/manage-events" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+              <Link
+                href="/event-management"
+                className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2"
+              >
                 <Profile size={16} color="#3C3C3C" />
                 Manage Events
               </Link>
-              <Link href="/create-event" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+              <Link href="/create-events" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
                 <Add size={16} color="#3C3C3C" />
                 Create Event
               </Link>
@@ -165,14 +197,18 @@ function AuthenticatedHeader() {
                 <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
               </div>
               <div className="space-y-2 border-b border-b-Grey-G30 pb-4">
-                <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-                  <Profile size={18} color="#3C3C3C" />
-                  <p className="text-Grey-G500 font-medium text-sm">View profile</p>
-                </div>
-                <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
-                  <Setting4 size={18} color="#3C3C3C" />
-                  <p className="text-Grey-G500 font-medium text-sm">Settings</p>
-                </div>
+                <Link href="/profile">
+                  <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
+                    <Profile size={18} color="#3C3C3C" />
+                    <p className="text-Grey-G500 font-medium text-sm">View profile</p>
+                  </div>
+                </Link>
+                <Link href="/settings">
+                  <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
+                    <Setting4 size={18} color="#3C3C3C" />
+                    <p className="text-Grey-G500 font-medium text-sm">Settings</p>
+                  </div>
+                </Link>
               </div>
               <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
                 <Link href="/">
@@ -193,6 +229,11 @@ function AuthenticatedHeader() {
             className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
           >
             <Input placeholder="Search anything" className="border border-Grey-G60 rounded-lg bg-white-N0" />
+          </div>
+        )}
+        {notificationMenu && (
+          <div className="absolute bg-white-100 top-full w-fit md:2/4 lg:w-1/4 right-0 " ref={notificationsRef}>
+            <Notifications notificationsRef={notificationsRef} unreadNotifications={setUnreadNotifications} />
           </div>
         )}
       </nav>
