@@ -30,7 +30,7 @@ function CompleteReset({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [resetSuccess, setResetSuccess] = useState<boolean>(false);
+  // const [resetSuccess, setResetSuccess] = useState<boolean>(false);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);

@@ -42,9 +42,9 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
         </div>
         <Button
           onClick={onOpen}
-          className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center"
+          className="px-12 py-4 rounded-lg  bg-primary-100 w-full flex items-center gap-[10px] justify-center"
         >
-          <p className="text-center text-stone-900 text-base font-medium leading-normal">Signin With Email</p>
+          <p className="text-center text-white-100 text-base font-medium leading-normal">Signin With Email</p>
         </Button>
       </div>
       <SigninWithEmail isOpen={modOpen} onClose={isClose} />
