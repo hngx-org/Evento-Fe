@@ -6,8 +6,13 @@ export interface UserProfile2 {
   userID?: string;
   email?: string;
   bio?: string;
-  socialLinks?: any;
-  profileImage?: string;
+  socialLinks?: {
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    website?: string;
+  };
+  profileImage?: string | Blob | File;
   displayName?: string;
   firstName?: string;
   lastName?: string;
@@ -20,8 +25,13 @@ export interface UserProfile {
   userID: string;
   email: string;
   bio: string;
-  socialLinks: string;
-  profileImage: string;
+  socialLinks: {
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    website: string;
+  };
+  profileImage: string | Blob | File;
   displayName: string;
   firstName: string;
   lastName: string;
@@ -72,7 +82,10 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
   }
 };
 
-export const editUserProfile = async (data: UserProfile2) => {
+export const editUserProfile = async (
+  data: UserProfile2,
+  setReRoute: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const authToken = getAuthToken();
   const userId = getUserId();
 
@@ -83,14 +96,12 @@ export const editUserProfile = async (data: UserProfile2) => {
       },
     });
 
-    console.log(editUserData);
+    console.log(editUserData.data.data);
 
     if (editUserData.status === 200) {
       toast.success('profile updated');
-
-      // setTimeout(() => {
-      //   router('/profile');
-      // }, 2000);
+      setReRoute(true);
+      return editUserData;
     }
   } catch (err: any) {
     toast.error(err.message);

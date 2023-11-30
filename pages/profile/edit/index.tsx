@@ -4,9 +4,9 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/UserProfile/Input';
 import AuthLayout from '@/layout/Authlayout';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Montserrat, Nunito } from 'next/font/google';
-import { editUserProfile } from '@/http/profileapi';
+import { UserProfile, UserProfile2, editUserProfile } from '@/http/profileapi';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -23,19 +23,8 @@ const montserrat = Montserrat({
 const EditProfilePage = () => {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    bio: '',
-    website: '',
-    socialLinks: {
-      twitter: '',
-      facebook: '',
-      instagram: '',
-    },
-    // profileImage: Blob,
-    // Add other fields as needed
-  });
+  const [formData, setFormData] = useState<UserProfile2>({});
+  const [reRoute, setReRoute] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
@@ -47,7 +36,7 @@ const EditProfilePage = () => {
       setFormData((prevData) => ({
         ...prevData,
         socialLinks: {
-          ...prevData.socialLinks,
+          ...prevData?.socialLinks,
           [name]: value,
         },
       }));
@@ -58,37 +47,42 @@ const EditProfilePage = () => {
       }));
     }
   };
+
   const [profilePicURL, setProfilePicURL] = useState('');
 
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectedImage = event.target.files && event.target.files[0];
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files && event.target.files[0];
 
-  //   if (selectedImage) {
-  //     // Log the name of the selected image file
-  //     const imageBlob = new Blob([selectedImage], { type: selectedImage.type });
+    if (selectedImage) {
+      // Log the name of the selected image file
+      const imageBlob = new Blob([selectedImage], { type: selectedImage.type });
 
-  //     // handleInputChange(event, imageBlob);
+      setFormData((prevData) => ({ ...prevData, profileImage: selectedImage }));
 
-  //     const imageUrl = URL.createObjectURL(selectedImage);
-  //     setProfilePicURL(imageUrl);
+      const imageUrl = URL.createObjectURL(selectedImage);
+      setProfilePicURL(imageUrl);
 
-  //     const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
+      const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
 
-  //     const profilePicContainer = document.getElementById('profilePicContainer');
+      const profilePicContainer = document.getElementById('profilePicContainer');
 
-  //     if (profilePicContainer) {
-  //       profilePicContainer.innerHTML = tempProfilPic;
-  //     }
-  //   }
+      if (profilePicContainer) {
+        profilePicContainer.innerHTML = tempProfilPic;
+      }
+    }
 
-  //   // handle the posting here
-  // };
+    // handle the posting here
+  };
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
     console.log(formData);
-    // Here, you can perform further actions like sending the data to an API
-    const profile = editUserProfile(formData);
-    console.log(profile);
+    editUserProfile(formData, setReRoute);
+
+    setTimeout(() => {
+      if (reRoute) {
+        router.push('/profile');
+      }
+    }, 3000);
   };
   return (
     <AuthLayout>
@@ -103,15 +97,16 @@ const EditProfilePage = () => {
         <section className=" w-[358px] md:w-[634px] lg:w-[842px] bg-white-100 relative p-6 lg:p-[64px] flex flex-col gap-y-[24px]  rounded-2xl">
           <div
             id="profilePicContainer"
-            className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
+            className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden z-[1] "
           >
             <Edit onClick={() => {}} />
             <input
+              type="file"
               accept="image/*"
               onChange={(event) => {
-                // handleImageChange(event);
+                handleImageChange(event);
               }}
-              className=" absolute w-6 h-6 opacity-0"
+              className=" absolute w-6 h-6 opacity-0 z-0 cursor-pointer"
             />
           </div>
 
@@ -177,7 +172,7 @@ const EditProfilePage = () => {
                     label="Website URL"
                     placeholder="Enter your website URL"
                     name="website"
-                    value={formData.website}
+                    value={formData?.socialLinks?.website}
                     onChange={handleInputChange}
                   ></Input>
                 </div>
@@ -187,7 +182,7 @@ const EditProfilePage = () => {
                     label="Twitter"
                     placeholder="Enter your twitter handle"
                     name="twitter"
-                    value={formData.socialLinks.twitter}
+                    value={formData?.socialLinks?.twitter}
                     onChange={handleInputChange}
                   ></Input>
                 </div>
@@ -199,7 +194,7 @@ const EditProfilePage = () => {
                     label="Facebook"
                     placeholder="Enter your facebook handle"
                     name="facebook"
-                    value={formData.socialLinks.facebook}
+                    value={formData?.socialLinks?.facebook}
                     onChange={handleInputChange}
                   ></Input>
                 </div>
@@ -209,7 +204,7 @@ const EditProfilePage = () => {
                     label="Instagram"
                     placeholder="Enter your instagram handle"
                     name="instagram"
-                    value={formData.socialLinks.instagram}
+                    value={formData?.socialLinks?.instagram}
                     onChange={handleInputChange}
                   ></Input>
                 </div>

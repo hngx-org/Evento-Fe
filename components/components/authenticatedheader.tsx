@@ -189,7 +189,8 @@ function AuthenticatedHeader() {
           <div
             ref={profileRef}
             style={{ boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.06), 0px 1px 3px 0px rgba(16, 24, 40, 0.10)' }}
-            className="absolute bg-white-N0 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
+            // i added a z-index cause it was going below my page
+            className="absolute bg-white-N0 z-10 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
           >
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
