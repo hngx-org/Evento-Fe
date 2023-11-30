@@ -40,10 +40,10 @@ function AuthenticatedHeader() {
     }
   }, [toggle]);
 
-  // const handleLogout = () => {
-  //   // Call the function when the button is clicked
-  //   Logout();
-  // };
+  const handleLogout = () => {
+    // Call the function when the button is clicked
+    Logout();
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
