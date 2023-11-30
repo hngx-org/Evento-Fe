@@ -1,11 +1,11 @@
+import HomeFooter from '@/components/Home/homefooter';
+import Homenav from '@/components/Home/homenav';
 import EventGrids from '@/components/components/event-grids/event-grids';
 import EventSearch from '@/components/event-search/event-search';
 import Button from '@/components/ui/NewButton';
-import { Input, SelectInput } from '@/components/ui/NewInput';
-import ExploreLayout from '@/layout/Explorelayout';
-import { EmptyWalletAdd, Music, Setting, Setting2, Setting3, Setting4 } from 'iconsax-react';
+import { Music } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
-import React, { ChangeEvent, ChangeEventHandler } from 'react';
+import React, { useState } from 'react';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -20,6 +20,7 @@ const nunito = Nunito({
 });
 
 const categories = [
+  'All',
   'Music & Concert',
   'Sporting',
   'Tech',
@@ -30,9 +31,7 @@ const categories = [
   'Travel & Adventure',
   'Science & Nature',
   'Fashion & Beauty',
-  'Health & Wellness',
   'Arts & Culture',
-  'Networking & Business',
 ];
 
 const upcoming_events = [
@@ -43,6 +42,7 @@ const upcoming_events = [
     title: 'HNG Finalist Meetup',
     location: 'Ndubuisi Kanu Park',
     price: 10,
+    tags: ['All', 'Tech', 'Networking & Business'],
   },
   {
     id: 'event2',
@@ -51,6 +51,7 @@ const upcoming_events = [
     title: 'Afro Nation Lagos 2023',
     location: 'Teslim Balogun Stadium',
     price: 100,
+    tags: ['All', 'Music & Concert', 'Music'],
   },
   {
     id: 'event3',
@@ -59,6 +60,7 @@ const upcoming_events = [
     title: 'The Web3 Summit In Africa',
     location: 'Teslim Balogun Stadium',
     price: 'free',
+    tags: ['All', 'Networking & Business', 'Music', 'Travel & Adventure'],
   },
   {
     id: 'event4',
@@ -67,6 +69,7 @@ const upcoming_events = [
     title: 'HNG Finalist Meetup',
     location: 'Ndubuisi Kanu Park',
     price: 10,
+    tags: ['All', 'Networking & Business', 'Music', 'Travel & Adventure'],
   },
   {
     id: 'event5',
@@ -75,6 +78,7 @@ const upcoming_events = [
     title: 'HNG Finalist Meetup',
     location: 'Ndubuisi Kanu Park',
     price: 10,
+    tags: ['All', 'Tech', 'Fashion & Beauty'],
   },
   {
     id: 'event6',
@@ -83,12 +87,61 @@ const upcoming_events = [
     title: 'HNG Finalist Meetup',
     location: 'Ndubuisi Kanu Park',
     price: 10,
+    tags: ['All', 'Tech'],
+  },
+  {
+    id: 'event7',
+    banner: '/assets/banner3.jpg',
+    date: 'Sat. Oct 6, 10:00AM WAT',
+    title: 'The Annual Music Festival',
+    location: 'Abuja National Stadium',
+    price: 4,
+    tags: ['All', 'Music & Concert', 'Music'],
+  },
+  {
+    id: 'event8',
+    banner: '/assets/banner2.png',
+    date: 'Sun. Oct 7, 11:00AM WAT',
+    title: 'The Big Football Matchup',
+    location: 'Lagos National Stadium',
+    price: 16,
+    tags: ['All', 'Sporting', 'Music'],
+  },
+  {
+    id: 'event9',
+    banner: '/assets/banner1.png',
+    date: 'Mon. Oct 8, 9:00AM WAT',
+    title: 'Tech Conference 2023',
+    location: 'Eko Hotel and Suites',
+    price: 20,
+    tags: ['All', 'Tech'],
+  },
+  {
+    id: 'event10',
+    banner: '/assets/banner1.png',
+    date: 'Tues. Oct 9, 3:00PM WAT',
+    title: 'Wellness Retreat and Yoga Session',
+    location: 'Serenity Spa and Wellness Center',
+    price: 12,
+    tags: ['All', 'Health & Wellness'],
+  },
+  {
+    id: 'event11',
+    banner: '/assets/banner3.jpg',
+    date: 'Wed. Oct 10, 7:00PM WAT',
+    title: 'Art Exhibition: Colors of Africa',
+    location: 'National Museum, Lagos',
+    price: 15,
+    tags: ['All', 'Art & Culture'],
   },
 ];
 
 function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
   return (
-    <ExploreLayout>
+    <div>
+      <Homenav />
       <div className="relative">
         <div className="relative bg-secondary-100 py-11 sm:py-[74px] px-6">
           <div className="max-w-[634px] lg:max-w-[1002px] mx-auto text-center">
@@ -137,15 +190,20 @@ function Home() {
             <h4 className={`${montserrat.className} hidden sm:block text-3xl font-bold mb-7 text-Grey-G700`}>
               Category
             </h4>
-            <div className="flex flex-nowrap overflow-scroll md:flex-wrap md:justify-center md:p-2 gap-x-4 lg:gap-x-3 gap-y-4">
+            <div className="flex no-scrollbar flex-nowrap overflow-scroll md:flex-wrap md:justify-center md:p-2 gap-x-4 lg:gap-x-3 gap-y-4">
               {categories.map((item, index) => {
                 return (
                   <Button
                     key={index}
-                    leftIcon={<Music color="#3C3C3C" />}
+                    leftIcon={<Music color={selectedCategory === item ? '#FFF' : '#3C3C3C'} />}
                     intent={'secondary'}
                     size={'md'}
-                    className={`${nunito.className} rounded-full py-2 text-sm shrink-0 border-primary-100 border font-bold`}
+                    className={`${
+                      nunito.className
+                    } rounded-full py-2 text-sm shrink-0 border-primary-100 border font-bold ${
+                      selectedCategory === item ? 'bg-primary-100 text-white-100' : ''
+                    }`}
+                    onClick={() => setSelectedCategory(item)}
                   >
                     {item}
                   </Button>
@@ -154,14 +212,18 @@ function Home() {
             </div>
           </section>
           <section>
-            <EventGrids title="Popular Events" events={upcoming_events} />
+            <EventGrids
+              title="Popular Events"
+              events={upcoming_events.filter((item) => item.tags.includes(selectedCategory))}
+            />
           </section>
           <section>
             <EventGrids title="Recommended for You" events={upcoming_events} />
           </section>
         </main>
       </div>
-    </ExploreLayout>
+      <HomeFooter />
+    </div>
   );
 }
 
