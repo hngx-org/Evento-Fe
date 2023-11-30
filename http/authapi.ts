@@ -104,7 +104,7 @@ export const revalidateAuth = async (props: { token: string }) => {
 
 export const logoutUser = async () => {
   try {
-    const res = await $AuthHttp.get('/logout');
+    const res = await $AuthHttp.delete('/logout');
 
     if (res.status === 302) {
       console.log('Logout successful');

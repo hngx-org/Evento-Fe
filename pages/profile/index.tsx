@@ -12,7 +12,7 @@ import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
 
-import { UserProfile, getUserProfile } from '@/http/profileapi';
+import { UserProfile as NewUserProfile, getUserProfile } from '@/http/profileapi';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -27,7 +27,7 @@ const montserrat = Montserrat({
 });
 
 const UserProfile: React.FC = () => {
-  const [userProfile, setUserProfile] = useState<UserProfile>({
+  const [userProfile, setUserProfile] = useState<NewUserProfile>({
     userID: '',
     email: '',
     bio: '',
