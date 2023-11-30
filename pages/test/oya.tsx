@@ -35,7 +35,7 @@
 
 // export default IndexPage;
 
-'use client';
+// 'use client';
 
 // Import necessary dependencies
 import AuthInstance from '@/http/AuthInstance';
