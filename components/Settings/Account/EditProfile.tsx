@@ -1,19 +1,33 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import profile from 'public/profileB.svg';
-import Button from '../../ui/Button';
-import Input from '../../UserProfile/Input';
+// import Button from '../../ui/Button';
+import Input from '@/components/UserProfile/Input';
+import ButtonB from '@/components/ui/Button';
+import Button from '@/components/ui/NewButton';
 import TelInput from '../TelInput';
+import { editUserProfile } from '@/http/profileapi';
+import { UserProfile, editUserAccount, getUserProfile, uploadUserImage } from '@/http/settingsapi';
 
 function EditProfile() {
+  const [formData, setFormData] = useState<UserProfile>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    bio: '',
+  });
   const [profileImage, setProfileImage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const selectedImage = event.target.files[0];
-      setProfileImage(URL.createObjectURL(selectedImage));
+      if (selectedImage) {
+        setProfileImage(URL.createObjectURL(selectedImage));
+        uploadUserImage(URL.createObjectURL(selectedImage), setLoading);
+      }
     }
   };
 
@@ -21,6 +35,27 @@ function EditProfile() {
     if (fileInputRef.current) {
       fileInputRef.current.click();
     }
+  };
+
+  useEffect(() => {
+    getUserProfile(setFormData);
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    // console.log('clicked');
+    editUserAccount(formData, setLoading);
+    setTimeout(() => {
+      getUserProfile(setFormData);
+    }, 2000);
   };
 
   return (
@@ -45,38 +80,66 @@ function EditProfile() {
           type="file"
           onChange={(event) => handleImageChange(event)}
         />
-        <Button type="button" title="upload" styles="text-white-N0 font-bold text-sm" handleClick={handleImageUpload}>
+        <ButtonB type="button" title="upload" styles="text-white-N0 font-bold text-sm" handleClick={handleImageUpload}>
           Upload Picture
-        </Button>
-        <Button
+        </ButtonB>
+        <ButtonB
           type="button"
           title="remove"
           styles="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm"
           handleClick={() => setProfileImage('')}
         >
           Remove
-        </Button>
+        </ButtonB>
       </div>
-      <form className="space-y-8">
-        <Input label="First Name" placeholder="John" inputHeight="h-[3.5rem]" backgroundColor="bg-white-N0" />
-        <Input label="Last Name" placeholder="Doe" inputHeight="h-[3.5rem]" backgroundColor="bg-white-N0" />
+      <form className="space-y-8" onSubmit={(e) => (e.preventDefault(), handleSubmit())}>
+        <Input
+          label="First Name"
+          name="firstName"
+          placeholder="John"
+          inputHeight="h-[3.5rem]"
+          backgroundColor="bg-white-N0"
+          value={formData.firstName}
+          onChange={handleInputChange}
+        />
+        <Input
+          label="Last Name"
+          name="lastName"
+          placeholder="Doe"
+          inputHeight="h-[3.5rem]"
+          backgroundColor="bg-white-N0"
+          value={formData.lastName}
+          onChange={handleInputChange}
+        />
         <Input
           label="Email Address"
           placeholder="johndoe@gmail.com"
+          name="email"
           type="email"
           inputHeight="h-[3.5rem]"
           backgroundColor="bg-white-N0"
+          value={formData.email}
+          onChange={handleInputChange}
         />
-        <TelInput />
+        {/* <TelInput /> */}
         <Input
           label="Short bio "
           inputHeight="h-[9.5rem] lg:min-h-[104px]"
           backgroundColor="bg-white-N0"
+          name="bio"
           textArea={true}
           placeholder="Lorem ipsum dolor sit amet consectetur. Elit ultricies in fermentum enim cursus convallis etiam consectetur potenti."
+          value={formData.bio}
+          onChange={handleInputChange}
         />
         <div className="flex justify-end">
-          <Button type="button" title="profile-button" styles="text-white-N0 font-bold text-sm py-3 px-[1.12rem]">
+          <Button
+            type="submit"
+            title="profile-button"
+            className="text-white-N0 font-bold text-sm py-3 px-[1.12rem] bg-primary-100 rounded-lg"
+            isLoading={loading}
+            // handleClick={() => handleSubmit()}
+          >
             Save Changes
           </Button>
         </div>
