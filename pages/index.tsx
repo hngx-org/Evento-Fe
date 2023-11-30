@@ -1,7 +1,7 @@
 import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
 import Mainsec from '@/modules/home/Page/Mainsec';
-import Home2 from './landpage-v1';
+import Home2 from './land3';
 import withoutAuth from '@/helpers/withoutAuth';
 
 const workSans = Work_Sans({
