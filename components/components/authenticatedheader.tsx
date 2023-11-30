@@ -206,12 +206,7 @@ function AuthenticatedHeader() {
         </div>
         {/* Profile Dropdown Container */}
         {profileDropdown && (
-          <div
-            ref={profileRef}
-            
-            className="absolute bg-white-N0 z-10 rounded-lg w-[15rem] p-3 right-8 top-[80px]"
-
-          >
+          <div ref={profileRef} className="absolute bg-white-N0 z-10 rounded-lg w-[15rem] p-3 right-8 top-[80px]">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
                 <Image src={profile} alt="profile" width={40} height={40} />

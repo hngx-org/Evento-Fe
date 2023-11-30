@@ -37,6 +37,7 @@ import { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import isAuthenticated from './isAuthenticated';
 import AuthInstance from '@/http/AuthInstance';
+import { AxiosError } from 'axios';
 
 // Set the base URL
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
@@ -49,25 +50,42 @@ const hasAuthToken = () => {
 
 const authorizeAndStoreToken = async () => {
   try {
-    // Make a POST request to obtain a new token
-    const response = await $AuthHttp.get('/authorize');
+    const response = await $AuthHttp.post('/authorize');
 
-    console.log(response);
+    // Extract user ID and token from the response data
+    const { userId, token } = response.data.data;
 
-    if (response.status === 200) {
-      const { userId, token } = response.data;
+    // Store the obtained token and user ID in localStorage
+    localStorage.setItem('authToken', token);
+    localStorage.setItem('userId', userId);
 
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('userId', userId);
-
-      console.log('Token obtained successfully');
-    } else {
-      console.error('Error obtaining token:', response.statusText);
-    }
-  } catch (error) {
-    console.error('Error obtaining token:', (error as Error).message);
+    console.log('Token and user ID saved to local storage');
+  } catch (error: any) {
+    // Use type assertion to specify the type of 'error'
+    console.error('Error during login:', (error as AxiosError).message);
+    // Handle errors if necessary
   }
 };
+//   try {
+//     // Make a POST request to obtain a new token
+//     const response = await $AuthHttp.post('/authorize');
+
+//     console.log(response);
+
+//     if (response.status === 200) {
+//       const { userId, token } = response.data;
+
+//       localStorage.setItem('authToken', token);
+//       localStorage.setItem('userId', userId);
+
+//       console.log('Token obtained successfully');
+//     } else {
+//       console.error('Error obtaining token:', response.statusText);
+//     }
+//   } catch (error) {
+//     console.error('Error obtaining token:', (error as Error).message);
+//   }
+// };
 
 const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
   const Wrapper: React.FC<P> = (props) => {
@@ -85,8 +103,8 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
         // If no token, make a POST request to obtain a new token
         authorizeAndStoreToken();
       }
-      // If not authenticated, redirect to the access-denied page
       const isLoggedIn = isAuthenticated(token as string);
+      // If not authenticated, redirect to the access-denied page
       if (!isLoggedIn) {
         router.push('/access-denied');
       }
