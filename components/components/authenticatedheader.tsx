@@ -73,7 +73,7 @@ function AuthenticatedHeader() {
     logoutUser();
     setIsLoading(true);
     setTimeout(() => {
-         window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
+      window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
     }, 5000);
   };
 
