@@ -26,6 +26,12 @@ const EditProfilePage = () => {
   const [formData, setFormData] = useState<UserProfile2>({});
   const [reRoute, setReRoute] = useState(false);
 
+  useEffect(() => {
+    if (reRoute) {
+      router.push('/profile');
+    }
+  }, [reRoute, router]);
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>,
     imageBlob?: Blob,
@@ -76,13 +82,9 @@ const EditProfilePage = () => {
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
     console.log(formData);
-    editUserProfile(formData, setReRoute);
-
-    setTimeout(() => {
-      if (reRoute) {
-        router.push('/profile');
-      }
-    }, 3000);
+    editUserProfile(formData, () => {
+      setReRoute(true); // Trigger rerouting upon successful profile update
+    });
   };
   return (
     <AuthLayout>

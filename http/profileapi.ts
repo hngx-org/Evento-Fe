@@ -82,10 +82,7 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
   }
 };
 
-export const editUserProfile = async (
-  data: UserProfile2,
-  setReRoute: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
+export const editUserProfile = async (data: UserProfile2, successCallback: () => void) => {
   const authToken = getAuthToken();
   const userId = getUserId();
 
@@ -100,7 +97,7 @@ export const editUserProfile = async (
 
     if (editUserData.status === 200) {
       toast.success('profile updated');
-      setReRoute(true);
+      successCallback();
       return editUserData;
     }
   } catch (err: any) {
