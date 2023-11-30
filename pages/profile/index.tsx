@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import Head from 'next/head';
+import React, { useEffect, useState } from 'react';
+
 import Button from '@/components/ui/Button';
-import Input from '@/components/ui/Input';
+
 import { Montserrat, Nunito } from 'next/font/google';
 
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
 import { Edit } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
-import EditProfileModal from '@/components/UserProfile/EditProfileModal';
+
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
-import withoutAuth from '@/helpers/withoutAuth';
+
+import { UserProfile as NewUserProfile, getUserProfile } from '@/http/profileapi';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -24,8 +25,40 @@ const montserrat = Montserrat({
   display: 'swap',
   variable: '--font-montserrat',
 });
-// add a userlayout later
+
 const UserProfile: React.FC = () => {
+  const [userProfile, setUserProfile] = useState<NewUserProfile>({
+    userID: '',
+    email: '',
+    bio: '',
+    socialLinks: '',
+    profileImage: '',
+    displayName: '',
+    firstName: '',
+    lastName: '',
+    slug: '',
+    role: '',
+    location: '',
+  });
+
+  useEffect(() => {
+    getUserProfile(setUserProfile);
+
+    const demo = {
+      userID: '409a273a-be65-436f-9e76-b914ee3be5ca',
+      email: 'halesh553@gmail.com',
+      bio: null,
+      socialLinks: null,
+      profileImage: null,
+      displayName: null,
+      firstName: 'Ibukun',
+      lastName: 'Alesinloye',
+      slug: 'ibukun-alesinloye-1',
+      role: 'USER',
+      location: null,
+    };
+  }, []);
+
   const [profilePicURL, setProfilePicURL] = useState('');
 
   const router = useRouter();
@@ -35,7 +68,11 @@ const UserProfile: React.FC = () => {
 
     if (selectedImage) {
       // Log the name of the selected image file
-      console.log('Selected image:', selectedImage.name);
+      const imageBlob = new Blob([selectedImage], { type: selectedImage.type });
+      // post
+      // postProfilePicture(imageBlob);
+      // ?post
+
       const imageUrl = URL.createObjectURL(selectedImage);
       setProfilePicURL(imageUrl);
 
@@ -53,7 +90,6 @@ const UserProfile: React.FC = () => {
 
   return (
     <AuthLayout>
-      {/* <EditProfileModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} /> */}
       <div className={` ${nunito.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
         <section className="w-full h-[240px] bg-secondary-100 absolute">
           <Button
@@ -87,7 +123,7 @@ const UserProfile: React.FC = () => {
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
                 <h6 className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 `}>
-                  Brooklyn Simeons
+                  {userProfile?.lastName + ' ' + userProfile?.firstName}
                 </h6>
                 <Button
                   handleClick={() => {
@@ -103,11 +139,7 @@ const UserProfile: React.FC = () => {
                   Edit Profile
                 </Button>
               </div>
-              <p className=" text-xs md:text-base line-clamp-3">
-                Lorem ipsum dolor sit amet consectetur. Dis non diam neque at ac fringilla in consequat. Facilisis velit
-                in cum lorem feugiat. Libero elementum donec at nulla. Sed auctor nunc phasellus tristique porttitor
-                tortor fames natoque.
-              </p>
+              <p className=" text-xs md:text-base line-clamp-3">{userProfile?.bio}</p>
               <div className="socials flex gap-x-[20px] items-center">
                 <InstagramIcon />
 
@@ -120,8 +152,6 @@ const UserProfile: React.FC = () => {
 
           <ProfieEvent />
         </section>
-
-        {/* <section className="events w-[906px] relative "></section> */}
       </div>
     </AuthLayout>
   );

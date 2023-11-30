@@ -17,6 +17,9 @@ interface BaseInputProps {
   backgroundColor?: string;
   textArea?: boolean;
   [key: string]: any;
+  onChange?: (e: any) => void;
+  name?: string;
+  value?: any;
 }
 
 const Input: React.FC<BaseInputProps> = (props) => {
@@ -33,6 +36,9 @@ const Input: React.FC<BaseInputProps> = (props) => {
     inputHeight,
     backgroundColor,
     textArea = false,
+    onChange,
+    name,
+    value,
     ...rest
   } = props;
 
@@ -68,6 +74,10 @@ const Input: React.FC<BaseInputProps> = (props) => {
       {textArea ? (
         <textarea
           id={id}
+          // type={type}
+          onChange={onChange}
+          name={name}
+          value={value}
           className={clsx(
             [
               styles.base,
@@ -88,6 +98,9 @@ const Input: React.FC<BaseInputProps> = (props) => {
         <input
           id={id}
           type={type}
+          onChange={onChange}
+          name={name}
+          value={value}
           className={clsx(
             [
               styles.base,
