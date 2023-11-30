@@ -30,6 +30,8 @@
 
 // export default withAuth;
 
+'use client';
+
 // Import necessary dependencies
 import { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
@@ -49,6 +51,8 @@ const authorizeAndStoreToken = async () => {
   try {
     // Make a POST request to obtain a new token
     const response = await $AuthHttp.get('/authorize');
+
+    console.log(response);
 
     if (response.status === 200) {
       const { userId, token } = response.data;
@@ -70,20 +74,23 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
     const router = useRouter();
 
     useEffect(() => {
+      const token = localStorage.getItem('authToken');
       // Check if a token exists in localStorage
-      if (!hasAuthToken()) {
-        // If no token, make a POST request to obtain a new token
-        authorizeAndStoreToken();
+      if (hasAuthToken()) {
       } else {
         // If a token exists, check if the user is authenticated
-        const token = localStorage.getItem('authToken');
-        const isLoggedIn = isAuthenticated(token as string);
-
-        // If not authenticated, redirect to the access-denied page
-        if (!isLoggedIn) {
-          router.push('/access-denied');
-        }
+        // const token = localStorage.getItem('authToken');
+        // const isLoggedIn = isAuthenticated(token as string);
+        !hasAuthToken();
+        // If no token, make a POST request to obtain a new token
+        authorizeAndStoreToken();
       }
+      // If not authenticated, redirect to the access-denied page
+      const isLoggedIn = isAuthenticated(token as string);
+      if (!isLoggedIn) {
+        router.push('/access-denied');
+      }
+
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
