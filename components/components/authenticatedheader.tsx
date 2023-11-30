@@ -17,6 +17,7 @@ import {
 import useVisible from '@/hooks/useVisible';
 import Input from '../ui/Input';
 import logoutUser from '@/hooks/logout';
+import { logoutUser as lgout } from '@/http/authapi';
 import Button from '@ui/NewButton';
 import { useRouter } from 'next/navigation';
 import Notifications from '../ui/notification';
@@ -69,12 +70,31 @@ function AuthenticatedHeader() {
     setNotificationMenu(!notificationMenu);
   };
 
-  const handleLogout = () => {
-    logoutUser();
+  // const handleLogout = () => {
+  //   logoutUser();
+  //   try {
+  //     await lgout();
+  //     // Additional logic after successful logout, if needed
+  //   } catch (error) {
+  //     // Handle errors if necessary
+  //   }
+  // };
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     //    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
+  //   }, 5000);
+  // };
+
+  const handleLogout = async () => {
     setIsLoading(true);
-    setTimeout(() => {
-      //    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
-    }, 5000);
+    logoutUser();
+
+    try {
+      await lgout();
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

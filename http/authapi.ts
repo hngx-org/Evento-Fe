@@ -102,16 +102,40 @@ export const revalidateAuth = async (props: { token: string }) => {
   }
 };
 
+// export const logoutUser = async () => {
+//   try {
+//     const res = await $AuthHttp.delete('/logout');
+
+//     if (res.status === 302) {
+//       console.log('Logout successful');
+//       toast.success('Logout successful');
+//     }
+
+//     console.log('Logout response', res);
+//     return res?.data;
+//   } catch (e: any) {
+//     console.log('Logout call error from API call', e);
+//     if (e?.response?.status === 401) {
+//       toast.error('Unauthorized. Please log in.');
+//     } else {
+//       toast.error('An error occurred during logout. Please try again later.');
+//     }
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
+
 export const logoutUser = async () => {
   try {
-    const res = await $AuthHttp.get('/logout');
+    const res = await $AuthHttp.delete('/logout');
 
     if (res.status === 302) {
-      console.log('Logout successful');
-      toast.success('Logout successful');
+      console.log(`Logout successful: ${res.statusText}`);
+      toast.success(`Logout successful: ${res.statusText}`);
     }
 
     console.log('Logout response', res);
+
+    // Check if res.data exists before returning it
     return res?.data;
   } catch (e: any) {
     console.log('Logout call error from API call', e);
@@ -120,6 +144,8 @@ export const logoutUser = async () => {
     } else {
       toast.error('An error occurred during logout. Please try again later.');
     }
+
+    // Use e.message as a fallback if e.response.data or e.response.data.message is not available
     throw e?.response?.data || { message: e.message };
   }
 };
