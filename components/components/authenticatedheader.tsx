@@ -40,10 +40,10 @@ function AuthenticatedHeader() {
     }
   }, [toggle]);
 
-  const handleLogout = () => {
-    // Call the function when the button is clicked
-    Logout();
-  };
+  // const handleLogout = () => {
+  //   // Call the function when the button is clicked
+  //   Logout();
+  // };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -73,7 +73,7 @@ function AuthenticatedHeader() {
     logoutUser();
     setIsLoading(true);
     setTimeout(() => {
-      //    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
+         window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
     }, 5000);
   };
 
