@@ -232,7 +232,7 @@ const getSessionId = () => {
   const domain = 'evento-qo6d.onrender.com';
 
   // Try to get the session ID from cookies with the specified domain
- // const sessionId = Cookies.get('connect.sid',  domain );
+ const sessionId = Cookies.get('connect.sid' );
   const cookie = getCookie('connect.sid')
   console.log ('cookie')
   const allCookie = getCookies()
