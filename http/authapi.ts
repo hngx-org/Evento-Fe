@@ -236,7 +236,7 @@ const getSessionId = () => {
   const cookie = getCookie('connect.sid')
   console.log ('cookie')
   const allCookie = getCookies()
-  console.log = ('allCookie')
+  console.log ('allCookie')
 
   if (sessionId) {
     console.log('Retrieved Session ID from Cookies:', sessionId);
