@@ -105,11 +105,11 @@ function AuthenticatedHeader() {
             <Image src={logo} alt="logo" width={84} height={32} />
           </Link>
           <div className="hidden lg:flex items-center gap-8">
-            <Link href="/explore" className="text-Grey-G500 font-medium text-base">
+            <Link href="/loggedinexplore" className="text-Grey-G500 font-medium text-base">
               Explore
             </Link>
             <Link href="/event-management" className="text-Grey-G500 font-medium text-base">
-              Manage Events
+              Event-Management
             </Link>
             <Link href="/create-events" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
               Create Event
