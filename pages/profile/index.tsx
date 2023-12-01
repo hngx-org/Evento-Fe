@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-
 import Button from '@/components/ui/Button';
-
 import { Montserrat, Nunito } from 'next/font/google';
-
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
 import { Edit } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
-
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
-
 import { UserProfile, getUserProfile } from '@/http/profileapi';
 import Image from 'next/image';
+import SkeletonElement from '@/components/UserProfile/SkeletonElement';
+import Typewriter from 'typewriter-effect';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -48,23 +45,14 @@ const UserProfile: React.FC = () => {
   });
 
   useEffect(() => {
+    // remove time out to see skeleton
     getUserProfile(setUserProfile);
-
-    const demo = {
-      userID: '409a273a-be65-436f-9e76-b914ee3be5ca',
-      email: 'halesh553@gmail.com',
-      bio: null,
-      socialLinks: null,
-      profileImage: null,
-      displayName: null,
-      firstName: 'Ibukun',
-      lastName: 'Alesinloye',
-      slug: 'ibukun-alesinloye-1',
-      role: 'USER',
-      location: null,
-    };
   }, []);
 
+  useEffect(() => {
+    //  send to local storage
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  }, [userProfile]);
   const [profilePicURL, setProfilePicURL] = useState('');
 
   const router = useRouter();
@@ -142,8 +130,22 @@ const UserProfile: React.FC = () => {
 
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
-                <h6 className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 `}>
-                  {userProfile?.lastName + ' ' + userProfile?.firstName}
+                <h6
+                  className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 min-w-[100px] w-fit `}
+                >
+                  {userProfile?.lastName ? (
+                    <Typewriter
+                      options={{}}
+                      onInit={(typewriter) => {
+                        typewriter.typeString(userProfile?.lastName + ' ' + userProfile?.firstName).start();
+                      }}
+                    />
+                  ) : (
+                    // Display a loading message or a skeleton element while bio is loading
+                    <SkeletonElement type="text" />
+                  )}
+
+                  {/* {userProfile.firstName.length > 0 ? 'Mehn ' : 'Loading'} */}
                 </h6>
                 <Button
                   handleClick={() => {
@@ -159,7 +161,20 @@ const UserProfile: React.FC = () => {
                   Edit Profile
                 </Button>
               </div>
-              <p className=" text-xs md:text-base line-clamp-3 max-w-full">{userProfile?.bio}</p>
+              {/* <SkeletonElement type="title" /> */}
+              <div className=" text-xs md:text-base line-clamp-3 max-w-full">
+                {userProfile?.bio ? (
+                  <Typewriter
+                    options={{}}
+                    onInit={(typewriter) => {
+                      typewriter.typeString(userProfile.bio).start();
+                    }}
+                  />
+                ) : (
+                  // Display a loading message or a skeleton element while bio is loading
+                  <SkeletonElement type="text" />
+                )}
+              </div>
               <div className="socials flex gap-x-[20px] items-center">
                 <a href={userProfile?.socialLinks?.instagram} target="_blank" rel="noopener noreferrer">
                   <InstagramIcon />
