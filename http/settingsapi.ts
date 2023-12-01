@@ -126,85 +126,85 @@ export const editUserSocials = async (data: UserSocials, setLoading: React.Dispa
   }
 };
 
-// export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
-//   const authToken = getAuthToken();
-//   const userId = getUserId();
-//   setLoading(true);
-//   //   console.log(data);
-//   let image = new FormData();
-//   image.append('file', data);
-
-//   const config = {
-//     method: 'post',
-//     url: `/user/profile/image/upload/${userId}`,
-//     headers: {
-//       Authorization: `Bearer ${authToken}`,
-//       'Content-Type': 'multipart/form-data',
-//      Accept: 'application/json',
-//     },
-//     data: image,
-//   };
-//   try {
-//     const editUserData = await $AuthHttp(config);
-
-//     // console.log(editUserData);
-//     setLoading(false);
-//     if (editUserData.status === 200) {
-//       toast.success('profile updated');
-//     }
-//   } catch (err: any) {
-//     console.log(err);
-//     setLoading(false);
-//     toast.error(err.message);
-//   }
-// };
-
-import axios, { AxiosError } from 'axios';
 export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
   const authToken = getAuthToken();
   const userId = getUserId();
   setLoading(true);
+  //   console.log(data);
+  let image = new FormData();
+  image.append('file', data);
 
+  const config = {
+    method: 'post',
+    url: `/user/profile/image/upload/${userId}`,
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      'Content-Type': 'multipart/form-data',
+      Accept: 'application/json',
+    },
+    data: image,
+  };
   try {
-    let image = new FormData();
-    image.append('file', data);
+    const editUserData = await $AuthHttp(config);
 
-    const response = await axios.post(
-      `https://evento-qo6d.onrender.com/api/v1/user/profile/image/upload/${userId}`,
-      image,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'multipart/form-data',
-          Accept: 'application/json',
-        },
-      },
-    );
-
-    // Handle success, if needed
-    console.log('Image uploaded successfully:', response.data);
-    toast.success('Image uploaded successfully');
-  } catch (error: any) {
-    // Use type assertion to specify the type of 'error'
-    const axiosError = error as AxiosError;
-
-    if (axiosError.response) {
-      // The request was made and the server responded with a status code
-      console.error('Upload failed with status code:', axiosError.response.status);
-      toast.error(`Upload failed with status code: ${axiosError.response.status}`);
-    } else if (axiosError.request) {
-      // The request was made but no response was received
-      console.error('No response received from the server');
-      toast.error('No response received from the server');
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.error('Error setting up the request:', axiosError.message);
-      toast.error(`Error setting up the request: ${axiosError.message}`);
-    }
-
-    // Handle other errors if necessary
-  } finally {
+    // console.log(editUserData);
     setLoading(false);
+    if (editUserData.status === 200) {
+      toast.success('profile updated');
+    }
+  } catch (err: any) {
+    console.log(err);
+    setLoading(false);
+    toast.error(err.message);
   }
 };
+
+// import axios, { AxiosError } from 'axios';
+// export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+//   const authToken = getAuthToken();
+//   const userId = getUserId();
+//   setLoading(true);
+
+//   try {
+//     let image = new FormData();
+//     image.append('file', data);
+
+//     const response = await axios.post(
+//       `https://evento-qo6d.onrender.com/api/v1/user/profile/image/upload/${userId}`,
+//       image,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${authToken}`,
+//           'Access-Control-Allow-Origin': '*',
+//           'Content-Type': 'multipart/form-data',
+//           Accept: 'application/json',
+//         },
+//       },
+//     );
+
+//     // Handle success, if needed
+//     console.log('Image uploaded successfully:', response.data);
+//     toast.success('Image uploaded successfully');
+//   } catch (error: any) {
+//     // Use type assertion to specify the type of 'error'
+//     const axiosError = error as AxiosError;
+
+//     if (axiosError.response) {
+//       // The request was made and the server responded with a status code
+//       console.error('Upload failed with status code:', axiosError.response.status);
+//       toast.error(`Upload failed with status code: ${axiosError.response.status}`);
+//     } else if (axiosError.request) {
+//       // The request was made but no response was received
+//       console.error('No response received from the server');
+//       toast.error('No response received from the server');
+//     } else {
+//       // Something happened in setting up the request that triggered an Error
+//       console.error('Error setting up the request:', axiosError.message);
+//       toast.error(`Error setting up the request: ${axiosError.message}`);
+//     }
+
+//     // Handle other errors if necessary
+//   } finally {
+//     setLoading(false);
+//   }
+// };

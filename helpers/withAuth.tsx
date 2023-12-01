@@ -33,11 +33,15 @@
 'use client';
 
 // Import necessary dependencies
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import isAuthenticated from './isAuthenticated';
 import AuthInstance from '@/http/AuthInstance';
 import { AxiosError } from 'axios';
+
+import { useAuth } from '@/context/AuthContext';
+import useIsAuthenticated from '@/hooks/useisAuthenticated';
+import React from 'react';
 
 // Set the base URL
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
@@ -128,3 +132,39 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
 };
 
 export default withAuth;
+
+export const withUserAuth = <P extends { children: React.ReactNode }>(WrappedComponent: React.ComponentType<P>) => {
+  const Wrapper: React.FC<P> = (props) => {
+    const [isPageLoading, setIsPageLoading] = useState(true);
+    const router = useRouter();
+    const { auth } = useAuth();
+
+    const { authenticatedState } = useIsAuthenticated();
+
+    // isAuthorized({ token: token as string });
+
+    useEffect(() => {
+      // there is no token found in the localstorage
+
+      if (authenticatedState === false) {
+        router.replace('/auth/login');
+        console.log(authenticatedState, 'authenticated state');
+        return;
+      }
+
+      // auth is undefined means user just landed on page
+      if (!auth) return;
+
+      setIsPageLoading(false);
+    }, [auth, router, authenticatedState]);
+
+    if (isPageLoading) {
+      return <div className="flex items-center justify-center h-screen"></div>;
+    }
+
+    const wrappedComponent = React.createElement(WrappedComponent, props);
+    return wrappedComponent;
+  };
+
+  return Wrapper;
+};
