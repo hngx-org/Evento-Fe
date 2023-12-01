@@ -1,9 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import AuthLayout from '@/layout/Authlayout';
 import withAuth from '@/helpers/withAuth';
 import EventCard from '@/components/components/card/event';
+import { withUserAuth } from '@/helpers/withAuth';
+import { fetchAuthToken } from '@/http/authapi';
+import { toast } from 'react-toastify';
 
 const events = {
   upcoming_events: [
@@ -97,9 +100,33 @@ interface EventProps {
 function EventDashboard({ tag, tag_image }: EventProps) {
   const [event, setEvent] = useState(true);
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const authToken = await fetchAuthToken();
+        console.log(authToken);
+
+        // Use authToken as needed for secure API calls or other actions
+      } catch (error) {
+        console.error('Error fetching authentication token:', error);
+        // Handle errors or redirect to login
+        toast.error('Error fetching authentication token. Please log in.');
+        // Redirect to login page
+        // You might want to use Next.js router for this, for example:
+        // import { useRouter } from 'next/router';
+        // const router = useRouter();
+        // router.push('/login');
+      }
+    }
+
+    fetchData();
+  }, []); 
+
   function changeEvent() {
     setEvent(!event);
   }
+
+ 
 
   return (
     <AuthLayout>
@@ -168,4 +195,4 @@ function EventDashboard({ tag, tag_image }: EventProps) {
   );
 }
 
-export default withAuth(EventDashboard);
+export default  EventDashboard;

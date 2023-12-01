@@ -93,3 +93,8 @@ body.mobile-menu-open {
     padding: 96px 10px 96px 10px;
   }
 }
+
+.Typewriter__cursor {
+  /* Set the color to transparent */
+  color: transparent !important; /* Use !important to override any other styles */
+}

@@ -78,3 +78,7 @@
 
 .checkboxChecked:focus {
 }
+
+.Typewriter__cursor {
+  color: transparent;
+}

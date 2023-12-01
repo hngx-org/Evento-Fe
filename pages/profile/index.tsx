@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
-
 import Button from '@/components/ui/Button';
-
 import { Montserrat, Nunito } from 'next/font/google';
-
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
 import { Edit } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
-
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
-
-import { UserProfile as NewUserProfile, getUserProfile } from '@/http/profileapi';
+import { UserProfile, getUserProfile } from '@/http/profileapi';
+import Image from 'next/image';
+import SkeletonElement from '@/components/UserProfile/SkeletonElement';
+import Typewriter from 'typewriter-effect';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -27,11 +25,16 @@ const montserrat = Montserrat({
 });
 
 const UserProfile: React.FC = () => {
-  const [userProfile, setUserProfile] = useState<NewUserProfile>({
+  const [userProfile, setUserProfile] = useState<UserProfile>({
     userID: '',
     email: '',
     bio: '',
-    socialLinks: '',
+    socialLinks: {
+      facebook: '',
+      instagram: '',
+      twitter: '',
+      website: '',
+    },
     profileImage: '',
     displayName: '',
     firstName: '',
@@ -42,23 +45,14 @@ const UserProfile: React.FC = () => {
   });
 
   useEffect(() => {
+    // remove time out to see skeleton
     getUserProfile(setUserProfile);
-
-    const demo = {
-      userID: '409a273a-be65-436f-9e76-b914ee3be5ca',
-      email: 'halesh553@gmail.com',
-      bio: null,
-      socialLinks: null,
-      profileImage: null,
-      displayName: null,
-      firstName: 'Ibukun',
-      lastName: 'Alesinloye',
-      slug: 'ibukun-alesinloye-1',
-      role: 'USER',
-      location: null,
-    };
   }, []);
 
+  useEffect(() => {
+    //  send to local storage
+    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+  }, [userProfile]);
   const [profilePicURL, setProfilePicURL] = useState('');
 
   const router = useRouter();
@@ -91,7 +85,7 @@ const UserProfile: React.FC = () => {
   return (
     <AuthLayout>
       <div className={` ${nunito.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
-        <section className="w-full h-[240px] bg-secondary-100 absolute">
+        <section className="w-full h-[240px] bg-secondary-100 absolute ">
           <Button
             handleClick={() => {}}
             styles={'  !rounded-[50%] border border-[#ED9E72] relative right-20 top-6 float-right'}
@@ -105,25 +99,53 @@ const UserProfile: React.FC = () => {
 
         <section className="w-[358px] md:w-[634px] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
           <div className="w-full flex flex-col gap-y-6  bg-white-100 rounded-[12px] p-6">
-            <div
-              id="profilePicContainer"
-              className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
-            >
-              <Edit onClick={() => {}} />
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(event) => {
-                  handleImageChange(event);
-                }}
-                className=" absolute w-6 h-6 opacity-0"
-              />
-            </div>
+            {userProfile.profileImage ? (
+              <div
+                id="profilePicContainer"
+                className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
+              >
+                <Image
+                  alt=""
+                  src="https://res.cloudinary.com/dnc0fjkpo/image/upload/v1701274125/ftxvhcqapviuntzypts5.png"
+                  width={120}
+                  height={120}
+                />
+              </div>
+            ) : (
+              <div
+                id="profilePicContainer"
+                className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
+              >
+                <Edit onClick={() => {}} />
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    handleImageChange(event);
+                  }}
+                  className=" absolute w-6 h-6 opacity-0"
+                />
+              </div>
+            )}
 
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
-                <h6 className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 `}>
-                  {userProfile?.lastName + ' ' + userProfile?.firstName}
+                <h6
+                  className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 min-w-[100px] w-fit `}
+                >
+                  {userProfile?.lastName ? (
+                    <Typewriter
+                      options={{}}
+                      onInit={(typewriter) => {
+                        typewriter.typeString(userProfile?.lastName + ' ' + userProfile?.firstName).start();
+                      }}
+                    />
+                  ) : (
+                    // Display a loading message or a skeleton element while bio is loading
+                    <SkeletonElement type="text" />
+                  )}
+
+                  {/* {userProfile.firstName.length > 0 ? 'Mehn ' : 'Loading'} */}
                 </h6>
                 <Button
                   handleClick={() => {
@@ -139,13 +161,32 @@ const UserProfile: React.FC = () => {
                   Edit Profile
                 </Button>
               </div>
-              <p className=" text-xs md:text-base line-clamp-3">{userProfile?.bio}</p>
+              {/* <SkeletonElement type="title" /> */}
+              <div className=" text-xs md:text-base line-clamp-3 max-w-full">
+                {userProfile?.bio ? (
+                  <Typewriter
+                    options={{}}
+                    onInit={(typewriter) => {
+                      typewriter.typeString(userProfile.bio).start();
+                    }}
+                  />
+                ) : (
+                  // Display a loading message or a skeleton element while bio is loading
+                  <SkeletonElement type="text" />
+                )}
+              </div>
               <div className="socials flex gap-x-[20px] items-center">
-                <InstagramIcon />
+                <a href={userProfile?.socialLinks?.instagram} target="_blank" rel="noopener noreferrer">
+                  <InstagramIcon />
+                </a>
 
-                <FacebookIcon />
+                <a href="https://www.facebook.com/your_facebook_account" target="_blank" rel="noopener noreferrer">
+                  <FacebookIcon />
+                </a>
 
-                <TwitterIcon />
+                <a href="https://twitter.com/your_twitter_account" target="_blank" rel="noopener noreferrer">
+                  <TwitterIcon />
+                </a>
               </div>
             </div>
           </div>

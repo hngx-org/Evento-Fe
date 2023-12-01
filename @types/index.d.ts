@@ -101,3 +101,36 @@ export interface NotificationsProps {
   unreadNotifications: (count: number) => void;
   notificationsRef: React.RefObject<HTMLDivElement>;
 }
+
+export type AuthResponse = {
+  token: string;
+  user: User;
+};
+
+export interface AuthContextProps {
+  auth: AuthResponse | undefined;
+  email: string;
+  redirect: string;
+  userCameFrom: string | undefined;
+  userCameFromForOAuth: string | undefined;
+  handleAuth: (value: AuthResponse | undefined) => void;
+  handleEmail: (value: string) => void;
+  handleRedirect: (value: string) => void;
+  handleUserCameFrom: (value: string | undefined) => void;
+  handleUserCameFromForOAuth: (value: string | undefined) => void;
+}
+
+export interface AuthorizationResponse {
+  userId: string;
+  token: string;
+  status: number;
+}
+
+export interface IsAuthenticatedResult {
+  mutate: (token: string) => void;
+  authenticatedState?: boolean;
+}
+
+export interface CustomError {
+  status?: number;
+}
