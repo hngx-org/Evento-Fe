@@ -235,7 +235,7 @@ const getSessionId = () => {
  // const sessionId = Cookies.get('connect.sid',  domain );
   const cookie = getCookie('connect.sid')
   console.log ('cookie')
-  const allCookie = getCookies()
+  const allCookie = getCookie()
   console.log = ('allCookie')
 
   if (sessionId) {
