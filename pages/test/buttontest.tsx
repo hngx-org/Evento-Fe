@@ -1,5 +1,6 @@
 /* App.tsx  */
 import Button from '../../components/ui/Button';
+import { withUserAuth } from '@/helpers/withAuth';
 
 const App = () => {
   return (
@@ -18,4 +19,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withUserAuth(App);

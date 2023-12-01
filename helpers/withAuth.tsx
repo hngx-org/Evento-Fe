@@ -147,7 +147,7 @@ export const withUserAuth = <P extends { children: React.ReactNode }>(WrappedCom
       // there is no token found in the localstorage
 
       if (authenticatedState === false) {
-        router.replace('/auth/login');
+        router.replace('/');
         console.log(authenticatedState, 'authenticated state');
         return;
       }
