@@ -4,6 +4,7 @@ import Image from 'next/image';
 import AuthLayout from '@/layout/Authlayout';
 import withAuth from '@/helpers/withAuth';
 import EventCard from '@/components/components/card/event';
+import { withUserAuth } from '@/helpers/withAuth';
 
 const events = {
   upcoming_events: [
@@ -168,4 +169,4 @@ function EventDashboard({ tag, tag_image }: EventProps) {
   );
 }
 
-export default withAuth(EventDashboard);
+export default  EventDashboard;
