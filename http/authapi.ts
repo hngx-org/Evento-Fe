@@ -1,6 +1,7 @@
 import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
+import Cookies from 'js-cookie';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -70,25 +71,25 @@ export const loginUser = async (props: { email: string; password: string }) => {
   }
 };
 
-export const fetchAuthToken = async () => {
-  try {
-    const authResponse = await $AuthHttp.get('/authorize');
+// export const fetchAuthToken = async () => {
+//   try {
+//     const authResponse = await $AuthHttp.get('/authorize');
 
-    if (authResponse.status === 200) {
-      console.log('Authorization successful');
-      return authResponse.data.token;
-    } else if (authResponse.status === 401) {
-      console.error('User not logged in.');
-      toast.error('User not logged in.');
-    }
+//     if (authResponse.status === 200) {
+//       console.log('Authorization successful');
+//       return authResponse.data.token;
+//     } else if (authResponse.status === 401) {
+//       console.error('User not logged in.');
+//       toast.error('User not logged in.');
+//     }
 
-    console.log('Authorization response', authResponse);
-    return null;
-  } catch (e: any) {
-    console.log('Authorization call error from API call', e);
-    throw e?.response?.data || { message: e.message };
-  }
-};
+//     console.log('Authorization response', authResponse);
+//     return null;
+//   } catch (e: any) {
+//     console.log('Authorization call error from API call', e);
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
 
 export const signUpWithGoogle = () => {
   return $AuthHttp.get('/google');
@@ -182,5 +183,80 @@ export const authorizeToken = async (token: string): Promise<AuthorizationRespon
     } else {
       throw { message: e.message || 'Unknown error' };
     }
+  }
+};
+
+
+
+
+// export const fetchAuthToken = async () => {
+//   try {
+//     const authResponse = await $AuthHttp.get('/authorize');
+
+//     if (authResponse.status === 200) {
+//       // Get the session ID from the response headers
+//       const sessionId = authResponse.headers.get('set-cookie');
+      
+//       if (sessionId) {
+//         // Set the session ID in cookies
+//         Cookies.set('connect.sid', sessionId, { path: '/' });
+//         console.log('Session ID set in cookies:', sessionId);
+//       } else {
+//         console.error('Session ID not found in response headers.');
+//         toast.error('Session ID not found in response headers.');
+//       }
+
+//       console.log('Authorization successful');
+//       return authResponse.data.token;
+//     } else if (authResponse.status === 401) {
+//       console.error('User not logged in.');
+//       toast.error('User not logged in.');
+//     }
+
+//     console.log('Authorization response', authResponse);
+//     return null;
+//   } catch (e: any) {
+//     console.log('Authorization call error from API call', e);
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
+
+
+
+
+
+
+export const fetchAuthToken = async () => {
+  try {
+    // Get the existing session ID from cookies
+    const sessionId = Cookies.get('connect.sid');
+
+    if (sessionId) {
+      // Include the session ID in the request headers
+      const headers = {
+        'Cookie': `connect.sid=${sessionId}`,
+      };
+
+      // Make the API call with the session ID in headers
+      const authResponse = await $AuthHttp.get('/authorize', { headers });
+
+      if (authResponse.status === 200) {
+        console.log('Authorization successful');
+        return authResponse.data.token;
+      } else if (authResponse.status === 401) {
+        console.error('User not logged in.');
+        toast.error('User not logged in.');
+      }
+
+      console.log('Authorization response', authResponse);
+      return null;
+    } else {
+      console.error('Session ID not found in cookies.');
+      toast.error('Session ID not found in cookies.');
+      return null;
+    }
+  } catch (e: any) {
+    console.log('Authorization call error from API call', e);
+    throw e?.response?.data || { message: e.message };
   }
 };
