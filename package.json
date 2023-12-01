@@ -52,6 +52,7 @@
     "swiper": "^11.0.5",
     "swiper.js": "^1.0.0",
     "tailwind-merge": "^2.0.0",
+    "typescript-cookie": "^1.0.6",
     "typewriter-effect": "^2.21.0",
     "usehooks-ts": "^2.9.1"
   },

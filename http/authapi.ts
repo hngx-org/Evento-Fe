@@ -2,6 +2,7 @@ import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
 import Cookies from 'js-cookie';
+import { getCookie, setCookie } from 'typescript-cookie'
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -226,10 +227,31 @@ export const authorizeToken = async (token: string): Promise<AuthorizationRespon
 
 
 
+const getSessionId = () => {
+  // Specify the domain where the cookie is set
+  const domain = 'evento-qo6d.onrender.com';
+
+  // Try to get the session ID from cookies with the specified domain
+  const sessionId = Cookies.get('connect.sid', { domain });
+  const cookie = getCookie('connect.sid')
+  console.log ('cookie')
+  const allCookie = getCookies()
+  console.log = ('allCookie')
+
+  if (sessionId) {
+    console.log('Retrieved Session ID from Cookies:', sessionId);
+    return sessionId;
+  } else {
+    console.error('Session ID not found in cookies.');
+    toast.error('Session ID not found in cookies.');
+    return null;
+  }
+};
+
 export const fetchAuthToken = async () => {
   try {
     // Get the existing session ID from cookies
-    const sessionId = Cookies.get('connect.sid');
+    const sessionId = getSessionId();
 
     if (sessionId) {
       // Include the session ID in the request headers
@@ -251,9 +273,7 @@ export const fetchAuthToken = async () => {
       console.log('Authorization response', authResponse);
       return null;
     } else {
-      console.error('Session ID not found in cookies.');
-      toast.error('Session ID not found in cookies.');
-      return null;
+      return null; // Handle case where session ID is not found
     }
   } catch (e: any) {
     console.log('Authorization call error from API call', e);
