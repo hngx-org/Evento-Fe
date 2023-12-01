@@ -1,22 +1,69 @@
-import React, { useState } from 'react';
+import 'react-datepicker/dist/react-datepicker.css';
+
+import React, { useRef, useState } from 'react';
 
 import { ArrowDown2, ArrowUp2 } from 'iconsax-react';
 import Link from 'next/link';
+import Datepicker from 'react-datepicker';
 
 interface Page1Props {
   onNext: () => void;
 }
 
-interface Props {}
+interface TimeOption {
+  label: string;
+  value: string;
+}
+
+interface CustomDatePickerProps {
+  selectedDate: Date | null;
+  onChange: (date: Date | null) => void;
+}
+
+const CustomDatePicker: React.FC<CustomDatePickerProps> = ({ selectedDate, onChange }) => {
+  const datepickerRef = useRef<any>(null);
+  const [isDatepickerOpen, setIsDatepickerOpen] = React.useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const handleIconClick = () => {
+    if (datepickerRef.current) {
+      datepickerRef.current.setOpen(!isInputFocused);
+    }
+  };
+
+  return (
+    <div className="relative w-full">
+      {/* <i className="absolute top-1/2 right-7 transform -translate-y-1/2 text-gray-500 z-10" onClick={handleIconClick}> */}
+      {/* Add your icon here, for example, using an SVG or an icon library */}
+      {/* {isInputFocused ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />} */}
+      {/* </i> */}
+      <Datepicker
+        ref={datepickerRef}
+        className="border-[#d7d7d7] w-full lg:w-full md:w-[300px] text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f] relative z-0"
+        placeholderText="Wed, 08, 2023"
+        selected={selectedDate}
+        onChange={(date) => onChange(date)}
+        onFocus={() => setIsInputFocused(true)}
+        onBlur={() => setIsInputFocused(false)}
+        customInput={<input type="text" onClick={handleIconClick} />} // Custom input element
+        onInputClick={() => {}} // Custom input element
+      />
+    </div>
+  );
+};
 
 const Page1: React.FC<Page1Props> = ({ onNext }) => {
   const [selectedLocationType, setSelectedLocationType] = useState('');
   const [eventName, setEventName] = useState('');
   const [eventDescription, setEventDescription] = useState('');
-  const [eventStartDate, setEventStartDate] = useState('');
+  const [eventStartTime, setEventStartTime] = useState<string>('');
+  const [isDropdownTimeOpen, setIsDropdownTimeOpen] = useState<boolean>(false);
+  const [isDropdownEndTimeOpen, setIsDropdownEndTimeOpen] = useState<boolean>(false);
+  const [selectedDate, setDate] = useState<Date | null>(null);
   const [eventEndDate, setEventEndDate] = useState('');
-  const [eventStartTime, setEventStartTime] = useState('');
-  const [eventEndTime, setEventEndTime] = useState('');
+  const [eventStartDate, setEventStartDate] = useState('');
+  // const [eventStartTime, setEventStartTime] = useState<string>('');
+  const [eventEndTime, setEventEndTime] = useState<string>('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSecondContainerVisible, setIsSecondContainerVisible] = useState(false);
   const [isThirdDivVisible, setIsThirdDivVisible] = useState(true);
@@ -118,6 +165,20 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
     // Add more location types as needed
   ];
 
+  const startEventTimeTypes = [
+    { label: '08:00 am', value: '08:00 pm' },
+    { label: '12:00 pm', value: '12:00 pm' },
+    { label: '03:00 pm', value: '03:00 pm' },
+    { label: '06:00 pm', value: '06:00 pm' },
+  ];
+
+  const endEventTimeTypes = [
+    { label: '08:00 am', value: '08:00 am' },
+    { label: '12:00 pm', value: '12:00 pm' },
+    { label: '03:00 pm', value: '03:00 pm' },
+    { label: '06:00 pm', value: '06:00 pm' },
+  ];
+
   const handleEventNameChange = (e: { target: { value: React.SetStateAction<string> } }) => {
     setEventName(e.target.value);
   };
@@ -140,16 +201,34 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
     // setPage1Complete(true);
   };
 
-  const handleStartTimeChange = (e: { target: { value: any } }) => {
-    const newStartTime = e.target.value;
-    setEventStartTime(newStartTime);
-    // setPage1Complete(true);
+  function handleStartTimeChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value;
+    setEventStartTime(newValue);
+    // ... rest of your logic
+  }
+
+  function handleEndTimeChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value;
+    setEventEndTime(newValue);
+    // ... rest of your logic
+  }
+
+  const handleDropdownTimeToggle = () => {
+    setIsDropdownTimeOpen(!isDropdownTimeOpen);
   };
 
-  const handleEndTimeChange = (e: { target: { value: any } }) => {
-    const newEndTime = e.target.value;
-    setEventEndTime(newEndTime);
-    // setPage1Complete(true);
+  const handleDropdownEndTimeToggle = () => {
+    setIsDropdownEndTimeOpen(!isDropdownEndTimeOpen);
+  };
+
+  const handleSelectOption = (selectedTime: string) => {
+    setEventStartTime(selectedTime);
+    setIsDropdownOpen(false);
+  };
+
+  const handleSelectEndTimeOption = (selectedTime: string) => {
+    setEventEndTime(selectedTime);
+    setIsDropdownOpen(false);
   };
 
   const handleDropdownToggle = () => {
@@ -171,46 +250,80 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
   return (
     <>
       <section className="page-1 event-dashboard w-full lg:px-[0px] md:px-0 max-sm:px-0 py-4 ">
-        <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
+        <div className="w-full flex flex-col border-[2px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="event-name w-full ">
             <input
-              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+              className="w-full border-[1px] py-[32px] max-sm:py-5 px-4 border-[#d7d7d7] focus:border-b-[#e0580c] focus:border-b-[2px] rounded-lg font-semibold text-3xl max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] outline-none  focus:placeholder-transparent"
               placeholder="Event Name"
+              minLength={0}
+              maxLength={20}
               type="text"
               value={eventName}
               onChange={handleEventNameChange}
             />
           </div>
           <div className="event-description w-full my-6">
-            <input
-              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+            <textarea
+              className="w-full border-[1px] px-4 py-6 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:border-b-[#e0580c] focus:border-b-[2px] outline-none focus:placeholder-transparent"
               placeholder="Description"
-              type="text"
               value={eventDescription}
+              minLength={0}
+              maxLength={300}
+              rows={3}
               onChange={handleEventDescriptionChange}
-            />
+            ></textarea>
           </div>
           <div className="event-date w-full flex flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
             <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1">
               <div className="w-[70px] text-xl font-semibold">Start</div>
               <div className=" w-full flex flex-row gap-1">
                 <div className="w-full">
-                  <input
+                  <label htmlFor="calendar">
+                    <CustomDatePicker selectedDate={selectedDate} onChange={setDate} />
+                  </label>
+
+                  {/* <input
                     className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f] "
                     placeholder="Wed, Oct, 08"
                     type="date"
                     value={eventStartDate}
                     onChange={handleStartDateChange}
-                  />
+                  /> */}
                 </div>
-                <div className="w-full">
+                <div className="w-full relative inline-block">
                   <input
                     className="border-[#d7d7d7] w-full text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
-                    placeholder="Wed, Oct, 08"
-                    type="time"
+                    placeholder="12:30pm"
+                    type="mixed"
                     value={eventStartTime}
                     onChange={handleStartTimeChange}
                   />
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                    onClick={handleDropdownTimeToggle}
+                  >
+                    {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
+                    {isDropdownTimeOpen ? <ArrowUp2 size={12} /> : <ArrowDown2 size={12} />}
+                  </div>
+
+                  {/* Dropdown Modal */}
+                  {isDropdownTimeOpen && (
+                    <div className="absolute w-[160px] flex flex-col content-center items-center justify-center top-full z-50 p-2 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7] rounded-lg overflow-hidden">
+                      <ul className="list-none p-0 m-0">
+                        {startEventTimeTypes.map((timeOption) => (
+                          <li
+                            key={timeOption.value}
+                            className="cursor-pointer py-2 px-8 w-full hover:bg-[#dedede] text-sm rounded-lg"
+                            onClick={() => handleSelectOption(timeOption.value)}
+                          >
+                            <span style={{ fontSize: '15px', color: '#020202', fontWeight: 'bold' }}>
+                              {timeOption.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -218,22 +331,51 @@ const Page1: React.FC<Page1Props> = ({ onNext }) => {
               <div className="w-[70px] text-xl font-semibold">End</div>
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">
-                  <input
+                  <label htmlFor="calendar">
+                    <CustomDatePicker selectedDate={selectedDate} onChange={setDate} />
+                  </label>
+                  {/* <input
                     className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f]"
                     placeholder="Wed, Oct, 08"
                     type="date"
                     value={eventEndDate}
                     onChange={handleEndDateChange}
-                  />
+                  /> */}
                 </div>
-                <div className="w-full">
+                <div className="w-full relative inline-block">
                   <input
-                    className="w-full border-[#d7d7d7] text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
-                    placeholder="Wed, Oct, 08"
-                    type="time"
+                    className="border-[#d7d7d7] w-full text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
+                    placeholder="12:30pm"
+                    type="mixed"
                     value={eventEndTime}
                     onChange={handleEndTimeChange}
                   />
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+                    onClick={handleDropdownEndTimeToggle}
+                  >
+                    {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
+                    {isDropdownEndTimeOpen ? <ArrowUp2 size={12} /> : <ArrowDown2 size={12} />}
+                  </div>
+
+                  {/* Dropdown Modal */}
+                  {isDropdownEndTimeOpen && (
+                    <div className="absolute w-[160px] flex flex-col content-center items-center justify-center top-full z-50 p-2 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7] rounded-lg overflow-hidden">
+                      <ul className="list-none p-0 m-0">
+                        {endEventTimeTypes.map((timeOption) => (
+                          <li
+                            key={timeOption.value}
+                            className="cursor-pointer py-2 px-8 hover:bg-[#dedede] text-sm rounded-lg"
+                            onClick={() => handleSelectEndTimeOption(timeOption.value)}
+                          >
+                            <span style={{ fontSize: '15px', color: '#020202', fontWeight: 'bold' }}>
+                              {timeOption.label}
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

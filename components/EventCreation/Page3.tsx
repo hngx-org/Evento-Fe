@@ -20,7 +20,7 @@ const Page3: React.FC<Page3Props> = (props) => {
   return (
     <>
       <section className="page-3 w-full lg:px-[0px] md:px-0 max-sm:px-0 pt-[64.66px] max-sm:pt-10 pb-6">
-        <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
+        <div className="w-full flex flex-col border-[2px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="w-full mb-12 text-center">
             <h1 className=" font-semibold text-3xl max-sm:text-xl leading-10">Event Created Successfully!</h1>
           </div>
@@ -33,15 +33,9 @@ const Page3: React.FC<Page3Props> = (props) => {
             </button>
             <button
               onClick={handleButtonClick}
-              className=" w-full text-center max-sm:w-full font-semibold text-base leading-6 py-4 px-1 mb-3 max-sm:mb-0 bg-[#e0580c] text-[#fefefe] rounded-lg"
+              className=" w-full text-center max-sm:w-full font-semibold text-base leading-6 py-4 px-1 mb-3 max-sm:mb-0 bg-[#fefefe] border-[1px] border-[#e0580c] text-[#e0580c] rounded-lg"
             >
               Copy event link
-            </button>
-            <button
-              onClick={props.onPrevious}
-              className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold rounded-lg"
-            >
-              Go back
             </button>
           </div>
         </div>

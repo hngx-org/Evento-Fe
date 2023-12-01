@@ -158,7 +158,7 @@ const Page2: React.FC<Page2Props> = (props) => {
   return (
     <>
       <section className="page-2 w-full lg:px-[0px] md:px-0 max-sm:px-0 pt-[49.5px] pb-6">
-        <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
+        <div className="w-full flex flex-col border-[2px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="h1 w-full mb-12 max-sm:mb-6 ">
             <h1 className=" font-semibold text-3xl max-sm:text-xl leading-10 text-[#000000]">Hey Pal, Almost done!</h1>
           </div>
@@ -174,20 +174,8 @@ const Page2: React.FC<Page2Props> = (props) => {
               />
             )}
 
-            {/* {selectedFile && isValidFileType && (
-              <div className="w-full h-full">
-                <Image
-                  src={selectedFile}
-                  width={500}
-                  height={278}
-                  alt="Uploaded"
-                  className="w-full rounded-3xl h-full object-cover"
-                />
-              </div>
-            )} */}
-
             <GalleryEdit
-              className="absolute bottom-[13px] right-4 cursor-pointer"
+              className="absolute bottom-[2%] right-[2%] sm:bottom-[13px] sm:right-4 cursor-pointer"
               size={24}
               color="#fefefe"
               onClick={openImageModal}
