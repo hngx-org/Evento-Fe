@@ -7,7 +7,8 @@ import ButtonB from '@/components/ui/Button';
 import Button from '@/components/ui/NewButton';
 import TelInput from '../TelInput';
 import { editUserProfile } from '@/http/profileapi';
-import { UserProfile, editUserAccount, getUserProfile, uploadUserImage } from '@/http/settingsapi';
+import { UserProfile, editUserAccount, getUserProfile } from '@/http/settingsapi';
+import { uploadUserImage } from '@/http/settingsapi';
 
 function EditProfile() {
   const [formData, setFormData] = useState<UserProfile>({

@@ -1,5 +1,6 @@
 import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
+import { AuthorizationResponse } from '@/@types';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -93,9 +94,17 @@ export const signUpWithGoogle = () => {
   return $AuthHttp.get('/google');
 };
 
+// export const revalidateAuth = async (props: { token: string }) => {
+//   try {
+//     const res = await $AuthHttp.get(`/authorize/${props.token}`);
+//     return res?.data;
+//   } catch (e: any) {
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
 export const revalidateAuth = async (props: { token: string }) => {
   try {
-    const res = await $AuthHttp.get(`/authorize/${props.token}`);
+    const res = await $AuthHttp.get(`/revalidate-login/${props.token}`);
     return res?.data;
   } catch (e: any) {
     throw e?.response?.data || { message: e.message };
@@ -147,5 +156,31 @@ export const logoutUser = async () => {
 
     // Use e.message as a fallback if e.response.data or e.response.data.message is not available
     throw e?.response?.data || { message: e.message };
+  }
+};
+
+// export const authorizeToken = async (props: { token: string }): Promise<AuthorizationResponse> => {
+//   try {
+//     const res = await $AuthHttp.post('/authorize', props);
+//     return res.data as AuthorizationResponse;
+//   } catch (e: any) {
+//     if (e.response) {
+//       throw e.response.data || { message: 'Unknown error' };
+//     } else {
+//       throw { message: e.message || 'Unknown error' };
+//     }
+//   }
+// };
+
+export const authorizeToken = async (token: string): Promise<AuthorizationResponse> => {
+  try {
+    const res = await $AuthHttp.post('/authorize', { token });
+    return res?.data as AuthorizationResponse;
+  } catch (e: any) {
+    if (e.response) {
+      throw e.response.data || { message: 'Unknown error' };
+    } else {
+      throw { message: e.message || 'Unknown error' };
+    }
   }
 };
