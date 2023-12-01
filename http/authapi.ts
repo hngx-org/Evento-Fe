@@ -2,7 +2,7 @@ import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
 import Cookies from 'js-cookie';
-import { getCookie, setCookie } from 'typescript-cookie'
+import { getCookie, setCookie, getCookies } from 'typescript-cookie'
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -235,7 +235,7 @@ const getSessionId = () => {
  // const sessionId = Cookies.get('connect.sid',  domain );
   const cookie = getCookie('connect.sid')
   console.log ('cookie')
-  const allCookie = getCookie()
+  const allCookie = getCookies()
   console.log = ('allCookie')
 
   if (sessionId) {
