@@ -60,25 +60,37 @@ const EditProfilePage = () => {
     const selectedImage = event.target.files && event.target.files[0];
 
     if (selectedImage) {
-      // Log the name of the selected image file
-      const imageBlob = new Blob([selectedImage], { type: selectedImage.type });
-
       setFormData((prevData) => ({ ...prevData, profileImage: selectedImage }));
 
-      const imageUrl = URL.createObjectURL(selectedImage);
-      setProfilePicURL(imageUrl);
+      // Check if selectedImage is a Blob object
+      if (selectedImage instanceof Blob) {
+        const imageUrl = URL.createObjectURL(selectedImage);
+        setProfilePicURL(imageUrl);
 
-      const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
+        const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
 
-      const profilePicContainer = document.getElementById('profilePicContainer');
+        const profilePicContainer = document.getElementById('profilePicContainer');
 
-      if (profilePicContainer) {
-        profilePicContainer.innerHTML = tempProfilPic;
+        if (profilePicContainer) {
+          profilePicContainer.innerHTML = tempProfilPic;
+        }
       }
     }
-
-    // handle the posting here
   };
+
+  useEffect(() => {
+    // Fetch user profile data from local storage
+    const storedUserProfile = localStorage.getItem('userProfile');
+    if (storedUserProfile) {
+      const parsedUserProfile = JSON.parse(storedUserProfile);
+      setFormData(parsedUserProfile);
+      // Set profilePicURL if applicable
+      // if (parsedUserProfile.profileImage) {
+      //   const imageUrl = URL.createObjectURL(parsedUserProfile.profileImage);
+      //   setProfilePicURL(imageUrl);
+      // }
+    }
+  }, []);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
     console.log(formData);
