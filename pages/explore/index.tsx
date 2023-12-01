@@ -6,6 +6,7 @@ import Button from '@/components/ui/NewButton';
 import { Music } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
 import React, { useState } from 'react';
+import withoutAuth from '@/helpers/withoutAuth';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -227,4 +228,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withoutAuth(Home);
