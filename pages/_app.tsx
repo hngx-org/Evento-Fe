@@ -1,10 +1,12 @@
 import '@/styles/globals.css';
 import '../styles/nprogress.css';
-import type { AppProps } from 'next/app';
-import { ToastContainer } from 'react-toastify';
+import '../styles/eventcreation.css';
 import 'react-toastify/dist/ReactToastify.css';
-import nProgress from 'nprogress';
+
+import type { AppProps } from 'next/app';
 import { Router } from 'next/router';
+import nProgress from 'nprogress';
+import { ToastContainer } from 'react-toastify';
 
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);

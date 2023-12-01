@@ -56,7 +56,9 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
       <div className=" w-full content-center justify-center  lg:px-[350px] max-sm:px-5 md:px-5 py-10  flex  flex-col">
         <div className="progress-bar lg:px-[0px] md:px-0 max-sm:px-0 w-full flex flex-col">
           <div className="w-full flex justify-between content-center">
-            <label htmlFor="progress-bar">Progress</label>
+            <label className="font-medium" htmlFor="progress-bar">
+              Progress
+            </label>
             {/* <p>{page === 1 ? '0%' : page === 2 ? '80%' : '100%'}</p> */}
           </div>
           <input
@@ -67,6 +69,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
             max={100}
             type="range"
             readOnly
+            onMouseDown={(e) => e.preventDefault()}
           />
           {page === 1 && <Page1 onNext={nextPage} />}
           {page === 2 && <Page2 onNext={nextPage} onPrevious={prevPage} />}
