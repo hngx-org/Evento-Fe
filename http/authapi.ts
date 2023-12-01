@@ -2,7 +2,7 @@ import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
 import Cookies from 'js-cookie';
-import { getCookie, setCookie, getCookies } from 'typescript-cookie'
+import { getCookie, setCookie, getCookies } from 'typescript-cookie';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -187,9 +187,6 @@ export const authorizeToken = async (token: string): Promise<AuthorizationRespon
   }
 };
 
-
-
-
 // export const fetchAuthToken = async () => {
 //   try {
 //     const authResponse = await $AuthHttp.get('/authorize');
@@ -197,7 +194,7 @@ export const authorizeToken = async (token: string): Promise<AuthorizationRespon
 //     if (authResponse.status === 200) {
 //       // Get the session ID from the response headers
 //       const sessionId = authResponse.headers.get('set-cookie');
-      
+
 //       if (sessionId) {
 //         // Set the session ID in cookies
 //         Cookies.set('connect.sid', sessionId, { path: '/' });
@@ -222,21 +219,16 @@ export const authorizeToken = async (token: string): Promise<AuthorizationRespon
 //   }
 // };
 
-
-
-
-
-
 const getSessionId = () => {
   // Specify the domain where the cookie is set
   const domain = 'evento-qo6d.onrender.com';
 
   // Try to get the session ID from cookies with the specified domain
- const sessionId = Cookies.get('connect.sid' );
-  const cookie = getCookie('connect.sid')
-  console.log ('cookie')
-  const allCookie = getCookies()
-  console.log ('allCookie')
+  const sessionId = Cookies.get('connect.sid');
+  const cookie = getCookie('connect.sid');
+  console.log('cookie');
+  const allCookie = getCookies();
+  console.log('allCookie');
 
   if (sessionId) {
     console.log('Retrieved Session ID from Cookies:', sessionId);
@@ -256,7 +248,7 @@ export const fetchAuthToken = async () => {
     if (sessionId) {
       // Include the session ID in the request headers
       const headers = {
-        'Cookie': `connect.sid=${sessionId}`,
+        Cookie: `connect.sid=${sessionId}`,
       };
 
       // Make the API call with the session ID in headers

@@ -134,3 +134,21 @@ export interface IsAuthenticatedResult {
 export interface CustomError {
   status?: number;
 }
+
+export interface EventDataProps {
+  title: string;
+  description: string;
+  imageURL: string;
+  startDate: string;
+  endDate: string;
+  time: string;
+  location: string;
+  capacity: string;
+  entranceFee: string | number;
+  eventType: string;
+  organizerID: string;
+  categoryName: string;
+  startTime: string;
+  endTime: string;
+  liveLink: string;
+}

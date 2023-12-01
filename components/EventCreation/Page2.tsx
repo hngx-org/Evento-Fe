@@ -1,12 +1,16 @@
-import React, { PropsWithChildren, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
 
 import { ArrowDown2, ArrowUp2, GalleryEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { FaXmark } from 'react-icons/fa6';
+import { EventDataProps } from '@/@types';
+import $http from '@/http/axios';
 
 interface Page2Props extends PropsWithChildren<any> {
   onNext: () => void;
   onPrevious: () => void;
+  data: EventDataProps;
+  setState: Dispatch<SetStateAction<EventDataProps>>;
 }
 
 interface EventType {
@@ -23,7 +27,7 @@ interface TicketType {
 }
 
 interface Props {}
-
+const baseUrl = 'https://evento-qo6d.onrender.com/v1/';
 const Page2: React.FC<Page2Props> = (props) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
@@ -35,11 +39,8 @@ const Page2: React.FC<Page2Props> = (props) => {
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isValidFileType, setIsValidFileType] = useState(true);
   // const [capacity, setCapacity] = useState('Unlimited');
-  const [selectedEventType, setSelectedEventType] = useState('');
-  const [selectedCapacity, setSelectedCapacity] = useState('');
-  const [selectedTicketType, setSelectedTicketType] = useState('');
+  const [selectedTicketType, setSelectedTicketType] = useState('Free');
   const [isSecondDivVisible, setIsSecondDivVisible] = useState(false);
-  const [ticketPrice, setTicketPrice] = useState('');
 
   const openImageModal = () => {
     setIsModalImageOpen(true);
@@ -50,25 +51,36 @@ const Page2: React.FC<Page2Props> = (props) => {
     setIsFileTypeModalOpen(false);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0];
 
     if (file) {
-      const allowedFileTypes = ['jpg', 'png', 'svg'];
-      const fileType = file.name.split('.').pop()?.toLowerCase();
-
-      if (fileType && allowedFileTypes.includes(fileType)) {
-        // Valid file type
-        setSelectedFile(URL.createObjectURL(file));
-        closeImageModal();
-      } else {
-        // Invalid file type
-        setIsValidFileType(false);
-        setIsFileTypeModalOpen(true);
-        // Clear the selectedFile state
-        setSelectedFile(null);
-      }
+      processFile(file);
     }
+  };
+
+  const handleDragOver = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    processFile(file);
+  };
+
+  const processFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = async () => {
+      const base64Image = reader.result as string; // Remove "data:image/png;base64," prefix
+      props.setState((prevState) => {
+        return { ...prevState, imageURL: base64Image };
+      });
+    };
+
+    reader.readAsDataURL(file);
+
+    closeImageModal();
   };
 
   const handleResetUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,12 +121,16 @@ const Page2: React.FC<Page2Props> = (props) => {
   };
 
   const handleEventTypeSelect = (eventType: EventType) => {
-    setSelectedEventType(eventType.label);
+    props.setState((prevState) => {
+      return { ...prevState, categoryName: eventType.label };
+    });
     setIsDropdownOpen(false);
   };
 
   const handleCapacitySelect = (capacityType: CapacityType) => {
-    setSelectedCapacity(capacityType.label);
+    props.setState((prevState) => {
+      return { ...prevState, capacity: capacityType.label };
+    });
     setIsDropdownCapacityOpen(false);
   };
 
@@ -125,7 +141,6 @@ const Page2: React.FC<Page2Props> = (props) => {
 
   const handleTicketTypeSelect = (selectedType: TicketType) => {
     setSelectedTicketType(selectedType.label);
-    setTicketPrice(selectedType.price);
 
     // Show the second div if the selected type is 'Premium'
     setIsSecondDivVisible(selectedType.label === 'Premium');
@@ -155,6 +170,13 @@ const Page2: React.FC<Page2Props> = (props) => {
     { label: 'Premium', price: '$100' },
   ];
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    props.setState((prevState) => {
+      return { ...prevState, [id]: value };
+    });
+  };
+
   return (
     <>
       <section className="page-2 w-full lg:px-[0px] md:px-0 max-sm:px-0 pt-[49.5px] pb-6">
@@ -166,7 +188,7 @@ const Page2: React.FC<Page2Props> = (props) => {
             {!selectedFile && (
               <Image
                 className="w-full h-[278px] object-fill"
-                src={'../../Create-Events/Event Image.svg'}
+                src={props.data.imageURL}
                 alt="event-image"
                 width={1280}
                 height={800}
@@ -205,7 +227,11 @@ const Page2: React.FC<Page2Props> = (props) => {
                       <FaXmark />
                     </div>
                   </div>
-                  <div className=" max-w-[327px] flex flex-col content-center items-center gap-6">
+                  <div
+                    className=" max-w-[327px] flex flex-col content-center items-center gap-6"
+                    onDrop={handleDrop}
+                    onDragOver={handleDragOver}
+                  >
                     <div className="flex content-center items-center justify-center bg-[#ebebeb] w-16 h-16 rounded-full">
                       <Image src={'../../Create-Events/$icon-line-upload.svg'} width={32} height={32} alt="" />
                     </div>
@@ -217,7 +243,12 @@ const Page2: React.FC<Page2Props> = (props) => {
                     </p>
                     <label className="bg-[#e0580c] text-[#fefefe] px-5 py-4 rounded-lg cursor-pointer hover:bg-opacity-90 shadow-lg">
                       Browse to Upload
-                      <input type="file" className="hidden" onChange={handleFileChange} accept="image/*" />
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                        accept="image/jpeg,image/png,image/svg+xml"
+                      />
                     </label>
                   </div>
                 </div>
@@ -263,11 +294,12 @@ const Page2: React.FC<Page2Props> = (props) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Select event Category</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
                 placeholder="Choose Event type"
                 type="text"
-                value={selectedEventType}
                 readOnly
+                value={props.data.categoryName}
+                onClick={handleDropdownToggle}
               />
               <div
                 className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
@@ -297,11 +329,12 @@ const Page2: React.FC<Page2Props> = (props) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Input capacity Level</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
                 placeholder="Choose capacity Limit"
                 type="text"
-                value={selectedCapacity}
+                value={props.data.capacity}
                 readOnly
+                onClick={handleDropdownCapacityToggle}
               />
               <div
                 className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
@@ -331,10 +364,11 @@ const Page2: React.FC<Page2Props> = (props) => {
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Ticket type</h2>
             <div className="relative inline-block w-full">
               <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
                 placeholder="Select Ticket type"
                 type="text"
                 value={selectedTicketType}
+                onClick={handleDropdownTicketToggle}
                 readOnly
               />
               <div
@@ -364,16 +398,16 @@ const Page2: React.FC<Page2Props> = (props) => {
           {/* Second Div - Displayed only when 'Premium' is selected */}
           {isSecondDivVisible && (
             <div className="w-full relative flex flex-col mb-10 content-center">
-              <label htmlFor="ticketPrice" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
+              <label htmlFor="entranceFee" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
                 Price
               </label>
               <input
-                id="ticketPrice"
+                id="entranceFee"
                 className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
                 placeholder=""
                 type="text"
-                value={ticketPrice}
-                readOnly
+                onChange={handleChange}
+                value={props.data.entranceFee}
               />
             </div>
           )}
