@@ -1,3 +1,4 @@
+import { Location, Timer, Timer1 } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -27,53 +28,43 @@ interface Props {
 function EventCard({ imagePath, date, title, location, price, tag, tag_image }: Props) {
   const [images] = useState(['/assets/attend3.jpg', '/assets/attend1.jpg', '/assets/attend2.jpg']);
   return (
-    <div className={`border border-Grey-G20 p-4 pb-6 rounded-lg`}>
-      <div className="relative w-full aspect-[367/272] rounded-lg overflow-hidden mb-7">
+    <div className={`border border-Grey-G80/50 card-shadow rounded-lg`}>
+      <div className="relative w-full h-[180px] rounded-t-lg overflow-hidden">
         <Image src={imagePath} fill alt="Event Image" className="object-cover" />
-        <div className="h-full w-full bg-black-main/50 absolute top-0 left-0 p-4">
-          {tag_image && (
-            <span className="flex items-center px-4 font-bold gap-2 tracking-[-0.5px] py-1 bg-black-main/40 w-fit rounded-full p-2 text-white-100">
-              <Image src={tag_image} height={24} width={24} alt="Tag Icon" />
-              <span className={nunito.className}>{tag}</span>
-            </span>
-          )}
-        </div>
       </div>
-      <span className={`${nunito.className} font-medium text-sm text-Grey-G90`}>{date}</span>
-      <h2 className={`${montserrat.className} text-Grey-G800 text-xl font-bold pt-1 pb-3`}>{title}</h2>
-      <p className={`${nunito.className} text-Grey-G500 flex items-center gap-0.5 mb-4`}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M12 13.4299C13.7231 13.4299 15.12 12.0331 15.12 10.3099C15.12 8.58681 13.7231 7.18994 12 7.18994C10.2769 7.18994 8.88 8.58681 8.88 10.3099C8.88 12.0331 10.2769 13.4299 12 13.4299Z"
-            stroke="#E0580C"
-            strokeWidth="1.5"
-          />
-          <path
-            d="M3.62 8.49C5.59 -0.169998 18.42 -0.159997 20.38 8.5C21.53 13.58 18.37 17.88 15.6 20.54C13.59 22.48 10.41 22.48 8.39 20.54C5.63 17.88 2.47 13.57 3.62 8.49Z"
-            stroke="#E0580C"
-            strokeWidth="1.5"
-          />
-        </svg>
-        <span className={`${nunito.className} font-medium text-gray-500`}></span>
-        {location}
-      </p>
-      <div className={`${montserrat.className} flex items-center`}>
-        <div className="flex items-center">
-          {images.map((item, index) => {
-            return (
-              <div key={index} className="h-9 w-9 -ml-1.5 border-2 border-Grey-G40 rounded-full overflow-hidden">
-                <Image src={item} height={36} width={36} alt="Attendant" className="object-top object-cover" />
-              </div>
-            );
-          })}
-          <div className="h-9 w-9 rounded-full grid place-content-center font-semibold -ml-1.5 text-sm bg-primary-100 text-white-100 border-2 border-Grey-G40">
-            53+
+      <div className="p-4">
+        <div className={`${nunito.className} flex justify-between items-center mb-1`}>
+          <span className={`font-bold text-sm text-orange`}>Mon. Oct 30</span>
+          <span className="text-primary-100 bg-secondary-100 rounded block px-3 py-1">
+            {price !== 'free' && '$'}
+            {price}
+          </span>
+        </div>
+        <h2
+          className={`${montserrat.className} text-Grey-G800 text-lg whitespace-nowrap overflow-hidden text-ellipsis sm:text-xl font-bold pt-1 pb-2`}
+        >
+          {title}
+        </h2>
+        <p className={`${nunito.className} text-Grey-G500 text-sm flex items-center gap-0.5 mb-1`}>
+          <Location color="#303030" size={16} />
+          <span className={`${nunito.className} font-medium text-Grey-G90`}>{location}</span>
+        </p>
+        <p className={`${nunito.className} text-Grey-G500 flex items-center gap-0.5 mb-2`}>
+          <Timer1 size={16} color="#303030" />
+          <span className={`${nunito.className} text-sm font-medium text-Grey-G90`}>3:00PM WAT</span>
+        </p>
+        <div className={`${montserrat.className} flex items-center`}>
+          <div className="flex items-center">
+            {images.map((item, index) => {
+              return (
+                <div key={index} className="h-8 w-8 first:ml-0 -ml-1.5 rounded-full overflow-hidden">
+                  <Image src={item} height={32} width={32} alt="Attendant" className="object-top object-cover" />
+                </div>
+              );
+            })}
+            <span className={`${nunito.className} pl-3 text-sm font-medium`}>+32 People registered</span>
           </div>
         </div>
-        <span className="text-Grey-G800 text-xl font-bold ml-auto capitalize">
-          {price !== 'free' && '$'}
-          {price}
-        </span>
       </div>
     </div>
   );

@@ -1,21 +1,37 @@
 import { CalendarIcon } from '@/public/assets/profile/icons';
 import React from 'react';
 import Button from '../ui/Button';
+import { Montserrat, Nunito } from 'next/font/google';
 
 interface NoEventProps {
   type: string;
 }
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
 
 const NoEvent: React.FC<NoEventProps> = ({ type }) => {
   return (
-    <div className="event bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 ">
+    <div
+      className={` ${nunito.className} event bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 `}
+    >
       <div className="rounded-[50%] w-[160px] h-[160px] bg-secondary-100 flex justify-center items-center">
         <CalendarIcon />
       </div>
-      <h4 className=" text-base lg:text-2xl max-w-[230px] lg:max-w-none font-semibold  text-center">
+      <h4
+        className={` ${montserrat.className} text-base lg:text-2xl max-w-[230px] md:max-w-none font-semibold  text-center`}
+      >
         Hey there! 👋 It seems like this corner is a bit quiet
       </h4>
-      <p className="text-sm lg:text-base max-w-[220px] lg:max-w-none text-center">
+      <p className="text-sm lg:text-base max-w-[220px] md:max-w-none text-center">
         Click the create event button to start creating events
       </p>
       <Button
