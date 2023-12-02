@@ -1,6 +1,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Nunito } from 'next/font/google';
 import React from 'react';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
 const links = [
   {
@@ -30,7 +37,7 @@ export default function EventManagementHeader() {
             pathname.toLowerCase() === item.href.toLowerCase()
               ? 'border-primary-100 text-Grey-G700'
               : 'text-Grey-G50 border-Grey-G50'
-          } w-1/3 flex justify-center items-center text-center py-2 sm:py-4 sm:px-2 border-b-[3px] sm:text-lg font-semibold sm:font-bold`}
+          } w-1/3 flex justify-center items-center text-center py-2 sm:py-4 sm:px-2 border-b-[3px] text-base sm:text-xl sm:font-semibold font-bold`}
         >
           {item.name}
         </Link>
