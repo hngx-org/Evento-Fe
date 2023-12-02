@@ -7,6 +7,8 @@ export type Category = {
   image: string;
 };
 
+declare module 'nprogress';
+
 export type Events = {
   image: string;
   date: string;
@@ -19,6 +21,15 @@ export type Events = {
 export type Select = {
   options: { name: string }[];
   color: 'light' | 'dark';
+  type: 'tel' | 'normal';
+  selected: { name: string; path?: string };
+  setSelected: React.Dispatch<
+    React.SetStateAction<{
+      name: string;
+      path?: string;
+    }>
+  >;
+  handleSelect: Function;
 };
 
 export type Switch = {
@@ -49,4 +60,95 @@ export interface ToastProps {
   progress?: undefined;
   theme?: ToastTheme;
   type?: ToastVariant;
+}
+
+export type Data = {
+  title: string;
+  description: string;
+  buttonText: string;
+};
+
+// Password interface
+export interface PasswordPopoverProps {
+  password: string;
+  children: React.ReactNode;
+}
+
+export interface PasswordRequirementProps {
+  meets: boolean;
+  label: string;
+}
+
+export interface ProgressBarProps {
+  color: string;
+  value: number;
+}
+
+export type inputErrorMessage = {
+  errorMessage: string;
+  inputName: string;
+  isValid: boolean;
+};
+
+export interface Notification {
+  id: number;
+  text: string;
+  read: boolean;
+  date: string;
+}
+
+export interface NotificationsProps {
+  unreadNotifications: (count: number) => void;
+  notificationsRef: React.RefObject<HTMLDivElement>;
+}
+
+export type AuthResponse = {
+  token: string;
+  user: User;
+};
+
+export interface AuthContextProps {
+  auth: AuthResponse | undefined;
+  email: string;
+  redirect: string;
+  userCameFrom: string | undefined;
+  userCameFromForOAuth: string | undefined;
+  handleAuth: (value: AuthResponse | undefined) => void;
+  handleEmail: (value: string) => void;
+  handleRedirect: (value: string) => void;
+  handleUserCameFrom: (value: string | undefined) => void;
+  handleUserCameFromForOAuth: (value: string | undefined) => void;
+}
+
+export interface AuthorizationResponse {
+  userId: string;
+  token: string;
+  status: number;
+}
+
+export interface IsAuthenticatedResult {
+  mutate: (token: string) => void;
+  authenticatedState?: boolean;
+}
+
+export interface CustomError {
+  status?: number;
+}
+
+export interface EventDataProps {
+  title: string;
+  description: string;
+  imageURL: string;
+  startDate: string;
+  endDate: string;
+  time: string;
+  location: string;
+  capacity: string;
+  entranceFee: string | number;
+  eventType: string;
+  organizerID: string;
+  categoryName: string;
+  startTime: string;
+  endTime: string;
+  liveLink: string;
 }

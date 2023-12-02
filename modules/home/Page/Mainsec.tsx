@@ -20,12 +20,12 @@ function Mainsec() {
       sm:mx-[105] items-center justify-center xl:flex-row-reverse xl:gap-[162px]"
     >
       <div className="flex flex-row space-x-4">
-        <div className="flex flex-col space-y-4">
+        <div className="flex  flex-col space-y-5">
           <Image src={top} alt="img" width={300} height={100} />
           <Image src={mid} alt="img" width={300} height={280} />
           <Image src={but} alt="img" width={300} height={100} />
         </div>
-        <div className="flex flex-col space-y-4">
+        <div className="flex flex-col space-y-5">
           <Image src={butt} alt="img" width={280} height={265} />
           <Image src={butd} alt="img" width={280} height={265} />
         </div>
@@ -51,7 +51,7 @@ function Mainsec() {
         <Link href={'/create-event'}>
           <Button
             styles={
-              ' w-[400px] h-auto py-4 rounded-lg item-center justify-center font-semibold  bg-primary-100 flex gap-2 text-white-100'
+              ' w-[400px] h-auto py-4 rounded-lg item-center px-6 justify-center font-semibold  bg-primary-100 flex gap-2 text-white-100'
             }
             title={''}
           >

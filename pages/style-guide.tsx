@@ -13,7 +13,7 @@ import {
   UserSquare,
 } from 'iconsax-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { CodeBlock, a11yDark } from 'react-code-blocks';
+// import { CodeBlock, a11yDark } from 'react-code-blocks';
 import useDisclosure from '../hooks/useDisclosure';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@ui/SelectInput';
 import { notify } from '@ui/Toast';
@@ -28,7 +28,8 @@ function EventoCodeBlock({
   language: string;
   showLineNumbers: boolean;
 }) {
-  return <CodeBlock text={code} language={language} showLineNumbers={showLineNumbers} theme={a11yDark} />;
+  return <p />;
+  // <CodeBlock text={code} language={language} showLineNumbers={showLineNumbers} theme={a11yDark} />;
 }
 
 const codes = [

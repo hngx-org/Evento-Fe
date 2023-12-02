@@ -12,6 +12,7 @@ export default function HomeLayout({ children }: { children: React.ReactNode }) 
   return (
     <main className={workSans.variable}>
       <Homenav />
+
       {children}
       <Homefooter />
     </main>

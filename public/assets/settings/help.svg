@@ -2,13 +2,13 @@
 <g filter="url(#filter0_dd_884_9797)">
 <circle cx="35" cy="34" r="32" fill="#1B1B1B"/>
 <circle cx="35" cy="34" r="32" fill="white"/>
-<circle cx="35" cy="34" r="31" stroke="#CBCBCB" stroke-opacity="0.933333" stroke-width="2"/>
-<path d="M28.9996 28.2509C28.9996 28.2509 29.0896 26.1883 31.0959 24.5345C32.2872 23.5526 33.7179 23.2682 34.9998 23.2507C36.1705 23.2364 37.2167 23.4345 37.8424 23.7395C38.9118 24.2633 41 25.5383 41 28.2509C41 31.1053 39.1762 32.3991 37.103 33.8248C35.0298 35.2504 34.4998 36.6486 34.4998 38.2512" stroke="#1B1B1B" stroke-width="2.24601" stroke-miterlimit="10" stroke-linecap="round"/>
+<circle cx="35" cy="34" r="31" stroke="#CBCBCB" stroke-opacity="0.933333" strokeWidth="2"/>
+<path d="M28.9996 28.2509C28.9996 28.2509 29.0896 26.1883 31.0959 24.5345C32.2872 23.5526 33.7179 23.2682 34.9998 23.2507C36.1705 23.2364 37.2167 23.4345 37.8424 23.7395C38.9118 24.2633 41 25.5383 41 28.2509C41 31.1053 39.1762 32.3991 37.103 33.8248C35.0298 35.2504 34.4998 36.6486 34.4998 38.2512" stroke="#1B1B1B" strokeWidth="2.24601" strokeMiterlimit="10" stroke-linecap="round"/>
 <path d="M34.4994 44.9993C35.6041 44.9993 36.4996 44.1038 36.4996 42.9992C36.4996 41.8945 35.6041 40.999 34.4994 40.999C33.3948 40.999 32.4993 41.8945 32.4993 42.9992C32.4993 44.1038 33.3948 44.9993 34.4994 44.9993Z" fill="#1B1B1B"/>
 </g>
 <defs>
-<filter id="filter0_dd_884_9797" x="0" y="0" width="70" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<filter id="filter0_dd_884_9797" x="0" y="0" width="70" height="70" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+<feFlood floodOpacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="1"/>
 <feGaussianBlur stdDeviation="1"/>

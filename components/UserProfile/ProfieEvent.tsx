@@ -4,6 +4,7 @@ import Events from './Events';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import FilterModal from './FilterModal';
 
 interface SwiperElement extends Element {
   swiper?: Swiper; // Define 'swiper' as a property of the Element
@@ -60,7 +61,7 @@ const ProfileEvent: React.FC = () => {
             id="create-events"
             onClick={slideToCreateEvents}
           >
-            Create Events
+            Created Events
           </div>
           <div
             className="w-[50%] items-center justify-center flex font-bold text-base lg:text-xl cursor-pointer transition border-b-[3px] border-[#C0C0C0]"
@@ -72,8 +73,8 @@ const ProfileEvent: React.FC = () => {
         </div>
         <div className="swiper-wrapper w-full relative ">
           <div className="swiper-slide" style={{ width: '100%' }}>
-            {/* <NoEvent type="create" /> */}
-            <Events type="create" />
+            <NoEvent type="create" />
+            {/* <Events type="create" /> */}
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
             <Events type="attend" />

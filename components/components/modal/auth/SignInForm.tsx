@@ -20,11 +20,16 @@ const SignInForm = () => {
       {!forgotPassword ? (
         <>
           <AuthTitle heading="Welcome to Evento" subHeading="Sign in to Continue using Evento" />
-          <button className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center mt-12">
+          <button className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center mt-10 sm:mt-12">
             <Image src="/google.svg" alt="Google icon" width={20} height={20} />
             <span className="text-center text-stone-900 text-base font-normal leading-normal">Sign in with Google</span>
           </button>
-          <div className="pt-6">
+          <div className="flex items-center gap-[10px] my-6">
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+            <div className="text-center text-neutral-500 text-sm font-normal leading-tight">OR</div>
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+          </div>
+          <div>
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -46,15 +51,9 @@ const SignInForm = () => {
               placeholder="Password"
             />
           </div>
-          <button
-            onClick={handleSignIn}
-            className="px-5 py-4 bg-orange-600 rounded-lg shadow text-base font-normal w-full mt-12 leading-normal text-white-100 mb-2"
-          >
-            Continue
-          </button>
           <div className="flex justify-between items-center">
             <div className="gap-[6px] flex items-center">
-              <input type="checkbox" name="remember-me" id="remember-me" />
+              <input type="checkbox" name="remember-me" id="remember-me" className=" accent-orange-600" />
               Remember me
             </div>
             <button
@@ -64,6 +63,12 @@ const SignInForm = () => {
               Forgot password?
             </button>
           </div>
+          <button
+            onClick={handleSignIn}
+            className="px-5 py-4 bg-orange-600 rounded-lg shadow text-base font-normal w-full mt-12 leading-normal text-white-100 mb-2"
+          >
+            Continue
+          </button>
         </>
       ) : (
         <>
