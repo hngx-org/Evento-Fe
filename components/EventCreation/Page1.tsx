@@ -87,11 +87,18 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
   const [isSecondContainerVisible, setIsSecondContainerVisible] = useState(false);
   const [isThirdDivVisible, setIsThirdDivVisible] = useState(true);
   const [suggestions, setSuggestions] = useState<string[]>([]);
-
+  const isAllInputFilled =
+    data.title === '' ||
+    data.description === '' ||
+    data.startDate === '' ||
+    data.startTime === '' ||
+    data.endTime === '' ||
+    data.endDate === '' ||
+    (data.eventType === 'Physical' && data.location === '') ||
+    (data.eventType === 'Virtual' && data.liveLink === '');
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, id } = e.target;
     setState((prevState) => {
-      // if((id === "title" && data.title.length > 30) || (id === "description" && data.description.length > 100)){}
       return { ...prevState, [id]: value };
     });
   };
@@ -136,8 +143,6 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
     // Close the dropdown
     setIsDropdownOpen(false);
   };
-
-  const nextPage = () => {};
 
   return (
     <>
@@ -304,7 +309,8 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
           )}
           <button
             onClick={onNext}
-            className=" text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg font-semibold"
+            className="text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
+            disabled={isAllInputFilled}
           >
             Next
           </button>

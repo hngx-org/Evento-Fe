@@ -45,10 +45,10 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   function progress() {
     switch (page) {
       case 1:
-        return 'w-1/2';
+        return 'w-0';
         break;
       case 2:
-        return 'w-3/4';
+        return 'w-1/2';
         break;
       case 3:
         return 'w-full';

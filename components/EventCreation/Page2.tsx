@@ -32,15 +32,13 @@ const Page2: React.FC<Page2Props> = (props) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
   const [isDropdownTicketTypeOpen, setIsDropdownTicketTypeOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [isModalTicketOpen, setIsModalTicketOpen] = useState(false);
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
   const [isFileTypeModalOpen, setIsFileTypeModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isValidFileType, setIsValidFileType] = useState(true);
-  // const [capacity, setCapacity] = useState('Unlimited');
   const [selectedTicketType, setSelectedTicketType] = useState('Free');
   const [isSecondDivVisible, setIsSecondDivVisible] = useState(false);
+  const isAllInputFilled = props.data.capacity === '' || props.data.entranceFee === '';
 
   const openImageModal = () => {
     setIsModalImageOpen(true);
@@ -66,7 +64,12 @@ const Page2: React.FC<Page2Props> = (props) => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
-    processFile(file);
+    const acceptedMimeType = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/jpg'];
+    if (acceptedMimeType.includes(file.type)) {
+      processFile(file);
+    } else {
+      setIsFileTypeModalOpen(true);
+    }
   };
 
   const processFile = (file: File) => {
@@ -81,31 +84,6 @@ const Page2: React.FC<Page2Props> = (props) => {
     reader.readAsDataURL(file);
 
     closeImageModal();
-  };
-
-  const handleResetUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
-
-    setIsValidFileType(true);
-    setIsFileTypeModalOpen(false);
-    closeImageModal(); // Close the file upload modal
-    // Clear the selectedFile state
-    if (file) {
-      const allowedFileTypes = ['jpg', 'png', 'svg'];
-      const fileType = file.name.split('.').pop()?.toLowerCase();
-
-      if (fileType && allowedFileTypes.includes(fileType)) {
-        // Valid file type
-        setSelectedFile(URL.createObjectURL(file));
-        closeImageModal();
-      } else {
-        // Invalid file type
-        setIsValidFileType(false);
-        setIsFileTypeModalOpen(true);
-        // Clear the selectedFile state
-        setSelectedFile(null);
-      }
-    }
   };
 
   const handleDropdownToggle = () => {
@@ -196,18 +174,6 @@ const Page2: React.FC<Page2Props> = (props) => {
               />
             )}
 
-            {/* {selectedFile && isValidFileType && (
-              <div className="w-full h-full">
-                <Image
-                  src={selectedFile}
-                  width={500}
-                  height={278}
-                  alt="Uploaded"
-                  className="w-full rounded-3xl h-full object-cover"
-                />
-              </div>
-            )} */}
-
             <GalleryEdit
               className="absolute bottom-[13px] right-4 cursor-pointer"
               size={24}
@@ -258,7 +224,11 @@ const Page2: React.FC<Page2Props> = (props) => {
             {/* Modal - Invalid File Type */}
             {isFileTypeModalOpen && (
               <div className="fixed z-50 bg-[#080809] bg-opacity-20 inset-0 flex items-center justify-center ">
-                <div className="bg-[#feeceb] flex flex-col items-center justify-center content-center border-[2px] border-[#f04438] py-[60px] w-[548px] max-sm:w-[390px]  text-center rounded-lg shadow-md">
+                <div
+                  className="bg-[#feeceb]  flex flex-col items-center justify-center content-center border-[2px] border-[#f04438] py-[60px] w-[548px] max-sm:w-[390px]  text-center rounded-lg shadow-md"
+                  onDrop={handleDrop}
+                  onDragOver={handleDragOver}
+                >
                   <div className=" max-w-[327px] flex flex-col content-center items-center gap-6">
                     <div className="flex content-center items-center justify-center bg-[#f04438] w-16 h-16 rounded-full">
                       <FaXmark color="#fefefe" size={32} />
@@ -270,7 +240,12 @@ const Page2: React.FC<Page2Props> = (props) => {
                     </p>
                     <label className="bg-[#e0580c] text-[#fefefe] px-5 py-4 rounded-lg cursor-pointer hover:bg-opacity-90 shadow-lg">
                       Reset Upload
-                      <input type="file" className="hidden" onChange={handleResetUpload} accept="image/*" />
+                      <input
+                        type="file"
+                        className="hidden"
+                        onChange={handleFileChange}
+                        accept="image/jpeg,image/png,image/svg+xml"
+                      />
                     </label>
                   </div>
                 </div>
@@ -413,7 +388,8 @@ const Page2: React.FC<Page2Props> = (props) => {
           )}
           <button
             onClick={props.onNext}
-            className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg"
+            className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:opacity-75 disabled:cursor-not-allowed"
+            disabled={isAllInputFilled}
           >
             Create event
           </button>
