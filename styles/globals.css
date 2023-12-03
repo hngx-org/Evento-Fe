@@ -93,8 +93,17 @@ body.mobile-menu-open {
     padding: 96px 10px 96px 10px;
   }
 }
+/* profile page */
 
 .Typewriter__cursor {
   /* Set the color to transparent */
   color: transparent !important; /* Use !important to override any other styles */
 }
+
+.swiper-slide {
+  height: 0px !important;
+}
+.swiper-slide-active {
+  height: fit-content !important;
+}
+/* profile page */

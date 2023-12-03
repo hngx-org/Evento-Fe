@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import NoEvent from './NoEvent';
 import Events from './Events';
 import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import FilterModal from './FilterModal';
+import { eventType, getUserEvents } from '@/http/profileapi';
 
 interface SwiperElement extends Element {
   swiper?: Swiper; // Define 'swiper' as a property of the Element
 }
 
 const ProfileEvent: React.FC = () => {
+  const [events, setEvents] = useState<eventType[]>([]);
   useEffect(() => {
     new Swiper('.swiper-container', {
       slidesPerView: 1,
@@ -20,6 +22,8 @@ const ProfileEvent: React.FC = () => {
         clickable: true,
       },
     });
+
+    getUserEvents(setEvents);
   }, []);
 
   const slideToCreateEvents = () => {
@@ -49,7 +53,7 @@ const ProfileEvent: React.FC = () => {
   };
 
   return (
-    <div className=" min-w-[358px] w-[100%] lg:w-[906px]  relative flex flex-col  rounded-[12px] overflow-hidden ">
+    <div className="  w-[100%] lg:w-[906px]  relative flex flex-col  rounded-[12px] overflow-hidden ">
       {/* <div className="pagination w-full h-[3px] flex bg-[#C0C0C0] mb-[50px]">
         <div className="w-[50%] h-full " />
         <div className="w-[50%] h-full bg-primary-100 " />
@@ -71,13 +75,14 @@ const ProfileEvent: React.FC = () => {
             Attended Events
           </div>
         </div>
-        <div className="swiper-wrapper w-full relative ">
+        <div className="swiper-wrapper w-full relative  ">
           <div className="swiper-slide" style={{ width: '100%' }}>
-            <NoEvent type="create" />
             {/* <Events type="create" /> */}
+            {events.length > 0 ? <Events type="create" events={events} /> : <NoEvent type="create" />}
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
-            <Events type="attend" />
+            <NoEvent type="attend" />
+            {/* <Events type="attend" /> */}
           </div>
         </div>
       </div>
