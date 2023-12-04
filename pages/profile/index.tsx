@@ -7,13 +7,21 @@ import { Edit, Facebook, Instagram } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
-import { UserProfile, UserProfile2, getSocialLinks, getUserProfile, socialLinks } from '@/http/profileapi';
+import {
+  UserProfile,
+  UserProfile2,
+  getSocialLinks,
+  getUserProfile,
+  postProfilePicture,
+  socialLinks,
+} from '@/http/profileapi';
 import Image from 'next/image';
 import SkeletonElement from '@/components/UserProfile/SkeletonElement';
 import Typewriter from 'typewriter-effect';
 import { FaFacebookF, FaTwitter } from 'react-icons/fa6';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { RiInstagramFill } from 'react-icons/ri';
+import { inflate } from 'zlib';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -61,6 +69,7 @@ const UserProfile: React.FC = () => {
   }, [userProfile]);
 
   const [profilePicURL, setProfilePicURL] = useState('');
+  const [coverPic, setCoverPic] = useState('');
 
   const router = useRouter();
 
@@ -69,13 +78,10 @@ const UserProfile: React.FC = () => {
 
     if (selectedImage) {
       // Log the name of the selected image file
-      const imageBlob = new Blob([selectedImage], { type: selectedImage.type });
-      // post
-      // postProfilePicture(imageBlob);
-      // ?post
-
       const imageUrl = URL.createObjectURL(selectedImage);
       setProfilePicURL(imageUrl);
+      postProfilePicture(selectedImage);
+      // ?post
 
       const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
 
@@ -88,22 +94,40 @@ const UserProfile: React.FC = () => {
 
     // handle the posting here
   };
+  const handlCoverImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedImage = event.target.files && event.target.files[0];
+
+    if (selectedImage) {
+      // Log the name of the selected image file
+      const coverImageUrl = URL.createObjectURL(selectedImage);
+      setCoverPic(coverImageUrl);
+    }
+  };
 
   return (
     <AuthLayout>
       <div className={` ${nunito.className} flex w-[100vw] h-fit overflow-hidden justify-center bg-[#F5F5F5]  `}>
-        <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute ">
+        <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute  overflow-hidden">
+          {coverPic && <Image src={coverPic} width={100} height={100} alt="" className="w-full object-cover " />}
           <Button
             handleClick={() => {
               console.log(socialLinks, socialLinks?.facebookURL);
             }}
             styles={
-              '  !rounded-[50%] border border-[#ED9E72] relative lg:right-20 md:right-[64px] right-[17px] top-4 md:top-6  float-right'
+              '  !rounded-[50%] border border-[#ED9E72] absolute lg:right-20 md:right-[64px] right-[17px] top-4 md:top-6  float-right'
             }
             type={'button'}
             title={'edit profile card'}
             disabled={false}
           >
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/*"
+              onChange={handlCoverImageChange}
+              // style={{ display: 'none' }}
+              className="absolute  z-0 rounded-[50%] w-full h-full border opacity-0 top-0 left-0"
+            />
             <Edit color="#FCEEE7" fontSize={20} className="" />
           </Button>
         </section>
@@ -115,12 +139,7 @@ const UserProfile: React.FC = () => {
                 id="profilePicContainer"
                 className=" rounded-[50%] w-[120px] h-[120px] bg-[#A4A4A4]  flex  justify-center items-center overflow-hidden "
               >
-                <Image
-                  alt=""
-                  src="https://res.cloudinary.com/dnc0fjkpo/image/upload/v1701274125/ftxvhcqapviuntzypts5.png"
-                  width={120}
-                  height={120}
-                />
+                <Image alt="" src={userProfile.profileImage} width={120} height={120} />
               </div>
             ) : (
               <div
