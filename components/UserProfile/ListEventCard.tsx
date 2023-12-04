@@ -51,7 +51,7 @@ export const eventPaticipants = (event: eventType) => {
 const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
   return (
     <div className="w-full h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01]">
-      <Image src={sampleImage} alt={''} className=" w-[163px] md:w-[285px] lg:w-[300px] h-full object-cover" />
+      <Image src={sampleImage} alt={''} className=" w-[163px] md:w-[285px] lg:w-[300px]  object-cover" />
 
       <div className="w-full p-2 md:p-4 flex flex-col gap-y-4">
         <div className="flex flex-col gap-y-1">

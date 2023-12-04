@@ -22,7 +22,7 @@ export interface UserProfile {
   email: string;
   bio: string;
 
-  profileImage: string | Blob | File;
+  profileImage: string;
   displayName: string;
   firstName: string;
   lastName: string;
@@ -189,13 +189,17 @@ function convertImageToBase64(file: File) {
 export const postProfilePicture = async (localImage: File) => {
   const authToken = getAuthToken();
   const userId = getUserId();
-  const image = convertImageToBase64(localImage);
-  console.log(image);
+  // const image = convertImageToBase64(localImage);
+  // console.log(image);
+  const image = new FormData();
+  image.append('file', localImage);
 
   try {
     const response = await $AuthHttp.post(`/user/profile/image/upload/${userId}`, image, {
       headers: {
         Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
       },
     });
 
