@@ -3,14 +3,17 @@ import Button from '@/components/ui/Button';
 import { Montserrat, Nunito } from 'next/font/google';
 import withAuth from '@/helpers/withAuth';
 import AuthLayout from '@/layout/Authlayout';
-import { Edit } from 'iconsax-react';
+import { Edit, Facebook, Instagram } from 'iconsax-react';
 import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 import { FacebookIcon, InstagramIcon, TwitterIcon } from '@/public/assets/profile/icons';
 import { useRouter } from 'next/router';
-import { UserProfile, getUserProfile } from '@/http/profileapi';
+import { UserProfile, UserProfile2, getSocialLinks, getUserProfile, socialLinks } from '@/http/profileapi';
 import Image from 'next/image';
 import SkeletonElement from '@/components/UserProfile/SkeletonElement';
 import Typewriter from 'typewriter-effect';
+import { FaFacebookF, FaTwitter } from 'react-icons/fa6';
+import { FaFacebookSquare } from 'react-icons/fa';
+import { RiInstagramFill } from 'react-icons/ri';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -29,12 +32,7 @@ const UserProfile: React.FC = () => {
     userID: '',
     email: '',
     bio: '',
-    socialLinks: {
-      facebook: '',
-      instagram: '',
-      twitter: '',
-      website: '',
-    },
+
     profileImage: '',
     displayName: '',
     firstName: '',
@@ -43,16 +41,25 @@ const UserProfile: React.FC = () => {
     role: '',
     location: '',
   });
+  const [socialLinks, setSocialLinks] = useState<socialLinks>({
+    facebookURL: '',
+    instagramURL: '',
+    twitterURL: '',
+    websiteURL: '',
+  });
 
   useEffect(() => {
     // remove time out to see skeleton
     getUserProfile(setUserProfile);
+    getSocialLinks(setSocialLinks);
   }, []);
 
   useEffect(() => {
     //  send to local storage
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
   }, [userProfile]);
+
   const [profilePicURL, setProfilePicURL] = useState('');
 
   const router = useRouter();
@@ -84,14 +91,18 @@ const UserProfile: React.FC = () => {
 
   return (
     <AuthLayout>
-      <div className={` ${nunito.className} flex w-[100vw] overflow-hidden justify-center bg-[#F5F5F5]  `}>
-        <section className="w-full h-[240px] bg-secondary-100 absolute ">
+      <div className={` ${nunito.className} flex w-[100vw] h-fit overflow-hidden justify-center bg-[#F5F5F5]  `}>
+        <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute ">
           <Button
-            handleClick={() => {}}
-            styles={'  !rounded-[50%] border border-[#ED9E72] relative right-20 top-6 float-right'}
+            handleClick={() => {
+              console.log(socialLinks, socialLinks?.facebookURL);
+            }}
+            styles={
+              '  !rounded-[50%] border border-[#ED9E72] relative lg:right-20 md:right-[64px] right-[17px] top-4 md:top-6  float-right'
+            }
             type={'button'}
             title={'edit profile card'}
-            disabled={true}
+            disabled={false}
           >
             <Edit color="#FCEEE7" fontSize={20} className="" />
           </Button>
@@ -162,7 +173,7 @@ const UserProfile: React.FC = () => {
                 </Button>
               </div>
               {/* <SkeletonElement type="title" /> */}
-              <div className=" text-xs md:text-base line-clamp-3 max-w-full">
+              <div className=" text-xs md:text-base text-[#676767] line-clamp-3 max-w-full">
                 {userProfile?.bio ? (
                   <Typewriter
                     options={{}}
@@ -176,16 +187,19 @@ const UserProfile: React.FC = () => {
                 )}
               </div>
               <div className="socials flex gap-x-[20px] items-center">
-                <a href={userProfile?.socialLinks?.instagram} target="_blank" rel="noopener noreferrer">
-                  <InstagramIcon />
+                <a href={socialLinks?.instagramURL} target="_blank" rel="noopener noreferrer">
+                  {/* <InstagramIcon className="" /> */}
+                  {/* <Instagram className="h-8 w-8" /> */}
+                  <RiInstagramFill className="h-8 w-8" />
                 </a>
 
-                <a href="https://www.facebook.com/your_facebook_account" target="_blank" rel="noopener noreferrer">
-                  <FacebookIcon />
+                <a href={socialLinks?.facebookURL} target="_blank" rel="noopener noreferrer">
+                  {/* <FacebookIcon /> */}
+                  <FaFacebookSquare className="h-8 w-8" />
                 </a>
 
-                <a href="https://twitter.com/your_twitter_account" target="_blank" rel="noopener noreferrer">
-                  <TwitterIcon />
+                <a href={socialLinks?.twitterURL} target="_blank" rel="noopener noreferrer">
+                  <FaTwitter className="h-8 w-8" />
                 </a>
               </div>
             </div>

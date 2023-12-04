@@ -2,6 +2,7 @@ import { CalendarIcon } from '@/public/assets/profile/icons';
 import React from 'react';
 import Button from '../ui/Button';
 import { Montserrat, Nunito } from 'next/font/google';
+import { useRouter } from 'next/router';
 
 interface NoEventProps {
   type: string;
@@ -19,9 +20,10 @@ const montserrat = Montserrat({
 });
 
 const NoEvent: React.FC<NoEventProps> = ({ type }) => {
+  const router = useRouter();
   return (
     <div
-      className={` ${nunito.className} event bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 `}
+      className={` ${nunito.className} event bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 rounded-[12px]`}
     >
       <div className="rounded-[50%] w-[160px] h-[160px] bg-secondary-100 flex justify-center items-center">
         <CalendarIcon />
@@ -31,15 +33,25 @@ const NoEvent: React.FC<NoEventProps> = ({ type }) => {
       >
         Hey there! 👋 It seems like this corner is a bit quiet
       </h4>
-      <p className="text-sm lg:text-base max-w-[220px] md:max-w-none text-center">
-        Click the create event button to start creating events
+      <p className="text-sm lg:text-base text-[#767676] max-w-[220px] md:max-w-none text-center">
+        {type === 'create' ? (
+          <span>Click the create event button to start creating events</span>
+        ) : (
+          <span>Click the explore button to see want kinds of events you can attend</span>
+        )}
       </p>
       <Button
-        handleClick={() => {}}
+        handleClick={() => {
+          if (type === 'create') {
+            router.push('/create-events');
+          } else {
+            router.push('/explore');
+          }
+        }}
         styles={'text-white-100 py-2 px-3'}
         type={'button'}
         title={'event button'}
-        disabled={true}
+        disabled={false}
       >
         {type === 'create' ? <span>Create Event</span> : <span>Explore</span>}
       </Button>

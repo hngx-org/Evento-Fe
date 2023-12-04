@@ -120,13 +120,11 @@ function EventDashboard({ tag, tag_image }: EventProps) {
     }
 
     fetchData();
-  }, []); 
+  }, []);
 
   function changeEvent() {
     setEvent(!event);
   }
-
- 
 
   return (
     <AuthLayout>
@@ -195,4 +193,4 @@ function EventDashboard({ tag, tag_image }: EventProps) {
   );
 }
 
-export default  EventDashboard;
+export default EventDashboard;
