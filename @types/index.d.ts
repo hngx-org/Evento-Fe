@@ -166,3 +166,18 @@ export interface UploadResponse {
 export interface UploadParams {
   file: File;
 }
+
+export interface EventPayload {
+  title: string;
+  description: string;
+  imageURL: string;
+  startDate: string;
+  endDate: string;
+  time: string;
+  location: string;
+  capacity: number;
+  entranceFee: number;
+  eventType: string;
+  organizerID: string;
+  categoryName: string;
+}
