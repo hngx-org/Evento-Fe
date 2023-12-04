@@ -4,6 +4,7 @@ import { useState, ChangeEvent } from 'react';
 import { toast } from 'react-toastify';
 import { uploadImage } from '@/http/createeventapi';
 import { UploadResponse } from '@/@types';
+import Image from 'next/image';
 
 const UploadPage: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -69,7 +70,13 @@ const UploadPage: React.FC = () => {
         {file && (
           <div className="mt-4">
             <p className="text-gray-600">Selected Image:</p>
-            <img src={imageUrl ?? ''} alt="Selected" className="mt-2 max-w-full h-auto rounded" />
+            <Image
+              src={imageUrl ?? ''}
+              alt="Selected"
+              width={512}
+              height={278}
+              className="mt-2 max-w-full h-auto rounded"
+            />
           </div>
         )}
         <button
