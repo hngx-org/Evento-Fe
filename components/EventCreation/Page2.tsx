@@ -388,7 +388,7 @@ const Page2: React.FC<Page2Props> = (props) => {
           )}
           <button
             onClick={props.onNext}
-            className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:opacity-75 disabled:cursor-not-allowed"
+            className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:bg-gray-alt  disabled:cursor-not-allowed"
             disabled={isAllInputFilled}
           >
             Create event
