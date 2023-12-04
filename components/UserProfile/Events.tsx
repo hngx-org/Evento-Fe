@@ -5,9 +5,11 @@ import Image from 'next/image';
 import ListEventCard from './ListEventCard';
 import GridEventCard from './GridEventCard';
 import FilterModal from './FilterModal';
+import { eventType } from '@/http/profileapi';
 
 interface EventProps {
   type: string;
+  events: eventType[];
 }
 interface FilterItem {
   key: string;
@@ -20,7 +22,7 @@ const Filt: React.FC<EventProps> = ({}) => {
   return <div className="text-primary-100 bg-secondary-100 ">{'Past Event'}</div>;
 };
 
-const Events: React.FC<EventProps> = ({ type }) => {
+const Events: React.FC<EventProps> = ({ type, events }) => {
   const [listView, setListView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterObject, setFilterObject] = useState<FilterObject>([]);
@@ -60,7 +62,7 @@ const Events: React.FC<EventProps> = ({ type }) => {
   };
 
   return (
-    <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[48px]" id="events">
+    <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[48px] rounded-[12px]" id="events">
       <div className="flex justify-between ">
         <div className="flex font-bold gap-2 text-xl  items-center relative">
           Filter By
@@ -93,7 +95,7 @@ const Events: React.FC<EventProps> = ({ type }) => {
         </div>
         <div className="flex">
           <div
-            className={`w-[40px] h-[40px]  flex justify-center items-center ${
+            className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
               listView ? 'bg-secondary-100' : ''
             } transition duration-1000`}
             onClick={() => {
@@ -103,7 +105,7 @@ const Events: React.FC<EventProps> = ({ type }) => {
             <RowVertical color="#e0580c" />
           </div>
           <div
-            className={`w-[40px] h-[40px]  flex justify-center items-center ${
+            className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
               !listView ? 'bg-secondary-100' : ''
             } transition `}
             onClick={() => {
@@ -118,13 +120,16 @@ const Events: React.FC<EventProps> = ({ type }) => {
       <div className="transition duration-1000">
         {listView ? (
           <div className="listView flex flex-col gap-8 transition duration-1000">
-            <ListEventCard />
-            <ListEventCard /> <ListEventCard /> <ListEventCard /> <ListEventCard /> <ListEventCard />
+            {events.map((event, index) => (
+              <ListEventCard key={index} event={event} />
+            ))}
           </div>
         ) : (
           <div className="gridView w-full h-full grid md:grid-cols-2 gap-6 transition duration-1000">
-            <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard /> <GridEventCard />{' '}
-            <GridEventCard />
+            {' '}
+            {events.map((event, index) => (
+              <GridEventCard key={index} event={event} />
+            ))}
           </div>
         )}
       </div>
