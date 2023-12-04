@@ -150,7 +150,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="event-name w-full ">
             <input
-              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
               placeholder="Event Name"
               type="text"
               id="title"
@@ -161,7 +161,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
           </div>
           <div className="event-description w-full my-6">
             <input
-              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
               placeholder="Description"
               type="text"
               id="description"
@@ -309,7 +309,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
           )}
           <button
             onClick={onNext}
-            className="text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg font-semibold disabled:opacity-70 disabled:cursor-not-allowed"
+            className="text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg font-semibold disabled:bg-gray-alt disabled:cursor-not-allowed"
             disabled={isAllInputFilled}
           >
             Next

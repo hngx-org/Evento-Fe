@@ -152,3 +152,17 @@ export interface EventDataProps {
   endTime: string;
   liveLink: string;
 }
+
+export interface UploadResponse {
+  timestamp: string;
+  success: boolean;
+  status: number;
+  data: {
+    imageURL: string;
+  };
+  message: string;
+}
+
+export interface UploadParams {
+  file: File;
+}
