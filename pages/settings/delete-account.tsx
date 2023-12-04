@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Input from '@/components/UserProfile/Input';
 import { Montserrat, Nunito } from 'next/font/google';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/NewButton';
 import Settingslayout from '@/layout/Settingslayout';
+import { useRouter } from 'next/router';
+import logoutUser from '@/hooks/logout';
+import { deleteUserAccount } from '@/http/settingsapi';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -17,6 +20,22 @@ const nunito = Nunito({
 });
 
 function DeleteAccount() {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
+
+  function handleDelete() {
+    deleteUserAccount(setLoading, setSuccess);
+  }
+
+  useEffect(() => {
+    if (success) {
+      logoutUser();
+      router.push('/');
+    }
+  }, [success, router]);
+
   return (
     <Settingslayout>
       <div className={`${nunito.className}`}>
@@ -31,7 +50,13 @@ function DeleteAccount() {
           <p className="text-Grey-G100 mt-1">If there is any crucial reason for this please let us know</p>
         </div>
         <div className="mt-10 flex items-center justify-end gap-4">
-          <Button type="button" title="delete" styles="text-white-N0 font-bold text-sm px-4 py-3">
+          <Button
+            type="button"
+            title="delete"
+            className="text-white-N0 bg-primary-100 rounded-lg font-bold text-sm px-4 py-3"
+            isLoading={loading}
+            onClick={handleDelete}
+          >
             Delete Account
           </Button>
         </div>

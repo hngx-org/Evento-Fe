@@ -34,7 +34,11 @@ export type Select = {
 
 export type Switch = {
   defaultValue: boolean;
+  enabled: boolean;
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClick: Function;
 };
+
 export interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;

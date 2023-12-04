@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Settingslayout from '@/layout/Settingslayout';
 import { Montserrat, Nunito } from 'next/font/google';
 import GoogleMeetLogo from 'public/assets/settings/logos_google-meet.svg';
@@ -60,6 +60,7 @@ const nunito = Nunito({
 });
 
 function Integrations() {
+  const [enabled, setEnabled] = useState(false);
   return (
     <Settingslayout>
       <div className="space-y-3">
@@ -84,7 +85,12 @@ function Integrations() {
               </div>
             </div>
             <div>
-              <Switch defaultValue={false} />
+              <Switch
+                defaultValue={false}
+                enabled={enabled}
+                setEnabled={setEnabled}
+                handleClick={() => setEnabled(enabled ? false : true)}
+              />
             </div>
           </div>
         ))}

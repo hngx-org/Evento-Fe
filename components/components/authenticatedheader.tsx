@@ -21,6 +21,7 @@ import { logoutUser as lgout } from '@/http/authapi';
 import Button from '@ui/NewButton';
 import { useRouter } from 'next/navigation';
 import Notifications from '../ui/notification';
+import { UserProfile, getUserProfile } from '@/http/settingsapi';
 
 function AuthenticatedHeader() {
   const [toggle, setToggle] = useState(false);
@@ -30,16 +31,25 @@ function AuthenticatedHeader() {
   const { ref: profileRef, isVisible: profileDropdown, setIsVisible: setProfileDropdown } = useVisible();
   const { ref: searchRef, isVisible: searchDropdown, setIsVisible: setSearchDropdown } = useVisible();
   const [isloading, setIsLoading] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    firstName: '',
+    lastName: '',
+    profileImage: '',
+  });
   const router = useRouter();
 
   useEffect(() => {
-    const body = document.querySelector('body');
-    if (toggle) {
-      body?.classList.add('mobile-menu-open');
-    } else {
-      body?.classList.remove('mobile-menu-open');
-    }
-  }, [toggle]);
+    getUserProfile(setUserProfile);
+  }, []);
+
+  // useEffect(() => {
+  //   const body = document.querySelector('body');
+  //   if (toggle) {
+  //     body?.classList.add('mobile-menu-open');
+  //   } else {
+  //     body?.classList.remove('mobile-menu-open');
+  //   }
+  // }, [toggle]);
 
   // const handleLogout = () => {
   //   // Call the function when the button is clicked
@@ -125,8 +135,16 @@ function AuthenticatedHeader() {
                 <Notification size={22} color="#3C3C3C" />
               </button>
             </div>
-            <div className="cursor-pointer" onClick={() => setProfileDropdown(true)}>
-              <Image src={profile} alt="profile" width={32} height={32} />
+            <div className="cursor-pointer w-[32px] h-[32px]" onClick={() => setProfileDropdown(true)}>
+              <Image
+                src={userProfile.profileImage ? userProfile.profileImage : profile}
+                alt="profile"
+                width={32}
+                height={32}
+                className={`w-full h-full object-cover rounded-full ${
+                  userProfile.profileImage ? 'border-2 border-primary-100' : ''
+                }`}
+              />
             </div>
           </div>
           <div className="lg:hidden" onClick={() => setToggle(toggle ? false : true)}>
@@ -166,8 +184,20 @@ function AuthenticatedHeader() {
         >
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
-              <Image src={profile} alt="profile" width={40} height={40} />
-              <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
+              <div className="w-[40px] h-[40px] rounded-full">
+                <Image
+                  src={userProfile.profileImage ? userProfile.profileImage : profile}
+                  alt="profile"
+                  width={40}
+                  height={40}
+                  className={`w-full h-full object-cover rounded-full ${
+                    userProfile.profileImage ? 'border-2 border-primary-100' : ''
+                  }`}
+                />
+              </div>
+              <p className="text-Grey-G500 font-semibold text-base">
+                {userProfile.firstName} {userProfile.lastName}
+              </p>
             </div>
             <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
               <Link href="/explore" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
@@ -213,8 +243,20 @@ function AuthenticatedHeader() {
           >
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 border-b border-b-Grey-G30 pb-3 px-2">
-                <Image src={profile} alt="profile" width={40} height={40} />
-                <p className="text-Grey-G500 font-semibold text-base">Ahmed Tinubu</p>
+                <div className="w-[40px] h-[40px] rounded-full">
+                  <Image
+                    src={userProfile.profileImage ? userProfile.profileImage : profile}
+                    alt="profile"
+                    width={40}
+                    height={40}
+                    className={`w-full h-full object-cover rounded-full ${
+                      userProfile.profileImage ? 'border-2 border-primary-100' : ''
+                    }`}
+                  />
+                </div>
+                <p className="text-Grey-G500 font-semibold text-base">
+                  {userProfile.firstName} {userProfile.lastName}
+                </p>
               </div>
               <div className="space-y-2 border-b border-b-Grey-G30 pb-4">
                 <Link href="/profile">
@@ -230,7 +272,7 @@ function AuthenticatedHeader() {
                   </div>
                 </Link>
               </div>
-              <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
+              <div className="flex items-center gap-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
                 <Link href="/">
                   <Button onClick={handleLogout} isLoading={isloading}>
                     <LogoutCurve size={18} color="#3C3C3C" />
