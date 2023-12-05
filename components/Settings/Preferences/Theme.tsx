@@ -7,23 +7,28 @@ import Image from 'next/image';
 const themes = [
   {
     id: 1,
-    name: 'Light Theme',
+    name: 'Light',
     src: lightTheme,
   },
   {
     id: 2,
-    name: 'Dark Theme',
+    name: 'Dark',
     src: darkTheme,
   },
   {
     id: 3,
-    name: 'System Theme',
+    name: 'System',
     src: systemTheme,
   },
 ];
 
-function Theme() {
-  const [selectedTheme, setSelectedTheme] = useState('Light Theme');
+function Theme({
+  selectedTheme,
+  setSelectedTheme,
+}: {
+  selectedTheme: string;
+  setSelectedTheme: React.Dispatch<React.SetStateAction<string>>;
+}) {
   return (
     <div className="flex flex-col gap-9">
       <div className={`space-y-2`}>
@@ -53,7 +58,7 @@ function Theme() {
               >
                 {theme.name === selectedTheme && <div className="w-2 h-2 bg-primary-100 rounded-full"></div>}
               </div>
-              <p className="text-[0.73rem] md:text-sm font-medium text-[#333]">{theme.name}</p>
+              <p className="text-[0.73rem] md:text-sm font-medium text-[#333]">{theme.name} Theme</p>
             </div>
           </div>
         ))}

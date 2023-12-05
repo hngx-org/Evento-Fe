@@ -1,12 +1,14 @@
 import { toast } from 'react-toastify';
 import AuthInstance from './AuthInstance';
 import { UserProfile2, getAuthToken, getUserId } from './profileapi';
+import axios from 'axios';
 
 export interface UserProfile {
   email?: string;
   bio?: string;
   firstName?: string;
   lastName?: string;
+  profileImage?: string;
 }
 
 export interface UserSocials {
@@ -23,6 +25,13 @@ export interface socialsData {
   twitterURL?: string;
   userID?: string;
   websiteURL?: string;
+}
+
+export interface preferences {
+  theme: string;
+  language: string;
+  regionalSettings: boolean;
+  timeZone: string;
 }
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
@@ -42,18 +51,31 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
     });
 
     const userData: UserProfile = getUserData?.data?.data;
+
+    if (userData?.email) {
+      localStorage.setItem('userEmail', userData?.email);
+    }
+    // console.log(userData);
     setData((prev) => ({
       ...prev,
       firstName: userData?.firstName,
       lastName: userData?.lastName,
       email: userData?.email,
       bio: userData?.bio,
+      profileImage: userData?.profileImage,
     }));
   } catch (e: any) {
     toast.error('An error occurred while fetching user info');
 
     throw e?.response?.data || { message: e.message };
   }
+};
+
+export const getUserEmail = () => {
+  // rewrite to fetch id instead
+  // const userEmail = localStorage.getItem('userEmail');
+  // ('');
+  // return userEmail;
 };
 
 export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetStateAction<UserSocials>>) => {
@@ -66,7 +88,8 @@ export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetSta
         Authorization: `Bearer ${authToken}`,
       },
     });
-    const userData: socialsData = getUserData?.data?.data[0];
+    // console.log(getUserData);
+    const userData: socialsData = getUserData?.data?.data;
     // console.log(userData);
     setSocialsData((prev) => ({
       ...prev,
@@ -76,6 +99,7 @@ export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetSta
       facebookURL: userData?.facebookURL ? userData?.facebookURL : '',
     }));
   } catch (e: any) {
+    console.log(e);
     toast.error('An error occurred while fetching user socials.');
     throw e?.response?.data || { message: e.message };
   }
@@ -126,13 +150,17 @@ export const editUserSocials = async (data: UserSocials, setLoading: React.Dispa
   }
 };
 
-export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const uploadUserImage = async (
+  image: string | Blob,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const authToken = getAuthToken();
   const userId = getUserId();
   setLoading(true);
-  //   console.log(data);
-  let image = new FormData();
-  image.append('file', data);
+  let data = new FormData();
+  data.append('file', image);
+  // console.log(image);
+  // image.append('file', data);
 
   const config = {
     method: 'post',
@@ -140,17 +168,154 @@ export const uploadUserImage = async (data: string, setLoading: React.Dispatch<R
     headers: {
       Authorization: `Bearer ${authToken}`,
       'Content-Type': 'multipart/form-data',
-      Accept: 'application/json',
+      // Accept: 'application/json',
     },
     data: image,
   };
   try {
-    const editUserData = await $AuthHttp(config);
+    const editUserData = await axios.post(`${BaseUrl}/user/profile/image/upload/${userId}`, data, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
 
     // console.log(editUserData);
     setLoading(false);
     if (editUserData.status === 200) {
       toast.success('profile updated');
+    }
+  } catch (err: any) {
+    // console.log(err);
+    setLoading(false);
+    toast.error(err.message);
+  }
+};
+
+export const deleteUploadedImage = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  try {
+    const getUserData = await $AuthHttp.delete(`/user/profile/image/delete/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    setLoading(false);
+    // console.log(getUserData);
+    if (getUserData.status === 200) {
+      toast.success('Profile image removed successfully');
+    }
+  } catch (e: any) {
+    console.log(e);
+    setLoading(false);
+    toast.error('An error occurred while removing profile image');
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+export const deleteUserAccount = async (
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  setSuccess(false);
+  try {
+    const deleteUserData = await $AuthHttp.delete(`/user/delete/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    //   console.log(deleteUserData);
+    setLoading(false);
+    setSuccess(true);
+    if (deleteUserData.status === 200) {
+      toast.success('Account deleted successfully');
+    }
+  } catch (err: any) {
+    console.log(err);
+    setLoading(false);
+    toast.error(err.message);
+  }
+};
+
+export const updateUserPreferences = async (
+  data: preferences,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  try {
+    const editUserData = await $AuthHttp.post(`/user/profile/preferences/${userId}`, data, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    //   console.log(editUserData);
+    setLoading(false);
+    if (editUserData.status === 200) {
+      toast.success('preferences updated');
+    }
+  } catch (err: any) {
+    console.log(err);
+    setLoading(false);
+    toast.error(err.message);
+  }
+};
+
+export const enable2fa = async (
+  email: string,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  setSuccess(false);
+  try {
+    const editUserData = await $AuthHttp.post(
+      `/generate-otp/${userId}`,
+      { email: email },
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
+    );
+    // console.log(editUserData);
+    setLoading(false);
+    if (editUserData.status === 200) {
+      setSuccess(true);
+      toast.success('verification code sent successfully');
+    }
+  } catch (err: any) {
+    console.log(err);
+    setSuccess(false);
+    setLoading(false);
+    toast.error(err.message);
+  }
+};
+
+export const changePassword = async (
+  data: { oldPassword: string; newPassword: string },
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  try {
+    const editUserData = await $AuthHttp.post(`user/password/change/${userId}`, data, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    // console.log(editUserData);
+    setLoading(false);
+    if (editUserData.status === 200) {
+      toast.success('An email has been sent for confirmation');
     }
   } catch (err: any) {
     console.log(err);

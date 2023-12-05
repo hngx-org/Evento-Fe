@@ -32,7 +32,7 @@ function SociaMedia() {
     editUserSocials(formData, setLoading);
     setTimeout(() => {
       getUserSocials(setFormData);
-    }, 2000);
+    }, 3000);
   };
 
   return (

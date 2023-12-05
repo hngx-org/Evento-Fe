@@ -34,7 +34,11 @@ export type Select = {
 
 export type Switch = {
   defaultValue: boolean;
+  enabled: boolean;
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  handleClick: Function;
 };
+
 export interface ModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -182,6 +186,7 @@ export interface EventPayload {
   categoryName: string;
 }
 
+
 export interface EventParticipant {
   userID: string;
   email: string;
@@ -206,3 +211,6 @@ export interface EventsProps {
   categoryCategoryID: string;
   participants: EventParticipant[];
 }
+
+export type InputRef = React.RefObject<HTMLInputElement>;
+

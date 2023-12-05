@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Switch from '../Switch';
 import Input from '@/components/UserProfile/Input';
 import Button from '@/components/ui/Button';
 
 function CardInfo() {
+  const [enabled, setEnabled] = useState(true);
   return (
     <div className="mt-5 flex flex-col gap-9">
       <div className={`space-y-2`}>
@@ -14,7 +15,12 @@ function CardInfo() {
       </div>
       <div className="flex items-center justify-between border-b border-b-Grey-G40 pb-7">
         <p className="font-medium text-Grey-G600">Automatically renew plan with card</p>
-        <Switch defaultValue />
+        <Switch
+          defaultValue
+          enabled={enabled}
+          setEnabled={setEnabled}
+          handleClick={() => setEnabled(enabled ? false : true)}
+        />
       </div>
       <div className="-mt-2">
         <Input label="Card Number" placeholder="5790-2456-9013" inputHeight="h-[3.5rem]" />
