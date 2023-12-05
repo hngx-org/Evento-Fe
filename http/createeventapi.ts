@@ -42,7 +42,10 @@ export const uploadImage = async ({ file }: UploadParams): Promise<UploadRespons
   }
 };
 
-export const createEvent = async (payload: EventPayload): Promise<void> => {
+export const createEvent = async (
+  payload: EventPayload,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+): Promise<void> => {
   const authToken = getStoredAuthToken();
   const userId = getStoredUserId();
 
@@ -61,12 +64,15 @@ export const createEvent = async (payload: EventPayload): Promise<void> => {
   };
 
   try {
+    setIsLoading(true);
     await $AuthHttp.post('/events/create', payload, config);
     toast.success('Event created successfully!');
   } catch (error) {
     console.error('Error creating event:', error);
     toast.error('Error creating event. Please try again.');
     throw error;
+  } finally {
+    setIsLoading(false);
   }
 };
 
