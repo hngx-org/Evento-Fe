@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Select from '../Select';
 
-const languages = [
+export const languages = [
   {
     name: 'English (UK)',
   },
@@ -19,8 +19,13 @@ const languages = [
   },
 ];
 
-function Language() {
-  const [selected, setSelected] = useState(languages[0]);
+function Language({
+  selected,
+  setSelected,
+}: {
+  selected: { name: string };
+  setSelected: React.Dispatch<React.SetStateAction<{ name: string }>>;
+}) {
   return (
     <div className="flex flex-col gap-9">
       <div className={`space-y-2`}>

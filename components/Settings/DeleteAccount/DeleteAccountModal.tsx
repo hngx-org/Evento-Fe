@@ -1,9 +1,12 @@
 import Input from '@/components/UserProfile/Input';
 import Modal from '../Modal';
-import useDisclosure from '@/hooks/useDisclosure';
 import { Montserrat, Nunito } from 'next/font/google';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/ui/Button';
+import ButtonB from '@/components/ui/NewButton';
+import { deleteUserAccount } from '@/http/settingsapi';
+import logoutUser from '@/hooks/logout';
+import { useRouter } from 'next/router';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -18,6 +21,22 @@ const nunito = Nunito({
 });
 
 function DeleteAccountModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const router = useRouter();
+
+  function handleDelete() {
+    deleteUserAccount(setLoading, setSuccess);
+  }
+
+  useEffect(() => {
+    if (success) {
+      logoutUser();
+      router.push('/');
+    }
+  }, [success, router]);
+
   return (
     <Modal isOpen={isOpen} closeModal={onClose} isCloseIconPresent={true} size="xl">
       <div className={`${nunito.className}`}>
@@ -32,17 +51,23 @@ function DeleteAccountModal({ isOpen, onClose }: { isOpen: boolean; onClose: () 
           <p className="text-Grey-G100 mt-1">If there is any crucial reason for this please let us know</p>
         </div>
         <div className="mt-16 flex items-center justify-end gap-4">
-          <Button
+          <ButtonB
             type="button"
             title="cancel"
-            styles="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm w-[150px] py-3"
-            handleClick={onClose}
+            className="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm w-[150px] py-3 rounded-lg"
+            onClick={onClose}
           >
             Cancel
-          </Button>
-          <Button type="button" title="delete" styles="text-white-N0 font-bold text-sm px-4 py-3">
+          </ButtonB>
+          <ButtonB
+            type="button"
+            title="delete"
+            className="text-white-N0 bg-primary-100 rounded-lg font-bold text-sm px-4 py-3"
+            isLoading={loading}
+            onClick={handleDelete}
+          >
             Delete Account
-          </Button>
+          </ButtonB>
         </div>
       </div>
     </Modal>

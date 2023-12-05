@@ -7,8 +7,8 @@ import ButtonB from '@/components/ui/Button';
 import Button from '@/components/ui/NewButton';
 import TelInput from '../TelInput';
 import { editUserProfile } from '@/http/profileapi';
-import { UserProfile, editUserAccount, getUserProfile } from '@/http/settingsapi';
-import { uploadUserImage } from '@/http/settingsapi';
+import { UserProfile, deleteUploadedImage, editUserAccount, getUserProfile, uploadUserImage } from '@/http/settingsapi';
+import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 function EditProfile() {
   const [formData, setFormData] = useState<UserProfile>({
@@ -16,19 +16,25 @@ function EditProfile() {
     lastName: '',
     email: '',
     bio: '',
+    profileImage: '',
   });
-  const [profileImage, setProfileImage] = useState('');
+  // const [profileImage, setProfileImage] = useState<string | StaticImport>('');
   const [loading, setLoading] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const selectedImage = event.target.files[0];
-      if (selectedImage) {
-        setProfileImage(URL.createObjectURL(selectedImage));
-        uploadUserImage(URL.createObjectURL(selectedImage), setLoading);
-      }
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      const image = URL.createObjectURL(file);
+      // setProfileImage(image);
+      setFormData((prev) => ({
+        ...prev,
+        profileImage: image,
+      }));
+      uploadUserImage(file, setUploadLoading);
     }
   };
 
@@ -56,7 +62,7 @@ function EditProfile() {
     editUserAccount(formData, setLoading);
     setTimeout(() => {
       getUserProfile(setFormData);
-    }, 2000);
+    }, 3000);
   };
 
   return (
@@ -68,11 +74,13 @@ function EditProfile() {
       <div className="flex items-center gap-7 -mt-4">
         <div className={`w-[84px] h-[84px] rounded-full`}>
           <Image
-            src={profileImage ? profileImage : profile}
+            src={formData.profileImage ? formData.profileImage : profile}
             width={84}
             height={84}
             alt="user-profile"
-            className={`w-full h-full object-cover rounded-full ${profileImage ? 'border-2 border-primary-100' : ''}`}
+            className={`w-full h-full object-cover rounded-full ${
+              formData.profileImage ? 'border-2 border-primary-100' : ''
+            }`}
           />
         </div>
         <input
@@ -81,17 +89,25 @@ function EditProfile() {
           type="file"
           onChange={(event) => handleImageChange(event)}
         />
-        <ButtonB type="button" title="upload" styles="text-white-N0 font-bold text-sm" handleClick={handleImageUpload}>
+        <Button
+          type="button"
+          title="upload"
+          className="text-white-N0 font-bold text-sm bg-primary-100 rounded-lg px-2 h-9"
+          onClick={handleImageUpload}
+          isLoading={uploadLoading}
+        >
           Upload Picture
-        </ButtonB>
-        <ButtonB
+        </Button>
+        <Button
           type="button"
           title="remove"
-          styles="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm"
-          handleClick={() => setProfileImage('')}
+          className="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm rounded-lg h-9"
+          isLoading={removeLoading}
+          onClick={() => deleteUploadedImage(setRemoveLoading)}
+          // handleClick={() => setProfileImage(null)}
         >
           Remove
-        </ButtonB>
+        </Button>
       </div>
       <form className="space-y-8" onSubmit={(e) => (e.preventDefault(), handleSubmit())}>
         <Input
