@@ -3,14 +3,15 @@ import React, { ChangeEvent, Dispatch, PropsWithChildren, SetStateAction, useSta
 import { ArrowDown2, ArrowUp2, GalleryEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { FaXmark } from 'react-icons/fa6';
-import { EventDataProps } from '@/@types';
-import $http from '@/http/axios';
+import { EventDataProps, UploadResponse } from '@/@types';
+import { uploadImage } from '@/http/createeventapi';
 
 interface Page2Props extends PropsWithChildren<any> {
   onNext: () => void;
   onPrevious: () => void;
   data: EventDataProps;
   setState: Dispatch<SetStateAction<EventDataProps>>;
+  loadState: boolean;
 }
 
 interface EventType {
@@ -27,7 +28,6 @@ interface TicketType {
 }
 
 interface Props {}
-const baseUrl = 'https://evento-qo6d.onrender.com/v1/';
 const Page2: React.FC<Page2Props> = (props) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
@@ -38,7 +38,7 @@ const Page2: React.FC<Page2Props> = (props) => {
   const [isValidFileType, setIsValidFileType] = useState(true);
   const [selectedTicketType, setSelectedTicketType] = useState('Free');
   const [isSecondDivVisible, setIsSecondDivVisible] = useState(false);
-  const isAllInputFilled = props.data.capacity === '' || props.data.entranceFee === '';
+  const isAllInputFilled = props.data.capacity === '';
 
   const openImageModal = () => {
     setIsModalImageOpen(true);
@@ -53,7 +53,21 @@ const Page2: React.FC<Page2Props> = (props) => {
     const file = event.target.files && event.target.files[0];
 
     if (file) {
-      processFile(file);
+      // processFile(file);
+      try {
+        const response: UploadResponse = await uploadImage({ file });
+
+        console.log('Upload successful:', response);
+        props.setState((prevState) => {
+          return { ...prevState, imageURL: response.data.imageURL };
+        });
+        closeImageModal();
+      } catch (error) {
+        console.error('Error uploading image:', error);
+      } finally {
+        // Don't clear the file state after upload
+        // setFile(null);
+      }
     }
   };
 
@@ -391,7 +405,11 @@ const Page2: React.FC<Page2Props> = (props) => {
             className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:bg-gray-alt  disabled:cursor-not-allowed"
             disabled={isAllInputFilled}
           >
-            Create event
+            {props.loadState ? (
+              <div className="h-5 w-5 rounded-full mx-auto border-2 border-white-100 border-t-gray-100 animate-spin" />
+            ) : (
+              'Create event'
+            )}
           </button>
           <button
             onClick={props.onPrevious}

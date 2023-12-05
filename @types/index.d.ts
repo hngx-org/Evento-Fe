@@ -148,7 +148,7 @@ export interface EventDataProps {
   time: string;
   location: string;
   capacity: string;
-  entranceFee: string | number;
+  entranceFee: number;
   eventType: string;
   organizerID: string;
   categoryName: string;
@@ -186,4 +186,31 @@ export interface EventPayload {
   categoryName: string;
 }
 
+
+export interface EventParticipant {
+  userID: string;
+  email: string;
+  profileImage: string | null;
+  firstName: string;
+  lastName: string;
+}
+
+export interface EventsProps {
+  eventID: string;
+  title: string;
+  description: string;
+  imageURL: string;
+  startDate: string;
+  endDate: string;
+  time: string;
+  location: string;
+  capacity: number;
+  entranceFee: number;
+  eventType: string;
+  organizerID: string;
+  categoryCategoryID: string;
+  participants: EventParticipant[];
+}
+
 export type InputRef = React.RefObject<HTMLInputElement>;
+

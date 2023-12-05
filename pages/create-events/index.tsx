@@ -5,6 +5,7 @@ import Page1 from '@/components/EventCreation/Page1';
 import Page2 from '@/components/EventCreation/Page2';
 import Page3 from '@/components/EventCreation/Page3';
 import { EventDataProps } from '@/@types';
+import { createEvent } from '@/http/createeventapi';
 
 interface Props {}
 
@@ -32,9 +33,45 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
     liveLink: '',
   });
   const [page, setPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [completedSteps, setCompletedSteps] = useState(0);
 
-  const nextPage = () => {
+  const nextPage = async () => {
+    if (page === 2) {
+      const {
+        title,
+        description,
+        imageURL,
+        startDate,
+        endDate,
+        startTime,
+        location,
+        capacity,
+        entranceFee,
+        eventType,
+        categoryName,
+        liveLink,
+      } = eventData;
+      await createEvent(
+        {
+          title,
+          description,
+          imageURL,
+          startDate,
+          endDate,
+          time: startTime,
+          location: eventType === '' ? location : liveLink,
+          capacity: parseInt(capacity),
+          entranceFee,
+          eventType,
+          organizerID: 'Physical',
+          categoryName,
+        },
+        setIsLoading,
+      );
+      setPage(3);
+      return;
+    }
     setPage((prevPage) => prevPage + 1);
   };
 
@@ -70,7 +107,15 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
             </div>
           </div>
           {page === 1 && <Page1 onNext={nextPage} data={eventData} setState={setEventData} />}
-          {page === 2 && <Page2 onNext={nextPage} onPrevious={prevPage} data={eventData} setState={setEventData} />}
+          {page === 2 && (
+            <Page2
+              onNext={nextPage}
+              onPrevious={prevPage}
+              loadState={isLoading}
+              data={eventData}
+              setState={setEventData}
+            />
+          )}
           {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
         </div>
       </div>
