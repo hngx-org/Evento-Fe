@@ -193,4 +193,4 @@ function EventDashboard({ tag, tag_image }: EventProps) {
   );
 }
 
-export default EventDashboard;
+export default withAuth(EventDashboard);
