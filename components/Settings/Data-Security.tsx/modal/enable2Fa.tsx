@@ -32,7 +32,7 @@ function Enable2Fa({
 }) {
   const [loading, setLoading] = useState(false);
   const userEmail = getUserEmail();
-  const [email, setEmail] = useState(userEmail ? userEmail : '');
+  const [email, setEmail] = useState('');
 
   return (
     <Modal isOpen={isOpenB} closeModal={onCloseB} isCloseIconPresent={true} size="xl">

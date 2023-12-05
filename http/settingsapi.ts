@@ -73,9 +73,9 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
 
 export const getUserEmail = () => {
   // rewrite to fetch id instead
-  const userEmail = localStorage.getItem('userEmail');
-  ('');
-  return userEmail;
+  // const userEmail = localStorage.getItem('userEmail');
+  // ('');
+  // return userEmail;
 };
 
 export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetStateAction<UserSocials>>) => {
