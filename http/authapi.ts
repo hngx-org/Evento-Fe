@@ -1,5 +1,8 @@
 import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
+import { AuthorizationResponse } from '@/@types';
+import Cookies from 'js-cookie';
+import { getCookie, setCookie, getCookies } from 'typescript-cookie';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -69,33 +72,41 @@ export const loginUser = async (props: { email: string; password: string }) => {
   }
 };
 
-export const fetchAuthToken = async () => {
-  try {
-    const authResponse = await $AuthHttp.get('/authorize');
+// export const fetchAuthToken = async () => {
+//   try {
+//     const authResponse = await $AuthHttp.get('/authorize');
 
-    if (authResponse.status === 200) {
-      console.log('Authorization successful');
-      return authResponse.data.token;
-    } else if (authResponse.status === 401) {
-      console.error('User not logged in.');
-      toast.error('User not logged in.');
-    }
+//     if (authResponse.status === 200) {
+//       console.log('Authorization successful');
+//       return authResponse.data.token;
+//     } else if (authResponse.status === 401) {
+//       console.error('User not logged in.');
+//       toast.error('User not logged in.');
+//     }
 
-    console.log('Authorization response', authResponse);
-    return null;
-  } catch (e: any) {
-    console.log('Authorization call error from API call', e);
-    throw e?.response?.data || { message: e.message };
-  }
-};
+//     console.log('Authorization response', authResponse);
+//     return null;
+//   } catch (e: any) {
+//     console.log('Authorization call error from API call', e);
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
 
 export const signUpWithGoogle = () => {
   return $AuthHttp.get('/google');
 };
 
+// export const revalidateAuth = async (props: { token: string }) => {
+//   try {
+//     const res = await $AuthHttp.get(`/authorize/${props.token}`);
+//     return res?.data;
+//   } catch (e: any) {
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
 export const revalidateAuth = async (props: { token: string }) => {
   try {
-    const res = await $AuthHttp.get(`/authorize/${props.token}`);
+    const res = await $AuthHttp.get(`/revalidate-login/${props.token}`);
     return res?.data;
   } catch (e: any) {
     throw e?.response?.data || { message: e.message };
@@ -146,6 +157,118 @@ export const logoutUser = async () => {
     }
 
     // Use e.message as a fallback if e.response.data or e.response.data.message is not available
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+// export const authorizeToken = async (props: { token: string }): Promise<AuthorizationResponse> => {
+//   try {
+//     const res = await $AuthHttp.post('/authorize', props);
+//     return res.data as AuthorizationResponse;
+//   } catch (e: any) {
+//     if (e.response) {
+//       throw e.response.data || { message: 'Unknown error' };
+//     } else {
+//       throw { message: e.message || 'Unknown error' };
+//     }
+//   }
+// };
+
+export const authorizeToken = async (token: string): Promise<AuthorizationResponse> => {
+  try {
+    const res = await $AuthHttp.post('/authorize', { token });
+    return res?.data as AuthorizationResponse;
+  } catch (e: any) {
+    if (e.response) {
+      throw e.response.data || { message: 'Unknown error' };
+    } else {
+      throw { message: e.message || 'Unknown error' };
+    }
+  }
+};
+
+// export const fetchAuthToken = async () => {
+//   try {
+//     const authResponse = await $AuthHttp.get('/authorize');
+
+//     if (authResponse.status === 200) {
+//       // Get the session ID from the response headers
+//       const sessionId = authResponse.headers.get('set-cookie');
+
+//       if (sessionId) {
+//         // Set the session ID in cookies
+//         Cookies.set('connect.sid', sessionId, { path: '/' });
+//         console.log('Session ID set in cookies:', sessionId);
+//       } else {
+//         console.error('Session ID not found in response headers.');
+//         toast.error('Session ID not found in response headers.');
+//       }
+
+//       console.log('Authorization successful');
+//       return authResponse.data.token;
+//     } else if (authResponse.status === 401) {
+//       console.error('User not logged in.');
+//       toast.error('User not logged in.');
+//     }
+
+//     console.log('Authorization response', authResponse);
+//     return null;
+//   } catch (e: any) {
+//     console.log('Authorization call error from API call', e);
+//     throw e?.response?.data || { message: e.message };
+//   }
+// };
+
+const getSessionId = () => {
+  // Specify the domain where the cookie is set
+  const domain = 'evento-qo6d.onrender.com';
+
+  // Try to get the session ID from cookies with the specified domain
+  const sessionId = Cookies.get('connect.sid');
+  const cookie = getCookie('connect.sid');
+  console.log('cookie');
+  const allCookie = getCookies();
+  console.log('allCookie');
+
+  if (sessionId) {
+    console.log('Retrieved Session ID from Cookies:', sessionId);
+    return sessionId;
+  } else {
+    console.error('Session ID not found in cookies.');
+    toast.error('Session ID not found in cookies.');
+    return null;
+  }
+};
+
+export const fetchAuthToken = async () => {
+  try {
+    // Get the existing session ID from cookies
+    const sessionId = getSessionId();
+
+    if (sessionId) {
+      // Include the session ID in the request headers
+      const headers = {
+        Cookie: `connect.sid=${sessionId}`,
+      };
+
+      // Make the API call with the session ID in headers
+      const authResponse = await $AuthHttp.get('/authorize', { headers });
+
+      if (authResponse.status === 200) {
+        console.log('Authorization successful');
+        return authResponse.data.token;
+      } else if (authResponse.status === 401) {
+        console.error('User not logged in.');
+        toast.error('User not logged in.');
+      }
+
+      console.log('Authorization response', authResponse);
+      return null;
+    } else {
+      return null; // Handle case where session ID is not found
+    }
+  } catch (e: any) {
+    console.log('Authorization call error from API call', e);
     throw e?.response?.data || { message: e.message };
   }
 };

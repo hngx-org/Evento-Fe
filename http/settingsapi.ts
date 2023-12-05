@@ -51,6 +51,10 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
     });
 
     const userData: UserProfile = getUserData?.data?.data;
+
+    if (userData?.email) {
+      localStorage.setItem('userEmail', userData?.email);
+    }
     // console.log(userData);
     setData((prev) => ({
       ...prev,
@@ -65,6 +69,13 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
 
     throw e?.response?.data || { message: e.message };
   }
+};
+
+export const getUserEmail = () => {
+  // rewrite to fetch id instead
+  const userEmail = localStorage.getItem('userEmail');
+  ('');
+  return userEmail;
 };
 
 export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetStateAction<UserSocials>>) => {
@@ -180,6 +191,29 @@ export const uploadUserImage = async (
   }
 };
 
+export const deleteUploadedImage = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  try {
+    const getUserData = await $AuthHttp.delete(`/user/profile/image/delete/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    setLoading(false);
+    // console.log(getUserData);
+    if (getUserData.status === 200) {
+      toast.success('Profile image removed successfully');
+    }
+  } catch (e: any) {
+    console.log(e);
+    setLoading(false);
+    toast.error('An error occurred while removing profile image');
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
 export const deleteUserAccount = async (
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
   setSuccess: React.Dispatch<React.SetStateAction<boolean>>,
@@ -232,10 +266,15 @@ export const updateUserPreferences = async (
   }
 };
 
-export const enable2fa = async (email: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+export const enable2fa = async (
+  email: string,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const authToken = getAuthToken();
   const userId = getUserId();
   setLoading(true);
+  setSuccess(false);
   try {
     const editUserData = await $AuthHttp.post(
       `/generate-otp/${userId}`,
@@ -249,10 +288,12 @@ export const enable2fa = async (email: string, setLoading: React.Dispatch<React.
     // console.log(editUserData);
     setLoading(false);
     if (editUserData.status === 200) {
+      setSuccess(true);
       toast.success('verification code sent successfully');
     }
   } catch (err: any) {
     console.log(err);
+    setSuccess(false);
     setLoading(false);
     toast.error(err.message);
   }
@@ -282,3 +323,53 @@ export const changePassword = async (
     toast.error(err.message);
   }
 };
+
+// import axios, { AxiosError } from 'axios';
+// export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
+//   const authToken = getAuthToken();
+//   const userId = getUserId();
+//   setLoading(true);
+
+//   try {
+//     let image = new FormData();
+//     image.append('file', data);
+
+//     const response = await axios.post(
+//       `https://evento-qo6d.onrender.com/api/v1/user/profile/image/upload/${userId}`,
+//       image,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${authToken}`,
+//           'Access-Control-Allow-Origin': '*',
+//           'Content-Type': 'multipart/form-data',
+//           Accept: 'application/json',
+//         },
+//       },
+//     );
+
+//     // Handle success, if needed
+//     console.log('Image uploaded successfully:', response.data);
+//     toast.success('Image uploaded successfully');
+//   } catch (error: any) {
+//     // Use type assertion to specify the type of 'error'
+//     const axiosError = error as AxiosError;
+
+//     if (axiosError.response) {
+//       // The request was made and the server responded with a status code
+//       console.error('Upload failed with status code:', axiosError.response.status);
+//       toast.error(`Upload failed with status code: ${axiosError.response.status}`);
+//     } else if (axiosError.request) {
+//       // The request was made but no response was received
+//       console.error('No response received from the server');
+//       toast.error('No response received from the server');
+//     } else {
+//       // Something happened in setting up the request that triggered an Error
+//       console.error('Error setting up the request:', axiosError.message);
+//       toast.error(`Error setting up the request: ${axiosError.message}`);
+//     }
+
+//     // Handle other errors if necessary
+//   } finally {
+//     setLoading(false);
+//   }
+// };

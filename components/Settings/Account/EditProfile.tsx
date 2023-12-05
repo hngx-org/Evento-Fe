@@ -7,7 +7,7 @@ import ButtonB from '@/components/ui/Button';
 import Button from '@/components/ui/NewButton';
 import TelInput from '../TelInput';
 import { editUserProfile } from '@/http/profileapi';
-import { UserProfile, editUserAccount, getUserProfile, uploadUserImage } from '@/http/settingsapi';
+import { UserProfile, deleteUploadedImage, editUserAccount, getUserProfile, uploadUserImage } from '@/http/settingsapi';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 
 function EditProfile() {
@@ -21,6 +21,7 @@ function EditProfile() {
   // const [profileImage, setProfileImage] = useState<string | StaticImport>('');
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -97,14 +98,16 @@ function EditProfile() {
         >
           Upload Picture
         </Button>
-        {/* <ButtonB
+        <Button
           type="button"
           title="remove"
-          styles="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm"
-          handleClick={() => setProfileImage(null)}
+          className="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm rounded-lg h-9"
+          isLoading={removeLoading}
+          onClick={() => deleteUploadedImage(setRemoveLoading)}
+          // handleClick={() => setProfileImage(null)}
         >
           Remove
-        </ButtonB> */}
+        </Button>
       </div>
       <form className="space-y-8" onSubmit={(e) => (e.preventDefault(), handleSubmit())}>
         <Input

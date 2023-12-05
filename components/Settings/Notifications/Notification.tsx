@@ -7,11 +7,11 @@ const notifications = [
     id: 'personal',
     name: 'Personal',
     items: [
-      {
-        id: 1,
-        name: 'Subscribe to your calendar',
-        group: 'personal',
-      },
+      // {
+      //   id: 1,
+      //   name: 'Subscribe to your calendar',
+      //   group: 'personal',
+      // },
       {
         id: 2,
         name: 'Register for your event',
@@ -39,32 +39,32 @@ const notifications = [
       },
     ],
   },
-  {
-    id: 'subscription',
-    name: 'Subscribed To',
-    items: [
-      {
-        id: 1,
-        name: 'Post event',
-        group: 'subscription',
-      },
-      {
-        id: 2,
-        name: 'Register for an event',
-        group: 'subscription',
-      },
-      {
-        id: 3,
-        name: 'Subscribes to a calendar',
-        group: 'subscription',
-      },
-      {
-        id: 4,
-        name: 'Alters an event registered for',
-        group: 'subscription',
-      },
-    ],
-  },
+  // {
+  //   id: 'subscription',
+  //   name: 'Subscribed To',
+  //   items: [
+  //     {
+  //       id: 1,
+  //       name: 'Post event',
+  //       group: 'subscription',
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'Register for an event',
+  //       group: 'subscription',
+  //     },
+  //     {
+  //       id: 3,
+  //       name: 'Subscribes to a calendar',
+  //       group: 'subscription',
+  //     },
+  //     {
+  //       id: 4,
+  //       name: 'Alters an event registered for',
+  //       group: 'subscription',
+  //     },
+  //   ],
+  // },
   {
     id: 'recommend',
     name: 'Recommend',

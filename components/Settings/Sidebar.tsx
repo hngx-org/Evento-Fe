@@ -56,7 +56,7 @@ function Sidebar({ onOpen }: { onOpen: () => void }) {
       <div className="flex items-center gap-2">
         <h1 className={`${montserrat.className} text-Grey-G700 text-5xl font-semibold`}>Settings</h1>
         <svg xmlns="http://www.w3.org/2000/svg" width="63" height="2" viewBox="0 0 63 2" fill="none">
-          <path d="M1 1H62" stroke="#3C3C3C" stroke-linecap="round" />
+          <path d="M1 1H62" stroke="#3C3C3C" strokeLinecap="round" />
         </svg>
       </div>
       <div className={`mt-16 flex flex-col gap-3 ${nunito.className}`}>

@@ -2,6 +2,7 @@ import React, { PropsWithChildren, useState } from 'react';
 
 import { Copy } from 'iconsax-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Page3Props extends PropsWithChildren<any> {
   onNext: () => void;
@@ -28,20 +29,17 @@ const Page3: React.FC<Page3Props> = (props) => {
             <Image src={'/Create-Events/17924 1.png'} height={300} width={300} layout="responsive" alt="" />
           </div>
           <div className="w-full flex flex-col content-center ">
-            <button className=" w-full max-sm:w-full text-center font-semibold text-[#fdfdfd] text-base leading-6 mb-3 py-4 px-5 bg-[#e0580c] rounded-lg">
+            <Link
+              href="/event-dashboard"
+              className=" w-full max-sm:w-full text-center font-semibold text-[#fdfdfd] text-base leading-6 mb-3 py-4 px-5 bg-[#e0580c] rounded-lg"
+            >
               See all events
-            </button>
+            </Link>
             <button
               onClick={handleButtonClick}
-              className=" w-full text-center max-sm:w-full font-semibold text-base leading-6 py-4 px-1 mb-3 max-sm:mb-0 bg-[#e0580c] text-[#fefefe] rounded-lg"
-            >
-              Copy event link
-            </button>
-            <button
-              onClick={props.onPrevious}
               className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold rounded-lg"
             >
-              Go back
+              Copy event link
             </button>
           </div>
         </div>
