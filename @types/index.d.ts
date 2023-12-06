@@ -186,7 +186,6 @@ export interface EventPayload {
   categoryName: string;
 }
 
-
 export interface EventParticipant {
   userID: string;
   email: string;
@@ -213,4 +212,3 @@ export interface EventsProps {
 }
 
 export type InputRef = React.RefObject<HTMLInputElement>;
-

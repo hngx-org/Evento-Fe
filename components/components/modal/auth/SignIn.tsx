@@ -4,18 +4,17 @@ import Modal from '@/components/ui/Modal';
 import AuthTitle from '@/components/components/authTitle';
 import Image from 'next/image';
 import SigninWithEmail from './SigninWithEmail';
+import { signUpWithGoogle } from '@/http/authapi';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [modOpen, setOpen] = useState(false);
   const onOpen = () => setOpen(true);
   const isClose = () => setOpen(false);
-  const [isloading, setIsLoading] = useState(false);
+  // const [isloading, setIsLoading] = useState(false);
 
   const handleLinkClick = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
-    }, 5000);
+    // window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
+    signUpWithGoogle();
   };
 
   return (
@@ -26,8 +25,8 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
       <div className="p-4 ">
         <AuthTitle heading="Welcome to Evento" subHeading="Sign In to Continue using Evento" />
         <Button
-          isLoading={isloading}
-          spinnerColor="#000"
+          // isLoading={isloading}
+          // spinnerColor="#000"
           className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center mt-12"
           onClick={handleLinkClick}
           //   href='https://evento-qo6d.onrender.com/api/v1/google'
