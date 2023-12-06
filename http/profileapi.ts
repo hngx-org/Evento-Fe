@@ -216,7 +216,7 @@ export const postProfilePicture = async (localImage: File) => {
   }
 };
 
-export const getUserEvents = async (setEvents: React.Dispatch<React.SetStateAction<eventType[]>>) => {
+export const getUserCreatedEvents = async (setEvents: React.Dispatch<React.SetStateAction<eventType[]>>) => {
   const authToken = getAuthToken();
   const userId = getUserId();
 
@@ -230,7 +230,8 @@ export const getUserEvents = async (setEvents: React.Dispatch<React.SetStateActi
     const events = response.data.data;
     console.log(events);
 
-    const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
+    // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
+    const filteredEvents = events.filter((event: any) => event.organizerID === userId);
 
     console.log(filteredEvents);
     setEvents(filteredEvents);
