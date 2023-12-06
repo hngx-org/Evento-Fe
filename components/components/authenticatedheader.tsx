@@ -86,15 +86,8 @@ function AuthenticatedHeader() {
   // };
 
   const handleLogout = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     logoutUser();
-
-    try {
-      await lgout();
-    } catch (error) {
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
