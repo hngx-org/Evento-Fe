@@ -5,7 +5,7 @@ import Swiper from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import FilterModal from './FilterModal';
-import { eventType, getUserEvents } from '@/http/profileapi';
+import { eventType, getUserCreatedEvents } from '@/http/profileapi';
 
 interface SwiperElement extends Element {
   swiper?: Swiper; // Define 'swiper' as a property of the Element
@@ -23,7 +23,7 @@ const ProfileEvent: React.FC = () => {
       },
     });
 
-    getUserEvents(setEvents);
+    getUserCreatedEvents(setEvents);
   }, []);
 
   const slideToCreateEvents = () => {

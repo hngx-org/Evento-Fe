@@ -108,7 +108,11 @@ const UserProfile: React.FC = () => {
     <AuthLayout>
       <div className={` ${nunito.className} flex w-[100vw] h-fit overflow-hidden justify-center bg-[#F5F5F5]  `}>
         <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute  overflow-hidden">
-          {coverPic && <Image src={coverPic} width={100} height={100} alt="" className="w-full object-cover " />}
+          {coverPic && (
+            <div className="flex justify-center items-center w-full h-full">
+              <Image src={coverPic} width={100} height={100} alt="" className="object-cover w-full h-full" />
+            </div>
+          )}
           <Button
             handleClick={() => {
               console.log(socialLinks, socialLinks?.facebookURL);
@@ -161,18 +165,19 @@ const UserProfile: React.FC = () => {
             <div className="info flex flex-col gap-4">
               <div className="flex justify-between">
                 <h6
-                  className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap1 min-w-[100px] w-fit `}
+                  className={`${montserrat.className} text-xl md:text-2xl font-bold whitespace-nowrap min-w-[100px] w-fit `}
                 >
                   {userProfile?.lastName ? (
-                    <Typewriter
-                      options={{}}
-                      onInit={(typewriter) => {
-                        typewriter.typeString(userProfile?.lastName + ' ' + userProfile?.firstName).start();
-                      }}
-                    />
+                    // <Typewriter
+                    //   options={{}}
+                    //   onInit={(typewriter) => {
+                    //     typewriter.typeString(userProfile?.lastName + ' ' + userProfile?.firstName).start();
+                    //   }}
+                    // />
+                    userProfile?.lastName + ' ' + userProfile?.firstName
                   ) : (
                     // Display a loading message or a skeleton element while bio is loading
-                    <SkeletonElement type="text" />
+                    <SkeletonElement type="title" className="h-4" />
                   )}
 
                   {/* {userProfile.firstName.length > 0 ? 'Mehn ' : 'Loading'} */}
@@ -192,17 +197,23 @@ const UserProfile: React.FC = () => {
                 </Button>
               </div>
               {/* <SkeletonElement type="title" /> */}
-              <div className=" text-xs md:text-base text-[#676767] line-clamp-3 max-w-full">
+              <div className=" text-xs md:text-base text-[#676767] line-clamp-3 max-w-full min-w-[100px] ">
                 {userProfile?.bio ? (
-                  <Typewriter
-                    options={{}}
-                    onInit={(typewriter) => {
-                      typewriter.typeString(userProfile.bio).start();
-                    }}
-                  />
+                  // <Typewriter
+                  //   options={{}}
+                  //   onInit={(typewriter) => {
+                  //     typewriter.typeString(userProfile.bio).start();
+                  //   }}
+                  // />
+                  userProfile.bio
                 ) : (
                   // Display a loading message or a skeleton element while bio is loading
-                  <SkeletonElement type="text" />
+                  <div className="flex flex-col ">
+                    {' '}
+                    <SkeletonElement type="text" className="" />
+                    <SkeletonElement type="text" className="" />
+                    <SkeletonElement type="text" className="" />
+                  </div>
                 )}
               </div>
               <div className="socials flex gap-x-[20px] items-center">

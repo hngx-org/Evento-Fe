@@ -1,23 +1,21 @@
+import clsx from 'clsx';
 import React from 'react';
 
-interface type {
+interface SkeletonProps {
   type: string;
+  className: string;
 }
 
-const SkeletonElement: React.FC<type> = ({ type }) => {
-  const classes = (type: string) => {
-    if (type === 'text') {
-      return 'w-full h-3 ';
-    } else if (type === 'title ') {
-      return 'min-w-[150px] w-full h-[30px] mb-4';
-    } else if (type === 'avatar') {
-      return 'rounded-[50%] w-full h-full';
-    } else if (type === 'thumbnail') {
-      return 'w-full h-full';
-    }
-  };
+const SkeletonElement: React.FC<SkeletonProps> = ({ type, className }) => {
+  const loaderClasses = clsx('skeleton-loader', {
+    'w-full h-3 min-w-[150px]': type === 'text',
+    'min-w-[150px] h-[30px] mb-4': type === 'title',
+    // Add more conditions for other types
+  });
 
-  return <div className={` bg-[#ddd] rounded-[4px] my-2  ${classes(type)}`}></div>;
+  const defaultClasses = 'bg-[#ddd] rounded-[4px] my-1';
+
+  return <div className={clsx(defaultClasses, loaderClasses, className)} />;
 };
 
 export default SkeletonElement;
