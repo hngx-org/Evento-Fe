@@ -26,7 +26,7 @@ export default function Index() {
   const pages = [{ page: num }, { page: num + 1 }, { page: num + 2 }, { page: num + 3 }];
   return (
     <EventManagementLayout>
-      <section className="flex justify-between py-8">
+      <section className="flex justify-between flex-col md:flex-row py-8">
         <div>
           <p className="text-[32px] text-[#535353] pb-4 font-[700] leading-[40px]">All applicant data</p>
           <div className="relative">
@@ -40,7 +40,7 @@ export default function Index() {
             </span>
           </div>
         </div>
-        <Button className="bg-primary-100 mt-3 w-[173px] h-[44px]">
+        <Button className="bg-primary-100 mt-12 w-full md:mt-3 md:w-[173px] h-[44px]">
           <Image src={Edit} width={0} alt="Edit Icon" />
           Invite Guests
         </Button>
@@ -51,8 +51,8 @@ export default function Index() {
           <div className="table_main_inner">
             {/* TABLE HEADER */}
             <div className="table_header">
-              <ul className="bg-[#f5f5f5] p-[1rem] py-6 overflow-hidden text-center flex justify-start items-center ">
-                <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[17rem] ">
+              <ul className="bg-[#f5f5f5] p-[1rem] py-6 overflow-hidden text-center hidden md:flex justify-start items-center ">
+                <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[8rem] ">
                   <input type="checkbox" className="cursor-pointer text-[20px]" />
                 </li>
                 <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[34rem] ">
@@ -60,9 +60,6 @@ export default function Index() {
                 </li>
                 <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[25rem] ">
                   Contact
-                </li>
-                <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[17rem]">
-                  Status
                 </li>
                 <li className=" font-[700] text-[20px] leading-[28px] text-[#3c3c3c] flex justify-start items-center w-[16rem] ">
                   Address
@@ -73,68 +70,34 @@ export default function Index() {
               </ul>
 
               <div className="table_data">
-                <div className="table_data_inner rounded-t-[6px] rounded-b-[16px] border-[0.5px] border-[#B1B1B1]">
+                <div className="table_data_inner rounded-t-[6px] rounded-b-[16px] border-0 md:border-[0.5px] border-[#B1B1B1]">
                   <ul>
                     {/*  */}
                     <li className=" border-b border-[#B1B1B1] ml-2 cursor-pointer  flex justify-start items-center p-[1rem]">
-                      <div className="  flex justify-start items-center w-[13rem] ">
+                      <div className="  flex justify-start items-center w-[5rem] sm:w-[10rem] md:w-[5rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
 
-                      <div className="flex justify-start w-[35rem] ">
+                      <div className="flex justify-start w-[26rem] ">
                         <Image src={Albert} width={50} height={50} alt="Albert" />
-                        <div className="text-left ml-3">
+                        <div className="text-left pl-3 pt-3">
                           <p className="text-[20px] font-[600] text-[#1e1e1e] ">Albert Ronald</p>
-                          <p className="text-[#b1b1b1] text-[16px] font-[500] ">Albert83</p>
+                          <div className="md:hidden">
+                            <p className="text-[#b1b1b1] text-[14px]">albertflores@gmail.com</p>
+                            <p className="text-[#b1b1b1] text-[14px]">Lagos, Nigeria</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[27rem] ">albertflores@gmail.com</div>
-
-                      <div className="w-[18rem] ">
-                        <button className="text-[12px] bg-[#eee7fc] rounded-[10px] py-[8px] p-[16px] font-[600] text-[#580CE0] ">
-                          Submitted
-                        </button>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[25rem] md:flex hidden ">
+                        albertflores@gmail.com
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem]">Lagos, Nigeria</div>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem] md:flex hidden">
+                        Lagos, Nigeria
+                      </div>
 
-                      <div className="min-w-fit">
-                        <button>
-                          <svg
-                            className="inline mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M3 22H21"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
+                      <div className="min-w-fit mr-5">
                         <button>
                           <Image src={Trash} width={0} alt="Edit Icon" className="inline" />
                         </button>
@@ -142,256 +105,120 @@ export default function Index() {
                     </li>
                     {/*  */}
                     <li className=" border-b border-[#B1B1B1] ml-2 cursor-pointer flex justify-start items-center p-[1rem]">
-                      <div className="  flex justify-start items-center w-[13rem] ">
+                      <div className="  flex justify-start items-center w-[5rem] sm:w-[10rem] md:w-[5rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
 
-                      <div className="flex justify-start w-[35rem] ">
+                      <div className="flex justify-start w-[26rem] ">
                         <Image src={Albert} width={50} height={50} alt="Albert" />
-                        <div className="text-left ml-3">
+                        <div className="text-left pl-3 pt-3">
                           <p className="text-[20px] font-[600] text-[#1e1e1e] ">Albert Ronald</p>
-                          <p className="text-[#b1b1b1] text-[16px] font-[500] ">Albert83</p>
+                          <div className="md:hidden">
+                            <p className="text-[#b1b1b1] text-[14px]">albertflores@gmail.com</p>
+                            <p className="text-[#b1b1b1] text-[14px]">Lagos, Nigeria</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[27rem] ">albertflores@gmail.com</div>
-
-                      <div className="w-[18rem] ">
-                        <button className="text-[12px] bg-[#FCEEE7] rounded-[10px] py-[8px] p-[16px] font-[600] text-[#E0580C] ">
-                          Waiting
-                        </button>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[25rem] md:flex hidden ">
+                        albertflores@gmail.com
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem]">Lagos, Nigeria</div>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem] md:flex hidden">
+                        Lagos, Nigeria
+                      </div>
 
-                      <div className="min-w-fit">
-                        <button>
-                          <svg
-                            className="inline mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M3 22H21"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
+                      <div className="min-w-fit mr-5">
                         <button>
                           <Image src={Trash} width={0} alt="Edit Icon" className="inline" />
                         </button>
                       </div>
                     </li>{' '}
                     <li className=" border-b border-[#B1B1B1] ml-2 cursor-pointer flex justify-start items-center p-[1rem]">
-                      <div className="  flex justify-start items-center w-[13rem] ">
+                      <div className="  flex justify-start items-center w-[5rem] sm:w-[10rem] md:w-[5rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
 
-                      <div className="flex justify-start w-[35rem] ">
+                      <div className="flex justify-start w-[26rem] ">
                         <Image src={Albert} width={50} height={50} alt="Albert" />
-                        <div className="text-left ml-3">
+                        <div className="text-left pl-3 pt-3">
                           <p className="text-[20px] font-[600] text-[#1e1e1e] ">Albert Ronald</p>
-                          <p className="text-[#b1b1b1] text-[16px] font-[500] ">Albert83</p>
+                          <div className="md:hidden">
+                            <p className="text-[#b1b1b1] text-[14px]">albertflores@gmail.com</p>
+                            <p className="text-[#b1b1b1] text-[14px]">Lagos, Nigeria</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[27rem] ">albertflores@gmail.com</div>
-
-                      <div className="w-[18rem] ">
-                        <button className="text-[12px] bg-[#eee7fc] rounded-[10px] py-[8px] p-[16px] font-[600] text-[#580CE0] ">
-                          Submitted
-                        </button>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[25rem] md:flex hidden ">
+                        albertflores@gmail.com
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem]">Lagos, Nigeria</div>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem] md:flex hidden">
+                        Lagos, Nigeria
+                      </div>
 
-                      <div className="min-w-fit">
-                        <button>
-                          <svg
-                            className="inline mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M3 22H21"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
+                      <div className="min-w-fit mr-5">
                         <button>
                           <Image src={Trash} width={0} alt="Edit Icon" className="inline" />
                         </button>
                       </div>
                     </li>
                     <li className=" border-b border-[#B1B1B1] ml-2 cursor-pointer flex justify-start items-center p-[1rem]">
-                      <div className="  flex justify-start items-center w-[13rem] ">
+                      <div className="  flex justify-start items-center w-[5rem] sm:w-[10rem] md:w-[5rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
 
-                      <div className="flex justify-start w-[35rem] ">
+                      <div className="flex justify-start w-[26rem] ">
                         <Image src={Albert} width={50} height={50} alt="Albert" />
-                        <div className="text-left ml-3">
+                        <div className="text-left pl-3 pt-3">
                           <p className="text-[20px] font-[600] text-[#1e1e1e] ">Albert Ronald</p>
-                          <p className="text-[#b1b1b1] text-[16px] font-[500] ">Albert83</p>
+                          <div className="md:hidden">
+                            <p className="text-[#b1b1b1] text-[14px]">albertflores@gmail.com</p>
+                            <p className="text-[#b1b1b1] text-[14px]">Lagos, Nigeria</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[27rem] ">albertflores@gmail.com</div>
-
-                      <div className="w-[18rem] ">
-                        <button className="text-[12px] bg-[#eee7fc] rounded-[10px] py-[8px] p-[16px] font-[600] text-[#580CE0] ">
-                          Submitted
-                        </button>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[25rem] md:flex hidden ">
+                        albertflores@gmail.com
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem]">Lagos, Nigeria</div>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem] md:flex hidden">
+                        Lagos, Nigeria
+                      </div>
 
-                      <div className="min-w-fit">
-                        <button>
-                          <svg
-                            className="inline mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M3 22H21"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
+                      <div className="min-w-fit mr-5">
                         <button>
                           <Image src={Trash} width={0} alt="Edit Icon" className="inline" />
                         </button>
                       </div>
                     </li>
                     <li className=" border-b border-[#B1B1B1] mb-10 ml-2 cursor-pointer flex justify-start items-center p-[1rem]">
-                      <div className="  flex justify-start items-center w-[13rem] ">
+                      <div className="  flex justify-start items-center w-[5rem] sm:w-[10rem] md:w-[5rem] ">
                         <input type="checkbox" className="cursor-pointer text-[20px]" />
                       </div>
 
-                      <div className="flex justify-start w-[35rem] ">
+                      <div className="flex justify-start w-[26rem] ">
                         <Image src={Albert} width={50} height={50} alt="Albert" />
-                        <div className="text-left ml-3">
+                        <div className="text-left pl-3 pt-3">
                           <p className="text-[20px] font-[600] text-[#1e1e1e] ">Albert Ronald</p>
-                          <p className="text-[#b1b1b1] text-[16px] font-[500] ">Albert83</p>
+                          <div className="md:hidden">
+                            <p className="text-[#b1b1b1] text-[14px]">albertflores@gmail.com</p>
+                            <p className="text-[#b1b1b1] text-[14px]">Lagos, Nigeria</p>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[27rem] ">albertflores@gmail.com</div>
-
-                      <div className="w-[18rem] ">
-                        <button className="text-[12px] bg-[#eee7fc] rounded-[10px] py-[8px] p-[16px] font-[600] text-[#580CE0] ">
-                          Submitted
-                        </button>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[25rem] md:flex hidden ">
+                        albertflores@gmail.com
                       </div>
 
-                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem]">Lagos, Nigeria</div>
+                      <div className="text-[#b1b1b1] text-[14px] font-[600] w-[17rem] md:flex hidden">
+                        Lagos, Nigeria
+                      </div>
 
-                      <div className="min-w-fit">
-                        <button>
-                          <svg
-                            className="inline mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M13.2594 3.6L5.04936 12.29C4.73936 12.62 4.43936 13.27 4.37936 13.72L4.00936 16.96C3.87936 18.13 4.71936 18.93 5.87936 18.73L9.09936 18.18C9.54936 18.1 10.1794 17.77 10.4894 17.43L18.6994 8.74C20.1194 7.24 20.7594 5.53 18.5494 3.44C16.3494 1.37 14.6794 2.1 13.2594 3.6Z"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M11.8906 5.05C12.3206 7.81 14.5606 9.92 17.3406 10.2"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M3 22H21"
-                              stroke="#292D32"
-                              strokeWidth="1.5"
-                              strokeMiterlimit="10"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                          </svg>
-                        </button>
+                      <div className="min-w-fit mr-5">
                         <button>
                           <Image src={Trash} width={0} alt="Edit Icon" className="inline" />
                         </button>
@@ -399,7 +226,7 @@ export default function Index() {
                     </li>
                   </ul>
 
-                  <div className="p-[1rem] flex justify-between">
+                  <div className="p-[1rem] hidden md:flex justify-between">
                     <p className="mt-2">Showing 5 of 5 entries</p>
                     <div className="flex rounded-lg mb-4">
                       <button
