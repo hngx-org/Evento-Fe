@@ -3,17 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logo from 'public/logo.svg';
 import profile from 'public/profileB.svg';
-import {
-  Add,
-  SearchNormal1,
-  Notification,
-  Profile,
-  Setting4,
-  LogoutCurve,
-  HambergerMenu,
-  Notepad,
-  Star,
-} from 'iconsax-react';
+import { Add, SearchNormal1, Notification, Profile, Setting4, LogoutCurve, HambergerMenu } from 'iconsax-react';
 import useVisible from '@/hooks/useVisible';
 import Input from '../ui/Input';
 import logoutUser from '@/hooks/logout';
@@ -118,18 +108,18 @@ function AuthenticatedHeader() {
             <Link href="/loggedinexplore" className="text-Grey-G500 font-medium text-base">
               Explore
             </Link>
-            <Link href="/event-management" className="text-Grey-G500 font-medium text-base">
+            {/* <Link href="/event-management" className="text-Grey-G500 font-medium text-base">
               Event-Management
-            </Link>
+            </Link> */}
             <Link href="/create-events" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
               Create Event
               <Add size={20} color="#3C3C3C" />
             </Link>
           </div>
           <div className="hidden lg:flex items-center gap-6">
-            <div className="cursor-pointer" onClick={() => setSearchDropdown(true)}>
+            {/* <div className="cursor-pointer" onClick={() => setSearchDropdown(true)}>
               <SearchNormal1 size={22} color="#3C3C3C" />
-            </div>
+            </div> */}
             <div className="cursor-pointer">
               <button onClick={handleNotificationsToggle} draggable={false}>
                 <Notification size={22} color="#3C3C3C" />
@@ -204,13 +194,13 @@ function AuthenticatedHeader() {
                 <Profile size={16} color="#3C3C3C" />
                 Explore
               </Link>
-              <Link
+              {/* <Link
                 href="/event-management"
                 className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2"
               >
                 <Profile size={16} color="#3C3C3C" />
                 Manage Events
-              </Link>
+              </Link> */}
               <Link href="/create-events" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
                 <Add size={16} color="#3C3C3C" />
                 Create Event

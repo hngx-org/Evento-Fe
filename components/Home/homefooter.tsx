@@ -35,12 +35,12 @@ export default function HomeFooter() {
             <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Explore
             </Link>
-            <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
+            {/* <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               New
             </Link>
             <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Price
-            </Link>
+            </Link> */}
             <Link href={''} className="text-gray-fot text-base md:text-lg font-medium">
               Help
             </Link>
