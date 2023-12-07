@@ -148,7 +148,7 @@ export interface EventDataProps {
   time: string;
   location: string;
   capacity: string;
-  entranceFee: number;
+  entranceFee: string;
   eventType: string;
   organizerID: string;
   categoryName: string;
@@ -220,6 +220,6 @@ export interface EventsProps {
 export type InputRef = React.RefObject<HTMLInputElement>;
 
 export interface CategoryProps {
-  id: string;
+  categoryID: string;
   name: string;
 }
