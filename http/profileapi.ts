@@ -230,8 +230,8 @@ export const getUserCreatedEvents = async (setEvents: React.Dispatch<React.SetSt
     const events = response.data.data;
     console.log(events);
 
-    // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
-    const filteredEvents = events.filter((event: any) => event.organizerID === userId);
+    const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
+    // const filteredEvents = events.filter((event: any) => event.organizerID === userId);
 
     console.log(filteredEvents);
     setEvents(filteredEvents);

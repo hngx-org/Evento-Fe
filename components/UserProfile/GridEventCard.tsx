@@ -38,7 +38,7 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
             <div className="flex gap-x-2 items-center">
               <Timer1 size="16" color="#303030" />
 
-              <span className="">{event.time && convertDateFormat(event.time, 'time')}</span>
+              <span className="">{event.startDate && convertDateFormat(event.startDate, 'time')}</span>
             </div>
           </div>
         </div>

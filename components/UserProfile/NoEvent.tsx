@@ -21,6 +21,7 @@ const montserrat = Montserrat({
 
 const NoEvent: React.FC<NoEventProps> = ({ type }) => {
   const router = useRouter();
+
   return (
     <div
       className={` ${nunito.className} event bg-white-100 flex flex-col justify-center items-center w-full h-fit p-[64px] gap-y-4 rounded-[12px]`}
@@ -33,28 +34,45 @@ const NoEvent: React.FC<NoEventProps> = ({ type }) => {
       >
         Hey there! 👋 It seems like this corner is a bit quiet
       </h4>
-      <p className="text-sm lg:text-base text-[#767676] max-w-[220px] md:max-w-none text-center">
-        {type === 'create' ? (
-          <span>Click the create event button to start creating events</span>
-        ) : (
-          <span>Click the explore button to see want kinds of events you can attend</span>
-        )}
-      </p>
-      <Button
-        handleClick={() => {
-          if (type === 'create') {
-            router.push('/create-events');
-          } else {
-            router.push('/explore');
-          }
-        }}
-        styles={'text-white-100 py-2 px-3'}
-        type={'button'}
-        title={'event button'}
-        disabled={false}
-      >
-        {type === 'create' ? <span>Create Event</span> : <span>Explore</span>}
-      </Button>
+      {type === '' ? (
+        <p className="text-sm lg:text-base text-[#767676] max-w-[220px] md:max-w-none text-center">
+          Click the{' '}
+          <span className="font-bold text-primary-100 cursor-pointer" onClick={() => router.push('/create-events')}>
+            create event
+          </span>{' '}
+          or explore{' '}
+          <span className="font-bold text-primary-100 cursor-pointer" onClick={() => router.push('/explore')}>
+            event button
+          </span>{' '}
+          to get started
+        </p>
+      ) : (
+        <>
+          {' '}
+          <p className="text-sm lg:text-base text-[#767676] max-w-[220px] md:max-w-none text-center">
+            {type === 'create' ? (
+              <span>Click the create event button to start creating events</span>
+            ) : (
+              <span>Click the explore button to see want kinds of events you can attend</span>
+            )}
+          </p>
+          <Button
+            handleClick={() => {
+              if (type === 'create') {
+                router.push('/create-events');
+              } else {
+                router.push('/explore');
+              }
+            }}
+            styles={'text-white-100 py-2 px-3'}
+            type={'button'}
+            title={'event button'}
+            disabled={false}
+          >
+            {type === 'create' ? <span>Create Event</span> : <span>Explore</span>}
+          </Button>
+        </>
+      )}
     </div>
   );
 };
