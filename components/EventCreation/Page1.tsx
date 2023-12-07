@@ -1,21 +1,39 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
-
-import { ArrowDown2, ArrowUp2 } from 'iconsax-react';
 import Link from 'next/link';
 import { EventDataProps } from '@/@types';
 import { Input } from '../ui/NewInput';
-import { DayPicker } from 'react-day-picker';
+import 'react-quill/dist/quill.snow.css';
 import 'react-day-picker/dist/style.css';
-import Button from '../ui/NewButton';
 import DateDropDown from './dateDropDown/dateDropDown';
 import TimeDropDown from './timeDropDown/timeDropDown';
 import ItemDropDown from './itemDropDown/itemDropDown';
+import dynamic from 'next/dynamic';
+const QuillNoSSRWrapper = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
 interface Page1Props {
   onNext: () => void;
   data: EventDataProps;
   setState: Dispatch<SetStateAction<EventDataProps>>;
+  descriptionContent: string;
+  setDescriptionContent: Dispatch<SetStateAction<string>>;
 }
+
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { header: '3' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+    ['link'],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
 
 // For demonstration purposes, let's use a static list of suggestions
 const staticSuggestions = [
@@ -86,16 +104,17 @@ const staticSuggestions = [
   'Belfast, Northern Ireland',
   'Ankara, Turkey',
   'Jerusalem, Israel',
+  'Ado-Ekiti, Nigeria',
   // Add more as needed
 ];
 
-const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
+const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionContent, setDescriptionContent }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(new Date());
   const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
   const isAllInputFilled =
     data.title === '' ||
-    data.description === '' ||
+    descriptionContent === '' ||
     data.startDate === '' ||
     data.startTime === '' ||
     data.endTime === '' ||
@@ -163,18 +182,25 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
               maxLength={30}
             />
           </div>
-          <div className="event-description w-full my-6">
-            <textarea
+          <div className="event-description w-full my-6 h-64">
+            <QuillNoSSRWrapper
+              value={descriptionContent}
+              onChange={setDescriptionContent}
+              modules={modules}
+              theme="snow"
+              className="h-[190px]"
+            />
+            {/* <textarea
               className="w-full py-4 resize-none border border-[#d7d7d7] rounded-lg px-4 block outline-primary-100"
               placeholder="Description"
               id="description"
               value={data.description}
               onChange={handleChange}
               style={{ height: '250px' }}
-            />
+            /> */}
           </div>
           <div className="event-date w-full flex z-20 flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
-            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 z-[9999] items-center">
+            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 z-[9999] md:items-center">
               <div className="w-[70px] text-xl font-semibold">Start</div>
               <div className=" w-full flex flex-row gap-1">
                 <div className="w-full z-[9999]">
@@ -189,7 +215,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
                 </div>
               </div>
             </div>
-            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 items-center">
+            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 md:items-center">
               <div className="w-[70px] text-xl font-semibold">End</div>
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">

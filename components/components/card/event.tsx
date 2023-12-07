@@ -57,7 +57,7 @@ function EventCard({ imagePath, date, title, location, price, participants, time
       <div className="p-4">
         <div className={`${nunito.className} flex justify-between items-center mb-1`}>
           <span className={`font-bold text-sm text-orange`}>{convertDate(date)}</span>
-          <span className="text-primary-100 bg-secondary-100 rounded block px-3 py-1">
+          <span className="text-primary-100 bg-secondary-100 rounded block px-3 py-1 capitalize">
             {price !== 'free' && '$'}
             {price}
           </span>
