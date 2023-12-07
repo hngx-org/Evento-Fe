@@ -1,5 +1,8 @@
+'use client';
+
 import React from 'react';
 import { GoogleLogin } from '@/http/authapi';
+import Button from '@/components/ui/NewButton';
 
 const TestButton = () => {
   const handleGoogleLogin = async () => {
@@ -14,7 +17,9 @@ const TestButton = () => {
 
   return (
     <div>
-      <button onClick={handleGoogleLogin}>Test Google Login</button>
+      <Button href="https://evento-qo6d.onrender.com/api/v1/google" className="text-black-main">
+        Test Google Login
+      </Button>
     </div>
   );
 };
