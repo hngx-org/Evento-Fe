@@ -223,3 +223,31 @@ export interface CategoryProps {
   categoryID: string;
   name: string;
 }
+
+export interface PreferencesProps {
+  newsletter: {
+    inApp: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  event_registration: {
+    inApp: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  event_invite: {
+    inApp: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  join_event: {
+    inApp: boolean;
+    email: boolean;
+    push: boolean;
+  };
+  event_change: {
+    inApp: boolean;
+    email: boolean;
+    push: boolean;
+  };
+}

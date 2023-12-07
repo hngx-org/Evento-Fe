@@ -2,6 +2,8 @@ import { toast } from 'react-toastify';
 import AuthInstance from './AuthInstance';
 import { UserProfile2, getAuthToken, getUserId } from './profileapi';
 import axios from 'axios';
+import { PreferencesProps } from '@/@types';
+import preferences from '@/pages/settings/preferences';
 
 export interface UserProfile {
   email?: string;
@@ -30,8 +32,8 @@ export interface socialsData {
 export interface preferences {
   theme: string;
   language: string;
-  regionalSettings: boolean;
-  timeZone: string;
+  regionalSettings?: boolean;
+  timeZone?: string;
 }
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
@@ -316,6 +318,56 @@ export const changePassword = async (
     setLoading(false);
     if (editUserData.status === 200) {
       toast.success('An email has been sent for confirmation');
+    }
+  } catch (err: any) {
+    console.log(err);
+    setLoading(false);
+    toast.error(err.message);
+  }
+};
+
+export const getNotificationsPreferences = async (
+  setPrefernces: React.Dispatch<React.SetStateAction<PreferencesProps>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+
+  try {
+    const getUserPrefernces = await $AuthHttp.get(`/settings/${userId}/notifications`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    // console.log(getUserPrefernces);
+
+    const data: PreferencesProps = getUserPrefernces?.data?.data;
+    if (Object.keys(data).length !== 0) {
+      setPrefernces(data);
+    }
+  } catch (e: any) {
+    console.log(e);
+    toast.error('An error occurred while fetching user preferences.');
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+export const updateNotificationsPreferences = async (
+  preferences: PreferencesProps,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  setLoading(true);
+  try {
+    const editUserPreferences = await $AuthHttp.post(`/settings/${userId}/notifications`, preferences, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    console.log(editUserPreferences);
+    setLoading(false);
+    if (editUserPreferences.status === 200) {
+      toast.success('preferences updated');
     }
   } catch (err: any) {
     console.log(err);

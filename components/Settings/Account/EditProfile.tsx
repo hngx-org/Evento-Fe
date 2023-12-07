@@ -104,7 +104,6 @@ function EditProfile() {
           className="bg-transparent border border-primary-100 text-primary-100 font-bold text-sm rounded-lg h-9"
           isLoading={removeLoading}
           onClick={() => deleteUploadedImage(setRemoveLoading)}
-          // handleClick={() => setProfileImage(null)}
         >
           Remove
         </Button>

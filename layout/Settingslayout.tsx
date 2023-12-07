@@ -19,9 +19,9 @@ function Settingslayout({ children }: { children: React.ReactNode }) {
             <MobileNav />
             {children}
           </div>
-          <div className="hidden lg:flex items-end cursor-pointer">
+          {/* <div className="hidden lg:flex items-end cursor-pointer">
             <Image src={help} alt="help" width={64} height={64} />
-          </div>
+          </div> */}
         </div>
       </main>
       <DeleteAccountModal isOpen={isOpen} onClose={onClose} />
