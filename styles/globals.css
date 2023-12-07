@@ -11,6 +11,9 @@
   .filter-btn {
     @apply border border-Grey-G60 text-start p-4 bg-Grey-G10/40 first:rounded-t-lg last:rounded-b-lg border-b-0 last:border-b text-Grey-G900;
   }
+  .loader {
+    @apply h-5 w-5 rounded-full mx-auto border-2 border-white-100 border-t-gray-100 animate-spin;
+  }
 
   @variants responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */

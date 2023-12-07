@@ -154,7 +154,9 @@ export interface EventDataProps {
   categoryName: string;
   startTime: string;
   endTime: string;
-  liveLink: string;
+  virtualLocationLink?: string;
+  locationType: 'Physical' | 'Virtual';
+  ticketType: 'Free' | 'Premium';
 }
 
 export interface UploadResponse {
@@ -177,13 +179,17 @@ export interface EventPayload {
   imageURL: string;
   startDate: string;
   endDate: string;
-  time: string;
-  location: string;
+  locationType: 'Physical' | 'Virtual';
+  location?: string;
+  virtualLocationLink?: string;
+  time?: string;
   capacity: number;
-  entranceFee: number;
   eventType: string;
   organizerID: string;
   categoryName: string;
+  ticketType: string;
+  ticketPrice: number;
+  entranceFee?: number;
 }
 
 export interface EventParticipant {
@@ -212,3 +218,8 @@ export interface EventsProps {
 }
 
 export type InputRef = React.RefObject<HTMLInputElement>;
+
+export interface CategoryProps {
+  id: string;
+  name: string;
+}

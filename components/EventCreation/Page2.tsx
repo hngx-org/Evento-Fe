@@ -1,10 +1,10 @@
-import React, { ChangeEvent, Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, Dispatch, PropsWithChildren, SetStateAction, useEffect, useState } from 'react';
 
 import { ArrowDown2, ArrowUp2, GalleryEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { FaXmark } from 'react-icons/fa6';
-import { EventDataProps, UploadResponse } from '@/@types';
-import { uploadImage } from '@/http/createeventapi';
+import { CategoryProps, EventDataProps, UploadResponse } from '@/@types';
+import { getCategories, uploadImage } from '@/http/createeventapi';
 
 interface Page2Props extends PropsWithChildren<any> {
   onNext: () => void;
@@ -12,10 +12,8 @@ interface Page2Props extends PropsWithChildren<any> {
   data: EventDataProps;
   setState: Dispatch<SetStateAction<EventDataProps>>;
   loadState: boolean;
-}
-
-interface EventType {
-  label: string;
+  otherCategory: string;
+  setOtherCategory: Dispatch<SetStateAction<string>>;
 }
 
 interface CapacityType {
@@ -24,11 +22,12 @@ interface CapacityType {
 
 interface TicketType {
   [x: string]: SetStateAction<string>;
-  label: string;
+  label: 'Free' | 'Premium';
 }
 
 interface Props {}
 const Page2: React.FC<Page2Props> = (props) => {
+  const [isFileUploading, setIsFileUploading] = useState<boolean>(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
   const [isDropdownTicketTypeOpen, setIsDropdownTicketTypeOpen] = useState(false);
@@ -36,12 +35,16 @@ const Page2: React.FC<Page2Props> = (props) => {
   const [isFileTypeModalOpen, setIsFileTypeModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isValidFileType, setIsValidFileType] = useState(true);
-  const [selectedTicketType, setSelectedTicketType] = useState('Free');
-  const [isSecondDivVisible, setIsSecondDivVisible] = useState(false);
   const isAllInputFilled = props.data.capacity === '';
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
 
-  const openImageModal = () => {
-    setIsModalImageOpen(true);
+  useEffect(() => {
+    categoryData();
+  }, []);
+
+  const categoryData = async () => {
+    const cats = await getCategories(setCategories);
+    setCategories([...cats, { name: 'Other', id: 'other' }]);
   };
 
   const closeImageModal = () => {
@@ -53,21 +56,24 @@ const Page2: React.FC<Page2Props> = (props) => {
     const file = event.target.files && event.target.files[0];
 
     if (file) {
-      // processFile(file);
-      try {
-        const response: UploadResponse = await uploadImage({ file });
+      await uploadFile(file);
+    }
+  };
 
-        console.log('Upload successful:', response);
-        props.setState((prevState) => {
-          return { ...prevState, imageURL: response.data.imageURL };
-        });
-        closeImageModal();
-      } catch (error) {
-        console.error('Error uploading image:', error);
-      } finally {
-        // Don't clear the file state after upload
-        // setFile(null);
-      }
+  const uploadFile = async (file: File) => {
+    setIsFileUploading(true);
+    try {
+      const response: UploadResponse = await uploadImage({ file });
+
+      props.setState((prevState) => {
+        return { ...prevState, imageURL: response.data.imageURL };
+      });
+
+      closeImageModal();
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    } finally {
+      setIsFileUploading(false);
     }
   };
 
@@ -80,24 +86,10 @@ const Page2: React.FC<Page2Props> = (props) => {
     const file = e.dataTransfer.files[0];
     const acceptedMimeType = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/jpg'];
     if (acceptedMimeType.includes(file.type)) {
-      processFile(file);
+      uploadFile(file);
     } else {
       setIsFileTypeModalOpen(true);
     }
-  };
-
-  const processFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64Image = reader.result as string; // Remove "data:image/png;base64," prefix
-      props.setState((prevState) => {
-        return { ...prevState, imageURL: base64Image };
-      });
-    };
-
-    reader.readAsDataURL(file);
-
-    closeImageModal();
   };
 
   const handleDropdownToggle = () => {
@@ -112,9 +104,9 @@ const Page2: React.FC<Page2Props> = (props) => {
     setIsDropdownTicketTypeOpen(!isDropdownTicketTypeOpen);
   };
 
-  const handleEventTypeSelect = (eventType: EventType) => {
+  const handleEventTypeSelect = (eventType: string) => {
     props.setState((prevState) => {
-      return { ...prevState, categoryName: eventType.label };
+      return { ...prevState, categoryName: eventType };
     });
     setIsDropdownOpen(false);
   };
@@ -126,36 +118,16 @@ const Page2: React.FC<Page2Props> = (props) => {
     setIsDropdownCapacityOpen(false);
   };
 
-  // const handleTicketTypeSelect = (ticketType: TicketType) => {
-  //   setSelectedTicketType(ticketType.label);
-  //   setIsDropdownTicketTypeOpen(false);
-  // };
-
-  const handleTicketTypeSelect = (selectedType: TicketType) => {
-    setSelectedTicketType(selectedType.label);
-
-    // Show the second div if the selected type is 'Premium'
-    setIsSecondDivVisible(selectedType.label === 'Premium');
+  const handleTicketTypeSelect = (ticket: 'Free' | 'Premium') => {
+    props.setState((prevState) => {
+      return { ...prevState, ticketType: ticket };
+    });
 
     // Close the dropdown
     setIsDropdownTicketTypeOpen(false);
   };
 
-  const eventTypes: EventType[] = [
-    { label: 'Tech' },
-    { label: 'Education' },
-    { label: 'Arts' },
-    { label: 'Business' },
-    // Add more options with different labels and descriptions as needed
-  ];
-
   const capacityTypes: CapacityType[] = [{ label: '50+' }, { label: '100+' }, { label: '200+' }, { label: '300+' }];
-
-  const locationTypes = [
-    { label: 'Physical', value: 'Physical' },
-    { label: 'Virtual', value: 'Virtual' },
-    // Add more location types as needed
-  ];
 
   const ticketTypes: TicketType[] = [
     { label: 'Free', price: '0' },
@@ -173,26 +145,21 @@ const Page2: React.FC<Page2Props> = (props) => {
     <>
       <section className="page-2 w-full lg:px-[0px] md:px-0 max-sm:px-0 pt-[49.5px] pb-6">
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
-          <div className="h1 w-full mb-12 max-sm:mb-6 ">
-            <h1 className=" font-semibold text-3xl max-sm:text-xl leading-10 text-[#000000]">Hey Pal, Almost done!</h1>
-          </div>
           <div className="relative w-full h-auto border-[1px] border-[#d7d7d7] rounded-3xl mb-12 max-sm:mb-6 ">
-            {!selectedFile && (
-              <Image
-                className="w-full h-[278px] object-fill"
-                src={props.data.imageURL}
-                alt="event-image"
-                width={1280}
-                height={800}
-                layout="responsive"
-              />
-            )}
+            <Image
+              className="w-full h-[278px] object-fill"
+              src={props.data.imageURL}
+              alt="event-image"
+              width={1280}
+              height={800}
+              layout="responsive"
+            />
 
             <GalleryEdit
               className="absolute bottom-[13px] right-4 cursor-pointer"
               size={24}
               color="#fefefe"
-              onClick={openImageModal}
+              onClick={() => setIsModalImageOpen(true)}
             />
 
             {/* Modal */}
@@ -221,8 +188,8 @@ const Page2: React.FC<Page2Props> = (props) => {
                       Dazzle the world, no magic wand needed. Just drag and drop files right here. Formats accepted are
                       JPG, PNG, or SVG.
                     </p>
-                    <label className="bg-[#e0580c] text-[#fefefe] px-5 py-4 rounded-lg cursor-pointer hover:bg-opacity-90 shadow-lg">
-                      Browse to Upload
+                    <label className="bg-[#e0580c] text-[#fefefe] px-5 py-4 rounded-lg min-w-[165px] cursor-pointer hover:bg-opacity-90 shadow-lg">
+                      {isFileUploading ? <div className="loader" /> : 'Browse to Upload'}
                       <input
                         type="file"
                         className="hidden"
@@ -267,7 +234,7 @@ const Page2: React.FC<Page2Props> = (props) => {
             )}
 
             {/* Display the uploaded image */}
-            {selectedFile && isValidFileType && (
+            {/* {selectedFile && isValidFileType && (
               <div className="w-full h-full">
                 <Image
                   src={selectedFile}
@@ -277,10 +244,10 @@ const Page2: React.FC<Page2Props> = (props) => {
                   className="w-full rounded-3xl h-full object-cover"
                 />
               </div>
-            )}
+            )} */}
           </div>
           <div className="w-full flex flex-col content-center mb-6 ">
-            <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Select event Category</h2>
+            <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Select Event Category</h2>
             <div className="relative inline-block w-full">
               <input
                 className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
@@ -290,30 +257,44 @@ const Page2: React.FC<Page2Props> = (props) => {
                 value={props.data.categoryName}
                 onClick={handleDropdownToggle}
               />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                onClick={handleDropdownToggle}
-              >
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer">
                 {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
                 {isDropdownOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
               </div>
 
               {/* Dropdown Modal */}
               {isDropdownOpen && (
-                <div className="absolute w-full top-full p-2 z-50 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg overflow-hidden">
-                  {eventTypes.map((eventType) => (
+                <div className="absolute w-full top-full max-h-56 overflow-scroll p-2 z-50 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg">
+                  {categories.map((item) => (
                     <div
-                      key={eventType.label}
+                      key={item.id}
                       className=" px-4 py-2 hover:bg-[#dedede] rounded-lg  cursor-pointer"
-                      onClick={() => handleEventTypeSelect(eventType)}
+                      onClick={() => handleEventTypeSelect(item.name)}
                     >
-                      <div className="mb-1 font-bold text-base text-[#020202]">{eventType.label}</div>
+                      <div className="mb-1 font-bold text-base text-[#020202]">{item.name}</div>
                     </div>
                   ))}
                 </div>
               )}
             </div>
           </div>
+
+          {props.data.categoryName === 'Other' && (
+            <div className="w-full relative flex flex-col mb-10 content-center">
+              <label htmlFor="entranceFee" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
+                Other Event Category
+              </label>
+              <input
+                id="entranceFee"
+                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
+                placeholder=""
+                type="text"
+                onChange={(e) => props.setOtherCategory(e.target.value)}
+                value={props.otherCategory}
+              />
+            </div>
+          )}
+
           <div className="w-full relative z-10 flex flex-col mb-6 content-center">
             <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Input capacity Level</h2>
             <div className="relative inline-block w-full">
@@ -325,10 +306,7 @@ const Page2: React.FC<Page2Props> = (props) => {
                 readOnly
                 onClick={handleDropdownCapacityToggle}
               />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                onClick={handleDropdownCapacityToggle}
-              >
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer">
                 {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
                 {isDropdownCapacityOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
               </div>
@@ -356,7 +334,7 @@ const Page2: React.FC<Page2Props> = (props) => {
                 className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
                 placeholder="Select Ticket type"
                 type="text"
-                value={selectedTicketType}
+                value={props.data.ticketType}
                 onClick={handleDropdownTicketToggle}
                 readOnly
               />
@@ -375,7 +353,7 @@ const Page2: React.FC<Page2Props> = (props) => {
                     <div
                       key={ticketType.label}
                       className=" px-4 py-2 hover:bg-[#dedede] rounded-lg cursor-pointer"
-                      onClick={() => handleTicketTypeSelect(ticketType)}
+                      onClick={() => handleTicketTypeSelect(ticketType.label)}
                     >
                       <div className="mb-1 font-bold text-base text-[#020202]">{ticketType.label}</div>
                     </div>
@@ -385,7 +363,7 @@ const Page2: React.FC<Page2Props> = (props) => {
             </div>
           </div>
           {/* Second Div - Displayed only when 'Premium' is selected */}
-          {isSecondDivVisible && (
+          {props.data.ticketType === 'Premium' && (
             <div className="w-full relative flex flex-col mb-10 content-center">
               <label htmlFor="entranceFee" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
                 Price
@@ -405,11 +383,7 @@ const Page2: React.FC<Page2Props> = (props) => {
             className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:bg-gray-alt  disabled:cursor-not-allowed"
             disabled={isAllInputFilled}
           >
-            {props.loadState ? (
-              <div className="h-5 w-5 rounded-full mx-auto border-2 border-white-100 border-t-gray-100 animate-spin" />
-            ) : (
-              'Create event'
-            )}
+            {props.loadState ? <div className="loader" /> : 'Create event'}
           </button>
           <button
             onClick={props.onPrevious}

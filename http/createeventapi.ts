@@ -2,8 +2,9 @@ import AuthInstance from './AuthInstance';
 import { toast } from 'react-toastify';
 import axios, { AxiosResponse } from 'axios';
 import { getStoredAuthToken, getStoredUserId } from './getToken';
-import { UploadParams, UploadResponse, EventPayload } from '@/@types';
+import { UploadParams, UploadResponse, EventPayload, CategoryProps } from '@/@types';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { Dispatch, SetStateAction } from 'react';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -73,6 +74,16 @@ export const createEvent = async (
     throw error;
   } finally {
     setIsLoading(false);
+  }
+};
+
+export const getCategories = async (setCategories: Dispatch<SetStateAction<CategoryProps[]>>) => {
+  try {
+    const categories = await $AuthHttp.get('/categories');
+    setCategories(categories?.data?.data);
+    return categories?.data?.data;
+  } catch (error) {
+    toast.error('An error occur while fetching categories');
   }
 };
 

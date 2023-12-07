@@ -6,6 +6,7 @@ import Page2 from '@/components/EventCreation/Page2';
 import Page3 from '@/components/EventCreation/Page3';
 import { EventDataProps } from '@/@types';
 import { createEvent } from '@/http/createeventapi';
+import { getStoredUserId } from '@/http/getToken';
 
 interface Props {}
 
@@ -28,13 +29,16 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
     eventType: '',
     organizerID: '',
     categoryName: '',
-    startTime: '',
-    endTime: '',
-    liveLink: '',
+    startTime: '12:30',
+    endTime: '12:30',
+    virtualLocationLink: '',
+    locationType: 'Physical',
+    ticketType: 'Free',
   });
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [completedSteps, setCompletedSteps] = useState(0);
+  const [otherCategory, setOtherCategory] = useState<string>('');
+  const userId = getStoredUserId();
 
   const nextPage = async () => {
     if (page === 2) {
@@ -50,8 +54,26 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
         entranceFee,
         eventType,
         categoryName,
-        liveLink,
+        locationType,
+        ticketType,
       } = eventData;
+      console.log({
+        title,
+        description,
+        imageURL,
+        startDate,
+        endDate,
+        locationType,
+        time: startTime,
+        location,
+        virtualLocationLink: eventData?.virtualLocationLink,
+        capacity: parseInt(capacity),
+        eventType,
+        organizerID: userId,
+        categoryName: categoryName === 'other' ? otherCategory : categoryName,
+        ticketType,
+        ticketPrice: entranceFee,
+      });
       await createEvent(
         {
           title,
@@ -59,13 +81,16 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
           imageURL,
           startDate,
           endDate,
+          locationType,
           time: startTime,
-          location: eventType === '' ? location : liveLink,
+          location,
+          virtualLocationLink: eventData?.virtualLocationLink,
           capacity: parseInt(capacity),
-          entranceFee,
           eventType,
-          organizerID: 'Physical',
-          categoryName,
+          organizerID: userId ?? '',
+          categoryName: categoryName === 'other' ? otherCategory : categoryName,
+          ticketType,
+          ticketPrice: entranceFee,
         },
         setIsLoading,
       );
@@ -114,6 +139,8 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
               loadState={isLoading}
               data={eventData}
               setState={setEventData}
+              otherCategory={otherCategory}
+              setOtherCategory={setOtherCategory}
             />
           )}
           {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
