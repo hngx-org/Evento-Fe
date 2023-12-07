@@ -46,7 +46,7 @@ function Preferences() {
       <div className={`${nunito.className} flex flex-col gap-10`}>
         <Theme selectedTheme={selectedTheme} setSelectedTheme={setSelectedTheme} />
         <Language selected={selectedLanguage} setSelected={setSelectedLanguage} />
-        <Regional location={regionalSettings.location} />
+        {/* <Regional location={regionalSettings.location} /> */}
         <div className="flex justify-end mt-5">
           <Button
             type="button"
