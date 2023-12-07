@@ -19,11 +19,11 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
                 return (
                   <EventCard
                     key={item.eventID}
-                    imagePath={item.imageURL}
+                    imagePath={item.imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : item.imageURL}
                     date={item.startDate}
                     title={item.title}
                     location={item.location}
-                    price={item.entranceFee}
+                    price={item?.entranceFee ?? 'free'}
                     participants={item.participants}
                     time={item.time}
                   />

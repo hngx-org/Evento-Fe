@@ -44,7 +44,9 @@ const Page2: React.FC<Page2Props> = (props) => {
 
   const categoryData = async () => {
     const cats = await getCategories(setCategories);
-    setCategories([...cats, { name: 'Other', id: 'other' }]);
+    if (cats) {
+      setCategories([...cats, { name: 'Other', categoryID: 'other' }]);
+    }
   };
 
   const closeImageModal = () => {
@@ -267,7 +269,7 @@ const Page2: React.FC<Page2Props> = (props) => {
                 <div className="absolute w-full top-full max-h-56 overflow-scroll p-2 z-50 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg">
                   {categories.map((item) => (
                     <div
-                      key={item.id}
+                      key={item.categoryID}
                       className=" px-4 py-2 hover:bg-[#dedede] rounded-lg  cursor-pointer"
                       onClick={() => handleEventTypeSelect(item.name)}
                     >

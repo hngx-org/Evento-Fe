@@ -10,7 +10,7 @@
 
 .checkboxChecked {
   appearance: none;
-  background-color: #fff;
+  background-color: white;
   margin: 0;
   font: inherit;
   color: currentColor;
@@ -33,7 +33,7 @@
   height: 1em;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em black;
+  box-shadow: inset 1em 1em #e0580c;
 
   /* Windows High Contrast Mode */
   background-color: CanvasText;

@@ -25,7 +25,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
     time: '',
     location: '',
     capacity: '',
-    entranceFee: 0,
+    entranceFee: '0',
     eventType: '',
     organizerID: '',
     categoryName: '',
@@ -38,6 +38,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [otherCategory, setOtherCategory] = useState<string>('');
+  const [descriptionContent, setDescriptionContent] = useState<string>('');
   const userId = getStoredUserId();
 
   const nextPage = async () => {
@@ -57,27 +58,11 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
         locationType,
         ticketType,
       } = eventData;
-      console.log({
-        title,
-        description,
-        imageURL,
-        startDate,
-        endDate,
-        locationType,
-        time: startTime,
-        location,
-        virtualLocationLink: eventData?.virtualLocationLink,
-        capacity: parseInt(capacity),
-        eventType,
-        organizerID: userId,
-        categoryName: categoryName === 'other' ? otherCategory : categoryName,
-        ticketType,
-        ticketPrice: entranceFee,
-      });
+
       await createEvent(
         {
           title,
-          description,
+          description: descriptionContent,
           imageURL,
           startDate,
           endDate,
@@ -90,7 +75,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
           organizerID: userId ?? '',
           categoryName: categoryName === 'other' ? otherCategory : categoryName,
           ticketType,
-          ticketPrice: entranceFee,
+          ticketPrice: parseInt(entranceFee),
         },
         setIsLoading,
       );
@@ -131,7 +116,15 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
               <div className={`h-full bg-Success-S400 rounded-lg ${progress()}`} />
             </div>
           </div>
-          {page === 1 && <Page1 onNext={nextPage} data={eventData} setState={setEventData} />}
+          {page === 1 && (
+            <Page1
+              onNext={nextPage}
+              data={eventData}
+              setState={setEventData}
+              descriptionContent={descriptionContent}
+              setDescriptionContent={setDescriptionContent}
+            />
+          )}
           {page === 2 && (
             <Page2
               onNext={nextPage}
