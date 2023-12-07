@@ -33,7 +33,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           //   href='https://evento-qo6d.onrender.com/api/v1/google'
         >
           <Image src="/google.svg" alt="Google icon" width={20} height={20} />
-          <span className="text-center text-stone-900 text-base font-medium leading-normal">Signin with Google</span>
+          <span className="text-center text-stone-900 text-base font-medium leading-normal">Sign in with Google</span>
         </Button>
         <div className="flex items-center gap-[10px] my-6">
           <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
@@ -44,7 +44,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           onClick={onOpen}
           className="px-12 py-4 rounded-lg  bg-primary-100 w-full flex items-center gap-[10px] justify-center"
         >
-          <p className="text-center text-white-100 text-base font-medium leading-normal">Signin With Email</p>
+          <p className="text-center text-white-100 text-base font-medium leading-normal">Sign in with Email</p>
         </Button>
       </div>
       <SigninWithEmail isOpen={modOpen} onClose={isClose} />
