@@ -1,8 +1,15 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import React, { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { ArrowDown2, ArrowUp2 } from 'iconsax-react';
 import Link from 'next/link';
 import { EventDataProps } from '@/@types';
+import { Input } from '../ui/NewInput';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import Button from '../ui/NewButton';
+import DateDropDown from './dateDropDown/dateDropDown';
+import TimeDropDown from './timeDropDown/timeDropDown';
+import ItemDropDown from './itemDropDown/itemDropDown';
 
 interface Page1Props {
   onNext: () => void;
@@ -83,10 +90,9 @@ const staticSuggestions = [
 ];
 
 const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isSecondContainerVisible, setIsSecondContainerVisible] = useState(false);
-  const [isThirdDivVisible, setIsThirdDivVisible] = useState(true);
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(new Date());
+  const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
   const isAllInputFilled =
     data.title === '' ||
     data.description === '' ||
@@ -95,8 +101,23 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
     data.endTime === '' ||
     data.endDate === '' ||
     (data.eventType === 'Physical' && data.location === '') ||
-    (data.eventType === 'Virtual' && data.liveLink === '');
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    (data.eventType === 'Virtual' && data.virtualLocationLink === '');
+
+  useEffect(() => {
+    if (!selectedStartDate) return;
+    setState((prevState) => {
+      return { ...prevState, startDate: new Date(selectedStartDate).toISOString() };
+    });
+  }, [selectedStartDate]);
+
+  useEffect(() => {
+    if (!selectedEndDate) return;
+    setState((prevState) => {
+      return { ...prevState, endDate: new Date(selectedEndDate).toISOString() };
+    });
+  }, [selectedEndDate]);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { value, id } = e.target;
     setState((prevState) => {
       return { ...prevState, [id]: value };
@@ -127,30 +148,13 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
     // Add more location types as needed
   ];
 
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleLocationTypeSelect = (selectedType: { label: any; value: any }) => {
-    setState((prevState) => {
-      return { ...prevState, eventType: selectedType.label };
-    });
-    // Show/hide the second div based on the selected type
-    setIsSecondContainerVisible(selectedType.value === 'Virtual');
-    // Show/hide the third div based on the selected type
-    setIsThirdDivVisible(selectedType.value !== 'Virtual');
-
-    // Close the dropdown
-    setIsDropdownOpen(false);
-  };
-
   return (
     <>
       <section className="page-1 event-dashboard w-full lg:px-[0px] md:px-0 max-sm:px-0 py-4 ">
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="event-name w-full ">
-            <input
-              className="w-full border-[1px] py-[32px] px-4 border-[#d7d7d7] rounded-lg font-semibold text-xl leading-7 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+            <Input
+              className="w-full focus:outline-1 font-medium rounded-lg focus:border-primary-100 active:outline-primary-100 border text-dark-100"
               placeholder="Event Name"
               type="text"
               id="title"
@@ -160,106 +164,60 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
             />
           </div>
           <div className="event-description w-full my-6">
-            <input
-              className="w-full border-[1px] py-[54px] max-sm:py-5 px-4 border-[#d7d7d7] rounded-lg font-semibold text-[32px] max-sm:text-xl leading-10 text-[#020202] placeholder-[#848383] focus:outline-[#ddab8f] focus:placeholder-transparent"
+            <textarea
+              className="w-full py-4 resize-none border border-[#d7d7d7] rounded-lg px-4 block outline-primary-100"
               placeholder="Description"
-              type="text"
               id="description"
               value={data.description}
               onChange={handleChange}
-              maxLength={100}
+              style={{ height: '250px' }}
             />
           </div>
-          <div className="event-date w-full flex flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
-            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1">
+          <div className="event-date w-full flex z-20 flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
+            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 z-[9999] items-center">
               <div className="w-[70px] text-xl font-semibold">Start</div>
               <div className=" w-full flex flex-row gap-1">
-                <div className="w-full">
-                  <input
-                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f] "
-                    placeholder="Wed, Oct, 08"
-                    type="date"
-                    id="startDate"
-                    value={data.startDate}
-                    onChange={handleChange}
+                <div className="w-full z-[9999]">
+                  <DateDropDown
+                    startDate={selectedStartDate}
+                    setStartDate={setSelectedStartDate}
+                    fromDate={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())}
                   />
                 </div>
                 <div className="w-full">
-                  <input
-                    className="border-[#d7d7d7] w-full text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
-                    placeholder="Wed, Oct, 08"
-                    type="time"
-                    id="startTime"
-                    value={data.startTime}
-                    onChange={handleChange}
-                  />
+                  <TimeDropDown stateData={data} setStateData={setState} type="startTime" />
                 </div>
               </div>
             </div>
-            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1">
+            <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 items-center">
               <div className="w-[70px] text-xl font-semibold">End</div>
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">
-                  <input
-                    className="w-full text-sm border-[#d7d7d7] px-2 py-3 rounded-lg border-[1px] placeholder-[#848383] focus:outline-[#ddab8f]"
-                    placeholder="Wed, Oct, 08"
-                    type="date"
-                    id="endDate"
-                    value={data.endDate}
-                    onChange={handleChange}
+                  <DateDropDown
+                    startDate={selectedEndDate}
+                    setStartDate={setSelectedEndDate}
+                    fromDate={
+                      selectedStartDate
+                        ? new Date(
+                            new Date(selectedStartDate).getFullYear(),
+                            new Date().getMonth(),
+                            new Date().getDate(),
+                          )
+                        : new Date()
+                    }
                   />
                 </div>
                 <div className="w-full">
-                  <input
-                    className="w-full border-[#d7d7d7] text-sm px-2 py-3 border-[1px] rounded-lg placeholder-[#848383] focus:outline-[#ddab8f]"
-                    placeholder="Wed, Oct, 08"
-                    type="time"
-                    value={data.endTime}
-                    id="endTime"
-                    onChange={handleChange}
-                  />
+                  <TimeDropDown stateData={data} setStateData={setState} type="endTime" />
                 </div>
               </div>
             </div>
           </div>
-          <div className="event-location my-6 w-full flex flex-col content-center">
-            <h2 className=" font-semibold leading-6 text-xl text-[#303030]">Add Location</h2>
-            <div className="relative mt-2 inline-block w-full">
-              <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4 cursor-pointer"
-                placeholder="Choose event location"
-                type="text"
-                value={data.eventType}
-                readOnly
-                onClick={handleDropdownToggle}
-              />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                onClick={handleDropdownToggle}
-              >
-                {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
-                {isDropdownOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
-              </div>
 
-              {/* Dropdown Modal */}
-              {isDropdownOpen && (
-                <div className="absolute w-full top-full z-50 p-2 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7] rounded-lg overflow-hidden">
-                  {locationTypes.map((locationType) => (
-                    <div
-                      key={locationType.label}
-                      className="px-4 py-2 hover:bg-[#dedede] rounded-lg cursor-pointer"
-                      onClick={() => handleLocationTypeSelect(locationType)}
-                    >
-                      <div className="mb-1 text-base font-bold text-[#020202]">{locationType.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <ItemDropDown value={data.locationType} setState={setState} locationTypes={locationTypes} />
 
-          {/* Second Div - Displayed only when 'Virtual' is selected */}
-          {isSecondContainerVisible && (
+          {/* If location type is virtual, render link input, else render location input */}
+          {data.locationType === 'Virtual' ? (
             <div className="virtual-link mb-6 w-full flex-col content-center">
               <h2 className="font-semibold leading-6 text-xl text-[#303030]">Enter Link</h2>
               <div className="relative mt-2 inline-block w-full">
@@ -267,16 +225,13 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
                   className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4"
                   placeholder="www.qwertyuiop[.url"
                   type="url"
-                  id="liveLink"
-                  value={data.liveLink}
+                  id="virtualLocationLink"
+                  value={data.virtualLocationLink}
                   onChange={handleChange}
                 />
               </div>
             </div>
-          )}
-
-          {/* Third Div - Displayed by default, hidden when 'Virtual' is selected */}
-          {isThirdDivVisible && (
+          ) : (
             <div className="enter-location mb-10 w-full flex flex-col content-center">
               <h2 className="font-semibold leading-6 text-xl text-[#303030]">Enter Location</h2>
               <div className="relative mt-2 inline-block w-full">
@@ -289,7 +244,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState }) => {
                   onChange={handleInput}
                 />
                 {suggestions.length > 0 && (
-                  <div className="autocomplete-items absolute p-2 border-[1px] mt-2 border-[#d7d7d7] rounded-lg  w-full bg-[#fefefe]">
+                  <div className="autocomplete-items absolute p-2 border-[1px] mt-2 border-[#d7d7d7] rounded-lg  w-full bg-[#fefefe] max-h-56 overflow-scroll">
                     {suggestions.map((suggestion, index) => (
                       <div
                         key={index}
