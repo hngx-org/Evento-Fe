@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
 import Cookies from 'js-cookie';
 import { getCookie, setCookie, getCookies } from 'typescript-cookie';
+import axios, { AxiosInstance } from 'axios';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -274,8 +275,10 @@ export const fetchAuthToken = async () => {
 };
 
 export const GoogleLogin = async () => {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const oauthUrl = 'https://evento-qo6d.onrender.com/api/v1/google';
   try {
-    const loginResponse = await $AuthHttp.get('/google');
+    const loginResponse = await axios.get(oauthUrl);
 
     if (loginResponse.status === 200) {
       console.log(loginResponse);
