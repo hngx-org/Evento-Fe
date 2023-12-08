@@ -100,27 +100,27 @@ interface EventProps {
 function EventDashboard({ tag, tag_image }: EventProps) {
   const [event, setEvent] = useState(true);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const authToken = await fetchAuthToken();
-        console.log(authToken);
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const authToken = await fetchAuthToken();
+  //       console.log(authToken);
 
-        // Use authToken as needed for secure API calls or other actions
-      } catch (error) {
-        console.error('Error fetching authentication token:', error);
-        // Handle errors or redirect to login
-        toast.error('Error fetching authentication token. Please log in.');
-        // Redirect to login page
-        // You might want to use Next.js router for this, for example:
-        // import { useRouter } from 'next/router';
-        // const router = useRouter();
-        // router.push('/login');
-      }
-    }
+  //       // Use authToken as needed for secure API calls or other actions
+  //     } catch (error) {
+  //       console.error('Error fetching authentication token:', error);
+  //       // Handle errors or redirect to login
+  //       toast.error('Error fetching authentication token. Please log in.');
+  //       // Redirect to login page
+  //       // You might want to use Next.js router for this, for example:
+  //       // import { useRouter } from 'next/router';
+  //       // const router = useRouter();
+  //       // router.push('/login');
+  //     }
+  //   }
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   function changeEvent() {
     setEvent(!event);

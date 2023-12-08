@@ -7,8 +7,8 @@
 <path d="M29.9981 60V55.3317C14.7175 55.3317 0 45.2796 0 30H4.66485C4.66485 14.7203 14.7175 0 29.9981 0V4.66836C45.2787 4.66836 60 14.7203 60 30H55.3353C55.3353 45.2796 45.2787 60 29.9981 60Z" fill="url(#paint0_linear_2581_6268)"/>
 </g>
 </g>
-<path d="M20.6197 26.49C22.5897 17.83 35.4197 17.84 37.3797 26.5C38.5297 31.58 35.3697 35.88 32.5997 38.54C30.5897 40.48 27.4097 40.48 25.3897 38.54C22.6297 35.88 19.4697 31.57 20.6197 26.49Z" stroke="#DA198A" stroke-width="2.5"/>
-<path d="M26.25 29.5L27.75 31L31.75 27" stroke="#DA198A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.6197 26.49C22.5897 17.83 35.4197 17.84 37.3797 26.5C38.5297 31.58 35.3697 35.88 32.5997 38.54C30.5897 40.48 27.4097 40.48 25.3897 38.54C22.6297 35.88 19.4697 31.57 20.6197 26.49Z" stroke="#DA198A" strokeWidth="2.5"/>
+<path d="M26.25 29.5L27.75 31L31.75 27" stroke="#DA198A" strokeWidth="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 <defs>
 <linearGradient id="paint0_linear_2581_6268" x1="47.25" y1="9.6" x2="13.2" y2="44.25" gradientUnits="userSpaceOnUse">
 <stop offset="0.0509862" stop-color="#FFB6E1"/>
