@@ -96,28 +96,33 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
     const router = useRouter();
 
     useEffect(() => {
-      const Oauthtoken = Cookies.get('token');
-      const userId = Cookies.get('userId');
-      const token = localStorage.getItem('authToken');
+      const setAuthAndUserIdAndNavigate = async () => {
+        // Delay execution for 10 seconds
+        await new Promise((resolve) => setTimeout(resolve, 10000));
 
-      if (hasAuthToken()) {
-        const isLoggedIn = isAuthenticated(token as string);
+        const Oauthtoken = Cookies.get('token');
+        const userId = Cookies.get('userId');
+        const token = localStorage.getItem('authToken');
 
-        if (!isLoggedIn) {
-          router.push('/access-denied');
-        }
-      } else {
-        authorizeAndStoreToken().then(() => {
-          const updatedToken = localStorage.getItem('authToken');
-          const isLoggedIn = isAuthenticated(updatedToken as string);
+        if (hasAuthToken()) {
+          const isLoggedIn = isAuthenticated(token as string);
 
-          // If not authenticated, redirect to the access-denied page
           if (!isLoggedIn) {
             router.push('/access-denied');
           }
-        });
-      }
+        } else {
+          authorizeAndStoreToken().then(() => {
+            const updatedToken = localStorage.getItem('authToken');
+            const isLoggedIn = isAuthenticated(updatedToken as string);
 
+            // If not authenticated, redirect to the access-denied page
+            if (!isLoggedIn) {
+              router.push('/access-denied');
+            }
+          });
+        }
+      };
+      setAuthAndUserIdAndNavigate();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
