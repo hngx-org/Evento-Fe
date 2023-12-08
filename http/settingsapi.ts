@@ -353,25 +353,44 @@ export const getNotificationsPreferences = async (
 
 export const updateNotificationsPreferences = async (
   preferences: PreferencesProps,
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  setLoading: React.Dispatch<React.SetStateAction<{ save: boolean; off: boolean }>>,
+  id: string,
 ) => {
   const authToken = getAuthToken();
   const userId = getUserId();
-  setLoading(true);
+
+  if (id === 'save') {
+    setLoading((prev) => ({ ...prev, save: true }));
+  } else {
+    setLoading((prev) => ({ ...prev, off: true }));
+  }
+
   try {
-    const editUserPreferences = await $AuthHttp.post(`/settings/${userId}/notifications`, preferences, {
+    const editUserPreferences = await $AuthHttp.put(`/settings/${userId}/notifications`, preferences, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     });
-    console.log(editUserPreferences);
-    setLoading(false);
+    // console.log(editUserPreferences);
+
+    if (id === 'save') {
+      setLoading((prev) => ({ ...prev, save: false }));
+    } else {
+      setLoading((prev) => ({ ...prev, off: false }));
+    }
+
     if (editUserPreferences.status === 200) {
       toast.success('preferences updated');
     }
   } catch (err: any) {
     console.log(err);
-    setLoading(false);
+
+    if (id === 'save') {
+      setLoading((prev) => ({ ...prev, save: false }));
+    } else {
+      setLoading((prev) => ({ ...prev, off: false }));
+    }
+
     toast.error(err.message);
   }
 };
