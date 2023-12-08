@@ -62,7 +62,7 @@ const Dashboard3: React.FC = () => {
               <div className="flex flex-col justify-between">
                 <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
                   {' '}
-                  {upcomingEvents.length}
+                  {upcomingEvents.length + createdEvents.length}
                 </span>
                 <span className="text-xl "> Upcoming events</span>
               </div>

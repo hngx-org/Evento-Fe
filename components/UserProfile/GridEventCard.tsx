@@ -44,7 +44,7 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
         </div>
         <div className="flex justify-between">
           <div className="flex gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit">
-            <Image src={avatars} alt={''} />
+            {event.participants && event.participants?.length > 0 ? <Image src={avatars} alt={''} /> : ''}
             <span className="md:flex hidden text-[10px] lg:text-base"> {eventPaticipants(event)}</span>
           </div>
 
