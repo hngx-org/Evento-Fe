@@ -14,7 +14,7 @@ const montserrat = Montserrat({
 
 const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
   return (
-    <div className="md:w-[285px] lg:w-[405px]  rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01]">
+    <div className="md:w-[285px] lg:w-[405px] h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0">
       <Image src={sampleImage} alt={''} className="w-full h-[180px] object-cover" />
       <div className="w-full p-4 flex flex-col gap-y-4">
         <div className="flex flex-col gap-y-1">
