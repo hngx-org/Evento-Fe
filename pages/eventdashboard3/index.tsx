@@ -15,6 +15,7 @@ import { UserProfile } from '@/http/settingsapi';
 import { useRouter } from 'next/router';
 import CreateEvents from '../create-events';
 import GridEventCard from '@/components/UserProfile/GridEventCard';
+import ProfieEvent from '@/components/UserProfile/ProfieEvent';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -34,6 +35,8 @@ const Dashboard3: React.FC = () => {
   const [createdEvents, setCreatedEvent] = useState<eventType[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
   const combinedEvents = [...createdEvents, ...upcomingEvents];
+  const [combinedViewMore, setCombinedViewMore] = useState(false);
+  const [pastViewMore, setPastViewMore] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,13 +47,18 @@ const Dashboard3: React.FC = () => {
     }
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
+
+  const renderedPastEvents = pastViewMore ? pastEvents : pastEvents.slice(0, 2);
+  const renderedCombinedEvents = combinedViewMore ? combinedEvents : combinedEvents.slice(0, 2);
+
   return (
     <AuthLayout>
-      <div className={`px-20 mt-10 ${nunito.className} max-h-[100vh]`}>
+      {/* desktop and tab */}
+      <div className={`lg:px-20 md:pl-6 mt-10 md:block hidden ${nunito.className} max-h-[100vh]`}>
         <section className="mb-14 ">
           <div className={`text-2xl font-medium mb-10 ${montserrat.className} `}>Welcome {userProfile.firstName},</div>
-          <div className="upcomingRest flex justify-between">
-            <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+          <div className="upcomingRest flex flex-wrap lg:justify-between gap-10 w-full ">
+            <div className="w-[340px]  lg:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
                 <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
                   {' '}
@@ -61,7 +69,7 @@ const Dashboard3: React.FC = () => {
 
               <Image src={upcoming} alt={''} />
             </div>
-            <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+            <div className="w-[340px]  lg:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
                 <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
                   {' '}
@@ -73,7 +81,7 @@ const Dashboard3: React.FC = () => {
               <Image src={created} alt={''} />
             </div>
 
-            <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+            <div className="w-[340px]  lg:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
                 <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
                   {' '}
@@ -86,9 +94,9 @@ const Dashboard3: React.FC = () => {
             </div>
           </div>
         </section>
-        <section className="flex justify-between">
-          <div className="w-[850px] no-scrollbar overflow-y-auto max-h-[calc(100vh-300px)] flex flex-col ">
-            {pastEvents.length < 0 && createdEvents.length < 0 && upcomingEvents.length < 0 ? (
+        <section className="flex justify-between flex-col lg:flex-row md:pr-10 lg:pr-0">
+          <div className="md:w-full md:min-w-[] lg:w-[850px] no-scrollbar overflow-y-auto max-h-[calc(100vh-300px)] flex flex-col ">
+            {pastEvents.length === 0 && createdEvents.length === 0 && upcomingEvents.length === 0 ? (
               <NoEvent type={''} />
             ) : (
               <div className="w-full flex flex-col  gap-12">
@@ -96,21 +104,25 @@ const Dashboard3: React.FC = () => {
                   {' '}
                   <div className="upcomingtitle flex justify-between items-baseline">
                     <span className="text-[#1E1E1E] text-xl font-semibold tracking-[-0.2px] ">Upcoming Events</span>{' '}
-                    <span className="text-sm underline  font-bold text-[#767676]">View all</span>
+                    <span
+                      className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100"
+                      onClick={() => {
+                        setCombinedViewMore((prev) => !prev);
+                      }}
+                    >
+                      {combinedViewMore ? 'View less' : 'View more'}
+                    </span>
                   </div>
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
-                    <div className="grid-cols-2 grid gap-10 ">
-                      {combinedEvents.map((event) => (
+                    <div className="grid-cols-2 grid gap-10 transition ">
+                      {renderedCombinedEvents.map((event) => (
                         <GridEventCard key={0} event={event} />
                       ))}
-                      {/* {pastEvents.map((event) => (
-                        <GridEventCard key={0} event={event} />
-                      ))} */}
                     </div>
                   ) : (
-                    <div className="flex gap-y-1 flex-col h-[188px] justify-center items-center">
+                    <div className="flex gap-y-1 flex-col h-[250px] justify-center items-center w-full">
                       <h4
-                        className={` ${montserrat.className} text-base lg:text-2xl max-w-[230px] md:max-w-none font-semibold  text-center`}
+                        className={` ${montserrat.className} text-base lg:text-2xl  w-fit  font-semibold  text-center`}
                       >
                         There’s nothing to show here.
                       </h4>
@@ -141,17 +153,25 @@ const Dashboard3: React.FC = () => {
                     <div className="w-full flex flex-col  gap-4">
                       <div className="pasttitle flex justify-between items-baseline">
                         <span className="text-[#1E1E1E] text-xl font-semibold tracking-[-0.2px] ">Past Events</span>{' '}
-                        <span className="text-sm underline  font-bold text-[#767676]">View all</span>
+                        <span
+                          className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100"
+                          onClick={() => {
+                            console.log('clicked view more');
+                            setPastViewMore((prev) => !prev);
+                          }}
+                        >
+                          {pastViewMore ? 'View less' : 'View more'}
+                        </span>
                       </div>
 
                       {pastEvents.length > 0 ? (
-                        <div className="grid-cols-2 grid gap-10">
-                          {pastEvents.map((event) => (
+                        <div className="grid-cols-2 grid gap-10 w-fit">
+                          {renderedPastEvents.map((event) => (
                             <GridEventCard key={0} event={event} />
                           ))}
                         </div>
                       ) : (
-                        <div className="flex gap-y-1 flex-col h-[188px] justify-center items-center">
+                        <div className="flex gap-y-1 flex-col h-[250px] justify-center items-center">
                           <h4
                             className={` ${montserrat.className} text-base lg:text-2xl max-w-[230px] md:max-w-none font-semibold  text-center`}
                           >
@@ -187,6 +207,15 @@ const Dashboard3: React.FC = () => {
           </div>
         </section>
       </div>
+      {/* */}
+
+      {/* mobile  */}
+
+      <div className="flex md:hidden">
+        {' '}
+        <ProfieEvent combinedEvents={combinedEvents} pastEvents={pastEvents} />{' '}
+      </div>
+      {/*  */}
     </AuthLayout>
   );
 };
