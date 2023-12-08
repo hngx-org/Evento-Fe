@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Checkbox from '../Checkbox';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/NewButton';
 import { getNotificationsPreferences, updateNotificationsPreferences } from '@/http/settingsapi';
-import { useRouter } from 'next/router';
 
 const notifications = [
   {
@@ -23,20 +22,20 @@ const notifications = [
       },
       {
         id: 3,
-        slug: '',
-        name: 'Event turn-up performance',
-        group: 'personal',
-      },
-      {
-        id: 4,
         slug: 'event_change',
         name: 'Alters an event registered for',
         group: 'personal',
       },
       {
-        id: 5,
+        id: 4,
         slug: 'newsletter',
         name: 'Evento Newsletter & Other Updates',
+        group: 'personal',
+      },
+      {
+        id: 5,
+        slug: '',
+        name: 'Event turn-up performance',
         group: 'personal',
       },
     ],
@@ -127,30 +126,87 @@ function Notification() {
       push: false,
     },
   });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState({
+    save: false,
+    off: false,
+  });
 
   useEffect(() => {
     getNotificationsPreferences(setPreferences);
   }, []);
 
-  const router = useRouter();
+  const handleCheckboxChange = (
+    category: keyof typeof preferences,
+    notificationType: keyof (typeof preferences)[typeof category],
+  ) => {
+    setPreferences((prevPreferences) => ({
+      ...prevPreferences,
+      [category]: {
+        ...prevPreferences[category],
+        [notificationType]: !prevPreferences[category][notificationType],
+      },
+    }));
+  };
+
+  function handleUpdate() {
+    updateNotificationsPreferences(preferences, setLoading, 'save');
+  }
+
+  function handleOff() {
+    const data = {
+      newsletter: {
+        inApp: false,
+        email: false,
+        push: false,
+      },
+      event_registration: {
+        inApp: false,
+        email: false,
+        push: false,
+      },
+      event_invite: {
+        inApp: false,
+        email: false,
+        push: false,
+      },
+      join_event: {
+        inApp: false,
+        email: false,
+        push: false,
+      },
+      event_change: {
+        inApp: false,
+        email: false,
+        push: false,
+      },
+    };
+    setPreferences(data);
+    updateNotificationsPreferences(data, setLoading, 'off');
+  }
 
   // useEffect(() => {
-  //   const handleBeforePopState = () => {
-  //     console.log('running');
-  //     updateNotificationsPreferences(preferences, setLoading);
-  //     return true;
+  //   const delay = 5000;
+  //   let timeoutId: NodeJS.Timeout;
+
+  //   const savePreferences = () => {
+  //     console.log('Preferences saved:', preferences);
   //   };
 
-  //   router.beforePopState(handleBeforePopState);
+  //   const debounceSave = () => {
+  //     clearTimeout(timeoutId);
+  //     timeoutId = setTimeout(savePreferences, delay);
+  //     console.log('saved');
+  //   };
+
+  //   debounceSave();
 
   //   return () => {
-
+  //     clearTimeout(timeoutId);
   //   };
-  // }, []);
+  // }, [preferences]);
 
   return (
-    <div className="mt-1 lg:mt-8 flex flex-col gap-14 md:gap-20">
+    <div className="mt-1 lg:mt-6 flex flex-col gap-14 md:gap-16">
       {notifications.map((notification) => (
         <div key={notification.name} className="flex flex-col gap-6 md:gap-10">
           <div className={`flex justify-between items-center`}>
@@ -172,21 +228,7 @@ function Notification() {
                     <div className="md:hidden text-base font-normal text-Grey-G700 w-[3.2rem]">In-app</div>
                     <div className="w-fit md:w-[3.2rem] flex justify-center">
                       <Checkbox
-                        handleClick={() =>
-                          setPreferences((prev) => {
-                            if (item.slug) {
-                              return {
-                                ...prev,
-                                [item.slug]: {
-                                  ...prev[item.slug as keyof typeof preferences],
-                                  inApp: prev[item.slug as keyof typeof preferences].inApp ? false : true,
-                                },
-                              };
-                            } else {
-                              return prev;
-                            }
-                          })
-                        }
+                        handleClick={() => handleCheckboxChange(item.slug as keyof typeof preferences, 'inApp')}
                         enabled={preferences[item?.slug as keyof typeof preferences]?.inApp}
                         slug={item.slug}
                       />
@@ -197,21 +239,7 @@ function Notification() {
                     <div className="md:hidden text-base font-normal text-Grey-G700 w-[3.2rem]">Email</div>
                     <div className="w-fit md:w-[2.7rem] flex justify-center">
                       <Checkbox
-                        handleClick={() =>
-                          setPreferences((prev) => {
-                            if (item.slug) {
-                              return {
-                                ...prev,
-                                [item.slug]: {
-                                  ...prev[item.slug as keyof typeof preferences],
-                                  email: prev[item.slug as keyof typeof preferences].email ? false : true,
-                                },
-                              };
-                            } else {
-                              return prev;
-                            }
-                          })
-                        }
+                        handleClick={() => handleCheckboxChange(item.slug as keyof typeof preferences, 'email')}
                         enabled={preferences[item?.slug as keyof typeof preferences]?.email}
                         slug={item.slug}
                       />
@@ -222,21 +250,7 @@ function Notification() {
                     <div className="md:hidden text-base font-normal text-Grey-G700 w-[3.2rem]">Push</div>
                     <div className="w-fit md:w-[2.4rem] flex justify-center">
                       <Checkbox
-                        handleClick={() =>
-                          setPreferences((prev) => {
-                            if (item.slug) {
-                              return {
-                                ...prev,
-                                [item.slug]: {
-                                  ...prev[item.slug as keyof typeof preferences],
-                                  push: prev[item.slug as keyof typeof preferences].push ? false : true,
-                                },
-                              };
-                            } else {
-                              return prev;
-                            }
-                          })
-                        }
+                        handleClick={() => handleCheckboxChange(item.slug as keyof typeof preferences, 'push')}
                         enabled={preferences[item?.slug as keyof typeof preferences]?.push}
                         slug={item.slug}
                       />
@@ -248,9 +262,24 @@ function Notification() {
           </div>
         </div>
       ))}
-      <div className="flex justify-end -mt-4">
-        <Button type="button" title="profile-button" styles="text-white-N0 font-bold text-sm py-3 px-[1.12rem]">
+      <div className="flex gap-5 justify-end -mt-8">
+        <Button
+          type="button"
+          title="turn-off-all"
+          className="text-primary-100 border border-primary-100 font-bold text-sm h-10 px-5 rounded-lg"
+          isLoading={loading.off}
+          onClick={handleOff}
+        >
           Turn off all
+        </Button>
+        <Button
+          type="button"
+          title="save"
+          className="text-white-N0 bg-primary-100 font-bold text-sm h-10 px-10 rounded-lg"
+          isLoading={loading.save}
+          onClick={handleUpdate}
+        >
+          Save
         </Button>
       </div>
     </div>
