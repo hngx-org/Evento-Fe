@@ -6,7 +6,7 @@
 <circle cx="17.5" cy="10" r="2" fill="#F8A333"/>
 <circle cx="23.5" cy="10" r="2" fill="#3AC383"/>
 <circle cx="132.5" cy="11" r="4" fill="#5BB4F5"/>
-<rect x="47.25" y="24.75" width="88.5" height="64.5" rx="3.25" fill="#A4A4A4" stroke="#A4A4A4" stroke-width="1.5"/>
+<rect x="47.25" y="24.75" width="88.5" height="64.5" rx="3.25" fill="#A4A4A4" stroke="#A4A4A4" strokeWidth="1.5"/>
 <rect x="9.5" y="24" width="21" height="6" rx="3" fill="#A4A4A4"/>
 <rect x="46.5" y="9" width="30" height="6" rx="3" fill="#A4A4A4"/>
 <rect x="46.5" y="18" width="62" height="2" rx="1" fill="#A4A4A4"/>
