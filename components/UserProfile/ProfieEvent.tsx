@@ -6,13 +6,17 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import FilterModal from './FilterModal';
 import { eventType, getUserCreatedEvents } from '@/http/profileapi';
+import { getUserEvents } from '@/http/dashBoard3api';
 
 interface SwiperElement extends Element {
   swiper?: Swiper; // Define 'swiper' as a property of the Element
 }
+interface ProfileEventType {
+  combinedEvents: eventType[];
+  pastEvents: eventType[];
+}
 
-const ProfileEvent: React.FC = () => {
-  const [events, setEvents] = useState<eventType[]>([]);
+const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }) => {
   useEffect(() => {
     new Swiper('.swiper-container', {
       slidesPerView: 1,
@@ -23,7 +27,8 @@ const ProfileEvent: React.FC = () => {
       },
     });
 
-    getUserCreatedEvents(setEvents);
+    // getUserCreatedEvents(setEvents);
+    // getUserEvents();
   }, []);
 
   const slideToCreateEvents = () => {
@@ -65,24 +70,22 @@ const ProfileEvent: React.FC = () => {
             id="create-events"
             onClick={slideToCreateEvents}
           >
-            Created Events
+            Upcoming Events
           </div>
           <div
             className="w-[50%] items-center justify-center flex font-bold text-base lg:text-xl cursor-pointer transition border-b-[3px] border-[#C0C0C0]"
             id="attended-events"
             onClick={slideToAttendedEvents}
           >
-            Attended Events
+            Past Events
           </div>
         </div>
         <div className="swiper-wrapper w-full relative  ">
           <div className="swiper-slide" style={{ width: '100%' }}>
-            {/* <Events type="create" /> */}
-            {events.length > 0 ? <Events type="create" events={events} /> : <NoEvent type="create" />}
+            {combinedEvents.length > 0 ? <Events type="create" events={combinedEvents} /> : <NoEvent type="create" />}
           </div>
           <div className="swiper-slide" style={{ width: '100%' }}>
-            <NoEvent type="attend" />
-            {/* <Events type="attend" /> */}
+            {pastEvents.length > 0 ? <Events type="create" events={pastEvents} /> : <NoEvent type="attend" />}
           </div>
         </div>
       </div>

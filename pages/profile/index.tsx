@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import {
   UserProfile,
   UserProfile2,
+  eventType,
   getSocialLinks,
   getUserProfile,
   postProfilePicture,
@@ -22,6 +23,7 @@ import { FaFacebookF, FaTwitter } from 'react-icons/fa6';
 import { FaFacebookSquare } from 'react-icons/fa';
 import { RiInstagramFill } from 'react-icons/ri';
 import { inflate } from 'zlib';
+import { getUserEvents } from '@/http/dashBoard3api';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -67,6 +69,20 @@ const UserProfile: React.FC = () => {
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
     localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
   }, [userProfile]);
+
+  const [pastEvents, setPastEvents] = useState<eventType[]>([]);
+  const [createdEvents, setCreatedEvent] = useState<eventType[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
+  const combinedEvents = [...createdEvents, ...upcomingEvents];
+
+  useEffect(() => {
+    const storedUserProfile = localStorage.getItem('userProfile');
+    if (storedUserProfile) {
+      const parsedUserProfile = JSON.parse(storedUserProfile);
+      setUserProfile(parsedUserProfile);
+    }
+    getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
+  }, []);
 
   const [profilePicURL, setProfilePicURL] = useState('');
   const [coverPic, setCoverPic] = useState('');
@@ -234,8 +250,7 @@ const UserProfile: React.FC = () => {
               </div>
             </div>
           </div>
-
-          <ProfieEvent />
+          <ProfieEvent combinedEvents={combinedEvents} pastEvents={pastEvents} />{' '}
         </section>
       </div>
     </AuthLayout>
