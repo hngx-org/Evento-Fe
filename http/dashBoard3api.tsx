@@ -6,7 +6,11 @@ const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 //evento-qo6d.onrender.com/api/v1
 const $AuthHttp = AuthInstance(BaseUrl);
 
-export const getUserEvents = async () =>
+export const getUserEvents = async (
+  setPastEvents: React.Dispatch<React.SetStateAction<eventType[]>>,
+  setCreatedEvent: React.Dispatch<React.SetStateAction<eventType[]>>,
+  setUpcomingEvents: React.Dispatch<React.SetStateAction<eventType[]>>,
+) =>
   // setEvents: React.Dispatch<React.SetStateAction<eventType[]>>
   {
     const authToken = getAuthToken();
@@ -35,23 +39,19 @@ export const getUserEvents = async () =>
 
         return false;
       });
-
+      setPastEvents(pastEvents);
       const createdEvents = events
         .filter((event: any) => event.organizerID === userId)
         .filter((event: any) => {
           const endDateString = event.endDate;
-
-          // Check if endDate exists and is a valid string
           if (endDateString && typeof endDateString === 'string') {
             const endDate = new Date(endDateString);
-
             return endDate >= currentTime;
           }
-
           return false;
         });
+      setCreatedEvent(createdEvents);
 
-      // Filter for upcoming events where the user is a participant and remove past events
       const upcomingEvents = events
         .filter((event: eventType) => event.participants?.some((item) => item.userID === userId))
         .filter((event: eventType) => {
@@ -59,14 +59,13 @@ export const getUserEvents = async () =>
 
           if (endDateString && typeof endDateString === 'string') {
             const endDate = new Date(endDateString);
-
             return endDate >= currentTime;
           }
-
           return false;
         });
+      setUpcomingEvents(upcomingEvents);
 
-      console.log(createdEvents, upcomingEvents);
+      console.log(createdEvents, upcomingEvents, pastEvents);
 
       if (response.status === 200) {
         console.log('Events gotten successfully');
