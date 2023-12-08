@@ -122,7 +122,7 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
           });
         }
       };
-
+      setAuthAndUserIdAndNavigate();
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
