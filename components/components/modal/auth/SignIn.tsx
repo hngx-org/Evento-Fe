@@ -13,8 +13,8 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   // const [isloading, setIsLoading] = useState(false);
 
   const handleLinkClick = () => {
-    // window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
-    signUpWithGoogle();
+    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
+    // signUpWithGoogle();
   };
 
   return (

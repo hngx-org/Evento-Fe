@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { AuthorizationResponse } from '@/@types';
 import Cookies from 'js-cookie';
 import { getCookie, setCookie, getCookies } from 'typescript-cookie';
+import axios, { AxiosInstance } from 'axios';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -269,6 +270,46 @@ export const fetchAuthToken = async () => {
     }
   } catch (e: any) {
     console.log('Authorization call error from API call', e);
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
+export const GoogleLogin = async () => {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  const oauthUrl = 'https://evento-qo6d.onrender.com/api/v1/google';
+  try {
+    const loginResponse = await axios.get(oauthUrl);
+
+    if (loginResponse.status === 200) {
+      console.log(loginResponse);
+      console.log('Login successful');
+      toast.success('Login successful');
+
+      const token = loginResponse.data.token;
+      const userId = loginResponse.data.user.userID;
+
+      if (token && userId) {
+        console.log('User ID:', userId);
+        console.log('Token:', token);
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('userId', userId);
+      } else {
+        console.error('Error extracting token from login response.');
+        toast.error('An error occurred while extracting the token.');
+      }
+    }
+
+    console.log('Login response', loginResponse);
+    return loginResponse?.data;
+  } catch (e: any) {
+    console.log('Login call error from API call', e);
+    if (e?.response?.status === 401) {
+      toast.error('Invalid credentials. Please check your email and password.');
+    } else if (!e?.response) {
+      toast.error('Network error. Please check your internet connection.');
+    } else {
+      toast.error('An error occurred during login. Please try again later.');
+    }
     throw e?.response?.data || { message: e.message };
   }
 };

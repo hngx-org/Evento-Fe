@@ -8,10 +8,10 @@
 </g>
 </g>
 <g clip-path="url(#clip1_2581_18699)">
-<path d="M26 34H23.43C21.14 34 20 32.86 20 30.57V23.43C20 21.14 21.14 20 23.43 20H28C30.29 20 31.43 21.14 31.43 23.43" stroke="#8517B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M36.5703 40H32.0003C29.7103 40 28.5703 38.86 28.5703 36.57V29.43C28.5703 27.14 29.7103 26 32.0003 26H36.5703C38.8603 26 40.0003 27.14 40.0003 29.43V36.57C40.0003 38.86 38.8603 40 36.5703 40Z" stroke="#8517B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M32.8701 33H36.1301" stroke="#8517B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M34.5 34.63V31.37" stroke="#8517B6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M26 34H23.43C21.14 34 20 32.86 20 30.57V23.43C20 21.14 21.14 20 23.43 20H28C30.29 20 31.43 21.14 31.43 23.43" stroke="#8517B6" strokeWidth="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M36.5703 40H32.0003C29.7103 40 28.5703 38.86 28.5703 36.57V29.43C28.5703 27.14 29.7103 26 32.0003 26H36.5703C38.8603 26 40.0003 27.14 40.0003 29.43V36.57C40.0003 38.86 38.8603 40 36.5703 40Z" stroke="#8517B6" strokeWidth="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M32.8701 33H36.1301" stroke="#8517B6" strokeWidth="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34.5 34.63V31.37" stroke="#8517B6" strokeWidth="2.5" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <linearGradient id="paint0_linear_2581_18699" x1="47.25" y1="9.6" x2="13.2" y2="44.25" gradientUnits="userSpaceOnUse">
