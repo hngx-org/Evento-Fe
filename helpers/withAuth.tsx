@@ -38,6 +38,7 @@ import Router, { useRouter } from 'next/router';
 import isAuthenticated from './isAuthenticated';
 import AuthInstance from '@/http/AuthInstance';
 import { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 
 import { useAuth } from '@/context/AuthContext';
 import useIsAuthenticated from '@/hooks/useisAuthenticated';
@@ -54,20 +55,19 @@ const hasAuthToken = () => {
 
 const authorizeAndStoreToken = async () => {
   try {
-    const response = await $AuthHttp.post('/authorize');
+    const token = Cookies.get('token');
+    const userId = Cookies.get('userId');
 
-    // Extract user ID and token from the response data
-    const { userId, token } = response.data.data;
+    if (token && userId) {
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('userId', userId);
 
-    // Store the obtained token and user ID in localStorage
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('userId', userId);
-
-    console.log('Token and user ID saved to local storage');
-  } catch (error: any) {
-    // Use type assertion to specify the type of 'error'
-    console.error('Error during login:', (error as AxiosError).message);
-    // Handle errors if necessary
+      console.log('Token obtained successfully');
+    } else {
+      console.error('Error obtaining token:', 400);
+    }
+  } catch (error) {
+    console.error('Error obtaining token:', (error as Error).message);
   }
 };
 //   try {
@@ -96,21 +96,18 @@ const withAuth = <P extends {}>(WrappedComponent: React.ComponentType<P>) => {
     const router = useRouter();
 
     useEffect(() => {
-      // Check if a token exists in localStorage
+      const Oauthtoken = Cookies.get('token');
+      const userId = Cookies.get('userId');
       const token = localStorage.getItem('authToken');
 
       if (hasAuthToken()) {
-        // Token exists, check if the user is authenticated
         const isLoggedIn = isAuthenticated(token as string);
 
-        // If not authenticated, redirect to the access-denied page
         if (!isLoggedIn) {
           router.push('/access-denied');
         }
       } else {
-        // If no token, make a POST request to obtain a new token
         authorizeAndStoreToken().then(() => {
-          // Check again for the token after the POST request
           const updatedToken = localStorage.getItem('authToken');
           const isLoggedIn = isAuthenticated(updatedToken as string);
 
