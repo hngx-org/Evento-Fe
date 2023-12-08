@@ -52,7 +52,10 @@ const Dashboard3: React.FC = () => {
           <div className="upcomingRest flex justify-between">
             <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
-                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}> 0</span>
+                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
+                  {' '}
+                  {upcomingEvents.length}
+                </span>
                 <span className="text-xl "> Upcoming events</span>
               </div>
 
@@ -60,7 +63,10 @@ const Dashboard3: React.FC = () => {
             </div>
             <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
-                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}> 0</span>
+                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
+                  {' '}
+                  {createdEvents.length}
+                </span>
                 <span className="text-xl "> Created events</span>
               </div>
 
@@ -69,7 +75,10 @@ const Dashboard3: React.FC = () => {
 
             <div className="w-[360px] flex justify-between p-6 rounded-lg shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col justify-between">
-                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}> 0</span>
+                <span className={`text-[32px] leading-[40px] font-bold ${montserrat.className} `}>
+                  {' '}
+                  {pastEvents.length}
+                </span>
                 <span className="text-xl "> Past events</span>
               </div>
 
