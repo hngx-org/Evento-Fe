@@ -251,3 +251,11 @@ export interface PreferencesProps {
     push: boolean;
   };
 }
+
+export interface Event {
+  id: number;
+  name: string;
+  imageUrl: string;
+  startDatetime: string;
+  endDatetime: string;
+}
