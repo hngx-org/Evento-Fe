@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
     "@lucasmogari/react-pagination": "^1.1.4",
     "@material-tailwind/react": "^2.1.4",
     "@radix-ui/react-select": "^2.0.0",
