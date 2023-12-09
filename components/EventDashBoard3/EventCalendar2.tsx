@@ -17,55 +17,61 @@ import {
 import { Fragment, useState } from 'react';
 import { Event } from '@/@types';
 import Image from 'next/image';
+import { eventType } from '@/http/profileapi';
 
-const events: Event[] = [
-  {
-    id: 1,
-    name: 'Leslie Alexander',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2023-12-09T13:00',
-    endDatetime: '2023-12-12T14:30',
-  },
-  {
-    id: 2,
-    name: 'Michael Foster',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2023-12-20T09:00',
-    endDatetime: '2023-12-20T12:30',
-  },
-  {
-    id: 3,
-    name: 'Dries Vincent',
-    imageUrl:
-      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2023-12-20T17:00',
-    endDatetime: '2023-12-20T18:30',
-  },
-  {
-    id: 4,
-    name: 'Leslie Alexander',
-    imageUrl:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2023-06-09T13:00',
-    endDatetime: '2023-06-09T14:30',
-  },
-  {
-    id: 5,
-    name: 'Michael Foster',
-    imageUrl:
-      'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    startDatetime: '2023-12-13T14:00',
-    endDatetime: '2023-12-13T14:30',
-  },
-];
+// const events: Event[] = [
+//   {
+//     id: 1,
+//     name: 'Leslie Alexander',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     startDatetime: '2023-12-09T13:00',
+//     endDatetime: '2023-12-12T14:30',
+//   },
+//   {
+//     id: 2,
+//     name: 'Michael Foster',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     startDatetime: '2023-12-20T09:00',
+//     endDatetime: '2023-12-20T12:30',
+//   },
+//   {
+//     id: 3,
+//     name: 'Dries Vincent',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     startDatetime: '2023-12-20T17:00',
+//     endDatetime: '2023-12-20T18:30',
+//   },
+//   {
+//     id: 4,
+//     name: 'Leslie Alexander',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     startDatetime: '2023-06-09T13:00',
+//     endDatetime: '2023-06-09T14:30',
+//   },
+//   {
+//     id: 5,
+//     name: 'Michael Foster',
+//     imageUrl:
+//       'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+//     startDatetime: '2023-12-13T14:00',
+//     endDatetime: '2023-12-13T14:30',
+//   },
+// ];
 
 function classNames(...classes: (string | boolean)[]): string {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function EventCalender(): JSX.Element {
+interface CalendarProps {
+  events: eventType[];
+}
+
+// const ProfileEvent: React.FC<CalendarProps>;
+const EventCalender3: React.FC<CalendarProps> = ({ events }) => {
   const today = startOfToday();
   const [selectedDay, setSelectedDay] = useState<Date>(today);
   const [currentMonth, setCurrentMonth] = useState<string>(format(today, 'MMM-yyyy'));
@@ -86,14 +92,23 @@ export default function EventCalender(): JSX.Element {
     setCurrentMonth(format(firstDayNextMonth, 'MMM-yyyy'));
   }
 
-  const selectedDayevents = events.filter((meeting) => isSameDay(parseISO(meeting.startDatetime), selectedDay));
+  const selectedDayevents = events.filter((meeting) => {
+    const startDateString = meeting.startDate; // Extract startDate
+    if (startDateString && typeof startDateString === 'string') {
+      const startDate = parseISO(startDateString);
+      if (startDate) {
+        // Check if startDate is valid before using isSameDay
+        return isSameDay(startDate, selectedDay);
+      }
+    }
+    return false; // Return false for invalid or undefined startDate
+  });
 
   return (
-    <div className="pt-16">
-      <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
-        {' '}
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
-          <div className="md:pr-14">
+    <div className="">
+      <div className=" ">
+        <div className=" w-fit">
+          <div className="w-[366px]">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h2>
               <button
@@ -153,15 +168,19 @@ export default function EventCalender(): JSX.Element {
                   </button>
 
                   <div className="w-1 h-1 mx-auto mt-1">
-                    {events.some((meeting) => isSameDay(parseISO(meeting.startDatetime), day)) && (
-                      <div className="w-1 h-1 rounded-full bg-primary-100"></div>
-                    )}
+                    {events.some((meeting) => {
+                      if (meeting.startDate) {
+                        const startDate = parseISO(meeting.startDate);
+                        return startDate && isSameDay(startDate, day);
+                      }
+                      return false;
+                    }) && <div className="w-1 h-1 rounded-full bg-primary-100"></div>}
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <section className="mt-12 md:mt-0 md:pl-14 ">
+          {/* <section className="mt-12 md:mt-0 md:pl-14 ">
             <h2 className="font-semibold text-gray-900">
               Events Schedule for{' '}
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
@@ -174,12 +193,14 @@ export default function EventCalender(): JSX.Element {
                 <p>No events for today.</p>
               )}
             </ol>
-          </section>
+          </section> */}
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default EventCalender3;
 
 interface EventProps {
   event: Event;
