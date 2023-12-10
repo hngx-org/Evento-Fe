@@ -1,7 +1,5 @@
 import { toast } from 'react-toastify';
 import AuthInstance from './AuthInstance';
-import { NextRouter } from 'next/router';
-import { socialsData } from './settingsapi';
 
 export interface UserProfile2 {
   userID?: string;
@@ -62,7 +60,8 @@ export type eventType = {
   participants?: participantType[];
 };
 
-const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
+// const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
+const BaseUrl = 'http://localhost:3000/api/v1/';
 
 //evento-qo6d.onrender.com/api/v1
 const $AuthHttp = AuthInstance(BaseUrl);
@@ -87,7 +86,7 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
   console.log(userId);
 
   try {
-    const getUserData = await $AuthHttp.get(`/user/profile/${userId}`, {
+    const getUserData = await $AuthHttp.get(`/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
