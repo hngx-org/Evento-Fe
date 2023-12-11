@@ -8,9 +8,9 @@ import { Montserrat, Nunito } from 'next/font/google';
 import React, { useEffect, useState } from 'react';
 import withoutAuth from '@/helpers/withoutAuth';
 import { getUpcomingEvents } from '@/http/events';
-import { EventsProps } from '@/@types';
+import { CategoryProps, EventsProps } from '@/@types';
+import { getCategories } from '@/http/createeventapi';
 import AuthLayout from '@/layout/Authlayout';
-import withAuth from '@/helpers/withAuth';
 
 
 
@@ -26,31 +26,26 @@ const nunito = Nunito({
   variable: '--font-nunito',
 });
 
-const categories = [
-  'All',
-  'Music & Concert',
-  'Sporting',
-  'Tech',
-  'Health & Wellness',
-  'Art & Culture',
-  'Networking & Business',
-  'Music',
-  'Travel & Adventure',
-  'Science & Nature',
-  'Fashion & Beauty',
-  'Arts & Culture',
-];
-
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [data, setData] = useState<{ isLoading: boolean; data: EventsProps[] }>({ isLoading: true, data: [] });
 
   useEffect(() => {
+    categoryData();
     getUpcomingEvents(setData);
   }, []);
 
+  const categoryData = async () => {
+    const cats = await getCategories(setCategories);
+    if (cats) {
+      setCategories([{ name: 'All', categoryID: 'all' }, ...cats]);
+    }
+  };
+
   return (
-    <AuthLayout>
+    <div>
+<AuthLayout>
       <div className="relative">
         <div className="relative bg-secondary-100 py-11 sm:py-[74px] px-6">
           <div className="max-w-[634px] lg:max-w-[1002px] mx-auto text-center">
@@ -103,18 +98,18 @@ function Home() {
               {categories.map((item, index) => {
                 return (
                   <Button
-                    key={index}
-                    leftIcon={<Music color={selectedCategory === item ? '#FFF' : '#3C3C3C'} />}
+                    key={item.categoryID}
+                    leftIcon={<Music color={selectedCategory === item.categoryID ? '#FFF' : '#3C3C3C'} />}
                     intent={'secondary'}
                     size={'md'}
                     className={`${
                       nunito.className
                     } rounded-full py-2 text-sm shrink-0 border-primary-100 border font-bold ${
-                      selectedCategory === item ? 'bg-primary-100 text-white-100' : ''
+                      selectedCategory === item.categoryID ? 'bg-primary-100 text-white-100' : ''
                     }`}
-                    onClick={() => setSelectedCategory(item == 'All' ? '' : item)}
+                    onClick={() => setSelectedCategory(item.categoryID == 'all' ? '' : item.categoryID)}
                   >
-                    {item}
+                    {item.name}
                   </Button>
                 );
               })}
@@ -123,7 +118,7 @@ function Home() {
           <section>
             <EventGrids
               title="Popular Events"
-              events={data.data.filter((item) => item.eventType.includes(selectedCategory))}
+              events={data.data.filter((item) => item.categoryCategoryID.includes(selectedCategory))}
               isLoading={data.isLoading}
             />
           </section>
@@ -132,7 +127,9 @@ function Home() {
           </section>
         </main>
       </div>
-    </AuthLayout>
+     
+    </div>
+</AuthLayout>
   );
 }
 
