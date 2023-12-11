@@ -8,8 +8,9 @@ import { Montserrat, Nunito } from 'next/font/google';
 import React, { useEffect, useState } from 'react';
 import withoutAuth from '@/helpers/withoutAuth';
 import { getUpcomingEvents } from '@/http/events';
-import { EventsProps } from '@/@types';
+import { CategoryProps, EventsProps } from '@/@types';
 import AuthLayout from '@/layout/Authlayout';
+import { getCategories } from '@/http/createeventapi';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -40,11 +41,20 @@ const categories = [
 
 function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [categories, setCategories] = useState<CategoryProps[]>([]);
   const [data, setData] = useState<{ isLoading: boolean; data: EventsProps[] }>({ isLoading: true, data: [] });
 
   useEffect(() => {
+    categoryData();
     getUpcomingEvents(setData);
   }, []);
+
+  const categoryData = async () => {
+    const cats = await getCategories(setCategories);
+    if (cats) {
+      setCategories([{ name: 'All', categoryID: 'all' }, ...cats]);
+    }
+  };
 
   return (
     <AuthLayout>
@@ -100,18 +110,18 @@ function Home() {
               {categories.map((item, index) => {
                 return (
                   <Button
-                    key={index}
-                    leftIcon={<Music color={selectedCategory === item ? '#FFF' : '#3C3C3C'} />}
+                    key={item.categoryID}
+                    leftIcon={<Music color={selectedCategory === item.categoryID ? '#FFF' : '#3C3C3C'} />}
                     intent={'secondary'}
                     size={'md'}
                     className={`${
                       nunito.className
                     } rounded-full py-2 text-sm shrink-0 border-primary-100 border font-bold ${
-                      selectedCategory === item ? 'bg-primary-100 text-white-100' : ''
+                      selectedCategory === item.categoryID ? 'bg-primary-100 text-white-100' : ''
                     }`}
-                    onClick={() => setSelectedCategory(item == 'All' ? '' : item)}
+                    onClick={() => setSelectedCategory(item.categoryID == 'all' ? '' : item.categoryID)}
                   >
-                    {item}
+                    {item.name}
                   </Button>
                 );
               })}
@@ -120,7 +130,7 @@ function Home() {
           <section>
             <EventGrids
               title="Popular Events"
-              events={data.data.filter((item) => item.eventType.includes(selectedCategory))}
+              events={data.data.filter((item) => item.categoryCategoryID.includes(selectedCategory))}
               isLoading={data.isLoading}
             />
           </section>

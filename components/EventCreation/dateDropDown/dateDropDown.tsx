@@ -2,7 +2,7 @@ import { EventDataProps } from '@/@types';
 import Button from '@/components/ui/NewButton';
 import { ArrowDown2 } from 'iconsax-react';
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { DayPicker } from 'react-day-picker';
+import { DayPicker, SelectSingleEventHandler } from 'react-day-picker';
 import { FaAngleDown } from 'react-icons/fa6';
 
 interface Props {
@@ -35,6 +35,12 @@ function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
     });
   }
 
+  const dateSelector = (date: any) => {
+    console.log(date);
+    if (!date) return;
+    setStartDate(date);
+  };
+
   return (
     <div className="relative" ref={wrapper}>
       <button
@@ -50,7 +56,7 @@ function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
             showOutsideDays
             mode="single"
             selected={startDate}
-            onSelect={setStartDate}
+            onSelect={dateSelector}
             fromDate={fromDate}
             toDate={new Date(new Date().getFullYear() + 2, new Date().getMonth(), new Date().getDate())}
           />
