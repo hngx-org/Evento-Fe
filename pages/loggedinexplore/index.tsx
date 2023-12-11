@@ -12,8 +12,6 @@ import { CategoryProps, EventsProps } from '@/@types';
 import { getCategories } from '@/http/createeventapi';
 import AuthLayout from '@/layout/Authlayout';
 
-
-
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
@@ -44,7 +42,11 @@ function Home() {
   };
 
   return (
-<AuthLayout>
+    <AuthLayout>
+    
+    
+    <div>
+
       <div className="relative">
         <div className="relative bg-secondary-100 py-11 sm:py-[74px] px-6">
           <div className="max-w-[634px] lg:max-w-[1002px] mx-auto text-center">
@@ -126,10 +128,10 @@ function Home() {
           </section>
         </main>
       </div>
-     
+
     </div>
-</AuthLayout>
+    </AuthLayout>
   );
 }
 
-export default withAuth(Home);
+export default withoutAuth(Home);
