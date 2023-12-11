@@ -11,6 +11,10 @@ import { getUpcomingEvents } from '@/http/events';
 import { CategoryProps, EventsProps } from '@/@types';
 import { getCategories } from '@/http/createeventapi';
 import AuthLayout from '@/layout/Authlayout';
+import withAuth from '@/helpers/withAuth';
+
+
+
 
 const montserrat = Montserrat({
   subsets: ['latin'],
