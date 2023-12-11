@@ -10,8 +10,8 @@ import past from '@/public/assets/eventDashboard3/past.svg';
 import { Montserrat, Nunito } from 'next/font/google';
 import AuthLayout from '@/layout/Authlayout';
 import { getUserEvents } from '@/http/dashBoard3api';
-import { eventType } from '@/http/profileapi';
-import { UserProfile } from '@/http/settingsapi';
+import { UserProfile, eventType, getUserProfile } from '@/http/profileapi';
+// import { UserProfile } from '@/http/settingsapi';
 import { useRouter } from 'next/router';
 import CreateEvents from '../create-events';
 import GridEventCard from '@/components/UserProfile/GridEventCard';
@@ -34,7 +34,20 @@ const montserrat = Montserrat({
 });
 
 const Dashboard3: React.FC = () => {
-  const [userProfile, setUserProfile] = useState<UserProfile>({});
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    userID: '',
+    email: '',
+    bio: '',
+
+    profileImage: '',
+    displayName: '',
+    firstName: '',
+    lastName: '',
+    slug: '',
+    role: '',
+    location: '',
+  });
+
   const [pastEvents, setPastEvents] = useState<eventType[]>([]);
   const [createdEvents, setCreatedEvent] = useState<eventType[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
@@ -48,7 +61,10 @@ const Dashboard3: React.FC = () => {
     if (storedUserProfile) {
       const parsedUserProfile = JSON.parse(storedUserProfile);
       setUserProfile(parsedUserProfile);
+    } else {
+      getUserProfile(setUserProfile);
     }
+
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
 

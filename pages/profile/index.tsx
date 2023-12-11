@@ -13,6 +13,7 @@ import {
   eventType,
   getSocialLinks,
   getUserProfile,
+  postCoverPicture,
   postProfilePicture,
   socialLinks,
 } from '@/http/profileapi';
@@ -42,6 +43,7 @@ const UserProfile: React.FC = () => {
     userID: '',
     email: '',
     bio: '',
+    coverImage: '',
 
     profileImage: '',
     displayName: '',
@@ -59,13 +61,8 @@ const UserProfile: React.FC = () => {
   });
 
   useEffect(() => {
-    // remove time out to see skeleton
-    getUserProfile(setUserProfile);
-    getSocialLinks(setSocialLinks);
-  }, []);
-
-  useEffect(() => {
     //  send to local storage
+    userProfile.coverImage && setCoverPic(userProfile.coverImage);
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
     localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
   }, [userProfile]);
@@ -76,6 +73,8 @@ const UserProfile: React.FC = () => {
   const combinedEvents = [...createdEvents, ...upcomingEvents];
 
   useEffect(() => {
+    getUserProfile(setUserProfile);
+    getSocialLinks(setSocialLinks);
     const storedUserProfile = localStorage.getItem('userProfile');
     if (storedUserProfile) {
       const parsedUserProfile = JSON.parse(storedUserProfile);
@@ -83,6 +82,10 @@ const UserProfile: React.FC = () => {
     }
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
+
+  useEffect(() => {
+    console.log(userProfile);
+  }, [userProfile]);
 
   const [profilePicURL, setProfilePicURL] = useState('');
   const [coverPic, setCoverPic] = useState('');
@@ -117,18 +120,20 @@ const UserProfile: React.FC = () => {
       // Log the name of the selected image file
       const coverImageUrl = URL.createObjectURL(selectedImage);
       setCoverPic(coverImageUrl);
+      postCoverPicture(selectedImage);
     }
   };
 
   return (
     <AuthLayout>
       <div className={` ${nunito.className} flex w-[100vw] h-fit overflow-hidden justify-center bg-[#F5F5F5]  `}>
-        <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute  overflow-hidden">
+        <section className="w-full h-[128px] md:h-[240px] bg-secondary-100 absolute  overflow-hidden ">
           {coverPic && (
             <div className="flex justify-center items-center w-full h-full">
               <Image src={coverPic} width={100} height={100} alt="" className="object-cover w-full h-full" />
             </div>
           )}
+
           <Button
             handleClick={() => {
               console.log(socialLinks, socialLinks?.facebookURL);
@@ -152,8 +157,8 @@ const UserProfile: React.FC = () => {
           </Button>
         </section>
 
-        <section className="w-[358px] md:w-[634px] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
-          <div className="w-full flex flex-col gap-y-6  bg-white-100 rounded-[12px] p-6">
+        <section className="w-full md:w-[634px] lg:w-[906px] relative top-[120px] flex flex-col gap-y-[92px] mb-[40vh]">
+          <div className="w-full flex flex-col gap-y-6  bg-white-100 rounded-[12px] md:px-6 py-6 px-4  ">
             {userProfile.profileImage ? (
               <div
                 id="profilePicContainer"
@@ -250,7 +255,9 @@ const UserProfile: React.FC = () => {
               </div>
             </div>
           </div>
-          <ProfieEvent combinedEvents={combinedEvents} pastEvents={pastEvents} />{' '}
+          <div className="md:px-0 px-4">
+            <ProfieEvent combinedEvents={combinedEvents} pastEvents={pastEvents} />{' '}
+          </div>
         </section>
       </div>
     </AuthLayout>
