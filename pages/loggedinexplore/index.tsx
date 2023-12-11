@@ -44,7 +44,6 @@ function Home() {
   };
 
   return (
-    <div>
 <AuthLayout>
       <div className="relative">
         <div className="relative bg-secondary-100 py-11 sm:py-[74px] px-6">
