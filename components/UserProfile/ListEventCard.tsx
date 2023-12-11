@@ -55,20 +55,18 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
 
       <div className="w-full p-2 md:p-4 flex flex-col gap-y-4">
         <div className="flex flex-col gap-y-1">
-          <div className="flex items-center justify-between text-primary-100 text-xs md:text-sm lg:text-base font-normal  ">
+          <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal  ">
             <span className="font-medium">{event.startDate && convertDateFormat(event.startDate, 'date')}</span>
             <span className="px-3 py-1 bg-secondary-100 rounded-[4px]">
               {event.entranceFee ? `$` + event.entranceFee : 'Free'}
             </span>
           </div>
 
-          <h6
-            className={` ${montserrat.className}  text-base md:text-xl lg:text-2xl font-semibold line-clamp-2 md:line-clamp-1 `}
-          >
+          <h6 className={` ${montserrat.className}  text-xl lg:text-2xl font-semibold line-clamp-2 md:line-clamp-1 `}>
             {event.title}{' '}
           </h6>
 
-          <div className="font-medium text-xs md:text-sm text-[#868686] flex flex-col gap-y-2">
+          <div className="font-medium text-sm text-[#868686] flex flex-col gap-y-2">
             <div className="flex gap-x-2 items-center">
               <Location size="16" color="#303030" />
 

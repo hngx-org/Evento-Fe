@@ -183,7 +183,7 @@ function AuthenticatedHeader() {
               </p>
             </div>
             <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
-              <Link href="/explore" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
+              <Link href="/loggedinexplore" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
                 <Profile size={16} color="#3C3C3C" />
                 Explore
               </Link>
