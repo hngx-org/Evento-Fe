@@ -5,6 +5,8 @@ import { Global, Location, Timer1 } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
 import { Montserrat } from 'next/font/google';
 import { EventCardProps, convertDateFormat, eventPaticipants } from './ListEventCard';
+import { useRouter } from 'next/router';
+import { getUserId } from '@/http/profileapi';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -13,8 +15,20 @@ const montserrat = Montserrat({
 });
 
 const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
+  const router = useRouter();
+  const handleCardClick = () => {
+    const userId = getUserId();
+    if (event.organizerID === userId) {
+      router.push(`event-management`);
+    } else router.push(`/user-invite`);
+  };
   return (
-    <div className="md:w-[285px] lg:w-[405px] h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0">
+    <div
+      className="md:w-[285px] lg:w-[405px] h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
+      onClick={() => {
+        handleCardClick();
+      }}
+    >
       <Image src={sampleImage} alt={''} className="w-full h-[180px] object-cover" />
       <div className="w-full p-4 flex flex-col gap-y-4 ">
         <div className="flex flex-col gap-y-1">

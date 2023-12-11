@@ -19,6 +19,7 @@ export interface UserProfile {
   userID: string;
   email: string;
   bio: string;
+  coverImage?: string;
 
   profileImage: string;
   displayName: string;
@@ -60,8 +61,8 @@ export type eventType = {
   participants?: participantType[];
 };
 
-// const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
-const BaseUrl = 'http://localhost:3000/api/v1/';
+const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
+// const BaseUrl = 'http://localhost:3000/api/v1/';
 
 //evento-qo6d.onrender.com/api/v1
 const $AuthHttp = AuthInstance(BaseUrl);
@@ -92,8 +93,8 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
       },
     });
 
-    // console.log(getUserData?.data.data);
     setData(getUserData?.data.data);
+    console.log(getUserData?.data.data);
 
     // return getUserData?.data;
   } catch (e: any) {
@@ -109,7 +110,7 @@ export const getSocialLinks = async (setData: React.Dispatch<React.SetStateActio
   const userId = getUserId();
 
   try {
-    const getUserSocials = await $AuthHttp.get(`/user/profile/social/${userId}`, {
+    const getUserSocials = await $AuthHttp.get(`/user/${userId}/social/`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -131,7 +132,7 @@ export const editUserProfile = async (data: UserProfile2, successCallback: () =>
   const userId = getUserId();
 
   try {
-    const editUserData = await $AuthHttp.patch(`/user/profile/edit/${userId}`, data, {
+    const editUserData = await $AuthHttp.patch(`/user/${userId}/`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -154,7 +155,7 @@ export const editSocialLinks = async (data: socialLinks) => {
   const userId = getUserId();
   // user/profile/social/add/
   try {
-    const editUserData = await $AuthHttp.post(`/user/profile/social/add/${userId}`, data, {
+    const editUserData = await $AuthHttp.post(`/user/${userId}/social`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -194,7 +195,7 @@ export const postProfilePicture = async (localImage: File) => {
   image.append('file', localImage);
 
   try {
-    const response = await $AuthHttp.post(`/user/profile/image/upload/${userId}`, image, {
+    const response = await $AuthHttp.post(`/user/${userId}/image/`, image, {
       headers: {
         Authorization: `Bearer ${authToken}`,
         'Content-Type': 'multipart/form-data',
@@ -205,6 +206,36 @@ export const postProfilePicture = async (localImage: File) => {
     if (response.status === 200) {
       // Image successfully uploaded
       console.log('Image uploaded successfully!');
+    } else {
+      // Handle other status codes
+      console.error('Error uploading image:', response.status, response.statusText);
+    }
+  } catch (error) {
+    // Handle network error
+    toast.error(`Network error: ${error}`);
+  }
+};
+
+export const postCoverPicture = async (localImage: File) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  // const image = convertImageToBase64(localImage);
+  // console.log(image);
+  const image = new FormData();
+  image.append('file', localImage);
+
+  try {
+    const response = await $AuthHttp.post(`/user/${userId}/cover`, image, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      // Image successfully uploaded
+      console.log('Cover Image uploaded successfully!');
     } else {
       // Handle other status codes
       console.error('Error uploading image:', response.status, response.statusText);
@@ -229,8 +260,8 @@ export const getUserCreatedEvents = async (setEvents: React.Dispatch<React.SetSt
     const events = response.data.data;
     console.log(events);
 
-    const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
-    // const filteredEvents = events.filter((event: any) => event.organizerID === userId);
+    // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
+    const filteredEvents = events.filter((event: any) => event.organizerID === userId);
 
     console.log(filteredEvents);
     setEvents(filteredEvents);

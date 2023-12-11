@@ -60,7 +60,10 @@ const Events: React.FC<EventProps> = ({ type, events }) => {
   console.log(events);
 
   return (
-    <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[32px] rounded-[12px]" id="events">
+    <div
+      className="w-full h-fit  md:p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[32px] rounded-[12px]"
+      id="events"
+    >
       <div className="filterTop flex flex-col">
         {' '}
         <div className="flex justify-between ">
