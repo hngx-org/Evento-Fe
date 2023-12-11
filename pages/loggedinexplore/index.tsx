@@ -10,6 +10,9 @@ import withoutAuth from '@/helpers/withoutAuth';
 import { getUpcomingEvents } from '@/http/events';
 import { EventsProps } from '@/@types';
 import AuthLayout from '@/layout/Authlayout';
+import withAuth from '@/helpers/withAuth';
+
+
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -133,4 +136,4 @@ function Home() {
   );
 }
 
-export default withoutAuth(Home);
+export default withAuth(Home);
