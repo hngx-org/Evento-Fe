@@ -134,4 +134,4 @@ function Home() {
   );
 }
 
-export default withoutAuth(Home);
+export default withAuth(Home);
