@@ -30,7 +30,7 @@ function AuthenticatedHeader() {
     profileImage: '',
   });
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
-  console.log(notifications);
+  // console.log(notifications);
 
   useEffect(() => {
     getUserProfile(setUserProfile);
@@ -49,13 +49,14 @@ function AuthenticatedHeader() {
       socket.emit('socketId', socket.id);
     });
 
-    socket.on('new_event', (event) => {
-      // console.log('Received a new notification:', event);
+    socket.on('notifications', (event) => {
+      console.log('Received a new notification');
+      // console.log('test');
+      setNotifications(event);
     });
 
-    socket.on('notifications', (event) => {
+    socket.on('new_event', (event) => {
       // console.log('Received a new notification:', event);
-      setNotifications(event);
     });
   }, []);
 
