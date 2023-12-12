@@ -53,7 +53,7 @@ export const eventPaticipants = (event: eventType) => {
 
 const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const router = useRouter();
-  // console.log(past, event);
+  console.log(past, event);
   const handleCardClick = () => {
     const userId = getUserId();
     if (event.organizerID === userId) {
