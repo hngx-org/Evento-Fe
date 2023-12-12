@@ -14,7 +14,7 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
+const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const router = useRouter();
   const handleCardClick = () => {
     const userId = getUserId();
@@ -24,12 +24,12 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
   };
   return (
     <div
-      className="md:w-[285px] lg:w-[405px] h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
+      className="w-[326px]  max-w-[100%] md:w-[296px] md:max-w-none lg:w-[370px] 2xl:w-[405px]  h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
       onClick={() => {
         handleCardClick();
       }}
     >
-      <Image src={sampleImage} alt={''} className="w-full h-[180px] object-cover" />
+      <Image src={sampleImage} alt={''} className={`w-full h-[180px] object-cover ${past ? 'grayscale' : ''} `} />
       <div className="w-full p-4 flex flex-col gap-y-4 ">
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal ">

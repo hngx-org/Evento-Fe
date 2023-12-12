@@ -25,21 +25,41 @@ export const getUserEvents = async (
 
       const events = response.data.data;
       console.log(events);
+      const userID = getUserId();
 
       // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
       const currentTime = new Date();
-      const pastEvents = events.filter((event: eventType) => {
-        const endDateString = event.endDate;
+      const pastEvents = [
+        ...events
+          .filter((event: eventType) => event.participants?.some((item) => item.userID === userId))
+          .filter((event: eventType) => {
+            const endDateString = event.endDate;
 
-        if (endDateString && typeof endDateString === 'string') {
-          const endDate = new Date(endDateString);
+            if (endDateString && typeof endDateString === 'string') {
+              const endDate = new Date(endDateString);
 
-          return endDate < currentTime;
-        }
+              return endDate < currentTime;
+            }
 
-        return false;
-      });
+            return false;
+          }),
+        ...events
+          .filter((event: eventType) => event.organizerID == userID)
+          .filter((event: eventType) => {
+            const endDateString = event.endDate;
+
+            if (endDateString && typeof endDateString === 'string') {
+              const endDate = new Date(endDateString);
+
+              return endDate < currentTime;
+            }
+
+            return false;
+          }),
+      ];
+
       setPastEvents(pastEvents);
+
       const createdEvents = events
         .filter((event: any) => event.organizerID === userId)
         .filter((event: any) => {
