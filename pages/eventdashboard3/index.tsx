@@ -52,8 +52,8 @@ const Dashboard3: React.FC = () => {
   const [createdEvents, setCreatedEvent] = useState<eventType[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
   const combinedEvents = [...createdEvents, ...upcomingEvents];
-  const [combinedViewMore, setCombinedViewMore] = useState(false);
-  const [pastViewMore, setPastViewMore] = useState(false);
+  // const [combinedViewMore, setCombinedViewMore] = useState(false);
+  // const [pastViewMore, setPastViewMore] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -68,8 +68,8 @@ const Dashboard3: React.FC = () => {
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
 
-  const renderedPastEvents = pastViewMore ? pastEvents : pastEvents.slice(0, 2);
-  const renderedCombinedEvents = combinedViewMore ? combinedEvents : combinedEvents.slice(0, 2);
+  // const renderedPastEvents = pastViewMore ? pastEvents : pastEvents.slice(0, 2);
+  // const renderedCombinedEvents = combinedViewMore ? combinedEvents : combinedEvents.slice(0, 2);
 
   return (
     <AuthLayout>
@@ -150,16 +150,31 @@ const Dashboard3: React.FC = () => {
                     <span
                       className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100 cursor-pointer"
                       onClick={() => {
-                        setCombinedViewMore((prev) => !prev);
+                        // setCombinedViewMore((prev) => !prev);
+                        router.push('./profile');
+                        setTimeout(() => {
+                          const pastEventsButton = document.getElementById('attended-events');
+
+                          if (pastEventsButton) {
+                            const yPos = pastEventsButton.getBoundingClientRect().top;
+                            window.scrollTo({
+                              top: yPos,
+                              behavior: 'smooth', // Optional: To make the scrolling smooth
+                            });
+                          }
+
+                          //  pastEventsButton.
+                        }, 200);
                       }}
                     >
-                      {combinedViewMore ? 'View less' : 'View all'}
+                      {/* {combinedViewMore ? 'View less' : 'View all'} */}
+                      View all
                     </span>
                   </div>
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
                     // desktop and tab
                     <div className=" grid-cols-1 md:grid-cols-2 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 md:grid hidden">
-                      {renderedCombinedEvents.map((event) => (
+                      {combinedEvents.slice(0, 2).map((event) => (
                         <GridEventCard key={0} event={event} past={false} />
                       ))}
                     </div>
@@ -200,17 +215,34 @@ const Dashboard3: React.FC = () => {
                         <span
                           className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100 cursor-pointer"
                           onClick={() => {
-                            console.log('clicked view all');
-                            setPastViewMore((prev) => !prev);
+                            // console.log('clicked view all');
+                            // setPastViewMore((prev) => !prev);
+
+                            router.push('./profile');
+
+                            setTimeout(() => {
+                              const pastEventsButton = document.getElementById('attended-events');
+                              if (pastEventsButton) {
+                                const yPos = pastEventsButton.getBoundingClientRect().top;
+                                window.scrollTo({
+                                  top: yPos,
+                                  behavior: 'smooth', // Optional: To make the scrolling smooth
+                                });
+                              }
+
+                              pastEventsButton?.click();
+                            }, 200);
                           }}
                         >
-                          {pastViewMore ? 'View less' : 'View all'}
+                          {/* {pastViewMore ? 'View less' : 'View all'}
+                           */}
+                          View all
                         </span>
                       </div>
 
                       {pastEvents.length > 0 ? (
                         <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit ">
-                          {renderedPastEvents.map((event) => (
+                          {pastEvents.slice(0, 2).map((event) => (
                             <GridEventCard key={0} event={event} past={true} />
                           ))}
                         </div>
