@@ -11,7 +11,10 @@ import { logoutUser as lgout } from '@/http/authapi';
 import Button from '@ui/NewButton';
 import { useRouter } from 'next/navigation';
 import Notifications from '../ui/notification';
-import { UserProfile, getUserProfile } from '@/http/settingsapi';
+import { UserProfile, getNotifications, getUserProfile } from '@/http/settingsapi';
+import { io } from 'socket.io-client';
+import { getUserId } from '@/http/profileapi';
+import { NotificationProps } from '@/@types';
 
 function AuthenticatedHeader() {
   const [toggle, setToggle] = useState(false);
@@ -26,10 +29,35 @@ function AuthenticatedHeader() {
     lastName: '',
     profileImage: '',
   });
-  const router = useRouter();
+  const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+  // console.log(notifications);
 
   useEffect(() => {
     getUserProfile(setUserProfile);
+    // getNotifications();
+  }, []);
+
+  useEffect(() => {
+    // const socket = io('https://evento-qo6d.onrender.com');
+    const socket = io('https://806f-41-90-184-91.ngrok-free.app');
+
+    socket.on('connect', () => {
+      const userId = getUserId();
+      console.log('Connected to Socket server');
+      socket.emit('id', { userID: userId, socketId: socket.id });
+      socket.emit('userId', userId);
+      socket.emit('socketId', socket.id);
+    });
+
+    socket.on('notifications', (event) => {
+      console.log('Received a new notification');
+      // console.log('test');
+      setNotifications(event);
+    });
+
+    socket.on('new_event', (event) => {
+      // console.log('Received a new notification:', event);
+    });
   }, []);
 
   // useEffect(() => {
@@ -50,7 +78,7 @@ function AuthenticatedHeader() {
     function handleClickOutside(event: MouseEvent) {
       const targetNode = event.target as Node | null;
       if (notificationsRef.current && !notificationsRef.current.contains(targetNode)) {
-        console.log(notificationsRef.current);
+        // console.log(notificationsRef.current);
         setNotificationMenu(false);
       }
     }
@@ -86,8 +114,10 @@ function AuthenticatedHeader() {
   // };
 
   const handleLogout = async () => {
+    const socket = io('https://806f-41-90-184-91.ngrok-free.app');
     // setIsLoading(true);
     logoutUser();
+    socket.disconnect();
   };
 
   return (
@@ -113,10 +143,13 @@ function AuthenticatedHeader() {
             {/* <div className="cursor-pointer" onClick={() => setSearchDropdown(true)}>
               <SearchNormal1 size={22} color="#3C3C3C" />
             </div> */}
-            <div className="cursor-pointer">
-              <button onClick={handleNotificationsToggle} draggable={false}>
-                <Notification size={22} color="#3C3C3C" />
-              </button>
+            <div className="cursor-pointer relative" onClick={handleNotificationsToggle}>
+              <Notification size={22} color="#3C3C3C" />
+              <div className="w-4 h-4 bg-primary-100 text-white-100 text-xs rounded-full absolute -top-[6px] left-2 flex items-center justify-center">
+                {notifications ? notifications.length : 0}
+              </div>
+              {/* <button onClick={handleNotificationsToggle} draggable={false}>
+              </button> */}
             </div>
             <div className="cursor-pointer w-[32px] h-[32px]" onClick={() => setProfileDropdown(true)}>
               <Image
@@ -278,7 +311,11 @@ function AuthenticatedHeader() {
         )}
         {notificationMenu && (
           <div className="absolute bg-white-100 top-full w-fit md:2/4 lg:w-1/4 right-0 " ref={notificationsRef}>
-            <Notifications notificationsRef={notificationsRef} unreadNotifications={setUnreadNotifications} />
+            <Notifications
+              notificationsRef={notificationsRef}
+              unreadNotifications={setUnreadNotifications}
+              notifications={notifications}
+            />
           </div>
         )}
       </nav>

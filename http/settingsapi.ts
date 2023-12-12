@@ -46,7 +46,7 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
   const userId = getUserId();
 
   try {
-    const getUserData = await $AuthHttp.get(`/user/profile/${userId}`, {
+    const getUserData = await $AuthHttp.get(`/user/${userId}`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -85,7 +85,7 @@ export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetSta
   const userId = getUserId();
 
   try {
-    const getUserData = await $AuthHttp.get(`/user/profile/social/${userId}`, {
+    const getUserData = await $AuthHttp.get(`/user/${userId}/social`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -115,7 +115,7 @@ export const editUserAccount = async (
   const userId = getUserId();
   setLoading(true);
   try {
-    const editUserData = await $AuthHttp.patch(`/user/profile/edit/${userId}`, data, {
+    const editUserData = await $AuthHttp.patch(`/user/${userId}`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -135,7 +135,7 @@ export const editUserSocials = async (data: UserSocials, setLoading: React.Dispa
   const userId = getUserId();
   setLoading(true);
   try {
-    const editUserData = await $AuthHttp.post(`/user/profile/social/add/${userId}`, data, {
+    const editUserData = await $AuthHttp.post(`/user/${userId}/social`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -175,7 +175,7 @@ export const uploadUserImage = async (
     data: image,
   };
   try {
-    const editUserData = await axios.post(`${BaseUrl}/user/profile/image/upload/${userId}`, data, {
+    const editUserData = await axios.post(`${BaseUrl}/user/${userId}/image`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -198,7 +198,7 @@ export const deleteUploadedImage = async (setLoading: React.Dispatch<React.SetSt
   const userId = getUserId();
   setLoading(true);
   try {
-    const getUserData = await $AuthHttp.delete(`/user/profile/image/delete/${userId}`, {
+    const getUserData = await $AuthHttp.delete(`/user/${userId}/image`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -225,7 +225,7 @@ export const deleteUserAccount = async (
   setLoading(true);
   setSuccess(false);
   try {
-    const deleteUserData = await $AuthHttp.delete(`/user/delete/${userId}`, {
+    const deleteUserData = await $AuthHttp.delete(`/user/${userId}/image`, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -251,7 +251,7 @@ export const updateUserPreferences = async (
   const userId = getUserId();
   setLoading(true);
   try {
-    const editUserData = await $AuthHttp.post(`/user/profile/preferences/${userId}`, data, {
+    const editUserData = await $AuthHttp.post(`/user/${userId}/preferences`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -309,7 +309,7 @@ export const changePassword = async (
   const userId = getUserId();
   setLoading(true);
   try {
-    const editUserData = await $AuthHttp.post(`user/password/change/${userId}`, data, {
+    const editUserData = await $AuthHttp.patch(`user/${userId}/password`, data, {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
@@ -392,6 +392,23 @@ export const updateNotificationsPreferences = async (
     }
 
     toast.error(err.message);
+  }
+};
+
+export const getNotifications = async () => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  try {
+    const getUserNotifications = await $AuthHttp.get(`/notifications/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    console.log(getUserNotifications);
+  } catch (e: any) {
+    console.log(e);
+    toast.error("An error occurred while fetching user's notifications.");
+    throw e?.response?.data || { message: e.message };
   }
 };
 

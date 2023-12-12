@@ -10,8 +10,8 @@ import past from '@/public/assets/eventDashboard3/past.svg';
 import { Montserrat, Nunito } from 'next/font/google';
 import AuthLayout from '@/layout/Authlayout';
 import { getUserEvents } from '@/http/dashBoard3api';
-import { eventType } from '@/http/profileapi';
-import { UserProfile } from '@/http/settingsapi';
+import { UserProfile, eventType, getUserProfile } from '@/http/profileapi';
+// import { UserProfile } from '@/http/settingsapi';
 import { useRouter } from 'next/router';
 import CreateEvents from '../create-events';
 import GridEventCard from '@/components/UserProfile/GridEventCard';
@@ -34,13 +34,26 @@ const montserrat = Montserrat({
 });
 
 const Dashboard3: React.FC = () => {
-  const [userProfile, setUserProfile] = useState<UserProfile>({});
+  const [userProfile, setUserProfile] = useState<UserProfile>({
+    userID: '',
+    email: '',
+    bio: '',
+
+    profileImage: '',
+    displayName: '',
+    firstName: '',
+    lastName: '',
+    slug: '',
+    role: '',
+    location: '',
+  });
+
   const [pastEvents, setPastEvents] = useState<eventType[]>([]);
   const [createdEvents, setCreatedEvent] = useState<eventType[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
   const combinedEvents = [...createdEvents, ...upcomingEvents];
-  const [combinedViewMore, setCombinedViewMore] = useState(false);
-  const [pastViewMore, setPastViewMore] = useState(false);
+  // const [combinedViewMore, setCombinedViewMore] = useState(false);
+  // const [pastViewMore, setPastViewMore] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,12 +61,15 @@ const Dashboard3: React.FC = () => {
     if (storedUserProfile) {
       const parsedUserProfile = JSON.parse(storedUserProfile);
       setUserProfile(parsedUserProfile);
+    } else {
+      getUserProfile(setUserProfile);
     }
+
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
 
-  const renderedPastEvents = pastViewMore ? pastEvents : pastEvents.slice(0, 2);
-  const renderedCombinedEvents = combinedViewMore ? combinedEvents : combinedEvents.slice(0, 2);
+  // const renderedPastEvents = pastViewMore ? pastEvents : pastEvents.slice(0, 2);
+  // const renderedCombinedEvents = combinedViewMore ? combinedEvents : combinedEvents.slice(0, 2);
 
   return (
     <AuthLayout>
@@ -62,7 +78,7 @@ const Dashboard3: React.FC = () => {
         <section className="mb-14 ">
           <div className={`text-2xl font-medium mb-10 ${montserrat.className} `}>Welcome {userProfile.firstName},</div>
           <div className="upcomingRest flex flex-wrap lg:justify-between gap-8 md:gap-10 w-full ">
-            <div className="w-[163px]  md:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+            <div className="w-[163px]  md:w-[360px] md:max-w-[calc(50%-40px)]  lg:max-w-none flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col gap-3 justify-between">
                 <span className={` text-2xl md:text-[32px] md:leading-[40px] font-bold ${montserrat.className} `}>
                   {' '}
@@ -73,7 +89,7 @@ const Dashboard3: React.FC = () => {
 
               <Image src={upcoming} alt={''} className="hidden md:flex" />
             </div>
-            <div className="w-[163px]  md:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+            <div className="w-[163px]  md:w-[360px] md:max-w-[calc(50%-40px)]  lg:max-w-none flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col gap-3 justify-between">
                 <span className={`text-2xl md:text-[32px] md:leading-[40px]  font-bold ${montserrat.className} `}>
                   {' '}
@@ -85,7 +101,7 @@ const Dashboard3: React.FC = () => {
               <Image src={created} alt={''} className="hidden md:flex" />
             </div>
 
-            <div className="w-[163px]  md:w-[360px] flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
+            <div className="w-[163px]  md:w-[360px] md:max-w-[calc(50%-40px)]  lg:max-w-none flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col gap-3 justify-between">
                 <span className={`text-2xl md:text-[32px] md:leading-[40px]  font-bold ${montserrat.className} `}>
                   {' '}
@@ -99,11 +115,17 @@ const Dashboard3: React.FC = () => {
           </div>
         </section>
         <section className="buttonsMobile flex text-[#FEFEFE] gap-x-6 text-base font-bold justify-center mb-10 md:hidden">
-          <Button styles={'flex py-4 px-[22px] gap-x-2'} title={''} handleClick={() => router.push('/create-events')}>
+          <Button
+            styles={'flex py-4 whitespace-nowrap justify-center gap-x-2 w-[167px]'}
+            title={''}
+            handleClick={() => router.push('/create-events')}
+          >
             Create event <Add />
           </Button>
           <Button
-            styles={'text-primary-100 flex py-4 px-[22px] !bg-[#FEFEFE] border border-primary-100 gap-x-2'}
+            styles={
+              'text-primary-100 flex py-4 whitespace-nowrap justify-center !bg-[#FEFEFE] border border-primary-100 gap-x-2 w-[167px]'
+            }
             title={''}
             handleClick={() => router.push('/explore')}
           >
@@ -128,16 +150,32 @@ const Dashboard3: React.FC = () => {
                     <span
                       className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100 cursor-pointer"
                       onClick={() => {
-                        setCombinedViewMore((prev) => !prev);
+                        // setCombinedViewMore((prev) => !prev);
+                        router.push('./profile');
+                        setTimeout(() => {
+                          const pastEventsButton = document.getElementById('attended-events');
+
+                          if (pastEventsButton) {
+                            const yPos = pastEventsButton.getBoundingClientRect().top;
+                            window.scrollTo({
+                              top: yPos,
+                              behavior: 'smooth', // Optional: To make the scrolling smooth
+                            });
+                          }
+
+                          //  pastEventsButton.
+                        }, 200);
                       }}
                     >
-                      {combinedViewMore ? 'View less' : 'View all'}
+                      {/* {combinedViewMore ? 'View less' : 'View all'} */}
+                      View all
                     </span>
                   </div>
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
-                    <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit px-[17px] md:px-0 ">
-                      {renderedCombinedEvents.map((event) => (
-                        <GridEventCard key={0} event={event} />
+                    // desktop and tab
+                    <div className=" grid-cols-1 md:grid-cols-2 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 md:grid hidden">
+                      {combinedEvents.slice(0, 2).map((event) => (
+                        <GridEventCard key={0} event={event} past={false} />
                       ))}
                     </div>
                   ) : (
@@ -177,18 +215,35 @@ const Dashboard3: React.FC = () => {
                         <span
                           className="text-sm underline  font-bold text-[#767676] hover:scale-105 hover:text-primary-100 cursor-pointer"
                           onClick={() => {
-                            console.log('clicked view all');
-                            setPastViewMore((prev) => !prev);
+                            // console.log('clicked view all');
+                            // setPastViewMore((prev) => !prev);
+
+                            router.push('./profile');
+
+                            setTimeout(() => {
+                              const pastEventsButton = document.getElementById('attended-events');
+                              if (pastEventsButton) {
+                                const yPos = pastEventsButton.getBoundingClientRect().top;
+                                window.scrollTo({
+                                  top: yPos,
+                                  behavior: 'smooth', // Optional: To make the scrolling smooth
+                                });
+                              }
+
+                              pastEventsButton?.click();
+                            }, 200);
                           }}
                         >
-                          {pastViewMore ? 'View less' : 'View all'}
+                          {/* {pastViewMore ? 'View less' : 'View all'}
+                           */}
+                          View all
                         </span>
                       </div>
 
                       {pastEvents.length > 0 ? (
                         <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit ">
-                          {renderedPastEvents.map((event) => (
-                            <GridEventCard key={0} event={event} />
+                          {pastEvents.slice(0, 2).map((event) => (
+                            <GridEventCard key={0} event={event} past={true} />
                           ))}
                         </div>
                       ) : (

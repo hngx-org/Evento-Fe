@@ -104,6 +104,7 @@ export interface Notification {
 export interface NotificationsProps {
   unreadNotifications: (count: number) => void;
   notificationsRef: React.RefObject<HTMLDivElement>;
+  notifications: NotificationProps[];
 }
 
 export type AuthResponse = {
@@ -258,4 +259,13 @@ export interface Event {
   imageUrl: string;
   startDatetime: string;
   endDatetime: string;
+}
+
+export interface NotificationProps {
+  id: string;
+  userId: string;
+  type: string;
+  message: string;
+  read: boolean;
+  createdAt: string;
 }

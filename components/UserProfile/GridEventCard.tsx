@@ -5,6 +5,8 @@ import { Global, Location, Timer1 } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
 import { Montserrat } from 'next/font/google';
 import { EventCardProps, convertDateFormat, eventPaticipants } from './ListEventCard';
+import { useRouter } from 'next/router';
+import { getUserId } from '@/http/profileapi';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -12,10 +14,22 @@ const montserrat = Montserrat({
   variable: '--font-montserrat',
 });
 
-const GridEventCard: React.FC<EventCardProps> = ({ event, key }) => {
+const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
+  const router = useRouter();
+  const handleCardClick = () => {
+    const userId = getUserId();
+    if (event.organizerID === userId) {
+      router.push(`event-management`);
+    } else router.push(`/user-invite`);
+  };
   return (
-    <div className="md:w-[285px] lg:w-[405px] h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0">
-      <Image src={sampleImage} alt={''} className="w-full h-[180px] object-cover" />
+    <div
+      className="w-[326px]  max-w-[100%] md:w-[296px] md:max-w-none lg:w-[370px] 2xl:w-[405px]  h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
+      onClick={() => {
+        handleCardClick();
+      }}
+    >
+      <Image src={sampleImage} alt={''} className={`w-full h-[180px] object-cover ${past ? 'grayscale' : ''} `} />
       <div className="w-full p-4 flex flex-col gap-y-4 ">
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal ">

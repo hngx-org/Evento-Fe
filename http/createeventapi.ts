@@ -32,7 +32,7 @@ export const uploadImage = async ({ file }: UploadParams): Promise<UploadRespons
   };
 
   try {
-    const response: AxiosResponse<UploadResponse> = await $AuthHttp.post('/events/upload', formData, config);
+    const response: AxiosResponse<UploadResponse> = await $AuthHttp.post('/events/image', formData, config);
 
     toast.success('Image uploaded successfully!');
     return response.data;
@@ -66,7 +66,7 @@ export const createEvent = async (
 
   try {
     setIsLoading(true);
-    await $AuthHttp.post('/events/create', payload, config);
+    await $AuthHttp.post('/events', payload, config);
     toast.success('Event created successfully!');
   } catch (error) {
     console.error('Error creating event:', error);

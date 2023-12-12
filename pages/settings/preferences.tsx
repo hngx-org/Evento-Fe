@@ -33,8 +33,8 @@ function Preferences() {
     const data: preferences = {
       theme: selectedTheme,
       language: selectedLanguage.name,
-      regionalSettings: regionalSettings.syncEnabled,
-      timeZone: regionalSettings.location,
+      // regionalSettings: regionalSettings.syncEnabled,
+      // timeZone: regionalSettings.location,
     };
     // console.log(data);
     updateUserPreferences(data, setLoading);
