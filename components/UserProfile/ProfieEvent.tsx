@@ -32,7 +32,7 @@ const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }
     // Add event listener to update pagination when slide changes
     swiper.on('slideChange', () => {
       const swiperContainer = document.querySelector<SwiperElement>('.swiper-container');
-      const createEventsButton = document.getElementById('create-events');
+      const createEventsButton = document.getElementById('createevents');
       const attendedEventsButton = document.getElementById('attended-events');
       const createEvents = document.getElementById('createCards');
       const attendedEvents = document.getElementById('attendedCards');
