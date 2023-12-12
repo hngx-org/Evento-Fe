@@ -18,7 +18,7 @@ interface ProfileEventType {
 
 const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }) => {
   useEffect(() => {
-    new Swiper('.swiper-container', {
+    const swiper = new Swiper('.swiper-container', {
       slidesPerView: 1,
       spaceBetween: 0,
       pagination: {
@@ -26,9 +26,6 @@ const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }
         clickable: true,
       },
     });
-
-    // getUserCreatedEvents(setEvents);
-    // getUserEvents();
   }, []);
 
   const slideToCreateEvents = () => {
@@ -80,12 +77,12 @@ const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }
             Past Events
           </div>
         </div>
-        <div className="swiper-wrapper w-full relative  ">
-          <div className="swiper-slide" style={{ width: '100%' }}>
-            {combinedEvents.length > 0 ? <Events type="create" events={combinedEvents} /> : <NoEvent type="create" />}
+        <div className="swiper-wrapper w-full relative gap-x-2  ">
+          <div className="swiper-slide createdCard" style={{ width: '100%' }}>
+            {combinedEvents.length > 0 ? <Events past={false} events={combinedEvents} /> : <NoEvent type="create" />}
           </div>
-          <div className="swiper-slide" style={{ width: '100%' }}>
-            {pastEvents.length > 0 ? <Events type="create" events={pastEvents} /> : <NoEvent type="attend" />}
+          <div className="swiper-slide " id="attendedCards" style={{ width: '100%' }}>
+            {pastEvents.length > 0 ? <Events past={true} events={pastEvents} /> : <NoEvent type="attend" />}
           </div>
         </div>
       </div>

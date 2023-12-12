@@ -108,35 +108,37 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   return (
     <div>
       <AuthenticatedHeader />
-      <div className=" w-full content-center justify-center  lg:px-[350px] max-sm:px-5 md:px-5 py-10  flex  flex-col">
-        <div className="progress-bar lg:px-[0px] md:px-0 max-sm:px-0 w-full flex flex-col">
-          <div className="w-full">
-            <p className="mb-3 font-medium">Progress</p>
-            <div className="h-2 w-full rounded-lg bg-Grey-G30 overflow-hidden">
-              <div className={`h-full bg-Success-S400 rounded-lg ${progress()}`} />
+      <div className=" w-full content-center justify-center  max-sm:px-5 md:px-5 py-10  flex  flex-col">
+        <div className="mx-auto max-w-2xl w-full">
+          <div className="progress-bar lg:px-[0px] md:px-0 max-sm:px-0 w-full flex flex-col">
+            <div className="w-full">
+              <p className="mb-3 font-medium">Progress</p>
+              <div className="h-2 w-full rounded-lg bg-Grey-G30 overflow-hidden">
+                <div className={`h-full bg-Success-S400 rounded-lg ${progress()}`} />
+              </div>
             </div>
+            {page === 1 && (
+              <Page1
+                onNext={nextPage}
+                data={eventData}
+                setState={setEventData}
+                descriptionContent={descriptionContent}
+                setDescriptionContent={setDescriptionContent}
+              />
+            )}
+            {page === 2 && (
+              <Page2
+                onNext={nextPage}
+                onPrevious={prevPage}
+                loadState={isLoading}
+                data={eventData}
+                setState={setEventData}
+                otherCategory={otherCategory}
+                setOtherCategory={setOtherCategory}
+              />
+            )}
+            {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
           </div>
-          {page === 1 && (
-            <Page1
-              onNext={nextPage}
-              data={eventData}
-              setState={setEventData}
-              descriptionContent={descriptionContent}
-              setDescriptionContent={setDescriptionContent}
-            />
-          )}
-          {page === 2 && (
-            <Page2
-              onNext={nextPage}
-              onPrevious={prevPage}
-              loadState={isLoading}
-              data={eventData}
-              setState={setEventData}
-              otherCategory={otherCategory}
-              setOtherCategory={setOtherCategory}
-            />
-          )}
-          {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
         </div>
       </div>
     </div>

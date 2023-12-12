@@ -30,7 +30,6 @@ const modules = {
     ['link'],
   ],
   clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
     matchVisual: false,
   },
 };
@@ -164,7 +163,6 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
   const locationTypes = [
     { label: 'Physical', value: 'Physical' },
     { label: 'Virtual', value: 'Virtual' },
-    // Add more location types as needed
   ];
 
   return (
@@ -190,14 +188,6 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
               theme="snow"
               className="h-[190px]"
             />
-            {/* <textarea
-              className="w-full py-4 resize-none border border-[#d7d7d7] rounded-lg px-4 block outline-primary-100"
-              placeholder="Description"
-              id="description"
-              value={data.description}
-              onChange={handleChange}
-              style={{ height: '250px' }}
-            /> */}
           </div>
           <div className="event-date w-full flex z-20 flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
             <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 z-[9999] md:items-center">

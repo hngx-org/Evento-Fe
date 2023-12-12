@@ -9,8 +9,8 @@ import React, { useEffect, useState } from 'react';
 import withoutAuth from '@/helpers/withoutAuth';
 import { getUpcomingEvents } from '@/http/events';
 import { CategoryProps, EventsProps } from '@/@types';
-import { getCategories } from '@/http/createeventapi';
 import AuthLayout from '@/layout/Authlayout';
+import { getCategories } from '@/http/createeventapi';
 import withAuth from '@/helpers/withAuth';
 
 const montserrat = Montserrat({

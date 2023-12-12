@@ -9,7 +9,7 @@ import { eventType } from '@/http/profileapi';
 import FilterTray from './FilterTray';
 
 interface EventProps {
-  type: string;
+  past: boolean;
   events: eventType[];
 }
 interface FilterItem {
@@ -19,7 +19,7 @@ interface FilterItem {
 }
 type FilterObject = FilterItem[];
 
-const Events: React.FC<EventProps> = ({ type, events }) => {
+const Events: React.FC<EventProps> = ({ past, events }) => {
   const [listView, setListView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterList, setFilterList] = useState<string[]>([]);
@@ -60,9 +60,11 @@ const Events: React.FC<EventProps> = ({ type, events }) => {
   console.log(events);
 
   return (
-    <div className="w-full h-fit p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[32px] rounded-[12px]" id="events">
+    <div
+      className="w-full h-fit  md:p-4 lg:p-[32px] flex flex-col bg-white-100 gap-y-[32px] rounded-[12px]"
+      id="events"
+    >
       <div className="filterTop flex flex-col">
-        {' '}
         <div className="flex justify-between ">
           <div className="flex font-bold gap-2 text-xl  items-center relative">
             Filter By
@@ -121,14 +123,14 @@ const Events: React.FC<EventProps> = ({ type, events }) => {
         {listView ? (
           <div className="listView flex flex-col gap-8 transition duration-1000">
             {events.map((event, index) => (
-              <ListEventCard key={index} event={event} />
+              <ListEventCard key={index} event={event} past={past} />
             ))}
           </div>
         ) : (
           <div className="gridView w-full h-full grid md:grid-cols-2 gap-6 transition duration-1000">
             {' '}
             {events.map((event, index) => (
-              <GridEventCard key={index} event={event} />
+              <GridEventCard key={index} event={event} past={past} />
             ))}
           </div>
         )}

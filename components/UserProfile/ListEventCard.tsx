@@ -5,7 +5,8 @@ import sampleImage from '@/public/assets/profile/imageCard.svg';
 import { Global, Location, Timer1 } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
 import { Montserrat } from 'next/font/google';
-import { eventType } from '@/http/profileapi';
+import { eventType, getUserId } from '@/http/profileapi';
+import { useRouter } from 'next/router';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -14,7 +15,8 @@ const montserrat = Montserrat({
 });
 export type EventCardProps = {
   event: eventType;
-  key: number;
+
+  past: boolean;
 };
 
 export function convertDateFormat(inputDateTime: string, part: 'date' | 'time') {
@@ -48,12 +50,31 @@ export const eventPaticipants = (event: eventType) => {
     }
   }
 };
-const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
+
+const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
+  const router = useRouter();
+  console.log(past, event);
+  const handleCardClick = () => {
+    const userId = getUserId();
+    if (event.organizerID === userId) {
+      router.push(`event-management`);
+    } else router.push(`/user-invite`);
+  };
   return (
-    <div className="w-full h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01]">
-      <Image src={sampleImage} alt={''} className=" w-[163px] md:w-[285px] lg:w-[300px]  object-cover" />
+    <div
+      className="w-full h-[140px] md:h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01] "
+      onClick={() => {
+        handleCardClick();
+      }}
+    >
+      <Image
+        src={sampleImage}
+        alt={''}
+        className={` w-[180px] md:w-[285px] lg:w-[300px]  object-cover ${past ? 'grayscale' : ''}`}
+      />
 
       <div className="w-full p-2 md:p-4 flex flex-col gap-y-4">
+        {past}
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal  ">
             <span className="font-medium">{event.startDate && convertDateFormat(event.startDate, 'date')}</span>
@@ -62,7 +83,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
             </span>
           </div>
 
-          <h6 className={` ${montserrat.className}  text-xl lg:text-2xl font-semibold line-clamp-2 md:line-clamp-1 `}>
+          <h6 className={` ${montserrat.className} text-base md:text-xl lg:text-2xl font-bold whitespace-nowrap `}>
             {event.title}{' '}
           </h6>
 
@@ -80,7 +101,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <div className="flex gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit">
+          <div className="hidden gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit md:flex">
             {event.participants && event.participants?.length > 0 ? <Image src={avatars} alt={''} /> : ''}
             <span className="md:flex hidden text-[10px] lg:text-base"> {eventPaticipants(event)}</span>
           </div>
