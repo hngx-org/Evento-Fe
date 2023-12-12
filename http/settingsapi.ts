@@ -395,6 +395,23 @@ export const updateNotificationsPreferences = async (
   }
 };
 
+export const getNotifications = async () => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  try {
+    const getUserNotifications = await $AuthHttp.get(`/notifications/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    console.log(getUserNotifications);
+  } catch (e: any) {
+    console.log(e);
+    toast.error("An error occurred while fetching user's notifications.");
+    throw e?.response?.data || { message: e.message };
+  }
+};
+
 // import axios, { AxiosError } from 'axios';
 // export const uploadUserImage = async (data: string, setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
 //   const authToken = getAuthToken();
