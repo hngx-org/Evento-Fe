@@ -15,7 +15,8 @@ const montserrat = Montserrat({
 });
 export type EventCardProps = {
   event: eventType;
-  key: number;
+
+  past: boolean;
 };
 
 export function convertDateFormat(inputDateTime: string, part: 'date' | 'time') {
@@ -50,8 +51,9 @@ export const eventPaticipants = (event: eventType) => {
   }
 };
 
-const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
+const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const router = useRouter();
+  console.log(past, event);
   const handleCardClick = () => {
     const userId = getUserId();
     if (event.organizerID === userId) {
@@ -65,9 +67,14 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, key }) => {
         handleCardClick();
       }}
     >
-      <Image src={sampleImage} alt={''} className=" w-[180px] md:w-[285px] lg:w-[300px]  object-cover" />
+      <Image
+        src={sampleImage}
+        alt={''}
+        className={` w-[180px] md:w-[285px] lg:w-[300px]  object-cover ${past ? 'grayscale' : ''}`}
+      />
 
       <div className="w-full p-2 md:p-4 flex flex-col gap-y-4">
+        {past}
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal  ">
             <span className="font-medium">{event.startDate && convertDateFormat(event.startDate, 'date')}</span>

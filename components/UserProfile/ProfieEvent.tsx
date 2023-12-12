@@ -26,27 +26,6 @@ const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }
         clickable: true,
       },
     });
-
-    // getUserCreatedEvents(setEvents);
-    // getUserEvents();
-    // Add event listener to update pagination when slide changes
-    swiper.on('slideChange', () => {
-      const swiperContainer = document.querySelector<SwiperElement>('.swiper-container');
-      const createEventsButton = document.getElementById('createevents');
-      const attendedEventsButton = document.getElementById('attended-events');
-      const createEvents = document.getElementById('createCards');
-      const attendedEvents = document.getElementById('attendedCards');
-      if (createEvents && attendedEvents) {
-        if (createEvents.classList.contains('!border-primary-100')) {
-          createEvents.classList.remove('!border-primary-100');
-          attendedEvents.classList.add('!border-primary-100');
-        }
-        if (attendedEvents.classList.contains('!border-primary-100')) {
-          attendedEvents.classList.remove('!border-primary-100');
-          createEvents.classList.add('!border-primary-100');
-        }
-      }
-    });
   }, []);
 
   const slideToCreateEvents = () => {
@@ -100,10 +79,10 @@ const ProfileEvent: React.FC<ProfileEventType> = ({ combinedEvents, pastEvents }
         </div>
         <div className="swiper-wrapper w-full relative gap-x-2  ">
           <div className="swiper-slide createdCard" style={{ width: '100%' }}>
-            {combinedEvents.length > 0 ? <Events type="create" events={combinedEvents} /> : <NoEvent type="create" />}
+            {combinedEvents.length > 0 ? <Events past={false} events={combinedEvents} /> : <NoEvent type="create" />}
           </div>
           <div className="swiper-slide " id="attendedCards" style={{ width: '100%' }}>
-            {pastEvents.length > 0 ? <Events type="create" events={pastEvents} /> : <NoEvent type="attend" />}
+            {pastEvents.length > 0 ? <Events past={true} events={pastEvents} /> : <NoEvent type="attend" />}
           </div>
         </div>
       </div>

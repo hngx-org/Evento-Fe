@@ -157,9 +157,10 @@ const Dashboard3: React.FC = () => {
                     </span>
                   </div>
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
-                    <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
+                    // desktop and tab
+                    <div className=" grid-cols-1 md:grid-cols-2 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 md:grid hidden">
                       {renderedCombinedEvents.map((event) => (
-                        <GridEventCard key={0} event={event} />
+                        <GridEventCard key={0} event={event} past={false} />
                       ))}
                     </div>
                   ) : (
@@ -210,7 +211,7 @@ const Dashboard3: React.FC = () => {
                       {pastEvents.length > 0 ? (
                         <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit ">
                           {renderedPastEvents.map((event) => (
-                            <GridEventCard key={0} event={event} />
+                            <GridEventCard key={0} event={event} past={true} />
                           ))}
                         </div>
                       ) : (
