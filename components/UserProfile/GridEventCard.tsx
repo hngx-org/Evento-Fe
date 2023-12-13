@@ -1,12 +1,14 @@
 import Image from 'next/image';
 import sampleImage from '@/public/assets/profile/imageCard.svg';
 import React from 'react';
-import { Global, Location, Timer1 } from 'iconsax-react';
+import { Global, Location, Timer1, ArrowRight } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
 import { Montserrat } from 'next/font/google';
 import { EventCardProps, convertDateFormat, eventPaticipants } from './ListEventCard';
 import { useRouter } from 'next/router';
 import { getUserId } from '@/http/profileapi';
+import { getStoredUserId } from '@/http/getToken';
+import Button from '@ui/NewButton';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -22,6 +24,26 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
       router.push(`event-management`);
     } else router.push(`/user-invite`);
   };
+
+  const userId = getStoredUserId();
+
+  const handleNavigate = (eventId: string) => {
+    const userId = getUserId();
+    if (userId === eventId) {
+      router.push('/event-management');
+    } else {
+      router.push('/user-invite');
+    }
+  };
+
+  const buttonClass = `rounded-md h-10 px-3 text-sm px-4 font-bold mt-2 ${
+    userId === event.organizerID ? 'bg-Grey-G600' : 'bg-Success-S400'
+  }`;
+
+  const buttonText = userId === event.organizerID ? 'Manage Event' : 'Registered';
+
+  const iconClasses = `${userId === event.organizerID ? 'block' : 'hidden'}`;
+
   return (
     <div
       className="w-[326px]  max-w-[100%] md:w-[296px] md:max-w-none lg:w-[370px] 2xl:w-[405px]  h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
@@ -55,10 +77,17 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
           </div>
         </div>
         <div className="flex justify-between">
-          <div className="flex gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit min-h-[32px]">
+          {/* <div className="flex gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit min-h-[32px]">
             {event.participants && event.participants?.length > 0 ? <Image src={avatars} alt={''} /> : ''}
             <span className="md:flex hidden text-[10px] lg:text-base"> {eventPaticipants(event)}</span>
-          </div>
+          </div> */}
+
+          <Button className={buttonClass} onClick={() => handleNavigate(event.organizerID)}>
+            {buttonText}{' '}
+            <span className={iconClasses}>
+              <ArrowRight size={16} color="#f5f5f5" />
+            </span>
+          </Button>
 
           {/* <div className="hidden lg:flex gap-x-1 items-center text-xs text-[#868686] font-medium">
             <Global size="12" color="#303030" /> Public

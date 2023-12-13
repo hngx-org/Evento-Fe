@@ -92,8 +92,8 @@ export default function EventCalender(): JSX.Element {
     <div className="pt-16">
       <div className="max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6">
         {' '}
-        <div className="md:grid md:grid-cols-2 md:divide-x md:divide-gray-200">
-          <div className="md:pr-14">
+        <div className="md:grid md:divide-y w-[450px] gap-y-5 md:divide-gray-200">
+          <div className="md:pr-14 w-[450px]">
             <div className="flex items-center">
               <h2 className="flex-auto font-semibold text-gray-900">{format(firstDayCurrentMonth, 'MMMM yyyy')}</h2>
               <button
@@ -161,7 +161,7 @@ export default function EventCalender(): JSX.Element {
               ))}
             </div>
           </div>
-          <section className="mt-12 md:mt-0 md:pl-14 ">
+          <section className="mt-8 md:mt-0 md:pl-14 ">
             <h2 className="font-semibold text-gray-900">
               Events Schedule for{' '}
               <time dateTime={format(selectedDay, 'yyyy-MM-dd')}>{format(selectedDay, 'MMM dd, yyy')}</time>
@@ -190,7 +190,7 @@ function Meeting({ event }: EventProps): JSX.Element {
   const endDateTime = parseISO(event.endDatetime);
 
   return (
-    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-gray-100">
+    <li className="flex items-center px-4 py-2 space-x-4 group rounded-xl focus-within:bg-gray-100 hover:bg-secondary-100">
       <Image src={event.imageUrl} alt="" width={30} height={20} className="flex-none w-10 h-10 rounded-full" />
       <div className="flex-auto">
         <p className="text-gray-900">{event.name}</p>
