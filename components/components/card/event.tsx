@@ -3,6 +3,8 @@ import { Location, Timer, Timer1 } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import { getStoredUserId } from '@/http/getToken';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
