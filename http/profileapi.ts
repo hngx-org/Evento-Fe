@@ -49,14 +49,15 @@ export type eventType = {
   title?: string;
   description?: string;
   imageURL?: string;
-  startDate?: string;
+  startDate: string;
   endDate?: string;
   time?: string;
   location?: string;
+  locationType: string;
   capacity?: number;
   entranceFee?: number;
   eventType?: string;
-  organizerID?: string;
+  organizerID: string;
   categoryCategoryID?: string;
   participants?: participantType[];
 };
