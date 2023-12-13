@@ -117,6 +117,43 @@ body.mobile-menu-open {
   height: fit-content !important;
 }
 
+.timeline {
+  position: relative;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background-color: black;
+  top: 0;
+  bottom: 0;
+  left: 90px;
+  margin-right: 10px;
+  /* margin-right: -3px; */
+}
+
+.container {
+  position: relative;
+  margin-left: 110px;
+}
+
+.container::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  left: -25px;
+  /* background-color: white; */
+  border: 2px solid orange;
+  /* border: 4px solid #FF9F55; */
+  top: 5px;
+  border-radius: 50%;
+  z-index: 1;
+}
+
 /* profile page */
 
 /* dashboard */

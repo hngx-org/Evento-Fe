@@ -37,28 +37,28 @@ function AuthenticatedHeader() {
     // getNotifications();
   }, []);
 
-  useEffect(() => {
-    // const socket = io('https://evento-qo6d.onrender.com');
-    const socket = io('https://806f-41-90-184-91.ngrok-free.app');
+  // useEffect(() => {
+  //   // const socket = io('https://evento-qo6d.onrender.com');
+  //   const socket = io('https://806f-41-90-184-91.ngrok-free.app');
 
-    socket.on('connect', () => {
-      const userId = getUserId();
-      console.log('Connected to Socket server');
-      socket.emit('id', { userID: userId, socketId: socket.id });
-      socket.emit('userId', userId);
-      socket.emit('socketId', socket.id);
-    });
+  //   socket.on('connect', () => {
+  //     const userId = getUserId();
+  //     console.log('Connected to Socket server');
+  //     socket.emit('id', { userID: userId, socketId: socket.id });
+  //     socket.emit('userId', userId);
+  //     socket.emit('socketId', socket.id);
+  //   });
 
-    socket.on('notifications', (event) => {
-      console.log('Received a new notification');
-      // console.log('test');
-      setNotifications(event);
-    });
+  //   socket.on('notifications', (event) => {
+  //     console.log('Received a new notification');
+  //     // console.log('test');
+  //     setNotifications(event);
+  //   });
 
-    socket.on('new_event', (event) => {
-      // console.log('Received a new notification:', event);
-    });
-  }, []);
+  //   socket.on('new_event', (event) => {
+  //     // console.log('Received a new notification:', event);
+  //   });
+  // }, []);
 
   // useEffect(() => {
   //   const body = document.querySelector('body');
