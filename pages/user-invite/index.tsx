@@ -89,6 +89,7 @@ const Index = () => {
           solutions converge. This event is not just a gathering; it&apos;s a celebration of technological marvels and
           the visionaries shaping the future.
         </p>
+
         <p className="text-[16px] sm:text-[20px] font-[400] leading-7 py-8 text-[#585858] ">
           Throughout the day, you&apos;ll have the opportunity to engage with industry trailblazers through insightful
           keynote sessions, hands-on workshops, and interactive panel discussions. Get ready to broaden your horizons,

@@ -4,6 +4,11 @@ import React, { useRef } from 'react';
 import { Work_Sans, Nunito, Montserrat } from 'next/font/google';
 import EventManagementLayout from '@/layout/EventManagementLayout';
 import Image from 'next/image';
+import { Edit2, Copy, Calendar, Location } from 'iconsax-react';
+import Frame1 from '../../../public/assets/eventnphone.svg';
+import LocPointer from '../../../public/assets/locpointer.svg';
+import App3 from '../../../public/assets/app2.svg';
+import Button from '@ui/NewButton';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -38,9 +43,9 @@ const event = {
   type: 'Virtual',
   location: 'Location of the event entered is displayed here for the planner to see',
   link: 'evento/yk1fzl2f',
-  host_name: 'Ayodeji Sebanjo, Kalu John, Magaret Iyanya',
+  host_name: 'Ayodeji Sebanjo',
   host_email: 'ayoniyi28@gmail.com',
-  image: '',
+  image: Frame1,
 };
 
 export default function Index() {
@@ -53,151 +58,71 @@ export default function Index() {
 
   return (
     <EventManagementLayout>
-      {/* End Image */}
-      <div className="mt-[52px] sm:mt-10 relative">
-        <button
-          type="button"
-          className={`${nunito.className} absolute top-6 left-6 px-4 py-[6px] rounded-md bg-Grey-G40 text-xl font-semibold`}
-        >
-          {event?.type}
-        </button>
-        <div className="w-ful h-[433px] rounded-2xl overflow-hidden">
-          <Image
-            src={'/event-management/frame1.svg'}
-            height={1128}
-            width={1692}
-            alt="Event Image"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <button
-          type="button"
-          title="Edit Event Image"
-          className="absolute w-[52px] h-[52px] bottom-6 right-6 rounded-full bg-[#1E1E1E99] flex justify-center items-center"
-        >
-          <Image src={'/event-management/gallery-edit.svg'} width={24} height={24} alt="Edit Event Image" />
-        </button>
-      </div>
-      {/* Event Name */}
-      <h1 className={`${montserrat.className} mt-8 sm:mt-10 text-2xl sm:text-[32px] font-bold text-Grey-G600`}>
-        {event?.name}
-      </h1>
-      {/* Description */}
-      <div className={`${nunito.className} mt-4 sm:mt-6 text-xl text-Grey-G300 grid gap-5`}>
-        <p>{event?.description1}</p>
-        <p>{event?.description2}</p>
-        <p>{event?.description3}</p>
-      </div>
-
-      {/* Location, Start, and End */}
-      <div className="mt-8 grid gap-8">
-        {/* Location */}
-        <div className="flex items-start gap-2">
-          <Image src={'/event-management/location.svg'} width={24} height={24} className="mt-2" alt="Calender Icon" />
-          <div>
-            <h3 className={`${montserrat.className} text-2xl font-medium text-primary-100`}>Location of event:</h3>
-            <p className={`${nunito.className} mt-2 text-xl font-semibold text-gray-fot`}>{event?.location}</p>
+      <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
+        <div>
+          <Image src={event?.image} width={528} height={541} alt="Event" />
+          <div className="flex pt-3 gap-4">
+            <Image src={App3} width={0} alt="Host" />
+            <p className="text-[20px] font-[500] text-[#1e1e1e] ">{event?.host_name}</p>
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 gap-8 sm:gap-6">
-          {/* Start */}
-          <div>
-            <div className="flex gap-1 items-center -ms-2">
-              <Image
-                src={'/event-management/calender.svg'}
-                width={40}
-                height={40}
-                // className='w-6 h-7'
-                alt="Calender Icon"
-              />
-              <h3 className={`${montserrat.className} text-2xl font-medium text-primary-100`}>Start date:</h3>
+        <div className="md:pb-[40px]">
+          <p className="text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px] ">
+            {event?.name}
+          </p>
+          <div className="flex gap-6 pb-6 ">
+            <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
+              <Calendar size="50" color="#000000" />
             </div>
-            <div className={`${nunito.className} mt-2 text-xl font-semibold`}>
-              <h5 className="text-gray-fot">{event?.start_date}</h5>
-              <p className="mt-2 text-Grey-G70">{event?.start_time}</p>
+            <div className="flex flex-col gap-1 text-[#1e1e1e]">
+              <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">{event?.start_date}</p>
+              <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">{event?.start_time}</p>
             </div>
           </div>
-          {/* End */}
-          <div>
-            <div className="flex gap-1 items-center -ms-2">
-              <Image
-                src={'/event-management/calender.svg'}
-                width={40}
-                height={40}
-                // className='w-6 h-7'
-                alt="Calender Icon"
-              />
-              <h3 className={`${montserrat.className} text-2xl font-medium text-primary-100`}>End date:</h3>
+          <div className="flex gap-6 pb-4 ">
+            <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
+              <Location size="50" color="#000000" />
             </div>
-            <div className={`${nunito.className} mt-2 text-xl font-semibold`}>
-              <h5 className="text-gray-fot">{event?.end_date}</h5>
-              <p className="mt-2 text-Grey-G70">{event?.end_time}</p>
+            <div className="flex flex-col text-[#1e1e1e]">
+              <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
+                Location
+                <Image src={LocPointer} alt="Location Pointer" className="inline" />
+              </p>
+              <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">{event?.location}</p>
             </div>
           </div>
+          <div className="flex flex-wrap md:flex-nowrap gap-4 py-8">
+            <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#360789] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+              <p>Event Category</p>
+              <p>{event?.category}</p>
+            </div>
+            <div className="flex flex-col gap-2 w-[193px] p-[16px] border border-[#e0580c] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+              <p>Event Capacity</p>
+              <p>{event?.capacity}</p>
+            </div>
+            <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#12b76a] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+              <p>Ticket type</p>
+              <p>{event?.ticket}</p>
+            </div>
+          </div>
+
+          <Button
+            style={{
+              boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+            }}
+            className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+          >
+            <Edit2 size="32" color="#FF8A65" />
+            <span className={nunito.className}>Edit Event</span>
+          </Button>
         </div>
       </div>
+      <div className="max-w-[1240px] mx-auto p-4 pt-3">
+        <p className="text-[18px] pt-4 pb-4 sm:text-[24px] font-[500] leading-[32px] text-[#000] ">About this event</p>
+        <p className="text-[16px] sm:text-[20px] font-[400] leading-7 text-[#585858] ">{event?.description1}</p>
 
-      {/* Category, Capacity, Type */}
-      <div className="mt-8 flex flex-col sm:flex-row gap-4 md:gap-10 sm:items-center">
-        <div className="w-full sm:max-w-[466px] flex justify-between sm:justify-start gap-4 md:gap-10 items-center">
-          <div className="w-full max-w-[193px]">
-            <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event category</h5>
-            <p className="mt-2 text-xl text-gray-fot">{event?.category}</p>
-          </div>
-          <div className="w-[2px] h-[88px] bg-[#EBEBEB] rounded-full"></div>
-          <div className="w-full max-w-[193px]">
-            <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event capacity</h5>
-            <p className="mt-2 text-xl text-gray-fot">{event?.capacity}</p>
-          </div>
-        </div>
-        <div className="w-full sm:w-[2px] h-[2px] sm:h-[88px] bg-[#EBEBEB] rounded-full"></div>
-        <div className="w-full sm:max-w-[193px]">
-          <h5 className="text-xl sm:text-2xl font-medium text-Grey-G70">Event Ticket type</h5>
-          <p className="mt-2 text-xl text-gray-fot">{event?.type}</p>
-        </div>
-      </div>
-
-      {/* Event Link and Host */}
-      <div className="mt-8 flex flex-col-reverse sm:flex-col gap-8 ">
-        <div className="w-full flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-2">
-          <h5 className={`${montserrat.className} text-primary-100 text-2xl font-medium`}>Host:</h5>
-          <div className={`${nunito.className} font-medium`}>
-            <h4 className="text-xl text-Grey-G500">{event?.host_name}</h4>
-            {/* <p className="mt-1 text-Grey-G70">{event?.host_email}</p> */}
-          </div>
-        </div>
-        <div className="w-full flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-2">
-          <h5 className={`${montserrat.className} text-primary-100 text-2xl font-medium`}>Event link:</h5>
-          <div className="sm:max-w-[257px] w-full relative">
-            <input
-              className={`${nunito.className} w-full py-3 px-4 rounded-lg border border-Success-S500 text-Success-S500 bg-Success-S50 font-bold`}
-              type="text"
-              value={event?.link}
-              title="Event Link"
-              // ref={copyRef}
-              readOnly
-            />
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2"
-              title="copy event link"
-              type="button"
-              // onClick={copyLink}
-            >
-              <Image src={'/event-management/copy.svg'} width={24} height={24} alt="Copy" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Edit Event */}
-      <div className="mt-8 sm:mt-20">
-        <button
-          type="button"
-          className="sm:max-w-[411px] w-full mx-auto py-3 px-[18px] text-primary-100 bg-white-N0 border border-primary-100 rounded-lg flex justify-center items-center gap-2 font-bold"
-        >
-          <Image src={'/event-management/edit.svg'} width={20} height={20} alt="Edit" />
-          <span className={nunito.className}>Edit Event</span>
-        </button>
+        <p className="text-[16px] sm:text-[20px] font-[400] leading-7 py-8 text-[#585858] ">{event?.description2}</p>
+        <p className="text-[16px] sm:text-[20px] font-[400] leading-7 text-[#585858] ">{event?.description3}</p>
       </div>
     </EventManagementLayout>
   );
