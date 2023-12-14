@@ -264,7 +264,7 @@ const Dashboard3: React.FC = () => {
                             or{' '}
                             <span
                               className="font-bold text-primary-100 cursor-pointer"
-                              onClick={() => router.push('/explore')}
+                              onClick={() => router.push('/loggedinexplore')}
                             >
                               explore event
                             </span>
