@@ -86,7 +86,7 @@ const Dashboard3: React.FC = () => {
       >
         <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
           {' '}
-          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-1 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar ">
+          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
             {combinedEvents.map((event, index) => (
               <GridEventCard key={index} event={event} past={false} />
               // <ListEventCard key={index} event={event} past={false} />
@@ -104,7 +104,7 @@ const Dashboard3: React.FC = () => {
       >
         <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
           {' '}
-          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-1 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar">
+          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
             {pastEvents.map((event, index) => (
               <GridEventCard key={index} event={event} past={true} />
               // <ListEventCard key={index} event={event} past={true} />
@@ -173,7 +173,7 @@ const Dashboard3: React.FC = () => {
         <section className="flex justify-between flex-col lg:flex-row md:pr-10 lg:pr-0">
           {/* max-h-[calc(100vh-300px)] */}
           <div
-            className="md:w-full md:min-w-[] lg:w-[850px] flex-shrink-0 no-scrollbar overflow-y-auto 
+            className="md:w-full  flex-shrink-0 no-scrollbar overflow-y-auto 
         
           flex flex-col px-[17px] md:px-0"
           >
@@ -197,18 +197,13 @@ const Dashboard3: React.FC = () => {
                   </div>
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
                     // desktop and tab
-                    <>
-                      <div className=" hidden md:grid-cols-2 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 md:grid ">
-                        {combinedEvents.slice(0, 2).map((event, index) => (
+                    <div className="max-h-[378px] overflow-hidden">
+                      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
+                        {combinedEvents.slice(0, 3).map((event, index) => (
                           <GridEventCard key={index} event={event} past={false} />
                         ))}
                       </div>
-                      <div className=" grid md:hidden grid-cols-1 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0  ">
-                        {combinedEvents.slice(0, 1).map((event, index) => (
-                          <GridEventCard key={index} event={event} past={false} />
-                        ))}
-                      </div>
-                    </>
+                    </div>
                   ) : (
                     <div className="flex gap-y-1 flex-col h-[250px] justify-center items-center w-full">
                       <h4
@@ -253,20 +248,15 @@ const Dashboard3: React.FC = () => {
                     </div>
 
                     {pastEvents.length > 0 ? (
-                      <div className=" grid-cols-1 md:grid-cols-2 grid gap-10 transition w-fit ">
-                        <>
-                          <div className=" hidden md:grid-cols-2 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 md:grid ">
-                            {pastEvents.slice(0, 2).map((event, index) => (
+                      <>
+                        <div className="max-h-[378px] overflow-hidden">
+                          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
+                            {pastEvents.slice(0, 3).map((event, index) => (
                               <GridEventCard key={index} event={event} past={true} />
                             ))}
                           </div>
-                          <div className=" grid md:hidden grid-cols-1 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0  ">
-                            {pastEvents.slice(0, 1).map((event, index) => (
-                              <GridEventCard key={index} event={event} past={true} />
-                            ))}
-                          </div>
-                        </>
-                      </div>
+                        </div>
+                      </>
                     ) : (
                       <div className="flex gap-y-1 flex-col h-[250px] justify-center items-center w-full">
                         <h4
