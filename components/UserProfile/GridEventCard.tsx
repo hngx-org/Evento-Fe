@@ -21,8 +21,8 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const handleCardClick = () => {
     const userId = getUserId();
     if (event.organizerID === userId) {
-      router.push(`event-management`);
-    } else router.push(`/user-invite`);
+      router.push(`event-management/${event.eventID}`);
+    } else router.push(`/user-invite/${event.eventID}`);
   };
 
   const userId = getStoredUserId();
@@ -30,9 +30,9 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const handleNavigate = (eventId: string) => {
     const userId = getUserId();
     if (userId === eventId) {
-      router.push('/event-management');
+      router.push(`/event-management/${event.eventID}`);
     } else {
-      router.push('/user-invite');
+      router.push(`/user-invite/${event.eventID}`);
     }
   };
 
