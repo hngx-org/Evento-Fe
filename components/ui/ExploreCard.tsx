@@ -4,7 +4,7 @@ import React from 'react';
 import { Global, Location, Timer1, ArrowRight } from 'iconsax-react';
 import avatars from '@/public/assets/profile/avatars.svg';
 import { Montserrat } from 'next/font/google';
-import { EventCardProps, convertDateFormat, eventPaticipants } from './ListEventCard';
+import { EventCardProps, convertDateFormat, eventPaticipants } from '../UserProfile/ListEventCard';
 import { useRouter } from 'next/router';
 import { getUserId } from '@/http/profileapi';
 import { getStoredUserId } from '@/http/getToken';
