@@ -84,8 +84,11 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
   };
 
   return (
-    <div className="px-4 w-full bg-white-100 rounded-lg">
-      <div className="timeline" id="events">
+    <div className="px-4 py-8 w-full bg-white-100 rounded-lg">
+      <div className="flex flex-col gap-8">
+        {events?.map((event, index) => <ListEventCard event={event} key={index} past={false} />)}
+      </div>
+      {/* <div className="timeline" id="events">
         <div className="py-4 flex flex-col gap-8">
           {events?.map((event, index) => (
             <div
@@ -135,80 +138,85 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
             </div>
           ))}
         </div>
-        {/* <div className="filterTop flex flex-col">
-        <div className="flex justify-between ">
-          <div className="flex font-bold gap-2 text-xl  items-center relative">
-            Filter By
-            <ArrowUp2
-              size="16"
-              color="#292d32"
-              onClick={() => closeModal}
-              className={`transition duration-[2000] ease-in-out transform hover:scale-110 hidden ${
-                isModalOpen ? '!flex' : ''
-              }`}
-            />
-            <ArrowDown2
-              size="16"
-              color="#292d32"
-              onClick={openModal}
-              className={`transition duration-[2000] ease-in-out transform hover:scale-110 hidden ${
-                !isModalOpen ? '!flex' : ''
-              }`}
-            />
-            <FilterModal
-              originalFilterList={['Upcoming events', 'Past events', 'Private events', 'Public events']}
-              filterObject={filterList}
-              isModalOpen={isModalOpen}
-              setIsModalOpen={setIsModalOpen}
-              setFilterObject={setFilterList}
-            />
-          </div>
-
-          <div className="flex">
-            <div
-              className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
-                listView ? 'bg-secondary-100' : ''
-              } transition duration-1000`}
-              onClick={() => {
-                setListView(true);
-              }}
-            >
-              <RowVertical color="#e0580c" />
-            </div>
-            <div
-              className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
-                !listView ? 'bg-secondary-100' : ''
-              } transition `}
-              onClick={() => {
-                setListView(false);
-              }}
-            >
-              <GridIcon />
-            </div>
-          </div>
-        </div>
-        <FilterTray filterObject={filterList} setFilterObject={setFilterList} />
       </div> */}
-
-        {/* <div className="transition duration-1000">
-        {listView ? (
-          <div className="listView flex flex-col gap-8 transition duration-1000">
-            {events.map((event, index) => (
-              <ListEventCard key={index} event={event} past={past} />
-            ))}
-          </div>
-        ) : (
-          <div className="gridView w-full h-full grid md:grid-cols-2 gap-6 transition duration-1000">
-            {' '}
-            {events.map((event, index) => (
-              <GridEventCard key={index} event={event} past={past} />
-            ))}
-          </div>
-        )}
-      </div> */}
-      </div>
     </div>
   );
 };
+
+{
+  /* <div className="filterTop flex flex-col">
+<div className="flex justify-between ">
+  <div className="flex font-bold gap-2 text-xl  items-center relative">
+    Filter By
+    <ArrowUp2
+      size="16"
+      color="#292d32"
+      onClick={() => closeModal}
+      className={`transition duration-[2000] ease-in-out transform hover:scale-110 hidden ${
+        isModalOpen ? '!flex' : ''
+      }`}
+    />
+    <ArrowDown2
+      size="16"
+      color="#292d32"
+      onClick={openModal}
+      className={`transition duration-[2000] ease-in-out transform hover:scale-110 hidden ${
+        !isModalOpen ? '!flex' : ''
+      }`}
+    />
+    <FilterModal
+      originalFilterList={['Upcoming events', 'Past events', 'Private events', 'Public events']}
+      filterObject={filterList}
+      isModalOpen={isModalOpen}
+      setIsModalOpen={setIsModalOpen}
+      setFilterObject={setFilterList}
+    />
+  </div>
+
+  <div className="flex">
+    <div
+      className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+        listView ? 'bg-secondary-100' : ''
+      } transition duration-1000`}
+      onClick={() => {
+        setListView(true);
+      }}
+    >
+      <RowVertical color="#e0580c" />
+    </div>
+    <div
+      className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+        !listView ? 'bg-secondary-100' : ''
+      } transition `}
+      onClick={() => {
+        setListView(false);
+      }}
+    >
+      <GridIcon />
+    </div>
+  </div>
+</div>
+<FilterTray filterObject={filterList} setFilterObject={setFilterList} />
+</div> */
+}
+
+{
+  /* <div className="transition duration-1000">
+{listView ? (
+  <div className="listView flex flex-col gap-8 transition duration-1000">
+    {events.map((event, index) => (
+      <ListEventCard key={index} event={event} past={past} />
+    ))}
+  </div>
+) : (
+  <div className="gridView w-full h-full grid md:grid-cols-2 gap-6 transition duration-1000">
+    {' '}
+    {events.map((event, index) => (
+      <GridEventCard key={index} event={event} past={past} />
+    ))}
+  </div>
+)}
+</div> */
+}
 
 export default Events;
