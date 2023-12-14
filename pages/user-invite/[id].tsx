@@ -26,27 +26,32 @@ const Index = () => {
   });
 
   const eventId =
-    typeof router.query.id === 'string' || (router.query.id && typeof router.query.id[0] === 'string')
-      ? router.query.id || router.query.id[0]
-      : undefined;
+    typeof router.query.id === 'string'
+      ? router.query.id
+      : Array.isArray(router.query.id)
+        ? router.query.id[0]
+        : undefined;
 
   if (eventId) {
-    console.log(eventId);
+    // console.log(eventId);
   } else {
     console.error('Event ID is undefined');
   }
 
   const userId = getStoredUserId();
-  console.log(userId);
+  // console.log(userId);
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { userId, eventId } = formData;
+  const RegistrationData = { userId: userId as string, eventId: eventId as string };
+  // const RegistrationData = JSON.stringify({ userId, eventId });
 
+  // console.log(RegistrationData);
+
+  const handleRegister = async () => {
     try {
       setLoading(true);
-      await Register({ eventId, userId });
+      await Register({ eventId: RegistrationData.eventId, userId: RegistrationData.userId });
       console.log('sucess');
+      console.log('success');
     } catch (error) {
       console.error('Error during Registration', error);
     } finally {

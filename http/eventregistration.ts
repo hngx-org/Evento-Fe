@@ -22,7 +22,7 @@ export const Register = async (props: { eventId: string; userId: string }) => {
       toast.success('Registration successful!');
     }
   } catch (e: any) {
-    console.log('Registration API call error:', e);
+    // console.log('Registration API call error:', e);
     if (e?.res?.status === 404) {
       toast.error('User already Registered');
     } else if (e?.res?.status === 409) {
