@@ -1,10 +1,11 @@
 import { participantType } from '@/http/profileapi';
-import { Location, Timer, Timer1 } from 'iconsax-react';
+import { Location, Timer1 } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getStoredUserId } from '@/http/getToken';
+import Link from 'next/link';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -19,6 +20,7 @@ const nunito = Nunito({
 });
 
 interface Props {
+  id: string;
   imagePath: string;
   date: string;
   title: string;
@@ -28,7 +30,7 @@ interface Props {
   time?: string;
 }
 
-function EventCard({ imagePath, date, title, location, price, participants, time }: Props) {
+function EventCard({ id, imagePath, date, title, location, price, participants, time }: Props) {
   function convertDate(inputDate: string) {
     const dateObj = new Date(inputDate);
     const monthNamesAbbrev = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -52,7 +54,7 @@ function EventCard({ imagePath, date, title, location, price, participants, time
   }
 
   return (
-    <div className={`border border-Grey-G80/50 card-shadow rounded-lg`}>
+    <Link href={'/user-invite/' + id} className={`block border border-Grey-G80/50 card-shadow rounded-lg`}>
       <div className="relative w-full h-[180px] rounded-t-lg overflow-hidden">
         <Image src={imagePath} fill alt="Event Image" className="object-cover" />
       </div>
@@ -102,7 +104,7 @@ function EventCard({ imagePath, date, title, location, price, participants, time
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

@@ -19,6 +19,7 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
                 return (
                   <EventCard
                     key={item.eventID}
+                    id={item.eventID}
                     imagePath={item.imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : item.imageURL}
                     date={item.startDate}
                     title={item.title}
@@ -31,11 +32,9 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
               })}
             </>
           ) : (
-            <>
-              {[1, 2, 3, 4, 5, 6].map((_, index) => {
-                return <SkeletonLoader key={index} />;
-              })}
-            </>
+            <div className="grid place-content-center sm:col-span-2 lg:col-span-3 py-10 w-full">
+              <div className="h-14 w-14 rounded-full border-4 border-gray-700 border-t-primary-100 animate-spin" />
+            </div>
           )}
         </div>
       ) : (

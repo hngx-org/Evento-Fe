@@ -78,6 +78,7 @@ function EventDashboard({ tag, tag_image }: EventProps) {
             return (
               <EventCard
                 key={index}
+                id={item.id}
                 date={item.date}
                 title={item.title}
                 location={item.location}
