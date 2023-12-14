@@ -1,5 +1,7 @@
 import React from 'react';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
+import Homenav from '@/components/Home/homenav';
+import Homefooter from '@/components/Home/homefooter';
 import date from '../../public/assets/date.svg';
 import Loc from '../../public/assets/loc.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
@@ -9,6 +11,8 @@ import { useQuery } from 'react-query';
 import { eventDetails } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
 import Link from 'next/link';
+import { getStoredUserId } from '@/http/getToken';
+import Button from '@ui/NewButton';
 
 const Index = () => {
   const router = useRouter();
@@ -17,6 +21,8 @@ const Index = () => {
     const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
     return eventDetails(id);
   });
+
+  const userId = getStoredUserId();
 
   function formatDate(dateISO: string) {
     const date = new Date(dateISO);
@@ -31,10 +37,11 @@ const Index = () => {
   if (isLoading) {
     return (
       <div className="flex flex-col h-screen">
-        <AuthenticatedHeader />
+        {userId ? <AuthenticatedHeader /> : <Homenav />}
         <div className="flex-1 grid place-content-center">
           <div className="h-14 w-14 rounded-full border-4 border-gray-700 border-t-primary-100 animate-spin" />
         </div>
+        {!userId && <Homefooter />}
       </div>
     );
   }
@@ -42,7 +49,7 @@ const Index = () => {
   if (error || !data) {
     return (
       <div className="flex flex-col h-screen">
-        <AuthenticatedHeader />
+        {userId ? <AuthenticatedHeader /> : <Homenav />}
         <div className="flex-1 flex flex-col items-center justify-center gap-4">
           <h4 className="text-2xl font-medium text-center">Event Not Found</h4>
           <Link
@@ -52,6 +59,7 @@ const Index = () => {
             <IoArrowBack /> Explore Events
           </Link>
         </div>
+        {!userId && <Homefooter />}
       </div>
     );
   }
@@ -60,7 +68,7 @@ const Index = () => {
     data?.data?.data;
   return (
     <div>
-      <AuthenticatedHeader />
+      {userId ? <AuthenticatedHeader /> : <Homenav />}
       <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
         <div className="w-full md:w-2/5 shrink-0">
           <div className="aspect-[528/541] relative rounded-lg overflow-hidden">
@@ -129,14 +137,14 @@ const Index = () => {
             <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
               Hello! To join the event, please register below.
             </p>
-            <button
+            <Button
               style={{
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
               className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
             >
               Click to Register
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -146,6 +154,7 @@ const Index = () => {
         </h4>
         <div dangerouslySetInnerHTML={{ __html: description }} />
       </div>
+      {!userId && <Homefooter />}
     </div>
   );
 };
