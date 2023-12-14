@@ -127,7 +127,7 @@ const Dashboard3: React.FC = () => {
               'text-primary-100 flex py-4 whitespace-nowrap justify-center !bg-[#FEFEFE] border border-primary-100 gap-x-2 w-[167px]'
             }
             title={''}
-            handleClick={() => router.push('/explore')}
+            handleClick={() => router.push('/loggedinexplore')}
           >
             Explore events <Discover />
           </Button>
