@@ -86,7 +86,7 @@ const Dashboard3: React.FC = () => {
       >
         <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
           {' '}
-          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
+          <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
             {combinedEvents.map((event, index) => (
               <GridEventCard key={index} event={event} past={false} />
               // <ListEventCard key={index} event={event} past={false} />
@@ -104,7 +104,7 @@ const Dashboard3: React.FC = () => {
       >
         <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
           {' '}
-          <div className=" relative w-fit grid grid-cols-1 md:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
+          <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
             {pastEvents.map((event, index) => (
               <GridEventCard key={index} event={event} past={true} />
               // <ListEventCard key={index} event={event} past={true} />
@@ -198,7 +198,7 @@ const Dashboard3: React.FC = () => {
                   {upcomingEvents.length > 0 || createdEvents.length > 0 ? (
                     // desktop and tab
                     <div className="max-h-[378px] overflow-hidden">
-                      <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
+                      <div className=" grid grid-cols-1 sm:grid-cols-2 sm: lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
                         {combinedEvents.slice(0, 3).map((event, index) => (
                           <GridEventCard key={index} event={event} past={false} />
                         ))}
@@ -250,7 +250,7 @@ const Dashboard3: React.FC = () => {
                     {pastEvents.length > 0 ? (
                       <>
                         <div className="max-h-[378px] overflow-hidden">
-                          <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
+                          <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 transition w-fit px-[10px] sm:px-[17px] md:px-0 ">
                             {pastEvents.slice(0, 3).map((event, index) => (
                               <GridEventCard key={index} event={event} past={true} />
                             ))}
