@@ -85,7 +85,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
 
   return (
     <div
-      className="w-[842px] h-[140px] md:h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01] "
+      className="w-[842px] h-[140px] md:h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01]  max-w-[99%]"
       onClick={() => {
         handleCardClick();
       }}
