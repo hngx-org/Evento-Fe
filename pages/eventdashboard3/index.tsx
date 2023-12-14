@@ -22,6 +22,8 @@ import EventCalender from '@/components/ui/Calender';
 import EventCalender3 from '@/components/EventDashBoard3/EventCalendar2';
 import Modal from '@/components/ui/Modal';
 import ListEventCard from '@/components/UserProfile/ListEventCard';
+import { GridIcon } from '@/public/assets/profile/icons';
+import { RowVertical } from 'iconsax-react';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -58,6 +60,10 @@ const Dashboard3: React.FC = () => {
   const [pastViewMore, setPastViewMore] = useState(false);
   const router = useRouter();
 
+  const [combinedListView, setCombinedListView] = useState(true);
+  const [pastListView, setPastListView] = useState(true);
+  // const []
+
   useEffect(() => {
     const storedUserProfile = localStorage.getItem('userProfile');
     if (storedUserProfile) {
@@ -76,6 +82,7 @@ const Dashboard3: React.FC = () => {
   return (
     <AuthLayout>
       {/* modals */}
+      {/* current modals */}
       <Modal
         isOpen={combinedViewMore}
         closeModal={function (): void {
@@ -83,17 +90,65 @@ const Dashboard3: React.FC = () => {
         }}
         closeOnOverlayClick={true}
         size="xxl"
+        isCloseIconPresent={false}
       >
-        <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
-          {' '}
-          <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
-            {combinedEvents.map((event, index) => (
-              <GridEventCard key={index} event={event} past={false} />
-              // <ListEventCard key={index} event={event} past={false} />
-            ))}
+        <div className="modalContent">
+          {/* modal scroll div */}
+          <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
+            <div className="">
+              {' '}
+              {/* view type */}
+              <div className=" hidden md:flex w-full relative z-[100] justify-end md:px-[40px] lg:px-[85px] ">
+                <div
+                  className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+                    combinedListView ? 'bg-secondary-100' : ''
+                  } transition duration-1000`}
+                  onClick={() => {
+                    setCombinedListView(true);
+                  }}
+                >
+                  <RowVertical color="#e0580c" />
+                </div>
+                <div
+                  className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+                    !combinedListView ? 'bg-secondary-100' : ''
+                  } transition `}
+                  onClick={() => {
+                    setCombinedListView(false);
+                  }}
+                >
+                  <GridIcon />
+                </div>
+              </div>
+              <div className="hidden md:block">
+                {' '}
+                {combinedListView ? (
+                  // list cards
+                  <div className="listView flex flex-col gap-8  md:px-[40px] lg:px-[85px]">
+                    {combinedEvents.map((event, index) => (
+                      <ListEventCard key={index} event={event} past={false} />
+                    ))}
+                  </div>
+                ) : (
+                  // grid cards
+                  <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
+                    {combinedEvents.map((event, index) => (
+                      <GridEventCard key={index} event={event} past={false} />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:hidden py-10 overflow-y-scroll no-scrollbar mx-auto">
+                {combinedEvents.map((event, index) => (
+                  <GridEventCard key={index} event={event} past={false} />
+                  // <ListEventCard key={index} event={event} past={false} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </Modal>
+      {/* past modals */}
       <Modal
         isOpen={pastViewMore}
         closeModal={function (): void {
@@ -101,17 +156,65 @@ const Dashboard3: React.FC = () => {
         }}
         closeOnOverlayClick={true}
         size="xxl"
+        isCloseIconPresent={false}
       >
-        <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
-          {' '}
-          <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
-            {pastEvents.map((event, index) => (
-              <GridEventCard key={index} event={event} past={true} />
-              // <ListEventCard key={index} event={event} past={true} />
-            ))}
+        <div className="modalContent">
+          {/* modal scroll div */}
+          <div className="max-h-[500px] overflow-clip overflow-y-scroll  no-scrollbar ">
+            <div className="">
+              {' '}
+              {/* view type */}
+              <div className=" hidden md:flex w-full relative z-[100] justify-end md:px-[40px] lg:px-[85px] ">
+                <div
+                  className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+                    pastListView ? 'bg-secondary-100' : ''
+                  } transition duration-1000`}
+                  onClick={() => {
+                    setPastListView(true);
+                  }}
+                >
+                  <RowVertical color="#e0580c" />
+                </div>
+                <div
+                  className={`w-[40px] h-[40px]  flex justify-center items-center rounded-[4px] ${
+                    !pastListView ? 'bg-secondary-100' : ''
+                  } transition `}
+                  onClick={() => {
+                    setPastListView(false);
+                  }}
+                >
+                  <GridIcon />
+                </div>
+              </div>
+              <div className="hidden md:block">
+                {' '}
+                {pastListView ? (
+                  // list cards
+                  <div className="listView flex flex-col gap-8  md:px-[40px] lg:px-[85px]">
+                    {pastEvents.map((event, index) => (
+                      <ListEventCard key={index} event={event} past={true} />
+                    ))}
+                  </div>
+                ) : (
+                  // grid cards
+                  <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:px-[40px] lg:px-[85px] py-10 overflow-y-scroll no-scrollbar mx-auto">
+                    {pastEvents.map((event, index) => (
+                      <GridEventCard key={index} event={event} past={true} />
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className=" relative w-fit grid grid-cols-1 sm:grid-cols-2 gap-6 max-h-full md:hidden py-10 overflow-y-scroll no-scrollbar mx-auto">
+                {pastEvents.map((event, index) => (
+                  <GridEventCard key={index} event={event} past={true} />
+                  // <ListEventCard key={index} event={event} past={true} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </Modal>
+      ;
       <div className={`lg:px-20 md:pl-6 px-[15px] my-10   ${nunito.className} `}>
         <section className="mb-14 ">
           <div className={`text-2xl font-medium mb-10 ${montserrat.className} `}>Welcome {userProfile.firstName},</div>
@@ -312,9 +415,7 @@ const Dashboard3: React.FC = () => {
         </section>
       </div>
       {/* */}
-
       {/* mobile  */}
-
       {/*  */}
     </AuthLayout>
   );
