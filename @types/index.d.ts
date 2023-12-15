@@ -269,3 +269,41 @@ export interface NotificationProps {
   read: boolean;
   createdAt: string;
 }
+
+export interface EventManagement {
+  eventID: string;
+  title: string;
+  description: string;
+  imageURL: string;
+  startDate: string;
+  endDate: string;
+  locationType: string;
+  location: string;
+  virtualLocationLink: string;
+  capacity: number;
+  organizerID: string;
+  categoryCategoryID: string;
+  organizer: {
+    userID: string;
+    email: string;
+    profileImage: string;
+    firstName: string;
+    lastName: string;
+  };
+  participants: {
+    userID: string;
+    email: string;
+    profileImage: string;
+    firstName: string;
+    lastName: string;
+  }[];
+  Category: {
+    categoryID: string;
+    name: string;
+  };
+  tickets: {
+    ticketID: string;
+    ticketType: string;
+    ticketPrice: number;
+  }[];
+}

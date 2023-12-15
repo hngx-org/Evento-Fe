@@ -62,16 +62,16 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
   const handleCardClick = () => {
     const userId = getUserId();
     if (event.organizerID === userId) {
-      router.push(`event-management`);
-    } else router.push(`/user-invite`);
+      router.push(`event-management/${event.eventID}`);
+    } else router.push(`/user-invite/${event.eventID}`);
   };
 
   const handleNavigate = (eventId: string) => {
     const userId = getUserId();
     if (userId === eventId) {
-      router.push('/event-management');
+      router.push(`/event-management/${event.eventID}`);
     } else {
-      router.push('/user-invite');
+      router.push(`/user-invite/${event.eventID}`);
     }
   };
 
@@ -85,7 +85,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
 
   return (
     <div
-      className="w-[842px] h-[140px] md:h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01] "
+      className="w-[842px] h-[140px] md:h-[196px] rounded-l-lg lg:rounded-2xl overflow-hidden flex bg-[#FEFEFE]  shadow-md cursor-pointer hover:scale-[1.01]  max-w-[99%]"
       onClick={() => {
         handleCardClick();
       }}

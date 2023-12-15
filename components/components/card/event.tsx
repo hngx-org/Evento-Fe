@@ -54,7 +54,10 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
   }
 
   return (
-    <Link href={'/user-invite/' + id} className={`block border border-Grey-G80/50 card-shadow rounded-lg`}>
+    <Link
+      href={'/user-invite/' + id}
+      className={`block border border-Grey-G80/50 card-shadow rounded-lg hover:scale-[1.01]`}
+    >
       <div className="relative w-full h-[180px] rounded-t-lg overflow-hidden">
         <Image src={imagePath} fill alt="Event Image" className="object-cover" />
       </div>
