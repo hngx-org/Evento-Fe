@@ -4,7 +4,7 @@ import { Montserrat, Work_Sans } from 'next/font/google';
 import Image from 'next/image';
 import FrameA from 'public/Home/homev31.svg';
 import top from '../../public/home3.svg';
-import HeroImg from 'public/btmm2.svg';
+import HeroImg from '@/public/assets/eventDashboard3/avartarCards.svg';
 import Button from '@/components/ui/Button';
 import Link from 'next/link';
 import { ArrowRight2 } from 'iconsax-react';
@@ -43,9 +43,9 @@ function Home() {
               easily */}
               Effortlessly organize your schedule an stay on top of your plans.
             </p>
-            <div className="flex   text-black-main font-medium mb-4  text-[.6rem] md:text-xs gap-2 ">
+            <div className="flex   text-black-main font-medium mb-4  text-[.6rem] md:text-xs gap-1 md:gap-2 items-center">
               {' '}
-              <Image src={HeroImg} alt="" className="mb-3 " width={70} height={32} />
+              <Image src={HeroImg} alt="" className=" " width={95} height={32} />
               Join over 12,00+ people in creating events{' '}
             </div>
 
