@@ -16,6 +16,8 @@ import { useQuery } from 'react-query';
 import Frame1 from '../../public/assets/eventnphone.svg';
 import App3 from '../../public/assets/app2.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
+import EditEventModal from '@/components/components/modal/EditEventModal';
+import TextEditor from '@/components/textEditor/textEditor';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -92,7 +94,7 @@ function Index() {
       <div>
         <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
           <div>
-            <Image src={Frame1} width={528} height={541} alt="Event" />
+            <Image src={event.imageURL} width={528} height={541} alt="Event" />
             <div className="flex items-center pt-3 gap-4">
               <Image
                 src={event.organizer.profileImage ? event.organizer.profileImage : App3}
@@ -146,26 +148,20 @@ function Index() {
               </div>
               <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#12b76a] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
                 <p>Ticket type</p>
-                <p>{event.tickets[0].ticketType}</p>
+                <p>{event.tickets[0]?.ticketType}</p>
               </div>
             </div>
 
-            <Button
-              style={{
-                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-              }}
-              className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-            >
-              <Edit2 size="32" color="#FF8A65" />
-              <span className={nunito.className}>Edit Event</span>
-            </Button>
+            <EditEventModal eventDetails={event} />
           </div>
         </div>
         <div className="max-w-[1240px] mx-auto p-4 pt-3">
           <p className="text-[18px] pt-4 pb-4 sm:text-[24px] font-[500] leading-[32px] text-[#000] ">
             About this event
           </p>
-          <p className="text-[16px] sm:text-[20px] font-[400] leading-7 text-[#585858] ">{event.description}</p>
+          <div className="text-[16px] sm:text-[20px] font-[400] leading-7 text-[#585858] ">
+            <div dangerouslySetInnerHTML={{ __html: event.description }} />
+          </div>
         </div>
       </div>
     </div>

@@ -277,7 +277,7 @@ export interface EventManagement {
   imageURL: string;
   startDate: string;
   endDate: string;
-  locationType: string;
+  locationType: 'Physical' | 'Virtual';
   location: string;
   virtualLocationLink: string;
   capacity: number;
@@ -303,7 +303,7 @@ export interface EventManagement {
   };
   tickets: {
     ticketID: string;
-    ticketType: string;
+    ticketType: 'Free' | 'Premium';
     ticketPrice: number;
   }[];
 }
