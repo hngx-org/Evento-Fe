@@ -89,6 +89,41 @@ export const getCategories = async (setCategories: Dispatch<SetStateAction<Categ
   }
 };
 
+export const updateEvent = async (
+  payload: EventPayload,
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  eventId: string,
+): Promise<void> => {
+  const authToken = getStoredAuthToken();
+  const userId = getStoredUserId();
+
+  if (!authToken || !userId) {
+    toast.error('Authentication data not available.');
+    throw new Error('Authentication data not available.');
+  }
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      accept: 'application/json',
+      Authorization: `Bearer ${authToken}`,
+      'User-Id': userId,
+    },
+  };
+
+  try {
+    setIsLoading(true);
+    const result = await $AuthHttp.put('/events/' + eventId, payload, config);
+    toast.success('Event Updated!');
+  } catch (error) {
+    console.error('Error updating event:', error);
+    toast.error('Error updating event. Please try again.');
+    throw error;
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 // export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 //   if (req.method === 'POST') {
 //     const { title, description, imageURL, startDate, endDate, time, location, capacity, entranceFee, eventType, organizerID, categoryName } = req.body;

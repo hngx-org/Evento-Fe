@@ -3,7 +3,6 @@ import React, { PropsWithChildren, useCallback, useEffect, useRef, useState } fr
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import Page1 from '@/components/EventCreation/Page1';
 import Page2 from '@/components/EventCreation/Page2';
-import Page3 from '@/components/EventCreation/Page3';
 import { EventDataProps } from '@/@types';
 import { createEvent } from '@/http/createeventapi';
 import { getStoredUserId } from '@/http/getToken';
@@ -20,7 +19,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const [eventData, setEventData] = useState<EventDataProps>({
     title: '',
     description: '',
-    imageURL: '/Create-Events/Event_Image.svg',
+    imageURL: '/assets/default-banner.jpg',
     startDate: '',
     endDate: '',
     time: '',

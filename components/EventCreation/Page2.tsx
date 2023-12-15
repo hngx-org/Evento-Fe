@@ -1,10 +1,13 @@
-import React, { ChangeEvent, Dispatch, PropsWithChildren, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, PropsWithChildren, SetStateAction, useState } from 'react';
 
-import { ArrowDown2, ArrowUp2, GalleryEdit } from 'iconsax-react';
+import { GalleryEdit } from 'iconsax-react';
 import Image from 'next/image';
 import { FaXmark } from 'react-icons/fa6';
-import { CategoryProps, EventDataProps, UploadResponse } from '@/@types';
-import { getCategories, uploadImage } from '@/http/createeventapi';
+import { EventDataProps, UploadResponse } from '@/@types';
+import { uploadImage } from '@/http/createeventapi';
+import CategoryDropDown from './categoryDropDown/categoryDropDown';
+import CapacityDropDown from './capacityDropDown/capacityDropDown';
+import TicketTypeDropDown from './ticketTypeDropDown/ticketTypeDropDown';
 
 interface Page2Props extends PropsWithChildren<any> {
   onNext: () => void;
@@ -16,38 +19,14 @@ interface Page2Props extends PropsWithChildren<any> {
   setOtherCategory: Dispatch<SetStateAction<string>>;
 }
 
-interface CapacityType {
-  label: string;
-}
-
-interface TicketType {
-  [x: string]: SetStateAction<string>;
-  label: 'Free' | 'Premium';
-}
-
 interface Props {}
 const Page2: React.FC<Page2Props> = (props) => {
   const [isFileUploading, setIsFileUploading] = useState<boolean>(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [isDropdownCapacityOpen, setIsDropdownCapacityOpen] = useState(false);
-  const [isDropdownTicketTypeOpen, setIsDropdownTicketTypeOpen] = useState(false);
   const [isModalImageOpen, setIsModalImageOpen] = useState(false);
   const [isFileTypeModalOpen, setIsFileTypeModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isValidFileType, setIsValidFileType] = useState(true);
   const isAllInputFilled = props.data.capacity === '';
-  const [categories, setCategories] = useState<CategoryProps[]>([]);
-
-  useEffect(() => {
-    categoryData();
-  }, []);
-
-  const categoryData = async () => {
-    const cats = await getCategories(setCategories);
-    if (cats) {
-      setCategories([...cats, { name: 'Other', categoryID: 'other' }]);
-    }
-  };
 
   const closeImageModal = () => {
     setIsModalImageOpen(false);
@@ -92,55 +71,6 @@ const Page2: React.FC<Page2Props> = (props) => {
     } else {
       setIsFileTypeModalOpen(true);
     }
-  };
-
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
-
-  const handleDropdownCapacityToggle = () => {
-    setIsDropdownCapacityOpen(!isDropdownCapacityOpen);
-  };
-
-  const handleDropdownTicketToggle = () => {
-    setIsDropdownTicketTypeOpen(!isDropdownTicketTypeOpen);
-  };
-
-  const handleEventTypeSelect = (eventType: string) => {
-    props.setState((prevState) => {
-      return { ...prevState, categoryName: eventType };
-    });
-    setIsDropdownOpen(false);
-  };
-
-  const handleCapacitySelect = (capacityType: CapacityType) => {
-    props.setState((prevState) => {
-      return { ...prevState, capacity: capacityType.label };
-    });
-    setIsDropdownCapacityOpen(false);
-  };
-
-  const handleTicketTypeSelect = (ticket: 'Free' | 'Premium') => {
-    props.setState((prevState) => {
-      return { ...prevState, ticketType: ticket };
-    });
-
-    // Close the dropdown
-    setIsDropdownTicketTypeOpen(false);
-  };
-
-  const capacityTypes: CapacityType[] = [{ label: '50+' }, { label: '100+' }, { label: '200+' }, { label: '300+' }];
-
-  const ticketTypes: TicketType[] = [
-    { label: 'Free', price: '0' },
-    { label: 'Premium', price: '$100' },
-  ];
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    props.setState((prevState) => {
-      return { ...prevState, [id]: value };
-    });
   };
 
   return (
@@ -248,138 +178,18 @@ const Page2: React.FC<Page2Props> = (props) => {
               </div>
             )} */}
           </div>
-          <div className="w-full flex flex-col content-center mb-6 ">
-            <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Select Event Category</h2>
-            <div className="relative inline-block w-full">
-              <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
-                placeholder="Choose Event type"
-                type="text"
-                readOnly
-                value={props.data.categoryName}
-                onClick={handleDropdownToggle}
-              />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer">
-                {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
-                {isDropdownOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
-              </div>
 
-              {/* Dropdown Modal */}
-              {isDropdownOpen && (
-                <div className="absolute w-full top-full max-h-56 overflow-scroll p-2 z-50 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg">
-                  {categories.map((item) => (
-                    <div
-                      key={item.categoryID}
-                      className=" px-4 py-2 hover:bg-[#dedede] rounded-lg  cursor-pointer"
-                      onClick={() => handleEventTypeSelect(item.name)}
-                    >
-                      <div className="mb-1 font-bold text-base text-[#020202]">{item.name}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+          <CategoryDropDown
+            data={props.data}
+            setState={props.setState}
+            otherCategory={props.otherCategory}
+            setOtherCategory={props.se}
+          />
 
-          {props.data.categoryName === 'Other' && (
-            <div className="w-full relative flex flex-col mb-10 content-center">
-              <label htmlFor="entranceFee" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
-                Other Event Category
-              </label>
-              <input
-                id="entranceFee"
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
-                placeholder=""
-                type="text"
-                onChange={(e) => props.setOtherCategory(e.target.value)}
-                value={props.otherCategory}
-              />
-            </div>
-          )}
+          <CapacityDropDown data={props.data} setState={props.setState} />
 
-          <div className="w-full relative z-10 flex flex-col mb-6 content-center">
-            <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Input capacity Level</h2>
-            <div className="relative inline-block w-full">
-              <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
-                placeholder="Choose capacity Limit"
-                type="text"
-                value={props.data.capacity}
-                readOnly
-                onClick={handleDropdownCapacityToggle}
-              />
-              <div className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer">
-                {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
-                {isDropdownCapacityOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
-              </div>
+          <TicketTypeDropDown data={props.data} setState={props.setState} />
 
-              {/* Dropdown Modal */}
-              {isDropdownCapacityOpen && (
-                <div className="absolute w-full top-full z-50 p-2 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg overflow-hidden">
-                  {capacityTypes.map((capacityType) => (
-                    <div
-                      key={capacityType.label}
-                      className=" px-4 py-2 hover:bg-[#dedede] rounded-lg cursor-pointer"
-                      onClick={() => handleCapacitySelect(capacityType)}
-                    >
-                      <div className="mb-1 font-bold text-base text-[#020202]">{capacityType.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="w-full relative flex flex-col mb-6 content-center">
-            <h2 className=" font-semibold text-xl mb-2 leading-6 text-[#303030]">Ticket type</h2>
-            <div className="relative inline-block w-full">
-              <input
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold cursor-pointer"
-                placeholder="Select Ticket type"
-                type="text"
-                value={props.data.ticketType}
-                onClick={handleDropdownTicketToggle}
-                readOnly
-              />
-              <div
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                onClick={handleDropdownTicketToggle}
-              >
-                {/* Toggle between the down and up arrow based on the isDropdownOpen state */}
-                {isDropdownTicketTypeOpen ? <ArrowUp2 size={16} /> : <ArrowDown2 size={16} />}
-              </div>
-
-              {/* Dropdown Modal */}
-              {isDropdownTicketTypeOpen && (
-                <div className="absolute w-full top-full z-50 p-2 left-0 mt-2 bg-[#fefefe] border border-[#d7d7d7]  rounded-lg overflow-hidden">
-                  {ticketTypes.map((ticketType) => (
-                    <div
-                      key={ticketType.label}
-                      className=" px-4 py-2 hover:bg-[#dedede] rounded-lg cursor-pointer"
-                      onClick={() => handleTicketTypeSelect(ticketType.label)}
-                    >
-                      <div className="mb-1 font-bold text-base text-[#020202]">{ticketType.label}</div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-          {/* Second Div - Displayed only when 'Premium' is selected */}
-          {props.data.ticketType === 'Premium' && (
-            <div className="w-full relative flex flex-col mb-10 content-center">
-              <label htmlFor="entranceFee" className="font-semibold text-xl mb-2 leading-6 text-[#303030]">
-                Price
-              </label>
-              <input
-                id="entranceFee"
-                className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] placeholder:font-semibold p-4 text-base font-bold"
-                placeholder=""
-                type="text"
-                onChange={handleChange}
-                value={props.data.entranceFee}
-              />
-            </div>
-          )}
           <button
             onClick={props.onNext}
             className=" w-full text-center text-[#fdfdfd] text-base leading-6 py-4 px-5 bg-[#e0580c] rounded-lg disabled:bg-gray-alt  disabled:cursor-not-allowed"
