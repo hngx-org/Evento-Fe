@@ -5,16 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 interface Page3Props extends PropsWithChildren<any> {
-  onNext: () => void;
-  onPrevious: () => void;
+  eventId: string | string[];
 }
 
 interface Props {}
 
-const Page3: React.FC<Page3Props> = (props) => {
+const Page3: React.FC<Page3Props> = ({ eventId }) => {
   const [isLinkContainerVisible, setLinkContainerVisible] = useState(false);
 
   const handleButtonClick = () => {
+    const id = typeof eventId === 'string' ? eventId : eventId[0];
+    navigator.clipboard.writeText(id);
     setLinkContainerVisible(!isLinkContainerVisible);
   };
 

@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import AuthInstance from './AuthInstance';
 import { EventsProps } from '@/@types';
+import { getStoredAuthToken, getStoredUserId } from './getToken';
 
 const BaseUrl = 'https://evento-qo6d.onrender.com/api/v1';
 
@@ -28,16 +29,43 @@ export const getUpcomingEvents = async (
 export const eventDetails = async (id: string) => {
   try {
     const getEvent = await $AuthHttp.get('/events/' + id);
-    // setData({data: getEvent?.data?.data, isLoading: false})
 
     return getEvent;
   } catch (error: any) {
     toast.error('An error occured while fetching events');
     console.log(error?.message);
     throw error?.response?.data || { message: error?.message };
-  } finally {
-    // setData((prevState) => {
-    //   return { ...prevState, isLoading: false };
-    // });
+  }
+};
+
+export const registerEvent = async (eventId: string) => {
+  const authToken = getStoredAuthToken();
+  const userId = getStoredUserId();
+
+  if (!authToken || !userId) {
+    toast.error('Authentication data not available.');
+    throw new Error('Authentication data not available.');
+  }
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      accept: 'application/json',
+      Authorization: `Bearer ${authToken}`,
+      'User-Id': userId,
+    },
+  };
+
+  try {
+    const payload = {
+      eventId,
+      userId,
+    };
+    await $AuthHttp.post('/events/registration', payload, config);
+    toast.success('Registration Successful!');
+  } catch (error) {
+    console.error('Error Registering event:', error);
+    toast.error('Error Registering for event. Please try again.');
+    throw error;
   }
 };

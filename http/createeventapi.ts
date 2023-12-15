@@ -66,8 +66,10 @@ export const createEvent = async (
 
   try {
     setIsLoading(true);
-    await $AuthHttp.post('/events', payload, config);
+    const result = await $AuthHttp.post('/events', payload, config);
     toast.success('Event created successfully!');
+    console.log(result);
+    return result.data.data.eventID;
   } catch (error) {
     console.error('Error creating event:', error);
     toast.error('Error creating event. Please try again.');

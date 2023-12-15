@@ -8,7 +8,7 @@ import LocPointer from '../../public/assets/locpointer.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import { eventDetails } from '@/http/events';
+import { eventDetails, registerEvent } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
 import Link from 'next/link';
 import { getStoredUserId } from '@/http/getToken';
@@ -103,8 +103,9 @@ const Index = () => {
     );
   }
 
-  const { title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
+  const { eventID, title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
     data?.data?.data;
+
   return (
     <>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
