@@ -65,13 +65,7 @@ const Dashboard3: React.FC = () => {
   // const []
 
   useEffect(() => {
-    const storedUserProfile = localStorage.getItem('userProfile');
-    if (storedUserProfile) {
-      const parsedUserProfile = JSON.parse(storedUserProfile);
-      setUserProfile(parsedUserProfile);
-    } else {
-      getUserProfile(setUserProfile);
-    }
+    getUserProfile(setUserProfile);
 
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
@@ -190,7 +184,7 @@ const Dashboard3: React.FC = () => {
                 {' '}
                 {pastListView ? (
                   // list cards
-                  <div className="listView flex flex-col gap-8  md:px-[40px] lg:px-[85px]">
+                  <div className="listView flex flex-col gap-8 py-10  md:px-[40px] lg:px-[85px]">
                     {pastEvents.map((event, index) => (
                       <ListEventCard key={index} event={event} past={true} />
                     ))}
