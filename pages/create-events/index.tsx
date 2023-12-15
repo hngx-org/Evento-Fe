@@ -7,6 +7,7 @@ import Page3 from '@/components/EventCreation/Page3';
 import { EventDataProps } from '@/@types';
 import { createEvent } from '@/http/createeventapi';
 import { getStoredUserId } from '@/http/getToken';
+import { useRouter } from 'next/router';
 
 interface Props {}
 
@@ -40,6 +41,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const [otherCategory, setOtherCategory] = useState<string>('');
   const [descriptionContent, setDescriptionContent] = useState<string>('');
   const userId = getStoredUserId();
+  const router = useRouter();
 
   const nextPage = async () => {
     if (page === 2) {
@@ -59,7 +61,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
         ticketType,
       } = eventData;
 
-      await createEvent(
+      const eventId = await createEvent(
         {
           title,
           description: descriptionContent,
@@ -79,7 +81,7 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
         },
         setIsLoading,
       );
-      setPage(3);
+      router.push(`/create-events/${eventId}`);
       return;
     }
     setPage((prevPage) => prevPage + 1);
@@ -137,7 +139,6 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
                 setOtherCategory={setOtherCategory}
               />
             )}
-            {page === 3 && <Page3 onNext={nextPage} onPrevious={prevPage} />}
           </div>
         </div>
       </div>

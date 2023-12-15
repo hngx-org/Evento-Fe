@@ -6,7 +6,7 @@ import LocPointer from '../../public/assets/locpointer.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import { eventDetails } from '@/http/events';
+import { eventDetails, registerEvent } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
 import Link from 'next/link';
 
@@ -56,8 +56,9 @@ const Index = () => {
     );
   }
 
-  const { title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
+  const { eventID, title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
     data?.data?.data;
+
   return (
     <div>
       <AuthenticatedHeader />
@@ -134,6 +135,7 @@ const Index = () => {
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
               className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+              onClick={() => registerEvent(eventID)}
             >
               Click to Register
             </button>

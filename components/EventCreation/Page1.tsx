@@ -177,7 +177,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
               id="title"
               value={data.title}
               onChange={handleChange}
-              maxLength={30}
+              maxLength={50}
             />
           </div>
           <div className="event-description w-full my-6 h-64">
