@@ -9,7 +9,7 @@ const $RegisterHttp = AuthInstance(BaseUrl);
 
 const token = getStoredAuthToken();
 
-export const Register = async (props: { eventId: string; userId: string }) => {
+export const Register = async (props: { eventID: string; userID: String }) => {
   try {
     const res = await $RegisterHttp.post('/registration', props, {
       headers: {
