@@ -13,7 +13,7 @@ import { useQuery } from 'react-query';
 
 function Edit() {
   const router = useRouter();
-  const id = router.query?.id![0];
+  const id = router.query?.id ? router.query?.id![0] : '';
   const userId = getStoredUserId();
 
   const { data, isLoading, error } = useQuery('get-event-details', () => {
@@ -40,10 +40,10 @@ function Edit() {
         <div className="flex-1 flex flex-col items-center justify-center gap-4">
           <h4 className="text-2xl font-medium text-center">Event Not Found</h4>
           <Link
-            href="/explore"
+            href="/event-dashboard"
             className="flex items-center mx-auto gap-2 py-1.5 px-6 bg-primary-100 w-fit text-white-100 rounded border border-primary-100 hover:bg-transparent hover:text-primary-100 transition-all"
           >
-            <IoArrowBack /> Explore Events
+            <IoArrowBack /> Return To Dashboard
           </Link>
         </div>
         {!userId && <HomeFooter />}
