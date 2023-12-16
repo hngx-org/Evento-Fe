@@ -57,6 +57,7 @@ export const getUserEvents = async (
             return false;
           }),
       ];
+      // console.log(pastEvents);
 
       setPastEvents(pastEvents);
 
@@ -72,6 +73,7 @@ export const getUserEvents = async (
         });
       setCreatedEvent(createdEvents);
 
+      // console.log(createdEvents);
       const upcomingEvents = events
         .filter((event: eventType) => event.participants?.some((item) => item.userID === userId))
         .filter((event: eventType) => {
@@ -82,10 +84,12 @@ export const getUserEvents = async (
             return endDate >= currentTime;
           }
           return false;
-        });
+        })
+        .filter((event: eventType) => !createdEvents?.some((item: eventType) => item.eventID === event.eventID));
+      // console.log(upcomingEvents);
       setUpcomingEvents(upcomingEvents);
 
-      console.log(createdEvents, upcomingEvents, pastEvents);
+      // console.log(createdEvents, upcomingEvents, pastEvents);
 
       if (response.status === 200) {
         console.log('Events gotten successfully');
@@ -112,7 +116,7 @@ export const getAllUserEvents = async (
       });
 
       const events = response.data.data;
-      console.log(events);
+      // console.log(events);
 
       // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
       const currentTime = new Date();
@@ -140,7 +144,7 @@ export const getAllUserEvents = async (
       });
       setUpcomingEvents(upcomingEvents);
 
-      console.log(upcomingEvents, pastEvents);
+      // console.log(upcomingEvents);
 
       if (response.status === 200) {
         console.log('Events gotten successfully');
