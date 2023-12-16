@@ -42,12 +42,11 @@ function Homenav() {
   return (
     <nav className="w-full py-3  bg-white-100 justify-between items-center px-4  relative ">
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
-
-<div className="flex gap-14">
-  <Link href="/">
-      <Image width={120} height={15} src={logo} alt="Evento logo" />
-  </Link>
-</div>
+        <div className="flex gap-14">
+          <Link href="/">
+            <Image width={120} height={15} src={logo} alt="Evento logo" />
+          </Link>
+        </div>
         <div className="hidden lg:block md:block">
           <div className="flex gap-7">
             <button

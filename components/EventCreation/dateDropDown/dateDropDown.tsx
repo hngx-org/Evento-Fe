@@ -36,9 +36,9 @@ function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
   }
 
   const dateSelector = (date: any) => {
-    console.log(date);
     if (!date) return;
     setStartDate(date);
+    setShowDate(false);
   };
 
   return (

@@ -15,6 +15,8 @@ import CategoryDropDown from '@/components/EventCreation/categoryDropDown/catego
 import CapacityDropDown from '@/components/EventCreation/capacityDropDown/capacityDropDown';
 import TicketTypeDropDown from '@/components/EventCreation/ticketTypeDropDown/ticketTypeDropDown';
 import { updateEvent, uploadImage } from '@/http/createeventapi';
+import Link from 'next/link';
+import { Router, useRouter } from 'next/router';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -46,10 +48,10 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
   const [data, setState] = useState<EventDataProps>(initialState);
   const [isEdited, setIsEdited] = useState<boolean>(false);
   const [otherCategory, setOtherCategory] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
   const [descriptionContent, setDescriptionContent] = useState<string>(eventDetails?.description);
   const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(new Date(eventDetails?.startDate));
   const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date(eventDetails?.endDate));
+  const router = useRouter();
 
   useEffect(() => {
     setIsEdited(compareObjects(data, initialState));
@@ -75,8 +77,6 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
 
     return false; // Objects are identical
   }
-
-  const onClose = () => setIsOpen(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, id } = e.target;
@@ -146,26 +146,13 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
       setIsUpdating,
       eventDetails?.eventID,
     );
-    onClose();
+    router.push('/event-management/' + eventDetails?.eventID);
   };
 
   return (
     <div>
-      <Button
-        style={{
-          boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-        }}
-        className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-        onClick={() => setIsOpen(true)}
-      >
-        <Edit2 size="32" color="#FF8A65" />
-        <span className={nunito.className}>Edit Event</span>
-      </Button>
-      <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} isCloseIconPresent={false} size="sm">
-        <form onSubmit={handleSubmit} className="max-h-[500px] overflow-y-scroll">
-          <Button type="button" onClick={onClose} className="ml-auto text-[#303030] px-0">
-            <CloseSquare />
-          </Button>
+      <div className="mx-auto max-w-2xl w-full">
+        <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="aspect-[512/278] relative rounded-lg overflow-hidden">
             <Image src={data.imageURL} fill alt="Baner" />
             <div>
@@ -251,19 +238,21 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
 
           <TicketTypeDropDown data={data} setState={setState} />
           <div className=" space-y-4">
-            <Button className=" bg-primary-100 w-full rounded-lg font-medium disabled:opacity-50" disabled={!isEdited}>
+            <Button
+              onClick={handleSubmit}
+              className=" bg-primary-100 w-full rounded-lg font-medium disabled:opacity-50"
+              disabled={!isEdited}
+            >
               {isUpdating ? <div className="loader" /> : 'Save Changes'}
             </Button>
-            <Button
-              type="button"
-              onClick={onClose}
-              className=" border border-primary-100 w-full rounded-lg text-primary-100 font-medium"
-            >
-              Cancel
-            </Button>
+            <Link href={'/event-management/' + eventDetails?.eventID} className="block">
+              <Button className=" border border-primary-100 w-full rounded-lg text-primary-100 font-medium">
+                Cancel
+              </Button>
+            </Link>
           </div>
-        </form>
-      </Modal>
+        </div>
+      </div>
     </div>
   );
 }
