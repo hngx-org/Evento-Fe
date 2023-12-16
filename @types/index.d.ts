@@ -307,3 +307,8 @@ export interface EventManagement {
     ticketPrice: number;
   }[];
 }
+
+export interface eventLinkProps {
+  eventLink: string;
+  title: string;
+}

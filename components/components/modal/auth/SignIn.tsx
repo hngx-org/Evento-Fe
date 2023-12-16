@@ -18,7 +18,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   };
 
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm">
+    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <button onClick={onClose} className="absolute top-[46px] right-12">
         <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
       </button>
