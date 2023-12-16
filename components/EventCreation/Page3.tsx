@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-
+import { useEventContext } from '@/context/EventContext';
 import { Copy } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,15 +8,24 @@ interface Page3Props extends PropsWithChildren<any> {
   eventId: string | string[];
 }
 
-interface Props {}
-
 const Page3: React.FC<Page3Props> = ({ eventId }) => {
   const [isLinkContainerVisible, setLinkContainerVisible] = useState(false);
+  const { shareEventLink } = useEventContext();
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
 
-  const handleButtonClick = () => {
-    const id = typeof eventId === 'string' ? eventId : eventId[0];
-    navigator.clipboard.writeText(id);
-    setLinkContainerVisible(!isLinkContainerVisible);
+  const Id = typeof eventId === 'string' ? eventId : eventId[0];
+
+  console.log(Id);
+  const eventLink = shareEventLink(Id);
+  console.log(eventLink);
+
+  const handleButtonClick = async () => {
+    try {
+      await navigator.clipboard.writeText(eventLink);
+      setIsLinkCopied(true);
+    } catch (error) {
+      console.error('Unable to copy to clipboard', error);
+    }
   };
 
   return (
@@ -46,7 +55,7 @@ const Page3: React.FC<Page3Props> = ({ eventId }) => {
         </div>
         <div
           className={`${
-            isLinkContainerVisible ? 'block' : 'hidden'
+            isLinkCopied ? 'block' : 'hidden'
           } bg-[#e7f8f0] w-[255px] content-center flex items-center rounded-lg gap-2 border-[1px] mt-3 border-[#0b7041] pl-6 py-3 font-bold text-base text-[#0b7041]`}
         >
           Link Copied Successfully

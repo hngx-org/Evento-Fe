@@ -49,7 +49,7 @@ const Index = () => {
   const handleRegister = async () => {
     try {
       setLoading(true);
-      await Register({ eventID: RegistrationData.eventId,userID: RegistrationData.userId });
+      await Register({ eventID: RegistrationData.eventId, userID: RegistrationData.userId });
       console.log('sucess');
       console.log('success');
     } catch (error) {
