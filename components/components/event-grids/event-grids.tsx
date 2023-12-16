@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import EventCard from '../card/event';
 import Button from '@/components/ui/NewButton';
 import { EventsProps } from '@/@types';
-import SkeletonLoader from '../card/skeleton-loader';
 
 function EventGrids({ events, title, isLoading }: { title?: string; events: EventsProps[]; isLoading: boolean }) {
   const [limit, setLimit] = useState<number>(5);
+
   return (
     <div className="max-w-[1240px] mx-auto mb-10 lg:mb-24">
       <span className="text-Grey-G80">Discover</span>
@@ -20,13 +20,16 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
                   <EventCard
                     key={item.eventID}
                     id={item.eventID}
-                    imagePath={item.imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : item.imageURL}
+                    imagePath={
+                      item.imageURL === 'https://example.com/image.jpg' ? '/assets/default-banner.jpg' : item.imageURL
+                    }
                     date={item.startDate}
                     title={item.title}
                     location={item.location}
                     price={item?.entranceFee ?? 'free'}
                     participants={item.participants}
                     time={item.time}
+                    organizerId={item?.organizerID}
                   />
                 );
               })}

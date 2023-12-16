@@ -77,6 +77,7 @@ function TimeDropDown({ stateData, setStateData, type }: Props) {
     setStateData((prevItem) => {
       return { ...prevItem, [type]: time };
     });
+    setShowTime(false);
   };
 
   const formatTime = () => {

@@ -3,7 +3,6 @@ import { EventManagement } from '@/@types';
 import HomeFooter from '@/components/Home/homefooter';
 import Homenav from '@/components/Home/homenav';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
-import Button from '@/components/ui/NewButton';
 import { eventDetails } from '@/http/events';
 import { getStoredUserId } from '@/http/getToken';
 import { Calendar, Edit2, Location } from 'iconsax-react';
@@ -17,7 +16,6 @@ import Frame1 from '../../public/assets/eventnphone.svg';
 import App3 from '../../public/assets/app2.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
 import EditEventModal from '@/components/components/modal/EditEventModal';
-import TextEditor from '@/components/textEditor/textEditor';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -134,7 +132,9 @@ function Index() {
                   Location
                   <Image src={LocPointer} alt="Location Pointer" className="inline" />
                 </p>
-                <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">{event?.location}</p>
+                <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">
+                  {event?.locationType === 'Physical' ? event?.location : event?.virtualLocationLink}
+                </p>
               </div>
             </div>
             <div className="flex flex-wrap md:flex-nowrap gap-4 py-8">
@@ -152,7 +152,16 @@ function Index() {
               </div>
             </div>
 
-            <EditEventModal eventDetails={event} />
+            <Link
+              href={'/event-management/' + event.eventID + '/edit'}
+              style={{
+                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+              }}
+              className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+            >
+              <Edit2 size="32" color="#FF8A65" />
+              <span className={nunito.className}>Edit Event</span>
+            </Link>
           </div>
         </div>
         <div className="max-w-[1240px] mx-auto p-4 pt-3">
