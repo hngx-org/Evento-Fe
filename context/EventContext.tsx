@@ -1,9 +1,11 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface EventContextProps {
   createEvent: (eventDetails: EventDetails) => void;
   registerEvent: (eventId: string, userId: string) => void;
   shareEventLink: (eventId: string) => string;
+  navigateToEvent: (eventId: string) => void;
 }
 
 interface EventDetails {}
@@ -16,6 +18,7 @@ interface EventProviderProps {
 
 export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
   const [events, setEvents] = useState<EventDetails[]>([]);
+  const router = useRouter();
 
   const createEvent = (eventDetails: EventDetails) => {
     setEvents([...events, eventDetails]);
@@ -30,16 +33,22 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
   };
 
   const shareEventLink = (eventId: string) => {
-    // const baseUrl = 'https://evento1.vercel.app/event-details/';
-    const baseUrl = 'http://localhost:3000/event-details/';
+    const baseUrl = 'https://evento1.vercel.app/event-details/';
+    // const baseUrl = 'http://localhost:3000/event-details/';
     const eventLink = baseUrl + eventId;
     // console.log('Event link shared:', eventLink);
 
     return eventLink;
   };
 
+  const navigateToEvent = (eventId: string) => {
+    router.push(`/event-detAILS/${eventId}`);
+  };
+
   return (
-    <EventContext.Provider value={{ createEvent, registerEvent, shareEventLink }}>{children}</EventContext.Provider>
+    <EventContext.Provider value={{ createEvent, registerEvent, shareEventLink, navigateToEvent }}>
+      {children}
+    </EventContext.Provider>
   );
 };
 

@@ -3,15 +3,25 @@ import { useEventContext } from '@/context/EventContext';
 import { Copy } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'react-share';
 
 interface Page3Props extends PropsWithChildren<any> {
   eventId: string | string[];
 }
 
 const Page3: React.FC<Page3Props> = ({ eventId }) => {
-  const [isLinkContainerVisible, setLinkContainerVisible] = useState(false);
   const { shareEventLink } = useEventContext();
   const [isLinkCopied, setIsLinkCopied] = useState(false);
+  // const title = 'come join me at the !';
 
   const Id = typeof eventId === 'string' ? eventId : eventId[0];
 

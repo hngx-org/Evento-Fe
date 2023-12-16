@@ -16,9 +16,18 @@ import Button from '@ui/NewButton';
 
 const Index = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useQuery('get-event-details', () => {
-    if (!router.query.id) return;
-    const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
+  //   const { data, isLoading, error } = useQuery('get-event-details', () => {
+  //     if (!router.query.id) return;
+  //     // const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
+  //     const id = router.query;
+  //     return eventDetails(id);
+  //   });
+
+  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+    if (!router.query.id) {
+      throw new Error('Event ID not provided');
+    }
+    const id = router.query.id as string;
     return eventDetails(id);
   });
 
@@ -135,7 +144,9 @@ const Index = () => {
           </div>
           <div className="rounded-[12px] border-[0.5px] border-[#c0c0c0] flex flex-col p-[16px] items-start gap-[24px] ">
             {userId ? (
-              <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">Register</p>
+              <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
+                Register to Continue
+              </p>
             ) : (
               <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
                 Hello! To join the event, please register below.
