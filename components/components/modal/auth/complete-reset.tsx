@@ -66,7 +66,7 @@ function CompleteReset({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
   // };
 
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm">
+    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-6 px-9 h-[476px] items-center justify-center">
         <div className="p-4">
           <button onClick={onClose} className="absolute top-[76px] right-12">

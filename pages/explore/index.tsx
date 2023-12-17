@@ -10,6 +10,8 @@ import withoutAuth from '@/helpers/withoutAuth';
 import { getUpcomingEvents } from '@/http/events';
 import { CategoryProps, EventsProps } from '@/@types';
 import { getCategories } from '@/http/createeventapi';
+import { getStoredUserId } from '@/http/getToken';
+import AuthenticatedHeader from '@/components/components/authenticatedheader';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -40,9 +42,11 @@ function Home() {
     }
   };
 
+  const userId = getStoredUserId();
+
   return (
     <div>
-      <Homenav />
+      {userId ? <AuthenticatedHeader /> : <Homenav />}
       <div className="relative">
         <div className="relative bg-secondary-100 py-11 sm:py-[74px] px-6">
           <div className="max-w-[634px] lg:max-w-[1002px] mx-auto text-center">
@@ -79,11 +83,12 @@ function Home() {
               Finding Events Have <span className="text-primary-100">Never</span> been{' '}
               <span className="text-primary-100">Easier</span>
             </h1>
-            <p className={`${nunito.className} max-w-[600px] lg:max-w-[800px] mx-auto`}>
-              Lorem ipsum dolor sit amet consectetur. Pretium lobortis lectus eget pulvinar vitae ac posuere. Aliquet
-              orci scelerisque diam tincidunt nunc sit netus imperdiet interdum.
+            <p className={`${nunito.className} max-w-[600px] lg:max-w-[800px] mx-auto text-lg`}>
+              Embark on a journey of personalized event discovery with EventHub&apos;s unique recommendation engine. As
+              you scroll through the Explore Page, immerse yourself in a finely curated feed of events meticulously
+              crafted to align seamlessly with your individual preferences, location, and favorite categories.
             </p>
-            <EventSearch />
+            {/* <EventSearch /> */}
           </div>
         </div>
         <main className="max-w-[1240px] mx-auto px-4">
@@ -124,9 +129,9 @@ function Home() {
           </section>
         </main>
       </div>
-      <HomeFooter />
+      {!userId && <HomeFooter />}
     </div>
   );
 }
 
-export default withoutAuth(Home);
+export default Home;

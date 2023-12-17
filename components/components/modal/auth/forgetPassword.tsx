@@ -5,6 +5,7 @@ import Button from '@ui/NewButton';
 import { Input } from '@ui/NewInput';
 import Image from 'next/image';
 import { Work_Sans, Nunito, Montserrat } from 'next/font/google';
+import { CloseCircle } from 'iconsax-react';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -56,11 +57,11 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   //     }
   //   };
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm">
+    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-6">
         <div className="p-4">
-          <button onClick={onClose} className="absolute top-[76px] right-12">
-            <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
+          <button onClick={onClose} className="absolute top-[30px] right-9">
+            <CloseCircle size="30" color="#000000" />
           </button>
         </div>
         <h1 className={`${montserrat.className} text-black-main text-2xl font-semibold`}>Forgot your Password?</h1>
@@ -81,10 +82,7 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               placeholder="Enter email address"
             />
           </div>
-          <Button
-            //     onClick={handleResetPassword}
-            className=" text-white-100 px-5 py-4 bg-primary-100 rounded-lg shadow text-base font-normal w-full mt-5 leading-normal"
-          >
+          <Button className=" text-white-100 px-5 py-4 bg-primary-100 rounded-lg shadow text-base font-normal w-full mt-5 leading-normal">
             Send recovery instructions
           </Button>
         </form>

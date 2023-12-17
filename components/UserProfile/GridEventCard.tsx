@@ -46,7 +46,7 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
 
   return (
     <div
-      className="w-[326px]  max-w-[100%] md:w-[296px] md:max-w-none lg:w-[370px] 2xl:w-[405px]  h-fit rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
+      className="w-[326px]  max-w-[100%] md:w-[296px] md:max-w-none lg:w-[370px] 2xl:w-[405px] rounded-2xl bg-[#FEFEFE] overflow-hidden  shadow-md cursor-pointer hover:scale-[1.01] flex flex-col flex-shrink-0"
       onClick={() => {
         handleCardClick();
       }}

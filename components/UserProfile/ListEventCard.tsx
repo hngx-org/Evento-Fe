@@ -130,14 +130,6 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
               <ArrowRight size={16} color="#f5f5f5" />
             </span>
           </Button>
-          {/* <div className="hidden gap-x-2 text-[#3C3C3C] text-xs font-medium items-center w-fit md:flex">
-            {event.participants && event.participants?.length > 0 ? <Image src={avatars} alt={''} /> : ''}
-            <span className="md:flex hidden text-[10px] lg:text-base"> {eventPaticipants(event)}</span>
-          </div> */}
-
-          {/* <div className="hidden lg:flex gap-x-1 items-center text-xs text-[#868686] font-medium">
-            <Global size="12" color="#303030" /> Public
-          </div> */}
         </div>
       </div>
     </div>

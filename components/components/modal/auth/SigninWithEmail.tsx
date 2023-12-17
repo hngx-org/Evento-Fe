@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import Button from '@ui/NewButton';
 import Modal from '@/components/ui/Modal';
-import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeSlash } from 'iconsax-react';
+import { Eye, EyeSlash, CloseCircle } from 'iconsax-react';
 import ForgetPassword from './forgetPassword';
+import { handleMouseEnter } from '@/utils/text-effect';
 
 function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [modOpen, setOpen] = useState(false);
@@ -62,11 +62,17 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
     <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-4">
-        <button onClick={onClose} className="absolute top-[46px] right-12">
-          <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
+        <button onClick={onClose} className="absolute top-[30px] right-9">
+          <CloseCircle size="30" color="#000000" />
         </button>
         <div>
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Sign In</h2>
+          <h2
+            className="text-2xl font-semibold mb-6 text-gray-800"
+            data-value="Sign In"
+            onMouseEnter={handleMouseEnter}
+          >
+            Sign In
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">

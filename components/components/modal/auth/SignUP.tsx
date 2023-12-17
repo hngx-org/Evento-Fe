@@ -5,6 +5,8 @@ import AuthTitle from '@/components/components/authTitle';
 import Image from 'next/image';
 import { signUpWithGoogle } from '@/http/authapi';
 import SignupWithEmail from './SignupWithEmail';
+import { CloseCircle } from 'iconsax-react';
+import { handleMouseEnter } from '@/utils/text-effect';
 
 function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [modOpen, setOpen] = useState(false);
@@ -22,11 +24,14 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
 
   return (
     <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
-      <button onClick={onClose} className="absolute top-[46px] right-12">
-        <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
+      <button onClick={onClose} className="absolute top-[30px] right-9">
+        <CloseCircle size="30" color="#000000" />
       </button>
       <div className="p-4 ">
-        <AuthTitle heading="Welcome to Evento" subHeading="Sign up to Continue using Evento" />
+        <h2 className="text-3xl font-medium mb-2" data-value="Welcome To Evento" onMouseEnter={handleMouseEnter}>
+          Welcome To Evento
+        </h2>
+        <span className="text-xl mt-2 font-normal ">sign Up to Continue using Evento</span>
         <Button
           isLoading={isloading}
           spinnerColor="#000"

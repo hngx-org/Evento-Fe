@@ -16,8 +16,11 @@ function Edit() {
   const id = router.query?.id ? router.query?.id![0] : '';
   const userId = getStoredUserId();
 
-  const { data, isLoading, error } = useQuery('get-event-details', () => {
-    if (!router.query.id) return;
+  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+    if (!router.query.id) {
+      throw new Error('Event ID not provided');
+    }
+    const id = router.query.id as string;
     return eventDetails(id);
   });
 

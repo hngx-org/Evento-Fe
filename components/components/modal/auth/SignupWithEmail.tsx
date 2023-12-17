@@ -5,16 +5,15 @@ import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import PasswordPopover from '@ui/PasswordPopover';
 import { signUpUser } from '@/http/authapi';
-import useInputError from '@/hooks/useInputError';
-import InputError from '@modules/InputError';
-import { inputErrorMessage } from '@/@types';
-import getInputError from '@/helpers/getInputErrors';
-import { Eye, EyeSlash } from 'iconsax-react';
+import { Eye, EyeSlash, CloseCircle } from 'iconsax-react';
+import { handleMouseEnter } from '@/utils/text-effect';
+import SucessModal from './SucessModal';
 
 function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [modOpen, setOpen] = useState(false);
+  const onOpen = () => setOpen(true);
+  const isClose = () => setOpen(false);
   const [loading, setLoading] = useState(false);
-  // const [isPasswordSame, setIsPasswordSame] = useState(false);
-  // const [inputErrors, setInputErrors] = useState<inputErrorMessage[]>();
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
 
   useEffect(() => {
@@ -43,23 +42,12 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    //   const FormData = formData
-
-    //   // turns formData to an object
-    //   const formValuesObj = Object.fromEntries(FormData));
-
-    //   // turn the formValues object to an array for easy mapping
-    //   const formValuesArray = Object.entries(formValuesObj);
-    //   const validFormValues = formValuesArray.map((value) => getInputError(value[0], value[1] as string));
-    //   setInputErrors(validFormValues);
-    //   console.log(validFormValues);
-    // };
-
     const { email, password, firstName, lastName } = formData;
 
     try {
       setLoading(true);
       await signUpUser({ email, password, firstName, lastName });
+      setOpen(true);
     } catch (error) {
       console.error('Error during sign-up:', error);
     } finally {
@@ -68,13 +56,19 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   };
 
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm">
+    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-4">
-        <button onClick={onClose} className="absolute top-[46px] right-12">
-          <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
+        <button onClick={onClose} className="absolute top-[30px] right-9">
+          <CloseCircle size="30" color="#000000" />
         </button>
         <div>
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Sign Up</h2>
+          <h2
+            className="text-2xl font-semibold mb-6 text-gray-800"
+            data-value="Sign Up"
+            onMouseEnter={handleMouseEnter}
+          >
+            Sign Up
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">
@@ -113,7 +107,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                   }
                 />
               </PasswordPopover>
-              {/* <InputError inputError={inputErrors} inputName="password" /> */}
             </div>
             <div className="mb-4">
               <label htmlFor="firstName" className="block text-sm font-medium text-gray-600">
@@ -129,7 +122,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
                 required
               />
-              {/* <InputError inputError={inputErrors} inputName="firstName" /> */}
             </div>
             <div className="mb-6">
               <label htmlFor="lastName" className="block text-sm font-medium text-gray-600">
@@ -145,7 +137,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 className="mt-1 w-full font-medium text-black-main border rounded-md"
                 required
               />
-              {/* <InputError inputError={inputErrors} inputName="lastName" /> */}
             </div>
             <div className="mb-6">
               <label className="flex items-center">
@@ -171,6 +162,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           </form>
         </div>
       </div>
+      <SucessModal isOpen={modOpen} onClose={isClose} />
     </Modal>
   );
 }
