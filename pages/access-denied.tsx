@@ -6,6 +6,19 @@ import Link from 'next/link';
 import PlainHeader from '@modules/home/PlainHeader/PlainHeader';
 import Homefooter from '@/components/Home/homefooter';
 import { ArrowLeft } from 'iconsax-react';
+import { Montserrat, Nunito } from 'next/font/google';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
 
 const title = `Access Denied`;
 const text = `Oops! It seems like you’ve taken a wrong turn. You don’t have permission to access this page. If you need assistance, contact support;`;
@@ -16,11 +29,13 @@ function AccessDenied() {
       <PlainHeader />
 
       <section
-        className=" flex flex-col gap-[48px] md:gap-9 sm:gap-[72px] min-h-[680px] md:min-h-[calc(100vh-105px)]  
-      sm:mx-[105] items-center justify-center xl:flex-row xl:gap-[162px]"
+        className={` ${nunito.className} flex flex-col gap-[48px] md:gap-9 sm:gap-[72px] min-h-[680px] md:min-h-[calc(100vh-105px)]  
+      sm:mx-[105] items-center justify-center xl:flex-row xl:gap-[162px] `}
       >
         <div className=" flex flex-col justify-center items-center xl:items-start gap-4 md:gap-6 max-w-[358px] md:max-w-none">
-          <h2 className=" text-2xl md:text-[35px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold ">
+          <h2
+            className={` ${montserrat.className} text-2xl md:text-[35px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold `}
+          >
             {title}
           </h2>
           <p className="text-Grey-G300 lg:max-w-[623px] md:max-w-[90%]  text-base md:text-2xl font-semibold md:text-left text-center">

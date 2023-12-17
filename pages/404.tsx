@@ -9,6 +9,20 @@ import Head from 'next/head';
 import Homefooter from '@/components/Home/homefooter';
 import { ArrowLeft } from 'iconsax-react';
 
+import { Montserrat, Nunito } from 'next/font/google';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
+
 const title = `Oops! this page is Gone`;
 const text = `Sorry we can't find this page`;
 const btnText = `Back to homepage`;
@@ -36,8 +50,8 @@ function Error404() {
         <div className=" border-b border-white-115 border-style: solid" />
 
         <section
-          className=" flex flex-col-reverse gap-9 sm:gap-[72px] min-h-[calc(100vh-105px)]  
-      sm:mx-[105] items-center justify-center xl:flex-row-reverse xl:gap-[162px]"
+          className={`  ${nunito.className}  flex flex-col-reverse gap-9 sm:gap-[72px] py-12 lg:py-0 lg:min-h-[calc(100vh-105px)]  
+      sm:mx-[105] items-center justify-center xl:flex-row-reverse xl:gap-[162px]`}
         >
           <Image
             src={oops}
@@ -45,7 +59,9 @@ function Error404() {
             className="w-[320px] h-[240px] md:w-[440px] md:h-[440px] xl:w-[480px] xl:h-[480px]"
           />
           <div className=" flex flex-col justify-center items-center xl:items-start gap-6">
-            <h2 className=" text-2xl md:text-[32px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold ">
+            <h2
+              className={`  ${montserrat.className}   text-2xl md:text-[32px] xl:text-[45px] md:leading-[36px] xl:leading-[52px] sm:font-bold xl:text-left max-w-[504px] text-center font-semibold `}
+            >
               {title}
             </h2>
             <p className="text-Grey-G300 max-w-[623px] text-sm sm:text-2xl  text-center  ">{text}</p>
