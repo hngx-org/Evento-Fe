@@ -14,10 +14,13 @@ import Link from 'next/link';
 import { getStoredUserId } from '@/http/getToken';
 import Button from '@ui/NewButton';
 import { Register } from '@/http/eventregistration';
+import { useRegistrationContext } from '@/context/RegistrationContext';
 
 const Index = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { registerEvent, getEventId, getUserId } = useRegistrationContext();
+
   const formData = { userId: 'string', eventId: 'string' };
   const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
     if (!router.query.id) {
@@ -39,6 +42,27 @@ const Index = () => {
   } else {
     console.error('Event ID is undefined');
   }
+
+  const handleRegistration = async () => {
+    // Get the event ID and user ID
+    const eventId = getEventId();
+    const userId = getUserId();
+
+    if (eventId && userId) {
+      try {
+        setLoading(true);
+        await Register({ eventID: eventId, userID: userId });
+        console.log('Additional logic after successful registration');
+        registerEvent();
+      } catch (error) {
+        console.error('Error during registration:', error);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      console.error('Event ID or User ID is missing');
+    }
+  };
 
   const userId = getStoredUserId();
   // console.log(userId);
@@ -189,7 +213,8 @@ const Index = () => {
                   }}
                   isLoading={loading}
                   spinnerColor="#fff"
-                  onClick={handleRegister}
+                  // onClick={handleRegister}
+                  onClick={handleRegistration}
                   className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
                 >
                   Click to Register
