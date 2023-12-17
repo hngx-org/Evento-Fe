@@ -5,9 +5,14 @@ import Image from 'next/image';
 import { Input } from '@ui/NewInput';
 import PasswordPopover from '@ui/PasswordPopover';
 import { signUpUser } from '@/http/authapi';
-import { Eye, EyeSlash } from 'iconsax-react';
+import { Eye, EyeSlash, CloseCircle } from 'iconsax-react';
+import { handleMouseEnter } from '@/utils/text-effect';
+import SucessModal from './SucessModal';
 
 function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [modOpen, setOpen] = useState(false);
+  const onOpen = () => setOpen(true);
+  const isClose = () => setOpen(false);
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
 
@@ -42,6 +47,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     try {
       setLoading(true);
       await signUpUser({ email, password, firstName, lastName });
+      setOpen(true);
     } catch (error) {
       console.error('Error during sign-up:', error);
     } finally {
@@ -52,11 +58,17 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   return (
     <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-4">
-        <button onClick={onClose} className="absolute top-[46px] right-12">
-          <Image src="/close-circle.svg" alt="Close icon" width={20} height={20} />
+        <button onClick={onClose} className="absolute top-[30px] right-9">
+          <CloseCircle size="30" color="#000000" />
         </button>
         <div>
-          <h2 className="text-2xl font-semibold mb-6 text-gray-800">Sign Up</h2>
+          <h2
+            className="text-2xl font-semibold mb-6 text-gray-800"
+            data-value="Sign Up"
+            onMouseEnter={handleMouseEnter}
+          >
+            Sign Up
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-600">
@@ -150,6 +162,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
           </form>
         </div>
       </div>
+      <SucessModal isOpen={modOpen} onClose={isClose} />
     </Modal>
   );
 }

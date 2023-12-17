@@ -115,6 +115,7 @@ const config: Config = {
           30: '#E6F5EA',
           20: '#CAEAD499',
           10: '#F4FBF6',
+          2: '#37d67a',
         },
         white: {
           N0: '#FEFEFE',

@@ -36,7 +36,6 @@ export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
     const baseUrl = 'https://evento1.vercel.app/event-details/';
     // const baseUrl = 'http://localhost:3000/event-details/';
     const eventLink = baseUrl + eventId;
-    // console.log('Event link shared:', eventLink);
 
     return eventLink;
   };
