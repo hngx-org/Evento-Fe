@@ -12,15 +12,15 @@ const nunito = Nunito({
 const links = [
   {
     name: 'Event Overview',
-    href: '/event-management/event-overview',
+    href: '/event-management/event-overview/[id]',
   },
   {
     name: 'Attendees',
-    href: '/event-management/attendees',
+    href: '/event-management/attendees/[id]',
   },
   {
     name: 'Share Invites',
-    href: '/event-management/share-invites',
+    href: '/event-management/share-invites/[id]',
   },
 ];
 

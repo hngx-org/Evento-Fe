@@ -1,3 +1,4 @@
+'use client';
 import { Work_Sans, Nunito } from 'next/font/google';
 import { EventManagement } from '@/@types';
 import HomeFooter from '@/components/Home/homefooter';
@@ -9,13 +10,22 @@ import { Calendar, Edit2, Location } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useQuery } from 'react-query';
-import Frame1 from '../../public/assets/eventnphone.svg';
+import { useEventContext } from '@/context/EventContext';
 import App3 from '../../public/assets/app2.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
-import EditEventModal from '@/components/components/modal/EditEventModal';
+import {
+  TwitterShareButton,
+  XIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'react-share';
 
 const workSans = Work_Sans({
   subsets: ['latin'],
@@ -30,6 +40,8 @@ const nunito = Nunito({
 });
 
 function Index() {
+  const { shareEventLink } = useEventContext();
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
   const router = useRouter();
   const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
     if (!router.query.id) {
@@ -38,6 +50,22 @@ function Index() {
     const id = router.query.id as string;
     return eventDetails(id);
   });
+
+  // const Id = typeof eventId === 'string' ? eventId : eventId[0];
+  const Id = router.query.id as string;
+
+  // console.log(Id);
+  const eventLink = shareEventLink(Id);
+  // console.log(eventLink);
+
+  const handleButtonClick = async () => {
+    try {
+      await navigator.clipboard.writeText(eventLink);
+      setIsLinkCopied(true);
+    } catch (error) {
+      console.error('Unable to copy to clipboard', error);
+    }
+  };
 
   const userId = getStoredUserId();
 
@@ -164,6 +192,36 @@ function Index() {
               <Edit2 size="32" color="#FF8A65" />
               <span className={nunito.className}>Edit Event</span>
             </Link>
+            <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
+              {/* React Share icons */}
+
+              <FacebookShareButton
+                url={eventLink}
+                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+              >
+                <FacebookIcon size={40} round={true} />
+              </FacebookShareButton>
+              <TwitterShareButton
+                url={eventLink}
+                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+              >
+                <XIcon size={40} round={true} />
+              </TwitterShareButton>
+              <LinkedinShareButton
+                url={eventLink}
+                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+              >
+                <LinkedinIcon size={40} round={true} />
+              </LinkedinShareButton>
+              <WhatsappShareButton
+                url={eventLink}
+                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+              >
+                <WhatsappIcon size={40} round={true} />
+              </WhatsappShareButton>
+
+              {/* You can add more social icons as needed */}
+            </div>
           </div>
         </div>
         <div className="max-w-[1240px] mx-auto p-4 pt-3">
