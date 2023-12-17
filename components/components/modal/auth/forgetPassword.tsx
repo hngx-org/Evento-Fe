@@ -56,7 +56,7 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
   //     }
   //   };
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm">
+    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
       <div className="p-6">
         <div className="p-4">
           <button onClick={onClose} className="absolute top-[76px] right-12">
@@ -81,10 +81,7 @@ function ForgetPassword({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
               placeholder="Enter email address"
             />
           </div>
-          <Button
-            //     onClick={handleResetPassword}
-            className=" text-white-100 px-5 py-4 bg-primary-100 rounded-lg shadow text-base font-normal w-full mt-5 leading-normal"
-          >
+          <Button className=" text-white-100 px-5 py-4 bg-primary-100 rounded-lg shadow text-base font-normal w-full mt-5 leading-normal">
             Send recovery instructions
           </Button>
         </form>

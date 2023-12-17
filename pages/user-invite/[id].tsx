@@ -19,9 +19,11 @@ const Index = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const formData = { userId: 'string', eventId: 'string' };
-  const { data, isLoading, error } = useQuery('get-event-details', () => {
-    if (!router.query.id) return;
-    const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
+  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+    if (!router.query.id) {
+      throw new Error('Event ID not provided');
+    }
+    const id = router.query.id as string;
     return eventDetails(id);
   });
 
