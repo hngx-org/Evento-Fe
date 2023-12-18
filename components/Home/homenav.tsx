@@ -6,8 +6,8 @@ import { useRouter } from 'next/router';
 import AuthModal from '../components/modal/auth/AuthModal';
 import SignUp from '../components/modal/auth/SignUP';
 import useDisclosure from '@/hooks/useDisclosure';
-import Button from '@ui/NewButton';
 import SignIn from '../components/modal/auth/SignIn';
+import Button from '@ui/NewButton';
 
 function Homenav() {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -18,16 +18,6 @@ function Homenav() {
   const [modOpen, setOpen] = useState(false);
   const Openmod = () => setOpen(true);
   const isClose = () => setOpen(false);
-
-  const openSignInModal = () => {
-    setModalVisible(true);
-    setModalType('signin');
-  };
-
-  const openSignUpModal = () => {
-    setModalVisible(true);
-    setModalType('signup');
-  };
 
   const handleToggle = () => {
     setToggle(!isToggle);
