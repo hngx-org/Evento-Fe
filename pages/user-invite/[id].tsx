@@ -2,13 +2,11 @@ import React, { useState, useEffect } from 'react';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import Homenav from '@/components/Home/homenav';
 import Homefooter from '@/components/Home/homefooter';
-import date from '../../public/assets/date.svg';
-import Loc from '../../public/assets/loc.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
-import { eventDetails, registerEvent } from '@/http/events';
+import { eventDetails } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
 import { Calendar, Location } from 'iconsax-react';
 import Link from 'next/link';
@@ -17,15 +15,16 @@ import Button from '@ui/NewButton';
 import { Register, Registration_EndPoint } from '@/http/eventregistration';
 import { useRegistrationContext } from '@/context/RegistrationContext';
 import { toast } from 'react-toastify';
+import useDisclosure from '@/hooks/useDisclosure';
+import SignIn from '@/components/components/modal/auth/SignIn';
 
 const Index = () => {
   const router = useRouter();
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const [loading, setLoading] = useState(false);
-  const { registerEvent, getEventId, getUserId } = useRegistrationContext();
+  const { getEventId, getUserId } = useRegistrationContext();
   const [eventID2, setEventID] = useState<string | null>(null);
   const [userID, setUserID] = useState<string | null>(null);
-
-  const formData = { userId: 'string', eventId: 'string' };
   const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
@@ -84,6 +83,7 @@ const Index = () => {
 
       if (response.ok) {
         toast.success('User registered for the event successfully');
+        router.push('/explore');
         console.log(responseData);
       } else if (response.status === 404) {
         toast.error('Event not found');
@@ -259,6 +259,7 @@ const Index = () => {
                   style={{
                     boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
                   }}
+                  onClick={onOpen}
                   className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
                 >
                   Sign In to Register
@@ -275,6 +276,7 @@ const Index = () => {
         </div>
       </div>
       {!userId && <Homefooter />}
+      <SignIn isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
