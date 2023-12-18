@@ -16,6 +16,8 @@ import { useQuery } from 'react-query';
 import { useEventContext } from '@/context/EventContext';
 import App3 from '../../public/assets/app2.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
+import { FaShareAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import {
   TwitterShareButton,
   XIcon,
@@ -62,6 +64,7 @@ function Index() {
     try {
       await navigator.clipboard.writeText(eventLink);
       setIsLinkCopied(true);
+      toast.success('Link copied to clipboard!');
     } catch (error) {
       console.error('Unable to copy to clipboard', error);
     }
@@ -219,6 +222,14 @@ function Index() {
               >
                 <WhatsappIcon size={40} round={true} />
               </WhatsappShareButton>
+
+              <button
+                className="transition-all ease-in-out duration-500 animate-bounce"
+                title="Copy event link"
+                onClick={handleButtonClick}
+              >
+                <FaShareAlt color="#FF8A65" size={24} />
+              </button>
 
               {/* You can add more social icons as needed */}
             </div>

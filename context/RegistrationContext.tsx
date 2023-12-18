@@ -45,7 +45,7 @@ export const RegistrationProvider: React.FC<RegistrationProviderProps> = ({ chil
     const pathParts = router.asPath.split('/');
     return pathParts[pathParts.length - 1] || null;
   };
-  //   console.log(getEventId)
+  // console.log(getEventId)
 
   const getUserId = () => {
     return userId;
