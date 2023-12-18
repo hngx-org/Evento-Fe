@@ -20,7 +20,7 @@ function Edit() {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
     }
-    const id = router.query.id as string;
+    const id = router.query.id[0] as string;
     return eventDetails(id);
   });
 
