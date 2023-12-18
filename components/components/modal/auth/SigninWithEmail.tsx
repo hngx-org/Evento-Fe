@@ -119,7 +119,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                   onChange={handleChanged}
                   className="mr-2   accent-primary-100"
                 />
-                <span className="text-md font-medium text-gray-600">Remeber Me</span>
+                <span className="text-md font-medium text-gray-600">Remember Me</span>
               </label>
               <button
                 className="text-orange-600 text-base  hover:underline font-normal leading-normal"
