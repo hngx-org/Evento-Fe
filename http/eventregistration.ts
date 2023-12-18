@@ -33,3 +33,5 @@ export const Register = async (props: { eventID: string; userID: String }) => {
     throw e?.response?.data || { message: e.message };
   }
 };
+
+export const Registration_EndPoint = 'https://evento-qo6d.onrender.com/api/v1/events';
