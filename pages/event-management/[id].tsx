@@ -185,16 +185,27 @@ function Index() {
               </div>
             </div>
 
-            <Link
-              href={'/event-management/' + event.eventID + '/edit'}
-              style={{
-                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-              }}
-              className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-            >
-              <Edit2 size="32" color="#FF8A65" />
-              <span className={nunito.className}>Edit Event</span>
-            </Link>
+            <div>
+              <Link
+                href={'/event-management/' + event.eventID + '/edit'}
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <Edit2 size="32" color="#FF8A65" />
+                <span className={nunito.className}>Edit Event</span>
+              </Link>
+              <Link
+                href={`/event-management/participants/${event.eventID}`}
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <span className={nunito.className}>View Participants</span>
+              </Link>
+            </div>
             <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
               {/* React Share icons */}
 
