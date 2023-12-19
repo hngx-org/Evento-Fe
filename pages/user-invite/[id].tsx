@@ -170,8 +170,34 @@ const Index = () => {
     );
   }
 
-  const { eventID, title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
-    data?.data?.data;
+  const {
+    eventID,
+    title,
+    imageURL,
+    organizer,
+    startDate,
+    location,
+    Category,
+    capacity,
+    tickets,
+    description,
+    organizerID,
+  } = data?.data?.data;
+
+  if (userId === organizerID) {
+    router.push('/event-management/' + eventID);
+    return (
+      <>
+        {userId ? <AuthenticatedHeader /> : <Homenav />}
+        <div className="flex flex-col h-screen">
+          <div className="flex-1 grid place-content-center">
+            <div className="h-14 w-14 rounded-full border-4 border-gray-700 border-t-primary-100 animate-spin" />
+          </div>
+          {!userId && <Homefooter />}
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -189,7 +215,13 @@ const Index = () => {
             </div>
             <div className="flex items-center pt-3 gap-4">
               <div className="h-10 w-10 border rounded-full overflow-hidden">
-                <Image src={organizer.profileImage} height={40} width={40} alt="Host" className="object-cover" />
+                <Image
+                  src={organizer.profileImage ?? '/assets/avatar.png'}
+                  height={40}
+                  width={40}
+                  alt="Host"
+                  className="object-cover"
+                />
               </div>
               <p className="sm:text-[20px] font-[500] text-[#1e1e1e] ">
                 Hosted by {organizer.firstName} {organizer.lastName}
