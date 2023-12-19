@@ -1,14 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import EventManagementLayout from '@/layout/EventManagementLayout';
-import App1 from '../../../public/assets/app1.svg';
-import App2 from '../../../public/assets/app2.svg';
-import App3 from '../../../public/assets/app3.svg';
-import App4 from '../../../public/assets/app4.svg';
-import App5 from '../../../public/assets/app5.svg';
-import Edit from '../../../public/assets/edit-2.svg';
-import Trash from '../../../public/assets/trash.svg';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import ArrowLeft from '../../../public/assets/arrow-left.svg';
 import ArrowRight from '../../../public/assets/arrow-right.svg';
@@ -26,9 +18,112 @@ import { IoArrowBack } from 'react-icons/io5';
 import { EventManagement } from '@/@types';
 import { BsTrash } from 'react-icons/bs';
 
+interface ParticipantsProps {
+  userID: string;
+  email: string;
+  profileImage: string | null;
+  firstName: string;
+  lastName: string;
+}
+
+const participantss = [
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+  {
+    userID: 'db12ac36-b6e9-49b2-8a8b-c8f098edd59c',
+    email: 'midebliss@gmail.com',
+    profileImage: null,
+    firstName: 'Olumide',
+    lastName: 'Bambe',
+  },
+];
+
 export default function Index() {
+  const [participantList, setParticipants] = useState<ParticipantsProps[]>(participantss);
+  const [pageOffset, setPageOffset] = useState<number>(1);
   const router = useRouter();
-  console.log(router.query.id);
   const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
@@ -36,6 +131,15 @@ export default function Index() {
     const id = router.query.id as string;
     return eventDetails(id);
   });
+
+  useEffect(() => {
+    if (data) {
+      setParticipants(data?.data?.data?.participants);
+      setPageOffset(Math.ceil(data?.data?.data?.participants.length / 10));
+    } else {
+      setParticipants([]);
+    }
+  }, [data]);
 
   // const Id = typeof eventId === 'string' ? eventId : eventId[0];
   const Id = router.query.id as string;
@@ -82,7 +186,7 @@ export default function Index() {
 
   const event: EventManagement = data?.data?.data;
   const participants = event.participants;
-  console.log(participants);
+
   return (
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
@@ -90,14 +194,26 @@ export default function Index() {
         <section className="flex justify-between flex-col md:flex-row py-8">
           <div>
             <p className="text-[32px] text-[#535353] pb-4 font-[700] leading-[40px]">All applicant data</p>
-            <div className="relative">
-              <Image src={App2} width={30} alt="Applicant 2" className="inline absolute left-0" />
-              <Image src={App1} width={30} alt="Applicant 1" className="inline absolute left-4" />
-              <Image src={App3} width={30} alt="Applicant 3" className="inline absolute left-8" />
-              <Image src={App4} width={30} alt="Applicant 4" className="inline absolute left-12" />
-              <Image src={App5} width={30} alt="Applicant 5" className="inline absolute left-16" />
-              <span className="absolute left-28 mt-0 font-[600] text-[20px] leading-[28px] text-[rgba(83,83,83,0.55)]">
-                5 attendees
+            <div className="flex items-center">
+              <div className="relative flex">
+                {participantList.map((item, index) => {
+                  if (index < 5) {
+                    return (
+                      <div key={item.userID} className="h-8 w-8 rounded-full overflow-hidden -ml-2">
+                        <Image
+                          src={item.profileImage ?? '/assets/avatar.png'}
+                          width={32}
+                          height={32}
+                          alt="Applicant Image"
+                          className=""
+                        />
+                      </div>
+                    );
+                  }
+                })}
+              </div>
+              <span className="mt-0 ml-4 font-[600] text-[20px] leading-[28px] text-[rgba(83,83,83,0.55)]">
+                {participantList?.length} attendees
               </span>
             </div>
           </div>
@@ -119,7 +235,7 @@ export default function Index() {
                   </tr>
                 </thead>
                 <tbody className="border border-[#B1B1B1] rounded-b-xl border-b-0">
-                  {participants?.map((item) => {
+                  {participantList?.map((item) => {
                     return (
                       <tr key={item.userID} className="text-left text-sm text-[#767676] font-semibold">
                         <td className="py-5 px-1 pr-8 text-center">
@@ -149,6 +265,35 @@ export default function Index() {
                       </tr>
                     );
                   })}
+                  <tr>
+                    <td colSpan={4} className=" col">
+                      <div className="p-[1rem] hidden md:flex justify-between">
+                        <p className="mt-2">Showing 1 of {pageOffset} entries</p>
+                        <div className="flex rounded-lg mb-4">
+                          <button
+                            onClick={Prev}
+                            className="focus:bg-[#ED9E72] hover:bg-[#ED9E72] mr-1 w-8 rounded-[4px] border border-[rgb(177,177,177)]"
+                          >
+                            <Image src={ArrowLeft} width={0} alt="arror-left" className="flex items-center m-auto" />
+                          </button>
+                          {Array.from({ length: pageOffset }, (_, i) => i).map((_, i) => (
+                            <button
+                              key={i}
+                              className="flex text-[16px] font-[600] leading-[24px] px-[12px] py-[4px] focus:bg-[#ED9E72] hover:bg-[#ED9E72] mx-1 rounded-[4px] border border-[#b1b1b1]"
+                            >
+                              {i + 1}
+                            </button>
+                          ))}
+                          <button
+                            onClick={Next}
+                            className="focus:bg-[#ED9E72] hover:bg-[#ED9E72] ml-1 w-8 rounded-[4px] border border-[rgb(177,177,177)]"
+                          >
+                            <Image src={ArrowRight} width={0} alt="arror-right" className="flex items-center m-auto" />
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
