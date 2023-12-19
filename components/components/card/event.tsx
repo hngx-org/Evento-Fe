@@ -90,6 +90,7 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
           {participants?.length !== 0 && (
             <div className="flex items-center">
               {participants?.map((item, index) => {
+                if (index >= 4) return;
                 return (
                   <div key={index} className="h-8 w-8 first:ml-0 -ml-1.5 rounded-full overflow-hidden">
                     <Image

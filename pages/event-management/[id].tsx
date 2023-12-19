@@ -6,7 +6,7 @@ import Homenav from '@/components/Home/homenav';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import { eventDetails } from '@/http/events';
 import { getStoredUserId } from '@/http/getToken';
-import { Calendar, Edit2, Location } from 'iconsax-react';
+import { Calendar, Edit2, Location, Profile2User } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -203,6 +203,7 @@ function Index() {
                 }}
                 className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
               >
+                <Profile2User size="32" color="#FF8A65" />
                 <span className={nunito.className}>View Participants</span>
               </Link>
             </div>
