@@ -53,58 +53,6 @@ const Index = () => {
     setUserID(userId);
   }, []);
 
-  const handleRegistration = async () => {
-    const authToken = getStoredAuthToken();
-    if (!authToken) {
-      console.error('Authentication token not found');
-      return;
-    }
-
-    const endpoint = '/registration';
-    const url = `${Registration_EndPoint}${endpoint}`;
-
-    const requestBody = {
-      eventID: eventID2,
-      userID: userID,
-    };
-
-    try {
-      setLoading(true);
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok) {
-        toast.success('User registered for the event successfully');
-        router.push('/explore');
-        console.log(responseData);
-      } else if (response.status === 404) {
-        toast.error('Event not found');
-        console.error('Event not found:', responseData.message);
-      } else if (response.status === 409) {
-        toast.error('Conflict - User already registered for the event');
-        console.error('Conflict:', responseData.message);
-      } else if (response.status === 401) {
-        toast.error('Unauthorized Error - Not authorized to access this resource');
-        console.error('Unauthorized Error:', responseData.message);
-      } else {
-        toast.error('An unexpected error occurred');
-        console.error('Unexpected error:', responseData.message);
-      }
-    } catch (error) {
-      toast.error('Error during registration');
-      console.error('Error during registration:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
   const userId = getStoredUserId();
   // console.log(userId);
 
@@ -183,6 +131,59 @@ const Index = () => {
     description,
     organizerID,
   } = data?.data?.data;
+
+  const handleRegistration = async () => {
+    const authToken = getStoredAuthToken();
+    if (!authToken) {
+      console.error('Authentication token not found');
+      return;
+    }
+
+    const endpoint = '/registration';
+    const url = `${Registration_EndPoint}${endpoint}`;
+
+    const requestBody = {
+      eventID,
+      userID: userId,
+    };
+
+    try {
+      setLoading(true);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        toast.success('User registered for the event successfully');
+        router.push('/explore');
+        console.log(responseData);
+      } else if (response.status === 404) {
+        toast.error('Event not found');
+        console.error('Event not found:', responseData.message);
+      } else if (response.status === 409) {
+        toast.error('Conflict - User already registered for the event');
+        console.error('Conflict:', responseData.message);
+      } else if (response.status === 401) {
+        toast.error('Unauthorized Error - Not authorized to access this resource');
+        console.error('Unauthorized Error:', responseData.message);
+      } else {
+        toast.error('An unexpected error occurred');
+        console.error('Unexpected error:', responseData.message);
+      }
+    } catch (error) {
+      toast.error('Error during registration');
+      console.error('Error during registration:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (userId === organizerID) {
     router.push('/event-management/' + eventID);
