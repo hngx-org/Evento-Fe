@@ -51,7 +51,18 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
         handleCardClick();
       }}
     >
-      <Image src={sampleImage} alt={''} className={`w-full h-[180px] object-cover ${past ? 'grayscale' : ''} `} />
+      {
+        <Image
+          src={event.imageURL ? event.imageURL : sampleImage}
+          alt={''}
+          width={100}
+          height={100}
+          className={`w-full h-[180px] object-cover ${past ? 'grayscale' : ''} `}
+        />
+      }
+
+      {/* item.imageURL === 'https://example.com/image.jpg' ? '/assets/default-banner.jpg' : item.imageURL */}
+
       <div className="w-full p-4 flex flex-col gap-y-4 ">
         <div className="flex flex-col gap-y-1">
           <div className="flex items-center justify-between text-primary-100 text-sm lg:text-base font-normal ">
