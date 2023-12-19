@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Ticket</title>
+    <script>
+      fetch(`https://evento-qo6d.onrender.com/api/v1/events/8d82b355-451e-4b1a-a07d-97e4a2900f2a`)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data);
+          const event = data.data;
+          const dateObject = new Date(event.startDate);
+          const day = dateObject.getDate();
+          const month = dateObject.getMonth() + 1;
+          const year = dateObject.getFullYear();
+          const formattedDate = `${day}/${month}/${year}`;
+          const formattedTime = dateObject.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+          const titleElement = document.querySelector('#title');
+          const dateElement = document.querySelector('#date');
+          const timeElement = document.querySelector('#time');
+          const priceElement = document.querySelector('#price');
+          const areaElement = document.querySelector('#area');
+          const zoneElement = document.querySelector('#zone');
+          const placeElement = document.querySelector('#place');
+          titleElement.textContent = event.title;
+          dateElement.textContent = formattedDate;
+          timeElement.textContent = formattedTime;
+          // priceElement.textContent = data.price;
+          // areaElement.textContent = data.location;
+          // zoneElement.textContent = data.location;
+          // placeElement.textContent = data.location;
+        })
+        .catch((error) => {
+          console.log('Error:', error);
+        });
+    </script>
+  </head>
+  <body>
+    <main>
+      <!-- <div class="img-container"><img src="/public/logo.svg" alt="logo" /></div> -->
+      <div class="event-container">
+        <div class="title">
+          <div class="circle"></div>
+          <div class="ticket">
+            <p>Event</p>
+            <p>Ticket</p>
+          </div>
+        </div>
+        <div>
+          <h2 id="title">Event</h2>
+          <p>NO: 45</p>
+          <div class="table-body">
+            <div class="table-row">
+              <div class="table-cell">DATE: <span id="date">15/06/2023</span></div>
+              <div class="table-cell">Area: <span id="area">VIP</span></div>
+            </div>
+            <div class="table-row">
+              <div class="table-cell">TIME: <span id="time">02:00PM</span></div>
+              <div class="table-cell">Zone: <span id="zone">A</span></div>
+            </div>
+            <div class="table-row">
+              <div class="table-cell">Price: <span id="price">$100</span></div>
+              <div class="table-cell">Place: <span id="place">10A</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="qr-container">
+          <p class="vertical-text">NO: 45</p>
+          <div class="qr-image">
+            <!-- <img src="/public/qr.png" alt="qr-code" /> -->
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    background-color: #f5f5f5;
+  }
+  main {
+    width: 900px;
+    height: 250px;
+    background-color: #fefefe;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    border-radius: 6px;
+  }
+  .event-container {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    align-items: center;
+  }
+  .title {
+    display: flex;
+    align-items: center;
+  }
+  .circle {
+    width: 110px;
+    height: 170px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: #fceee7;
+    flex-shrink: 0;
+  }
+  .ticket {
+    margin-left: -90px;
+    margin-top: -35px;
+    text-transform: uppercase;
+  }
+  .ticket p:first-child {
+    color: #e0580c;
+    font-size: 80px;
+  }
+  .ticket p:last-child {
+    color: black;
+    font-weight: 400;
+    font-size: 40px;
+    margin-top: -85px;
+  }
+  .table-body {
+    display: table;
+    border-collapse: collapse;
+  }
+  .table-row {
+    display: table-row;
+  }
+  .table-cell {
+    display: table-cell;
+    padding: 10px;
+    border: 2px solid #ebecf1;
+    color: #737876;
+    text-transform: uppercase;
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  .qr-container {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    padding-left: 12px;
+    border-left: 2px dashed #ebecf1;
+  }
+  .qr-image {
+    border: 1px solid black;
+    width: 100px;
+    height: 180px;
+    margin-right: 30px;
+  }
+  .qr-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: rotate(90deg);
+  }
+  .vertical-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-weight: 600;
+    text-align: end;
+  }
+</style>
