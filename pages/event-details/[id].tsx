@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import Homenav from '@/components/Home/homenav';
 import Homefooter from '@/components/Home/homefooter';
@@ -11,18 +11,21 @@ import { useQuery } from 'react-query';
 import { eventDetails } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
 import Link from 'next/link';
-import { getStoredUserId } from '@/http/getToken';
+import { getStoredUserId, getStoredAuthToken } from '@/http/getToken';
 import Button from '@ui/NewButton';
+import { Registration_EndPoint } from '@/http/eventregistration';
+import { useRegistrationContext } from '@/context/RegistrationContext';
+import { toast } from 'react-toastify';
+import useDisclosure from '@/hooks/useDisclosure';
+import SignIn from '@/components/components/modal/auth/SignIn';
 
 const Index = () => {
+  const [loading, setLoading] = useState(false);
+  const { isOpen, onClose, onOpen } = useDisclosure();
+  const { getEventId, getUserId } = useRegistrationContext();
+  const [eventID2, setEventID] = useState<string | null>(null);
+  const [userID, setUserID] = useState<string | null>(null);
   const router = useRouter();
-  //   const { data, isLoading, error } = useQuery('get-event-details', () => {
-  //     if (!router.query.id) return;
-  //     // const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
-  //     const id = router.query;
-  //     return eventDetails(id);
-  //   });
-
   const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
@@ -42,6 +45,66 @@ const Index = () => {
     // Combine components and return formatted string
     return `${day}, ${month} ${date.getDate()}, ${year}`;
   }
+
+  useEffect(() => {
+    const eventId = getEventId();
+    setEventID(eventId);
+    const userId = getUserId();
+    setUserID(userId);
+  }, []);
+
+  const handleRegistration = async () => {
+    const authToken = getStoredAuthToken();
+    if (!authToken) {
+      console.error('Authentication token not found');
+      return;
+    }
+
+    const endpoint = '/registration';
+    const url = `${Registration_EndPoint}${endpoint}`;
+
+    const requestBody = {
+      eventID: eventID2,
+      userID: userID,
+    };
+
+    try {
+      setLoading(true);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        toast.success('User registered for the event successfully');
+        router.push('/explore');
+        console.log(responseData);
+      } else if (response.status === 404) {
+        toast.error('Event not found');
+        console.error('Event not found:', responseData.message);
+      } else if (response.status === 409) {
+        toast.error('Conflict - User already registered for the event');
+        console.error('Conflict:', responseData.message);
+      } else if (response.status === 401) {
+        toast.error('Unauthorized Error - Not authorized to access this resource');
+        console.error('Unauthorized Error:', responseData.message);
+      } else {
+        toast.error('An unexpected error occurred');
+        console.error('Unexpected error:', responseData.message);
+      }
+    } catch (error) {
+      toast.error('Error during registration');
+      console.error('Error during registration:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -73,8 +136,34 @@ const Index = () => {
     );
   }
 
-  const { title, imageURL, organizer, startDate, location, Category, capacity, tickets, description } =
-    data?.data?.data;
+  const {
+    eventID,
+    title,
+    imageURL,
+    organizer,
+    startDate,
+    location,
+    Category,
+    capacity,
+    tickets,
+    description,
+    organizerID,
+  } = data?.data?.data;
+
+  if (userId === organizerID) {
+    router.push('/event-management/' + eventID);
+    return (
+      <>
+        {userId ? <AuthenticatedHeader /> : <Homenav />}
+        <div className="flex flex-col h-screen">
+          <div className="flex-1 grid place-content-center">
+            <div className="h-14 w-14 rounded-full border-4 border-gray-700 border-t-primary-100 animate-spin" />
+          </div>
+          {!userId && <Homefooter />}
+        </div>
+      </>
+    );
+  }
   return (
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
@@ -90,7 +179,13 @@ const Index = () => {
           </div>
           <div className="flex items-center pt-3 gap-4">
             <div className="h-10 w-10 border rounded-full overflow-hidden">
-              <Image src={organizer.profileImage} height={40} width={40} alt="Host" className="object-cover" />
+              <Image
+                src={organizer.profileImage ?? '/assets/avatar.png'}
+                height={40}
+                width={40}
+                alt="Host"
+                className="object-cover"
+              />
             </div>
             <p className="sm:text-[20px] font-[500] text-[#1e1e1e] ">
               Hosted by {organizer.firstName} {organizer.lastName}
@@ -153,14 +248,29 @@ const Index = () => {
               </p>
             )}
 
-            <Button
-              style={{
-                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-              }}
-              className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
-            >
-              Click to Register
-            </Button>
+            {userId ? (
+              <Button
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                isLoading={loading}
+                spinnerColor="#fff"
+                onClick={handleRegistration}
+                className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+              >
+                Click to Register
+              </Button>
+            ) : (
+              <Button
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                onClick={onOpen}
+                className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+              >
+                Sign In to Register
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -171,6 +281,8 @@ const Index = () => {
         <div dangerouslySetInnerHTML={{ __html: description }} />
       </div>
       {!userId && <Homefooter />}
+
+      <SignIn isOpen={isOpen} onClose={onClose} />
     </div>
   );
 };

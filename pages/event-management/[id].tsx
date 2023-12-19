@@ -16,6 +16,8 @@ import { useQuery } from 'react-query';
 import { useEventContext } from '@/context/EventContext';
 import App3 from '../../public/assets/app2.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
+import { FaShareAlt } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import {
   TwitterShareButton,
   XIcon,
@@ -62,6 +64,7 @@ function Index() {
     try {
       await navigator.clipboard.writeText(eventLink);
       setIsLinkCopied(true);
+      toast.success('Link copied to clipboard!');
     } catch (error) {
       console.error('Unable to copy to clipboard', error);
     }
@@ -182,16 +185,27 @@ function Index() {
               </div>
             </div>
 
-            <Link
-              href={'/event-management/' + event.eventID + '/edit'}
-              style={{
-                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-              }}
-              className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-            >
-              <Edit2 size="32" color="#FF8A65" />
-              <span className={nunito.className}>Edit Event</span>
-            </Link>
+            <div>
+              <Link
+                href={'/event-management/' + event.eventID + '/edit'}
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <Edit2 size="32" color="#FF8A65" />
+                <span className={nunito.className}>Edit Event</span>
+              </Link>
+              <Link
+                href={`/event-management/participants/${event.eventID}`}
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <span className={nunito.className}>View Participants</span>
+              </Link>
+            </div>
             <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
               {/* React Share icons */}
 
@@ -219,6 +233,14 @@ function Index() {
               >
                 <WhatsappIcon size={40} round={true} />
               </WhatsappShareButton>
+
+              <button
+                className="transition-all ease-in-out duration-500 animate-bounce"
+                title="Copy event link"
+                onClick={handleButtonClick}
+              >
+                <FaShareAlt color="#FF8A65" size={24} />
+              </button>
 
               {/* You can add more social icons as needed */}
             </div>

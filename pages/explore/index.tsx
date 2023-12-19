@@ -84,7 +84,7 @@ function Home() {
               <span className="text-primary-100">Easier</span>
             </h1>
             <p className={`${nunito.className} max-w-[600px] lg:max-w-[800px] mx-auto text-lg`}>
-              Embark on a journey of personalized event discovery with EventHub&apos;s unique recommendation engine. As
+              Embark on a journey of personalized event discovery with Evento&apos;s unique recommendation engine. As
               you scroll through the Explore Page, immerse yourself in a finely curated feed of events meticulously
               crafted to align seamlessly with your individual preferences, location, and favorite categories.
             </p>
