@@ -190,16 +190,21 @@ export default function Index() {
   return (
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
-      <div className="max-w-[1240px] mx-auto p-4 pt-8">
+      <div className="max-w-[1240px] mx-auto p-4 md:p-6 lg:p-4 pt-8 mb-8">
         <section className="flex justify-between flex-col md:flex-row py-8">
           <div>
-            <p className="text-[32px] text-[#535353] pb-4 font-[700] leading-[40px]">All applicant data</p>
+            <p className="text-[20px] md:text-[32px] text-[#535353] pb-4 font-[700] leading-[40px]">
+              All applicant data
+            </p>
             <div className="flex items-center">
               <div className="relative flex">
-                {participantList.map((item, index) => {
+                {/* {participantList.map((item, index) => {
                   if (index < 5) {
                     return (
-                      <div key={item.userID} className="h-8 w-8 rounded-full overflow-hidden -ml-2">
+                      <div
+                        key={item.userID}
+                        className="h-8 w-8 rounded-full overflow-hidden -ml-2  max-w-[20px] lg:max-w-none"
+                      >
                         <Image
                           src={item.profileImage ?? '/assets/avatar.png'}
                           width={32}
@@ -210,7 +215,18 @@ export default function Index() {
                       </div>
                     );
                   }
-                })}
+                })} */}
+                {participantList.slice(0, 5).map((item, index) => (
+                  <div key={item.userID} className="h-8 w-8 rounded-full overflow-hidden -ml-2 ">
+                    <Image
+                      src={item.profileImage ?? '/assets/avatar.png'}
+                      width={32}
+                      height={32}
+                      alt="Applicant Image"
+                      className=""
+                    />
+                  </div>
+                ))}
               </div>
               <span className="mt-0 ml-4 font-[600] text-[20px] leading-[28px] text-[rgba(83,83,83,0.55)]">
                 {participantList?.length} attendees
@@ -225,8 +241,8 @@ export default function Index() {
               {/* TABLE HEADER */}
               <table className="w-full">
                 <thead>
-                  <tr className="font-bold text-xl text-left text-[#3c3c3c] bg-[#f5f5f5]">
-                    <th className="px-1 py-6 pr-8 text-center">
+                  <tr className="font-bold text-xl text-left text-[#3c3c3c] bg-[#f5f5f5] hidden md:table-row">
+                    <th className="px-1 py-6 pr-8 text-center opacity-0">
                       <input type="checkbox" className="cursor-pointer text-[20px]" />
                     </th>
                     <th className="px-4 py-6">Name</th>
@@ -234,14 +250,19 @@ export default function Index() {
                     <th className="px-4 py-6 text-center">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="border border-[#B1B1B1] rounded-b-xl border-b-0">
+                <tbody className="md:border border-[#B1B1B1] rounded-b-xl border-b-0 ">
                   {participantList?.map((item) => {
                     return (
-                      <tr key={item.userID} className="text-left text-sm text-[#767676] font-semibold">
-                        <td className="py-5 px-1 pr-8 text-center">
-                          <input type="checkbox" className="cursor-pointer text-[20px]" />
+                      <tr
+                        key={item.userID}
+                        className="text-left text-sm text-[#767676] font-semibold py-1 px-4 border-b md:border-none border-[#DEDEDE]"
+                      >
+                        {/* hidden on small screen */}
+                        <td className="py-5 px-1 pr-8 text-center hidden md:table-cell">
+                          <input type="checkbox" className="cursor-pointer aspect-square h-6 md:h-5 rounded-md " />
                         </td>
-                        <td className="py-5 px-4">
+
+                        <td className="py-5 px-4 hidden md:table-cell">
                           <div className="flex items-center gap-3">
                             <div className="h-[50px] w-[50px] rounded-full overflow-hidden">
                               <Image
@@ -256,10 +277,40 @@ export default function Index() {
                             </p>
                           </div>
                         </td>
-                        <td className="py-5 px-4">{item.email}</td>
+
+                        <td className="py-5 px-4 hidden md:table-cell">{item.email}</td>
+                        {/* all hiddne on small screen */}
+                        {/* shown on small screen */}
+
+                        <td className="py-5 px-4  md:hidden table-cell ">
+                          <div className="flex flex-row items-center">
+                            {' '}
+                            <input
+                              type="checkbox"
+                              className="cursor-pointer aspect-square h-6 md:h-5 rounded-md mr-4"
+                            />
+                            <Image
+                              src={item.profileImage ?? '/assets/avatar.png'}
+                              width={40}
+                              height={40}
+                              alt="Applicant Image"
+                              className="mr-[10px]"
+                            />
+                            <div className="flex flex-col gap-y-1">
+                              {' '}
+                              <span className="text-xl font-semibold text-[#1E1E1E]">
+                                {' '}
+                                {item.firstName + ' ' + item.lastName}
+                              </span>
+                              <span className="text-sm"> {item.email}</span>
+                              <span className="text-sm"> {'Lagos , Nigeria'}</span>
+                            </div>
+                          </div>
+                        </td>
+                        {/* shown on small screen */}
                         <td className="py-5 px-4">
                           <div className="flex justify-center text-xl">
-                            <BsTrash />
+                            <BsTrash size={24} />
                           </div>
                         </td>
                       </tr>
