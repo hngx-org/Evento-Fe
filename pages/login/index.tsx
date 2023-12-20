@@ -104,7 +104,7 @@ function SignIn() {
               placeholder="Enter Email Address"
              // className="outline-none rounded-[8px] p-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
              
-                             className="mt-1 p-2 w-full border text-black-main font-medium rounded-md"
+                             className="p-2 w-full border text-black-main font-medium rounded-md"
             />
 
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Password</label>
@@ -114,7 +114,7 @@ function SignIn() {
              //   className="outline-none text-[#c0c0c0] //text-[14px] leading-[20.3px] font-[400] "
                  id="password"
                  
-            className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
+            className="p-2 w-full font-medium text-black-main border rounded-md"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
