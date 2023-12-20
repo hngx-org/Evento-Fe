@@ -18,8 +18,30 @@ import { useRegistrationContext } from '@/context/RegistrationContext';
 import { toast } from 'react-toastify';
 import useDisclosure from '@/hooks/useDisclosure';
 import SignIn from '@/components/components/modal/auth/SignIn';
+import { FaShareAlt } from 'react-icons/fa';
+import {
+  TwitterShareButton,
+  XIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'react-share';
+import { useEventContext } from '@/context/EventContext';
+import { Ticket } from 'iconsax-react';
+
+interface Participant {
+  userID: string;
+  email: string;
+  profileImage: string | null;
+  firstName: string;
+  lastName: string;
+}
 
 const Index = () => {
+  const { shareEventLink } = useEventContext();
   const [loading, setLoading] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
   const { getEventId, getUserId } = useRegistrationContext();
@@ -95,6 +117,7 @@ const Index = () => {
     tickets,
     description,
     organizerID,
+    participants,
   } = data?.data?.data;
 
   const handleRegistration = async () => {
@@ -148,6 +171,21 @@ const Index = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const eventLink = shareEventLink(eventID);
+
+  const handleButtonClick = async () => {
+    try {
+      await navigator.clipboard.writeText(eventLink);
+      toast.success('Link copied to clipboard!');
+    } catch (error) {
+      console.error('Unable to copy to clipboard', error);
+    }
+  };
+
+  const isRegistered = (): boolean => {
+    return participants.some((item: Participant) => item.userID === userId);
   };
 
   if (userId === organizerID) {
@@ -250,22 +288,29 @@ const Index = () => {
               </p>
             ) : (
               <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
-                Hello! To join the event, please register below.
+                {isRegistered()
+                  ? 'You have already registered for this event'
+                  : 'Hello! To join the event, please register below.'}
               </p>
             )}
 
             {userId ? (
-              <Button
-                style={{
-                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-                }}
-                isLoading={loading}
-                spinnerColor="#fff"
-                onClick={handleRegistration}
-                className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
-              >
-                Click to Register
-              </Button>
+              <>
+                {!isRegistered() && (
+                  <Button
+                    style={{
+                      boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                    }}
+                    isLoading={loading}
+                    spinnerColor="#fff"
+                    // onClick={handleRegister}
+                    onClick={handleRegistration}
+                    className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+                  >
+                    Click to Register
+                  </Button>
+                )}
+              </>
             ) : (
               <Button
                 style={{
@@ -278,6 +323,57 @@ const Index = () => {
               </Button>
             )}
           </div>
+          {isRegistered() && (
+            <div className="pt-2">
+              <Button
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+              >
+                <Ticket />
+                View Ticket
+              </Button>
+              <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
+                {/* React Share icons */}
+
+                <FacebookShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                >
+                  <FacebookIcon size={40} round={true} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                >
+                  <XIcon size={40} round={true} />
+                </TwitterShareButton>
+                <LinkedinShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                >
+                  <LinkedinIcon size={40} round={true} />
+                </LinkedinShareButton>
+                <WhatsappShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                >
+                  <WhatsappIcon size={40} round={true} />
+                </WhatsappShareButton>
+
+                <button
+                  className="transition-all ease-in-out duration-500 animate-bounce"
+                  title="Copy event link"
+                  onClick={handleButtonClick}
+                >
+                  <FaShareAlt color="#FF8A65" size={24} />
+                </button>
+
+                {/* You can add more social icons as needed */}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <div className="max-w-[1240px] mx-auto p-4 pt-3">
