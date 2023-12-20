@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import { eventDetails } from '@/http/events';
 import { IoArrowBack } from 'react-icons/io5';
-import { Calendar, Location } from 'iconsax-react';
+import { Calendar, Location, Ticket } from 'iconsax-react';
 import Link from 'next/link';
 import { getStoredUserId, getStoredAuthToken } from '@/http/getToken';
 import Button from '@ui/NewButton';
@@ -17,9 +17,30 @@ import { useRegistrationContext } from '@/context/RegistrationContext';
 import { toast } from 'react-toastify';
 import useDisclosure from '@/hooks/useDisclosure';
 import SignIn from '@/components/components/modal/auth/SignIn';
+import { FaShareAlt } from 'react-icons/fa';
+import {
+  TwitterShareButton,
+  XIcon,
+  FacebookShareButton,
+  FacebookIcon,
+  LinkedinShareButton,
+  LinkedinIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+} from 'react-share';
+import { useEventContext } from '@/context/EventContext';
+
+interface Participant {
+  userID: string;
+  email: string;
+  profileImage: string | null;
+  firstName: string;
+  lastName: string;
+}
 
 const Index = () => {
   const router = useRouter();
+  const { shareEventLink } = useEventContext();
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [loading, setLoading] = useState(false);
   const { getEventId, getUserId } = useRegistrationContext();
@@ -53,58 +74,6 @@ const Index = () => {
     setUserID(userId);
   }, []);
 
-  const handleRegistration = async () => {
-    const authToken = getStoredAuthToken();
-    if (!authToken) {
-      console.error('Authentication token not found');
-      return;
-    }
-
-    const endpoint = '/registration';
-    const url = `${Registration_EndPoint}${endpoint}`;
-
-    const requestBody = {
-      eventID: eventID2,
-      userID: userID,
-    };
-
-    try {
-      setLoading(true);
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${authToken}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok) {
-        toast.success('User registered for the event successfully');
-        router.push('/explore');
-        console.log(responseData);
-      } else if (response.status === 404) {
-        toast.error('Event not found');
-        console.error('Event not found:', responseData.message);
-      } else if (response.status === 409) {
-        toast.error('Conflict - User already registered for the event');
-        console.error('Conflict:', responseData.message);
-      } else if (response.status === 401) {
-        toast.error('Unauthorized Error - Not authorized to access this resource');
-        console.error('Unauthorized Error:', responseData.message);
-      } else {
-        toast.error('An unexpected error occurred');
-        console.error('Unexpected error:', responseData.message);
-      }
-    } catch (error) {
-      toast.error('Error during registration');
-      console.error('Error during registration:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
   const userId = getStoredUserId();
   // console.log(userId);
 
@@ -182,7 +151,76 @@ const Index = () => {
     tickets,
     description,
     organizerID,
+    participants,
   } = data?.data?.data;
+
+  const handleRegistration = async () => {
+    const authToken = getStoredAuthToken();
+    if (!authToken) {
+      console.error('Authentication token not found');
+      return;
+    }
+
+    const endpoint = '/registration';
+    const url = `${Registration_EndPoint}${endpoint}`;
+
+    const requestBody = {
+      eventID,
+      userID: userId,
+    };
+
+    try {
+      setLoading(true);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        toast.success('User registered for the event successfully');
+        router.push('/explore');
+        console.log(responseData);
+      } else if (response.status === 404) {
+        toast.error('Event not found');
+        console.error('Event not found:', responseData.message);
+      } else if (response.status === 409) {
+        toast.error('Conflict - User already registered for the event');
+        console.error('Conflict:', responseData.message);
+      } else if (response.status === 401) {
+        toast.error('Unauthorized Error - Not authorized to access this resource');
+        console.error('Unauthorized Error:', responseData.message);
+      } else {
+        toast.error('An unexpected error occurred');
+        console.error('Unexpected error:', responseData.message);
+      }
+    } catch (error) {
+      toast.error('Error during registration');
+      console.error('Error during registration:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const eventLink = shareEventLink(eventID);
+
+  const handleButtonClick = async () => {
+    try {
+      await navigator.clipboard.writeText(eventLink);
+      toast.success('Link copied to clipboard!');
+    } catch (error) {
+      console.error('Unable to copy to clipboard', error);
+    }
+  };
+
+  const isRegistered = (): boolean => {
+    return participants.some((item: Participant) => item.userID === userId);
+  };
 
   if (userId === organizerID) {
     router.push('/event-management/' + eventID);
@@ -210,7 +248,13 @@ const Index = () => {
                 src={imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : imageURL}
                 fill
                 alt="Event"
-                className="object-cover"
+                className="object-cover blur-xl opacity-60"
+              />
+              <Image
+                src={imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : imageURL}
+                fill
+                alt="Event"
+                className="object-contain"
               />
             </div>
             <div className="flex items-center pt-3 gap-4">
@@ -271,21 +315,27 @@ const Index = () => {
             </div>
             <div className="rounded-[12px] border-[0.5px] border-[#c0c0c0] flex flex-col p-[16px] items-start gap-[24px] ">
               <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
-                Hello! To join the event, please register below.
+                {isRegistered()
+                  ? 'You have already registered for this event'
+                  : 'Hello! To join the event, please register below.'}
               </p>
               {userId ? (
-                <Button
-                  style={{
-                    boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-                  }}
-                  isLoading={loading}
-                  spinnerColor="#fff"
-                  // onClick={handleRegister}
-                  onClick={handleRegistration}
-                  className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
-                >
-                  Click to Register
-                </Button>
+                <>
+                  {!isRegistered() && (
+                    <Button
+                      style={{
+                        boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                      }}
+                      isLoading={loading}
+                      spinnerColor="#fff"
+                      // onClick={handleRegister}
+                      onClick={handleRegistration}
+                      className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+                    >
+                      Click to Register
+                    </Button>
+                  )}
+                </>
               ) : (
                 <Button
                   style={{
@@ -298,6 +348,57 @@ const Index = () => {
                 </Button>
               )}
             </div>
+            {isRegistered() && (
+              <div className="pt-2">
+                <Button
+                  style={{
+                    boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                  }}
+                  className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+                >
+                  <Ticket />
+                  View Ticket
+                </Button>
+                <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
+                  {/* React Share icons */}
+
+                  <FacebookShareButton
+                    url={eventLink}
+                    className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                  >
+                    <FacebookIcon size={40} round={true} />
+                  </FacebookShareButton>
+                  <TwitterShareButton
+                    url={eventLink}
+                    className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                  >
+                    <XIcon size={40} round={true} />
+                  </TwitterShareButton>
+                  <LinkedinShareButton
+                    url={eventLink}
+                    className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                  >
+                    <LinkedinIcon size={40} round={true} />
+                  </LinkedinShareButton>
+                  <WhatsappShareButton
+                    url={eventLink}
+                    className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
+                  >
+                    <WhatsappIcon size={40} round={true} />
+                  </WhatsappShareButton>
+
+                  <button
+                    className="transition-all ease-in-out duration-500 animate-bounce"
+                    title="Copy event link"
+                    onClick={handleButtonClick}
+                  >
+                    <FaShareAlt color="#FF8A65" size={24} />
+                  </button>
+
+                  {/* You can add more social icons as needed */}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="max-w-[1240px] mx-auto p-4 pt-3">
