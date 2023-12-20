@@ -4,15 +4,21 @@ import Image from 'next/image';
 import Button from '@/components/ui/NewButton';
 import Link from 'next/link';
 import Homenav from '@/components/Home/homenav';
-import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeSlash } from 'iconsax-react';
 
-function SignIn() {
-  const router = useRouter();
+const Index = () => {
+  const handleLinkClick = () => {
+    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
+    // signUpWithGoogle();
+  };
+  const [seePassword, setSeePassword] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+  
+    const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
+  //const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -57,13 +63,6 @@ function SignIn() {
     }
   };
 
-  const handleLinkClick = () => {
-    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
-    // signUpWithGoogle();
-  };
-  const [seePassword, setSeePassword] = useState(false);
-  const [passwordFocus, setPasswordFocus] = useState(false);
-
   return (
     <>
       <Homenav />
@@ -76,7 +75,7 @@ function SignIn() {
         >
           <p className="text-[#1e1e1e] text-center text-[20px] sm:text-[32px] font-[600] pb-1 ">Welcome to Evento</p>
           <p className="text-[14px] sm:text-[16px] font-[400] leading-[24px] text-[#585858] pb-6 ">
-            Sign In to  continue using Evento
+            Sign In to continue using Evento
           </p>
           <Button
             className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center"
@@ -93,41 +92,44 @@ function SignIn() {
             <div className="text-center text-neutral-500 text-sm font-normal leading-tight">OR</div>
             <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
           </div>
-          <form onSubmit={handleSubmit} className="rounded-xl flex-col gap-6 flex">
+          <form className="rounded-xl flex-col gap-6 flex">
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Email</label>
-            <Input
+            <input
+              placeholder="Enter Email Address"
+              className="outline-none rounded-[8px] py-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
               id="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               type="email"
-              placeholder="Enter Email Address"
-              // className="outline-none rounded-[8px] p-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
-
-              className="p-2 w-full border text-black-main font-medium rounded-md"
             />
 
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Password</label>
-
-            <Input
-              type={defaultInpType}
-              //   className="outline-none text-[#c0c0c0] //text-[14px] leading-[20.3px] font-[400] "
-              id="password"
-              className="p-2 w-full font-medium text-black-main border rounded-md"
+            <div
+              className={`flex justify-between px-3 py-2 rounded-md  mt-[-22px]  ${
+                passwordFocus ? 'border border-orange-600' : 'border border-[#b1b1b1]'
+              }`}
+            >
+              <input
+                onFocus={() => setPasswordFocus(true)}
+                onBlur={() => setPasswordFocus(false)}
+                className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] "
+                type={seePassword ? 'text' : 'password'}
+                placeholder="Password"
+               id="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              rightIcon={
-                defaultInpType === 'text' ? (
-                  <Eye color="#777" onClick={() => setDefaultInpType('password')} />
-                ) : (
-                  <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
-                )
-              }
-              placeholder="Password"
-              required
-            />
-
+              />
+              <aside onClick={() => setSeePassword((prev) => !prev)} className="cursor-pointer">
+                {!seePassword && (
+                  <EyeSlash color="#777" />
+                )}
+                {seePassword && (
+                  <Eye color="#777" />
+                )}
+              </aside>
+            </div>
             <div className="flex justify-between mt-[-22px]">
               <div className="flex items-center gap-2">
                 <input
@@ -149,9 +151,9 @@ function SignIn() {
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
               className="bg-[#e0580c] my-3 text-[#fefefe] rounded-[8px] flex justify-center items-center px-[20px] py-[16px] w-full text-[16px] font-[400] "
-              type="submit"
-              isLoading={loading}
+               isLoading={loading}
               disabled={!isChecked}
+              type="submit"
             >
               Continue
             </Button>
@@ -166,6 +168,6 @@ function SignIn() {
       </div>
     </>
   );
-}
+};
 
-export default SignIn;
+export default Index;
