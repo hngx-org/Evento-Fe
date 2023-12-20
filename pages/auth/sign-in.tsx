@@ -62,7 +62,7 @@ const SignIn = () => {
           <div className="px-3 ">
             <div className="relative py-[80px] rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
               <h1 className="text-center font-[600]  text-[28px]"> Welcome back !</h1>
-              <span className="block text-center font-[400] text-[28px] mt-2 ">
+              <span className="block text-center font-[400] text-[20px] mt-2 ">
                 Great to have you back with us again
               </span>
 
@@ -135,7 +135,7 @@ const SignIn = () => {
               </Link>
             </div>
 
-            <span className=" text-white mb-5 text-lg  relative block text-center md:text-black z-10">
+            <span className=" text-white pb-5 text-lg  relative block text-center md:text-black z-10">
               Don&apos;t have an account?
               <Link href="/auth/sign-up" className="ml-1 underline">
                 Sign up
