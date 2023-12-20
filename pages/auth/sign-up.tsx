@@ -1,6 +1,7 @@
 'use client';
 
 import { Input } from '@ui/NewInput';
+import GoogleButton from '@ui/GoogleButton';
 import Homenav from '@/components/Home/homenav';
 import Button from '@ui/NewButton';
 import PasswordPopover from '@ui/PasswordPopover';
@@ -62,7 +63,14 @@ const SignUp = () => {
           <div className="px-3 ">
             <div className="relative py-4 rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
               <h1 className="text-center font-[600]  text-[28px]">Welcome to Evento</h1>
-              <span className="block text-center font-[400] text-[20px] mt-2 ">Begin your journey</span>
+              <span className="block text-center font-[400] text-[20px] mt-2 mb-6 ">Begin your journey</span>
+
+              <GoogleButton />
+              <div className="seperator flex items-center space-x-2 my-4 ">
+                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
+                <h4 className="text-gray/80"> Or</h4>
+                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
+              </div>
 
               <form action="" className="flex flex-col mt-4 z-10" onSubmit={handleSubmit}>
                 <label htmlFor="First Name" className="font-bold">
@@ -149,19 +157,6 @@ const SignUp = () => {
                   Sign up
                 </Button>
               </form>
-
-              <div className="seperator flex items-center space-x-2 my-2">
-                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
-                <h4 className="text-gray/80"> Or</h4>
-                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
-              </div>
-
-              <Button
-                className=" text-black w-full my-3 border-[#C7C7C7] border rounded-md bg-[#fff] py-1 "
-                leftIcon={<Image src="/google.svg" alt="google_logo_icon" width={20} height={20} className="mb-1" />}
-              >
-                Contine with Google
-              </Button>
             </div>
 
             <span className=" text-white mb-8 mt-5 text-lg  relative block text-center md:text-black z-10">
