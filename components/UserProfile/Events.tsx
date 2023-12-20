@@ -36,11 +36,10 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
   const [listView, setListView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterList, setFilterList] = useState<string[]>([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const router = useRouter();
 
   const userId = getUserId();
-
-  const isSmallScreen = window.innerWidth < 768;
 
   const closeModal = (event: Event) => {
     const target = event.target as HTMLElement;
@@ -68,6 +67,18 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
       };
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const openModal = () => {
     if (!isModalOpen) {

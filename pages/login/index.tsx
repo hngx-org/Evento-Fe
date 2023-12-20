@@ -96,11 +96,11 @@ function SignIn() {
           <form onSubmit={handleSubmit} className="rounded-xl flex-col gap-6 flex">
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Email</label>
             <Input
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                type = "email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              type="email"
               placeholder="Enter Email Address"
               className="outline-none rounded-[8px] py-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
             />
@@ -112,9 +112,9 @@ function SignIn() {
               }`}
             >
               <Input
-                 type={defaultInpType}
+                type={defaultInpType}
                 className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] "
-                 id="password"
+                id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -126,18 +126,12 @@ function SignIn() {
                   )
                 }
                 placeholder="Password"
-                                required
+                required
               />
-              
             </div>
             <div className="flex justify-between mt-[-22px]">
               <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="rememberMe"
-                  checked={formData.rememberMe}
-                  onChange={handleChanged}
-                />
+                <input type="checkbox" name="rememberMe" checked={formData.rememberMe} onChange={handleChanged} />
 
                 <p className="text-[16px] leading-6 font-[400] ">Remember me</p>
               </div>
@@ -150,9 +144,9 @@ function SignIn() {
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
               className="bg-[#e0580c] my-3 text-[#fefefe] rounded-[8px] flex justify-center items-center px-[20px] py-[16px] w-full text-[16px] font-[400] "
-                              type="submit"
-                isLoading={loading}
-                disabled={!isChecked}
+              type="submit"
+              isLoading={loading}
+              disabled={!isChecked}
             >
               Continue
             </Button>
@@ -167,6 +161,6 @@ function SignIn() {
       </div>
     </>
   );
-};
+}
 
 export default SignIn;

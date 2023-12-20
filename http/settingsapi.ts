@@ -80,10 +80,13 @@ export const getUserEmail = () => {
   // return userEmail;
 };
 
-export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetStateAction<UserSocials>>) => {
+export const getUserSocials = async (
+  setSocialsData: React.Dispatch<React.SetStateAction<UserSocials>>,
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
   const authToken = getAuthToken();
   const userId = getUserId();
-
+  setSuccess(false);
   try {
     const getUserData = await $AuthHttp.get(`/user/${userId}/social`, {
       headers: {
@@ -100,6 +103,7 @@ export const getUserSocials = async (setSocialsData: React.Dispatch<React.SetSta
       instagramURL: userData?.instagramURL ? userData?.instagramURL : '',
       facebookURL: userData?.facebookURL ? userData?.facebookURL : '',
     }));
+    setSuccess(true);
   } catch (e: any) {
     console.log(e);
     toast.error('An error occurred while fetching user socials.');
