@@ -102,6 +102,7 @@ const Index = () => {
               value={formData.email}
               onChange={handleChange}
               type="email"
+ required
             />
 
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Password</label>
@@ -110,18 +111,19 @@ const Index = () => {
                 passwordFocus ? 'border border-orange-600' : 'border border-[#b1b1b1]'
               }`}
             >
-              <input
-                onFocus={() => setPasswordFocus(true)}
-                onBlur={() => setPasswordFocus(false)}
-                className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] "
-                type={seePassword ? 'text' : 'password'}
-requried
-                placeholder="Password"
-               id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              />
+              
+<input
+  onFocus={() => setPasswordFocus(true)}
+  onBlur={() => setPasswordFocus(false)}
+  className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400]"
+  type={seePassword ? 'text' : 'password'}
+  required
+  placeholder="Password"
+  id="password"
+  name="password"
+  value={formData.password}
+  onChange={handleChange}
+/>
               <aside onClick={() => setSeePassword((prev) => !prev)} className="cursor-pointer">
                 {!seePassword && (
                   <EyeSlash color="#777" />
