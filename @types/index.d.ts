@@ -312,3 +312,20 @@ export interface eventLinkProps {
   eventLink: string;
   title: string;
 }
+
+export interface NextAuthProviderProps {
+  children: ReactNode;
+}
+
+export interface AuthOptions {
+  providers: any[];
+  pages: {
+    signIn: string;
+    error: string;
+    verifyRequest: string;
+    newUser?: string | undefined;
+  };
+  callbacks: {
+    redirect(url: string, baseUrl: string): Promise<string>;
+  };
+}

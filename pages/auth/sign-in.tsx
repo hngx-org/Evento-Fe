@@ -9,6 +9,7 @@ import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeSlash } from 'iconsax-react';
 import { MdOutlineMail } from 'react-icons/md';
+import GoogleButton from '@ui/GoogleButton';
 
 const SignIn = () => {
   const router = useRouter();
@@ -49,11 +50,6 @@ const SignIn = () => {
     }
   };
 
-  const handleLinkClick = () => {
-    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
-    // signUpWithGoogle();
-  };
-
   return (
     <>
       <section className="md:w-[80%] md:mx-auto h-[100vh] bg-white-100">
@@ -62,11 +58,18 @@ const SignIn = () => {
           <div className="px-3 ">
             <div className="relative py-[80px] rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
               <h1 className="text-center font-[600]  text-[28px]"> Welcome back !</h1>
-              <span className="block text-center font-[400] text-[20px] mt-2 ">
+              <span className="block text-center font-[400] text-[20px] mt-2 mb-6 ">
                 Great to have you back with us again
               </span>
 
-              <form action="" className="flex flex-col mt-4 z-10" onSubmit={handleSubmit}>
+              <GoogleButton />
+              <div className="seperator flex items-center space-x-2 my-4 ">
+                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
+                <h4 className="text-gray/80"> Or</h4>
+                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
+              </div>
+
+              <form action="" className="flex flex-col  z-10" onSubmit={handleSubmit}>
                 <label htmlFor="Business Email" className="font-bold">
                   Email
                 </label>
@@ -103,10 +106,21 @@ const SignIn = () => {
                   }
                   className="mt-1 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
-
-                <span className="mb-4 mt-1 text-lg text-right text-[#e0580c]">
-                  <Link href="">forgot password?</Link>
-                </span>
+                <div className="my-3 flex justify-between ">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="rememberMe"
+                      checked={formData.rememberMe}
+                      onChange={handleChange}
+                      className="mr-2   accent-primary-100"
+                    />
+                    <span className="text-md font-medium text-gray-600">Remember Me</span>
+                  </label>
+                  <button className="text-orange-600 text-base  hover:underline font-normal leading-normal">
+                    Forgot password?
+                  </button>
+                </div>
 
                 <Button
                   className="w-full rounded-md my-3 bg-primary-100"
@@ -117,22 +131,6 @@ const SignIn = () => {
                   Log in
                 </Button>
               </form>
-
-              <div className="seperator flex items-center space-x-2 my-2">
-                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
-                <h4 className="text-gray/80"> Or</h4>
-                <div className="seperate h-[1px] bg-[#C7C7C7] w-full"></div>
-              </div>
-
-              <Link href="">
-                <Button
-                  className=" text-black w-full my-3 border-[#C7C7C7] 
-								border rounded-md bg-[#fff] py-1"
-                  leftIcon={<Image src="/google.svg" alt="google_logo_icon" width={20} height={20} className="mb-1" />}
-                >
-                  Continue with Google
-                </Button>
-              </Link>
             </div>
 
             <span className=" text-white pb-5 text-lg  relative block text-center md:text-black z-10">
