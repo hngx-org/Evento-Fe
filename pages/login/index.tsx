@@ -92,7 +92,7 @@ const Index = () => {
             <div className="text-center text-neutral-500 text-sm font-normal leading-tight">OR</div>
             <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
           </div>
-          <form className="rounded-xl flex-col gap-6 flex">
+          <form className="rounded-xl flex-col gap-6 flex" onSubmit={handleSubmit}>
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Email</label>
             <input
               placeholder="Enter Email Address"
