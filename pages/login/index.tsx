@@ -76,7 +76,7 @@ function SignIn() {
         >
           <p className="text-[#1e1e1e] text-center text-[20px] sm:text-[32px] font-[600] pb-1 ">Welcome to Evento</p>
           <p className="text-[14px] sm:text-[16px] font-[400] leading-[24px] text-[#585858] pb-6 ">
-            Sign up to continue using Evento
+            Sign In to  continue using Evento
           </p>
           <Button
             className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center"
