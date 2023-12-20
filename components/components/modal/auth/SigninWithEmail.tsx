@@ -1,17 +1,15 @@
+'use client';
 import React, { useState } from 'react';
-import Button from '@ui/NewButton';
-import Modal from '@/components/ui/Modal';
+import Image from 'next/image';
+import Button from '@/components/ui/NewButton';
+import Link from 'next/link';
+import Homenav from '@/components/Home/homenav';
 import { Input } from '@ui/NewInput';
 import { loginUser } from '@/http/authapi';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeSlash, CloseCircle } from 'iconsax-react';
-import ForgetPassword from './forgetPassword';
-import { handleMouseEnter } from '@/utils/text-effect';
+import { Eye, EyeSlash } from 'iconsax-react';
 
-function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
-  const [modOpen, setOpen] = useState(false);
-  const onOpen = () => setOpen(true);
-  const isClose = () => setOpen(false);
+function SignIn() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
@@ -59,43 +57,64 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
     }
   };
 
+  const handleLinkClick = () => {
+    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/google';
+    // signUpWithGoogle();
+  };
+  const [seePassword, setSeePassword] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
   return (
-    <Modal closeOnOverlayClick isOpen={isOpen} closeModal={onClose} size="sm" isCloseIconPresent={false}>
-      <div className="p-4">
-        <button onClick={onClose} className="absolute top-[30px] right-9">
-          <CloseCircle size="30" color="#000000" />
-        </button>
-        <div>
-          <h2
-            className="text-2xl font-semibold mb-6 text-gray-800"
-            data-value="Sign In"
-            onMouseEnter={handleMouseEnter}
+    <>
+      <Homenav />
+      <div className="flex justify-center my-20 items-center m-auto">
+        <div
+          className="rounded-[8px] bg-[#fefefe] p-[80px] "
+          style={{
+            boxShadow: '0px 4px 4px 4px rgba(0, 0, 0, 0.04)',
+          }}
+        >
+          <p className="text-[#1e1e1e] text-center text-[20px] sm:text-[32px] font-[600] pb-1 ">Welcome to Evento</p>
+          <p className="text-[14px] sm:text-[16px] font-[400] leading-[24px] text-[#585858] pb-6 ">
+            Sign up to continue using Evento
+          </p>
+          <Button
+            className="px-12 py-4 rounded-lg border border-neutral-900 w-full flex items-center gap-[10px] justify-center"
+            onClick={handleLinkClick}
+            //   href='https://evento-qo6d.onrender.com/api/v1/google'
           >
-            Sign In
-          </h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600">
-                Email:
-              </label>
-              <Input
-                placeholder="Enter Email"
+            <Image src="/google.svg" alt="Google icon" width={24} height={24} />
+            <span className="text-center text-stone-900 text-[16px] font-normal leading-normal">
+              Log in with Google
+            </span>
+          </Button>
+          <div className="flex items-center gap-[10px] my-6">
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+            <div className="text-center text-neutral-500 text-sm font-normal leading-tight">OR</div>
+            <div className="w-full h-[0px] bg-neutral-500 border-b border-b-neutral-500" />
+          </div>
+          <form onSubmit={handleSubmit} className="rounded-xl flex-col gap-6 flex">
+            <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Email</label>
+            <Input
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border text-black-main font-medium rounded-md"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="password" className="block text-sm font-medium text-gray-600">
-                Password:
-              </label>
+                type = "email"
+              placeholder="Enter Email Address"
+             // className="outline-none rounded-[8px] p-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
+             
+                             className="mt-1 p-2 w-full border text-black-main font-medium rounded-md"
+            />
+
+            <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Password</label>
+            
               <Input
-                type={defaultInpType}
-                placeholder="Enter Password"
-                id="password"
+                 type={defaultInpType}
+             //   className="outline-none text-[#c0c0c0] //text-[14px] leading-[20.3px] font-[400] "
+                 id="password"
+                 
+            className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
@@ -106,44 +125,49 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                     <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                   )
                 }
-                className="mt-1 p-2 w-full font-medium text-black-main border rounded-md"
-                required
+                placeholder="Password"
+                                required
               />
-            </div>
-            <div className="mb-6 flex justify-between">
-              <label className="flex items-center">
+
+          
+            <div className="flex justify-between mt-[-22px]">
+              <div className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleChanged}
-                  className="mr-2   accent-primary-100"
+                className="mr-2   accent-primary-100"
                 />
-                <span className="text-md font-medium text-gray-600">Remember Me</span>
-              </label>
-              <button
-                className="text-orange-600 text-base  hover:underline font-normal leading-normal"
-                onClick={onOpen}
-              >
+
+                <p className="text-[16px] leading-6 font-[400] ">Remember me</p>
+              </div>
+              <Link href="" className="text-[16px] font-[400] text-[#e0580c] leading-[24px] ">
                 Forgot password?
-              </button>
+              </Link>
             </div>
-            <div>
-              <Button
-                type="submit"
+            <Button
+              style={{
+                boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+              }}
+              className="bg-[#e0580c] my-3 text-[#fefefe] rounded-[8px] flex justify-center items-center px-[20px] py-[16px] w-full text-[16px] font-[400] "
+                              type="submit"
                 isLoading={loading}
-                className={`$ bg-primary-100 w-full font-bold text-white-100 p-2 rounded-md hover:bg-orange-500 transition-all`}
                 disabled={!isChecked}
-              >
-                Sign In
-              </Button>
-            </div>
+            >
+              Continue
+            </Button>
           </form>
+          <div className="flex gap-2 text-[16px] font-[400] leading-6 text-[#111] ">
+            <p>Don&apos;t have an account?</p>
+            <Link href="/signup" className="text-[#e0580c] font-[500]">
+              Sign Up
+            </Link>
+          </div>
         </div>
       </div>
-      <ForgetPassword isOpen={modOpen} onClose={isClose} />
-    </Modal>
+    </>
   );
-}
+};
 
 export default SignIn;
