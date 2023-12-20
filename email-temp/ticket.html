@@ -10,26 +10,31 @@
         .then((data) => {
           console.log(data.data);
           const event = data.data;
+
           const dateObject = new Date(event.startDate);
           const day = dateObject.getDate();
           const month = dateObject.getMonth() + 1;
           const year = dateObject.getFullYear();
           const formattedDate = `${day}/${month}/${year}`;
           const formattedTime = dateObject.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+
+          const userID = localStorage.getItem('userId');
+          console.log(userID);
+
           const titleElement = document.querySelector('#title');
           const dateElement = document.querySelector('#date');
           const timeElement = document.querySelector('#time');
           const priceElement = document.querySelector('#price');
-          const areaElement = document.querySelector('#area');
-          const zoneElement = document.querySelector('#zone');
-          const placeElement = document.querySelector('#place');
+          const cityElement = document.querySelector('#city');
+          const countryElement = document.querySelector('#country');
+          const typeElement = document.querySelector('#type');
           titleElement.textContent = event.title;
           dateElement.textContent = formattedDate;
           timeElement.textContent = formattedTime;
-          // priceElement.textContent = data.price;
-          // areaElement.textContent = data.location;
-          // zoneElement.textContent = data.location;
-          // placeElement.textContent = data.location;
+          priceElement.textContent = event.tickets[0].ticketPrice;
+          cityElement.textContent = event.location.split(',')[0];
+          countryElement.textContent = event.location.split(',')[1];
+          typeElement.textContent = event.tickets[0].ticketType;
         })
         .catch((error) => {
           console.log('Error:', error);
@@ -49,24 +54,24 @@
         </div>
         <div>
           <h2 id="title">Event</h2>
-          <p>NO: 45</p>
+          <p>Zainab Ogunola</p>
           <div class="table-body">
             <div class="table-row">
               <div class="table-cell">DATE: <span id="date">15/06/2023</span></div>
-              <div class="table-cell">Area: <span id="area">VIP</span></div>
+              <div class="table-cell">City: <span id="city">VIP</span></div>
             </div>
             <div class="table-row">
               <div class="table-cell">TIME: <span id="time">02:00PM</span></div>
-              <div class="table-cell">Zone: <span id="zone">A</span></div>
+              <div class="table-cell">Country: <span id="country">A</span></div>
             </div>
             <div class="table-row">
-              <div class="table-cell">Price: <span id="price">$100</span></div>
-              <div class="table-cell">Place: <span id="place">10A</span></div>
+              <div class="table-cell">Type: <span id="type">Free</span></div>
+              <div class="table-cell">Price: $<span id="price">$100</span></div>
             </div>
           </div>
         </div>
         <div class="qr-container">
-          <p class="vertical-text">NO: 45</p>
+          <div class="img-container"><img src="/public/logo.svg" alt="logo" /></div>
           <div class="qr-image">
             <!-- <img src="/public/qr.png" alt="qr-code" /> -->
           </div>
@@ -116,13 +121,13 @@
   }
   .ticket p:first-child {
     color: #e0580c;
-    font-size: 80px;
+    font-size: 60px;
   }
   .ticket p:last-child {
     color: black;
     font-weight: 400;
     font-size: 40px;
-    margin-top: -85px;
+    margin-top: -75px;
   }
   .table-body {
     display: table;
@@ -144,16 +149,20 @@
   }
   .qr-container {
     display: flex;
+    flex-direction: column;
     height: 100%;
-    align-items: center;
+    align-items: start;
     padding-left: 12px;
+    padding-top: 20px;
+    padding-right: 12px;
     border-left: 2px dashed #ebecf1;
   }
   .qr-image {
     border: 1px solid black;
-    width: 100px;
+    width: 180px;
     height: 180px;
-    margin-right: 30px;
+    margin-top: 10px;
+    /* margin-right: 12px; */
   }
   .qr-image img {
     width: 100%;

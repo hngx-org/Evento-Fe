@@ -6,15 +6,9 @@ import AuthLayout from '@/layout/Authlayout';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Montserrat, Nunito } from 'next/font/google';
-import {
-  UserProfile,
-  UserProfile2,
-  editSocialLinks,
-  editUserProfile,
-  postProfilePicture,
-  socialLinks,
-} from '@/http/profileapi';
+import { UserProfile2, editSocialLinks, editUserProfile, postProfilePicture, socialLinks } from '@/http/profileapi';
 import Image from 'next/image';
+import { UserSocials, UserProfile, getUserSocials, getUserProfile } from '@/http/settingsapi';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -30,10 +24,52 @@ const montserrat = Montserrat({
 
 const EditProfilePage = () => {
   const router = useRouter();
-
-  const [formData, setFormData] = useState<UserProfile2>({});
-  const [socialLinks, setSocialLinks] = useState<socialLinks>({});
+  const [formData, setFormData] = useState<UserProfile>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    bio: '',
+  });
+  const [socialLinks, setSocialLinks] = useState<UserSocials>({
+    websiteURL: 'https://',
+    twitterURL: 'https://twitter.com/',
+    facebookURL: 'https://facebook.com/',
+    instagramURL: 'https://instagram.com/',
+  });
   const [reRoute, setReRoute] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    getUserProfile(setFormData);
+    getUserSocials(setSocialLinks, setSuccess);
+  }, []);
+
+  useEffect(() => {
+    if (success) {
+      const updatedFormData = { ...socialLinks };
+      for (const key in socialLinks) {
+        if (socialLinks[key as keyof typeof socialLinks] === '') {
+          switch (key) {
+            case 'websiteURL':
+              updatedFormData.websiteURL = 'https://';
+              break;
+            case 'twitterURL':
+              updatedFormData.twitterURL = 'https://twitter.com/';
+              break;
+            case 'facebookURL':
+              updatedFormData.facebookURL = 'https://facebook.com/';
+              break;
+            case 'instagramURL':
+              updatedFormData.instagramURL = 'https://instagram.com/';
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      setSocialLinks(updatedFormData);
+    }
+  }, [success]);
 
   useEffect(() => {
     if (reRoute) {
@@ -53,9 +89,20 @@ const EditProfilePage = () => {
   const handleSocialLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    let updatedValue = value;
+    if (name === 'websiteURL' && !value.startsWith('https://')) {
+      updatedValue = 'https://' + value.substring(8);
+    } else if (name === 'twitterURL' && !value.startsWith('https://twitter.com/')) {
+      updatedValue = 'https://twitter.com/' + value.substring(20);
+    } else if (name === 'facebookURL' && !value.startsWith('https://facebook.com/')) {
+      updatedValue = 'https://facebook.com/' + value.substring(21);
+    } else if (name === 'instagramURL' && !value.startsWith('https://instagram.com/')) {
+      updatedValue = 'https://instagram.com/' + value.substring(21);
+    }
+
     setSocialLinks((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 
@@ -69,23 +116,6 @@ const EditProfilePage = () => {
       postProfilePicture(selectedImage);
     }
   };
-  // if (selectedImage) {
-  //   setFormData((prevData) => ({ ...prevData, profileImage: selectedImage }));
-
-  //   // Check if selectedImage is a Blob object
-  //   if (selectedImage instanceof Blob) {
-  //     const imageUrl = URL.createObjectURL(selectedImage);
-  //     setProfilePicURL(imageUrl);
-
-  //     const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
-
-  //     const profilePicContainer = document.getElementById('profilePicContainer');
-
-  //     if (profilePicContainer) {
-  //       profilePicContainer.innerHTML = tempProfilPic;
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     // Fetch user profile data from local storage
@@ -93,18 +123,18 @@ const EditProfilePage = () => {
     if (storedUserProfile) {
       const parsedUserProfile = JSON.parse(storedUserProfile);
       setProfilePicURL(parsedUserProfile.profileImage);
-      setFormData(parsedUserProfile);
+      // setFormData(parsedUserProfile);
     }
-    const storedSocialLinks = localStorage.getItem('socialLinks');
-    if (storedSocialLinks) {
-      const parsedSocialLinks = JSON.parse(storedSocialLinks);
-      setSocialLinks(parsedSocialLinks);
-    }
+    // const storedSocialLinks = localStorage.getItem('socialLinks');
+    // if (storedSocialLinks) {
+    //   const parsedSocialLinks = JSON.parse(storedSocialLinks);
+    //   setSocialLinks(parsedSocialLinks);
+    // }
   }, []);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
-    console.log(formData);
-    console.log(socialLinks);
+    // console.log(formData);
+    // console.log(socialLinks);
 
     editUserProfile(formData, () => {
       setReRoute(true);
@@ -160,7 +190,7 @@ const EditProfilePage = () => {
                 <div className=" md:w-[277px] lg:w-[341px] ">
                   {' '}
                   <Input
-                    label="First name "
+                    label="First name"
                     placeholder="Enter Firstname"
                     name="firstName"
                     value={formData.firstName}
