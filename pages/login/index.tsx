@@ -96,7 +96,7 @@ const Index = () => {
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Email</label>
             <input
               placeholder="Enter Email Address"
-              className="outline-none rounded-[8px] py-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
+              className="outline-none rounded-[8px] py-[8px] px-[12px] flex items-center focus:border-[#ff5c00] border border-[#b1b1b1] bg-[#fefefe] text-black-main text-[14px] leading-[20.3px] font-[400] mt-[-22px] "
               id="email"
               name="email"
               value={formData.email}
@@ -115,7 +115,7 @@ const Index = () => {
 <input
   onFocus={() => setPasswordFocus(true)}
   onBlur={() => setPasswordFocus(false)}
-  className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400]"
+  className="outline-none text-black-main text-[14px] leading-[20.3px] font-[400]"
   type={seePassword ? 'text' : 'password'}
   required
   placeholder="Password"
