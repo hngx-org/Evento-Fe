@@ -277,8 +277,8 @@ const Dashboard3: React.FC = () => {
             {pastEvents.length === 0 && createdEvents.length === 0 && upcomingEvents.length === 0 ? (
               <NoEvent type={''} />
             ) : (
-              <div className="w-full flex flex-col  gap-12 items-center">
-                <div className="upcoming flex flex-col gap-4 w-fit">
+              <div className="flex flex-col  gap-12 items-center">
+                <div className="upcoming flex flex-col gap-4 w-full md:max-w-[612px] lg:max-w-none">
                   {' '}
                   <div className="upcomingtitle flex justify-between items-baseline w-full">
                     <span className="text-[#1E1E1E] text-xl font-semibold tracking-[-0.2px] ">Upcoming Events</span>{' '}
@@ -328,8 +328,8 @@ const Dashboard3: React.FC = () => {
                   )}
                 </div>
 
-                <div className="past flex flex-col  gap-4 items-center">
-                  <div className="w-fit flex flex-col  gap-4 ">
+                <div className="past flex flex-col  gap-4 items-center md:max-w-[612px] lg:max-w-none">
+                  <div className="past w-full flex flex-col gap-4 ">
                     <div className="pasttitle flex justify-between items-baseline w-full">
                       <span className="text-[#1E1E1E] text-xl font-semibold tracking-[-0.2px] ">Past Events</span>{' '}
                       <span
