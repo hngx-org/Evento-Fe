@@ -40,11 +40,11 @@ const NoEvent: React.FC<NoEventProps> = ({ type }) => {
           <span className="font-bold text-primary-100 cursor-pointer" onClick={() => router.push('/create-events')}>
             create event
           </span>{' '}
-          or explore{' '}
+          or{' '}
           <span className="font-bold text-primary-100 cursor-pointer" onClick={() => router.push('/explore')}>
-            event button
+            explore event
           </span>{' '}
-          to get started
+          button to get started
         </p>
       ) : (
         <>

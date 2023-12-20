@@ -15,8 +15,8 @@ const Index = () => {
   };
   const [seePassword, setSeePassword] = useState(false);
   const [passwordFocus, setPasswordFocus] = useState(false);
-  
-    const router = useRouter();
+
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   //const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
   const [formData, setFormData] = useState({
@@ -102,7 +102,7 @@ const Index = () => {
               value={formData.email}
               onChange={handleChange}
               type="email"
- required
+              required
             />
 
             <label className="gilroy text-[14px] font-[600] leading-[20.3px] text-[#303030] ">Password</label>
@@ -111,26 +111,21 @@ const Index = () => {
                 passwordFocus ? 'border border-orange-600' : 'border border-[#b1b1b1]'
               }`}
             >
-              
-<input
-  onFocus={() => setPasswordFocus(true)}
-  onBlur={() => setPasswordFocus(false)}
-  className="outline-none text-black-main text-[14px] leading-[20.3px] font-[400]"
-  type={seePassword ? 'text' : 'password'}
-  required
-  placeholder="Password"
-  id="password"
-  name="password"
-  value={formData.password}
-  onChange={handleChange}
-/>
+              <input
+                onFocus={() => setPasswordFocus(true)}
+                onBlur={() => setPasswordFocus(false)}
+                className="outline-none text-black-main text-[14px] leading-[20.3px] font-[400]"
+                type={seePassword ? 'text' : 'password'}
+                required
+                placeholder="Password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+              />
               <aside onClick={() => setSeePassword((prev) => !prev)} className="cursor-pointer">
-                {!seePassword && (
-                  <EyeSlash color="#777" />
-                )}
-                {seePassword && (
-                  <Eye color="#777" />
-                )}
+                {!seePassword && <EyeSlash color="#777" />}
+                {seePassword && <Eye color="#777" />}
               </aside>
             </div>
             <div className="flex justify-between mt-[-22px]">
@@ -154,7 +149,7 @@ const Index = () => {
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
               className="bg-[#e0580c] my-3 text-[#fefefe] rounded-[8px] flex justify-center items-center px-[20px] py-[16px] w-full text-[16px] font-[400] "
-               isLoading={loading}
+              isLoading={loading}
               disabled={!isChecked}
               type="submit"
             >
