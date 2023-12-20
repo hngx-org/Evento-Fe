@@ -211,7 +211,13 @@ const Index = () => {
                 src={imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : imageURL}
                 fill
                 alt="Event"
-                className="object-cover"
+                className="object-cover blur-xl opacity-60"
+              />
+              <Image
+                src={imageURL === 'https://example.com/image.jpg' ? '/assets/event2.png' : imageURL}
+                fill
+                alt="Event"
+                className="object-contain"
               />
             </div>
             <div className="flex items-center pt-3 gap-4">
