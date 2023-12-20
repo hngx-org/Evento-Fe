@@ -66,7 +66,7 @@ const Index = () => {
   return (
     <>
       <Homenav />
-      <div className="flex justify-center my-20 items-center m-auto">
+      <div className="flex justify-center my-20 w-[50%] items-center m-auto">
         <div
           className="rounded-[8px] bg-[#fefefe] p-[80px] "
           style={{
@@ -115,6 +115,7 @@ const Index = () => {
                 onBlur={() => setPasswordFocus(false)}
                 className="outline-none text-[#c0c0c0] text-[14px] leading-[20.3px] font-[400] "
                 type={seePassword ? 'text' : 'password'}
+requried
                 placeholder="Password"
                id="password"
               name="password"
