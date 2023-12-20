@@ -145,7 +145,7 @@ function SignIn() {
                 Forgot password?
               </Link>
             </div>
-            <button
+            <Button
               style={{
                 boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
               }}
@@ -155,7 +155,7 @@ function SignIn() {
                 disabled={!isChecked}
             >
               Continue
-            </button>
+            </Button>
           </form>
           <div className="flex gap-2 text-[16px] font-[400] leading-6 text-[#111] ">
             <p>Don&apos;t have an account?</p>
