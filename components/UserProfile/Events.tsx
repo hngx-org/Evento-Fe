@@ -40,6 +40,8 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
 
   const userId = getUserId();
 
+  const isSmallScreen = window.innerWidth < 768;
+
   const closeModal = (event: Event) => {
     const target = event.target as HTMLElement;
     // console.log(target);
@@ -85,8 +87,14 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
 
   return (
     <div className="px-4 py-8 w-full bg-white-100 rounded-lg">
-      <div className="flex flex-col gap-8">
-        {events?.map((event, index) => <ListEventCard event={event} key={index} past={false} />)}
+      <div className={`flex flex-col gap-8`}>
+        {events?.map((event, index) =>
+          isSmallScreen ? (
+            <GridEventCard event={event} key={index} past={past} />
+          ) : (
+            <ListEventCard event={event} key={index} past={past} />
+          ),
+        )}
       </div>
       {/* <div className="timeline" id="events">
         <div className="py-4 flex flex-col gap-8">
