@@ -309,3 +309,22 @@ export const finishReset = async (props: { UserID: string; password: string }) =
     throw e?.response?.data || { message: e.message };
   }
 };
+
+export const loginWithGoogle = async (userData: { name: string; email: string; imageUrl: string; id: string }) => {
+  try {
+    const res = await $AuthHttp.post('/login/google', userData);
+    if (res?.status === 200) {
+      toast.success('Google login successful!');
+    }
+    return res?.data;
+  } catch (e: any) {
+    // Handle errors and toast appropriate messages
+    if (e?.response?.status === 400) {
+      toast.error('Bad request. Please check your input.');
+    } else {
+      toast.error('An error occurred during Google login. Please try again later.');
+    }
+
+    throw e?.response?.data || { message: e.message };
+  }
+};

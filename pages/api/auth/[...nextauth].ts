@@ -1,6 +1,8 @@
 import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
+import { loginWithGoogle } from '@/http/authapi';
+import { toast } from 'react-toastify';
 
 const options = {
   providers: [
@@ -23,6 +25,21 @@ const options = {
         console.log('user', user);
       }
       return { user, token };
+    },
+
+    async loginUserWithGoogle(user: { name: any; email: any; imageUrl: any; id: any }) {
+      try {
+        await loginWithGoogle({
+          name: user.name,
+          email: user.email,
+          imageUrl: user.imageUrl,
+          id: user.id,
+        });
+        toast.success('Login with Google successful!');
+      } catch (error) {
+        console.error('Error during Google login:', error);
+        toast.error('An error occurred during Google login. Please try again later.');
+      }
     },
 
     async session({ session, token }: { session: any; token: any }) {
