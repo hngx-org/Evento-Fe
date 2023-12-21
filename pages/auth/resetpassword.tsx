@@ -2,15 +2,15 @@
 
 import { Input } from '@ui/NewInput';
 import Button from '@ui/NewButton';
-import Image from 'next/image';
 import React, { useState } from 'react';
 import Homenav from '@/components/Home/homenav';
-import Sucessemail from '@/components/components/modal/auth/Sucessemail';
-import { resetPassword } from '@/http/authapi';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { Montserrat, Nunito, Work_Sans } from 'next/font/google';
 import PasswordPopover from '@ui/PasswordPopover';
 import { Eye, EyeSlash, Call } from 'iconsax-react';
+import { finishReset } from '@/http/authapi';
+import { ResetPasswordProps } from '@/@types';
+import { toast } from 'react-toastify';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -30,24 +30,37 @@ const workSans = Work_Sans({
   variable: '--font-work-sans',
 });
 
-const ForgotPassword: React.FC = () => {
+const ResetPassword: React.FC<ResetPasswordProps> = () => {
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const isResetDisabled = password !== confirmPassword || password === '' || confirmPassword === '';
-  const [modOpen, setOpen] = useState(false);
-  const isClose = () => setOpen(false);
-  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { userID, token } = router.query;
+
+  const [formData, setFormData] = useState({
+    userID: userID,
+    password: '',
+    confirmPassword: '',
+  });
+  const isResetDisabled =
+    formData.password !== formData.confirmPassword || formData.password === '' || formData.confirmPassword === '';
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      toast.error('Passwords do not match. Please enter matching passwords.');
+      return;
+    }
+
+    try {
+      await finishReset({
+        UserID: formData.userID as string,
+        password: formData.password,
+      });
+    } catch (error) {
+      console.error('Password reset error:', error);
+    }
+  };
 
   return (
     <>
@@ -61,20 +74,20 @@ const ForgotPassword: React.FC = () => {
                 Enter New Password
               </span>
 
-              <form>
+              <form onSubmit={handleResetPassword}>
                 <div>
                   <label htmlFor="password" className={`${workSans.className} text-md text-black-main font-medium`}>
                     New Password
                   </label>
-                  <PasswordPopover password={password}>
+                  <PasswordPopover password={formData.password}>
                     <Input
                       id="password"
                       name="password"
                       type={defaultInpType}
                       placeholder="Enter New Passworrd"
                       autoComplete="new-password"
-                      value={password}
-                      onChange={handlePasswordChange}
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                       required
                       rightIcon={
                         defaultInpType === 'text' ? (
@@ -100,8 +113,8 @@ const ForgotPassword: React.FC = () => {
                     placeholder="Confirm Password"
                     type="password"
                     autoComplete="new-password"
-                    value={confirmPassword}
-                    onChange={handleConfirmPasswordChange}
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                     required
                     rightIcon={
                       defaultInpType === 'text' ? (
@@ -113,13 +126,7 @@ const ForgotPassword: React.FC = () => {
                     className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                   />
                 </div>
-                {/* </PasswordPopover> */}
-                <Button
-                  className="w-full rounded-md my-3 mt-9 bg-primary-100"
-                  type="submit"
-                  //   isLoading={isLoading}
-                  disabled={isResetDisabled}
-                >
+                <Button className="w-full rounded-md my-3 mt-9 bg-primary-100" type="submit" disabled={isResetDisabled}>
                   Complete Reset
                 </Button>
               </form>
@@ -131,4 +138,4 @@ const ForgotPassword: React.FC = () => {
   );
 };
 
-export default ForgotPassword;
+export default ResetPassword;
