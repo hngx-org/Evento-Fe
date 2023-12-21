@@ -10,27 +10,14 @@ import SignIn from '../components/modal/auth/SignIn';
 import Button from '@ui/NewButton';
 
 function Homenav() {
-  const { isOpen, onClose, onOpen } = useDisclosure();
   const [isToggle, setToggle] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalType, setModalType] = useState<'signin' | 'signup'>('signin');
-
-  const [modOpen, setOpen] = useState(false);
-  const Openmod = () => setOpen(true);
-  const isClose = () => setOpen(false);
 
   const handleToggle = () => {
     setToggle(!isToggle);
-    console.log('toggle', isToggle);
   };
 
-  const router = useRouter();
-  const activeLink = (path: string) =>
-    router.pathname === path
-      ? 'text-green-950 group-hover:text-white text-base font-semibold  leading-normal tracking-tight'
-      : 'text-gray-600 text-base font-semibold  leading-normal tracking-tight';
   return (
-    <nav className="w-full py-3  bg-white-100 justify-between items-center px-4  relative ">
+    <nav className="w-full py-3  bg-white-100 justify-between items-center px-4  relative z-20">
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
         <div className="flex gap-14">
           <Link href="/">
@@ -39,54 +26,43 @@ function Homenav() {
         </div>
         <div className="hidden lg:block md:block">
           <div className="flex gap-7">
-            <button
-              onClick={Openmod}
-              className="py-3 px-10 border-primary-100 border bg-white text-primary-100 z-10 hover:bg-white hover:text-secondary-300 rounded-lg font-bold  transition-all duration-300 ease-in-out"
-            >
-              Sign in
+            <button className="py-3 px-10 border-primary-100 border bg-white text-primary-100 z-10 hover:bg-white hover:text-secondary-300 rounded-lg font-bold  transition-all duration-300 ease-in-out">
+              <Link href="/auth/sign-in">Sign in</Link>
             </button>
 
             <Button
-              onClick={onOpen}
               type="button"
               className="py-3 px-7 border border-primary-100 hover:border-primary-100 z-10  rounded-lg font-bold  text-white-100 transition-all duration-300 ease-in-out bg-primary-100"
             >
-              Create Event
+              <Link href="/auth/sign-up">Create Event</Link>
             </Button>
           </div>
         </div>
 
         <div
-          className={`flex items-center lg:hidden md:hidden gap-4 lg:static absolute lg:flex-row flex-col ${
+          className={`flex items-center lg:hidden md:hidden gap-4 lg:static absolute lg:flex-row flex-col z-20 ${
             isToggle ? 'left-0' : 'left-[-100dvw]'
-          }  bg-white-100 w-[100%] py-8 lg:py-0 lg:w-auto lg:opacity-100 transition-all ease-in-out duration-500 top-[9vh]  z-[1]`}
+          }  bg-white-100 w-[100%] py-8 lg:py-0 lg:w-auto lg:opacity-100 transition-all ease-in-out duration-500 top-[9vh]  z-[20]`}
         >
-          <div className="w-[267px] h-16 p-2 justify-center items-center gap-4 lg:flex-row flex flex-col mt-20  lg:mt-0">
+          <div className="w-[267px] h-16 p-2 justify-center items-center gap-4 lg:flex-row flex flex-col mt-20  lg:mt-0 z-20">
             <div className="justify-center items-center lg:w-auto w-[100%] gap-2 lg:flex-row flex flex-col">
-              <button
-                className="text-center text-primary-100 text-base font-bold leading-normal tracking-tight px-6 py-3 bg-secondary-100 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]"
-                onClick={Openmod}
-              >
-                Sign In
+              <button className="text-center text-primary-100 text-base font-bold leading-normal tracking-tight px-6 py-3 bg-secondary-100 bg-opacity-50 rounded-lg justify-center items-center gap-4 flex lg:w-auto w-[100%]">
+                <Link href="/auth/sign-in">Sign in</Link>
               </button>
 
               <button
-                onClick={onOpen}
                 style={{
                   color: 'white',
                 }}
                 className="px-6 py-3 bg-primary-100 rounded-lg justify-center items-center gap-4 flex text-center  text-base font-bold  leading-normal tracking-tight text-white lg:w-auto w-[100%]"
               >
-                Create Event
+                <Link href="/auth/sign-up">Create Event</Link>
               </button>
             </div>
           </div>
         </div>
         <MenuIcon toggle={isToggle} style="lg:hidden md:hidden" toggler={handleToggle} />
       </div>
-      <AuthModal visible={modalVisible} type={modalType} onCancel={() => setModalVisible(false)} />
-      <SignUp isOpen={isOpen} onClose={onClose} />
-      <SignIn isOpen={modOpen} onClose={isClose} />
     </nav>
   );
 }

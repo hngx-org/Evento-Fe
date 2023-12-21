@@ -6,33 +6,88 @@ import { UserSocials, editUserSocials, getUserSocials } from '@/http/settingsapi
 
 function SociaMedia() {
   const [formData, setFormData] = useState<UserSocials>({
-    websiteURL: '',
-    twitterURL: '',
-    facebookURL: '',
-    instagramURL: '',
+    websiteURL: 'https://',
+    twitterURL: 'https://twitter.com/',
+    facebookURL: 'https://facebook.com/',
+    instagramURL: 'https://instagram.com/',
   });
   // console.log(formData);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    getUserSocials(setFormData);
+    getUserSocials(setFormData, setSuccess);
   }, []);
+
+  useEffect(() => {
+    if (success) {
+      const updatedFormData = { ...formData };
+      for (const key in formData) {
+        if (formData[key as keyof typeof formData] === '') {
+          switch (key) {
+            case 'websiteURL':
+              updatedFormData.websiteURL = 'https://';
+              break;
+            case 'twitterURL':
+              updatedFormData.twitterURL = 'https://twitter.com/';
+              break;
+            case 'facebookURL':
+              updatedFormData.facebookURL = 'https://facebook.com/';
+              break;
+            case 'instagramURL':
+              updatedFormData.instagramURL = 'https://instagram.com/';
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      setFormData(updatedFormData);
+    }
+  }, [success]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
+    let updatedValue = value;
+    if (name === 'websiteURL' && !value.startsWith('https://')) {
+      updatedValue = 'https://' + value.substring(8);
+    } else if (name === 'twitterURL' && !value.startsWith('https://twitter.com/')) {
+      updatedValue = 'https://twitter.com/' + value.substring(20);
+    } else if (name === 'facebookURL' && !value.startsWith('https://facebook.com/')) {
+      updatedValue = 'https://facebook.com/' + value.substring(21);
+    } else if (name === 'instagramURL' && !value.startsWith('https://instagram.com/')) {
+      updatedValue = 'https://instagram.com/' + value.substring(21);
+    }
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 
   const handleSubmit = () => {
-    // console.log('clicked');
-    editUserSocials(formData, setLoading);
-    setTimeout(() => {
-      getUserSocials(setFormData);
-    }, 3000);
+    const fieldsWithValues = Object.fromEntries(
+      Object.entries(formData).filter(([key, value]) => {
+        switch (key) {
+          case 'websiteURL':
+            return value.startsWith('https://') && value.length > 'https://'.length;
+          case 'twitterURL':
+            return value.startsWith('https://twitter.com/') && value.length > 'https://twitter.com/'.length;
+          case 'facebookURL':
+            return value.startsWith('https://facebook.com/') && value.length > 'https://facebook.com/'.length;
+          case 'instagramURL':
+            return value.startsWith('https://instagram.com/') && value.length > 'https://instagram.com/'.length;
+          default:
+            return true;
+        }
+      }),
+    );
+
+    editUserSocials(fieldsWithValues, setLoading);
+    // setTimeout(() => {
+    //   getUserSocials(setFormData);
+    // }, 3000);
   };
 
   return (

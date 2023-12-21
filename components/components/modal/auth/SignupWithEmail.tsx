@@ -16,14 +16,6 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
 
-  useEffect(() => {
-    if (loading) {
-      setTimeout(() => {
-        setLoading(!loading);
-      }, 2000);
-    }
-  }, [loading]);
-
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -138,7 +130,7 @@ function SignUp({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
                 required
               />
             </div>
-            <div className="mb-6">
+            <div className="mb-3 mt-2">
               <label className="flex items-center">
                 <input
                   type="checkbox"

@@ -36,6 +36,7 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
   const [listView, setListView] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterList, setFilterList] = useState<string[]>([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const router = useRouter();
 
   const userId = getUserId();
@@ -67,6 +68,18 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
     }
   }, [isModalOpen]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const openModal = () => {
     if (!isModalOpen) {
       // console.log('openModal');
@@ -85,8 +98,14 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
 
   return (
     <div className="px-4 py-8 w-full bg-white-100 rounded-lg">
-      <div className="flex flex-col gap-8">
-        {events?.map((event, index) => <ListEventCard event={event} key={index} past={false} />)}
+      <div className={`flex flex-col gap-8`}>
+        {events?.map((event, index) =>
+          isSmallScreen ? (
+            <GridEventCard event={event} key={index} past={past} />
+          ) : (
+            <ListEventCard event={event} key={index} past={past} />
+          ),
+        )}
       </div>
       {/* <div className="timeline" id="events">
         <div className="py-4 flex flex-col gap-8">

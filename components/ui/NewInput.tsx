@@ -1,9 +1,16 @@
 import { VariantProps, cva } from 'class-variance-authority';
 import React, { DetailedHTMLProps, InputHTMLAttributes, SelectHTMLAttributes } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { Nunito } from 'next/font/google';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
 const inputVariants = cva(
-  'relative px-4 py-3 flex items-center justify-center gap-3 w-fit h-[48px] rounded-[10px] font-manropeL text-dark-100 hide-caret transition-all select-none focus-within:border-brand-green-primary ',
+  'relative px-4 py-3 flex items-center justify-center gap-3 w-fit h-[48px] rounded-[10px] text-dark-100 hide-caret transition-all select-none focus-within:border-primary-100 ',
   {
     variants: {
       intent: {
@@ -130,9 +137,7 @@ export function Input({
   const classNames = twMerge(
     inputVariants({ intent, inputSize }),
     className,
-    disabled || isLoading
-      ? 'bg-brand-disabled opacity-[.8] border-[1px] border-brand-disabled2 cursor-not-allowed'
-      : '',
+    disabled || isLoading ? 'bg-brand-disabled opacity-[.8] border-[1px]border-brand-disabled2 cursor-not-allowed' : '',
   );
   return (
     <div className={classNames}>

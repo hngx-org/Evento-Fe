@@ -22,7 +22,12 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
     const userId = getUserId();
     if (event.organizerID === userId) {
       router.push(`event-management/${event.eventID}`);
-    } else router.push(`/user-invite/${event.eventID}`);
+      // router.push(`/event-management/participants/${event.eventID}`);
+    } else {
+      router.push(`/user-invite/${event.eventID}`);
+
+      // router.push(`/event-management/participants/${event.eventID}`);
+    }
   };
 
   const userId = getStoredUserId();
