@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import { Eye, EyeSlash } from 'iconsax-react';
 import { MdOutlineMail } from 'react-icons/md';
 import GoogleButton from '@ui/GoogleButton';
-import { Montserrat, Nunito } from 'next/font/google';
+import { Montserrat, Nunito, Work_Sans } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -22,6 +22,12 @@ const nunito = Nunito({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-nunito',
+});
+
+const workSans = Work_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-work-sans',
 });
 
 const SignIn = () => {
@@ -83,7 +89,7 @@ const SignIn = () => {
               </div>
 
               <form action="" className="flex flex-col  z-10" onSubmit={handleSubmit}>
-                <label htmlFor="Business Email" className="font-bold">
+                <label htmlFor="Business Email" className={`${workSans.className} text-md text-black-main font-medium`}>
                   Email
                 </label>
                 <Input
@@ -94,10 +100,10 @@ const SignIn = () => {
                   type="email"
                   placeholder="Enter Email Address"
                   required
-                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
-                <label htmlFor="Password" className="font-bold mt-4 ">
+                <label htmlFor="Password" className={`${workSans.className} text-md text-black-main font-medium`}>
                   Password
                 </label>
 
@@ -116,7 +122,7 @@ const SignIn = () => {
                       <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                     )
                   }
-                  className="mt-1 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
                 <div className="pt-1 flex items-center justify-between">
                   <div>
@@ -151,7 +157,7 @@ const SignIn = () => {
               </form>
             </div>
 
-            <span className="text-lg pt-5  relative block text-center md:text-black z-10">
+            <span className="text-lg relative block text-center md:text-black z-10">
               Don&apos;t have an account?
               <Link href="/auth/sign-up" className="ml-1 underline text-primary-100 font-montserrat">
                 Sign up

@@ -11,6 +11,25 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import SucessModal from '@/components/components/modal/auth/SucessModal';
+import { Montserrat, Nunito, Work_Sans } from 'next/font/google';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const workSans = Work_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-work-sans',
+});
 
 const SignUp = () => {
   const [defaultInpTypeNew, setDefaultInpTypeNew] = useState<'password' | 'text'>('password');
@@ -56,11 +75,13 @@ const SignUp = () => {
     <>
       <section className="md:w-[80%] md:mx-auto h-[100vh]">
         <Homenav />
-        <div className="lg:w-[60%] justify-center items-center lg:mx-auto lg:my-auto ">
-          <div className="px-3 ">
-            <div className="relative rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
-              <h1 className="text-center font-[600]  text-[28px]">Welcome to Evento</h1>
-              <span className="block text-center font-[400] text-[20px] mt-2 mb-6 ">Begin your journey</span>
+        <div className="lg:w-[50%] justify-center items-center lg:mx-auto lg:my-[20px] pt-[20px] lg:shadow-lg">
+          <div className="px-3">
+            <div className="relative sm:pt-[30px] sm:pb-[24px] rounded-[16px] bg-white-100 lg:px-[40px]">
+              <h1 className={`${montserrat.className} text-center font-[600]  text-[28px]`}>Welcome to Evento</h1>
+              <span className={`${nunito.className} block text-center font-[400] text-[20px] mt-2 mb-6 text-dark-400 `}>
+                Sign up to continue using Evento
+              </span>
 
               <GoogleButton />
               <div className="seperator flex items-center space-x-2 my-4 ">
@@ -70,7 +91,7 @@ const SignUp = () => {
               </div>
 
               <form action="" className="flex flex-col mt-4 z-10" onSubmit={handleSubmit}>
-                <label htmlFor="First Name" className="font-bold">
+                <label htmlFor="First Name" className={`${workSans.className} text-md text-black-main font-medium`}>
                   First Name
                 </label>
                 <Input
@@ -81,10 +102,10 @@ const SignUp = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
-                <label htmlFor="lastname" className="font-bold">
+                <label htmlFor="lastname" className={`${workSans.className} text-md text-black-main font-medium`}>
                   Last Name:
                 </label>
                 <Input
@@ -95,10 +116,10 @@ const SignUp = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
-                <label htmlFor="email" className="font-bold">
+                <label htmlFor="email" className={`${workSans.className} text-md text-black-main font-medium`}>
                   Email
                 </label>
                 <Input
@@ -108,10 +129,10 @@ const SignUp = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
-                <label htmlFor="Password" className="font-bold mt-1">
+                <label htmlFor="Password" className={`${workSans.className} text-md text-black-main font-medium`}>
                   Password
                 </label>
                 <PasswordPopover password={formData.password}>
@@ -130,7 +151,7 @@ const SignUp = () => {
                         <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                       )
                     }
-                    className="mt-1 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                    className="mt-1 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
                   />
                 </PasswordPopover>
 
@@ -141,21 +162,25 @@ const SignUp = () => {
                       name="agreeToTerms"
                       checked={isChecked}
                       onChange={() => setIsChecked(!isChecked)}
-                      className="mr-2   accent-primary-100"
+                      className="mr-2   w-[20px] h-[20px] rounded-lg   accent-primary-100"
                     />
-                    <span className="text-md font-medium text-gray-600">I agree to the terms and conditions</span>
+                    <span className="text-[16px] font-medium  text-gray-600">I agree to the terms and conditions</span>
                   </label>
                 </div>
 
-                <Button className="w-full rounded-md my-3 bg-primary-100" type="submit" disabled={!isChecked}>
+                <Button
+                  className="w-full rounded-md my-3 text-[16px] bg-primary-100"
+                  type="submit"
+                  disabled={!isChecked}
+                >
                   Sign up
                 </Button>
               </form>
             </div>
 
-            <span className=" text-white mb-8 mt-5 text-lg  relative block text-center md:text-black z-10">
+            <span className=" text-white mb-8 mt-2 text-lg  relative block text-center md:text-black z-10">
               Aready have an account?
-              <Link href="/auth/sign-in" className="ml-1 underline">
+              <Link href="/auth/sign-in" className="ml-1 underline text-primary-100">
                 Login
               </Link>
             </span>
