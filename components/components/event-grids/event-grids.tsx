@@ -6,6 +6,8 @@ import { EventsProps } from '@/@types';
 function EventGrids({ events, title, isLoading }: { title?: string; events: EventsProps[]; isLoading: boolean }) {
   const [limit, setLimit] = useState<number>(5);
 
+  events.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getDate());
+
   return (
     <div className="max-w-[1240px] mx-auto mb-10 lg:mb-24">
       <span className="text-Grey-G80">Discover</span>
@@ -14,25 +16,27 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6 lg:gap-x-7 lg:gap-y-8 mb-8 sm:mb-12">
           {!isLoading ? (
             <>
-              {events.map((item, index) => {
-                if (index > limit) return;
-                return (
-                  <EventCard
-                    key={item.eventID}
-                    id={item.eventID}
-                    imagePath={
-                      item.imageURL === 'https://example.com/image.jpg' ? '/assets/default-banner.jpg' : item.imageURL
-                    }
-                    date={item.startDate}
-                    title={item.title}
-                    location={item.location}
-                    price={item?.entranceFee ?? 'free'}
-                    participants={item.participants}
-                    time={item.time}
-                    organizerId={item?.organizerID}
-                  />
-                );
-              })}
+              {events
+                .sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+                .map((item, index) => {
+                  if (index > limit) return;
+                  return (
+                    <EventCard
+                      key={item.eventID}
+                      id={item.eventID}
+                      imagePath={
+                        item.imageURL === 'https://example.com/image.jpg' ? '/assets/default-banner.jpg' : item.imageURL
+                      }
+                      date={item.startDate}
+                      title={item.title}
+                      location={item.location}
+                      price={item?.entranceFee ?? 'free'}
+                      participants={item.participants}
+                      time={item.time}
+                      organizerId={item?.organizerID}
+                    />
+                  );
+                })}
             </>
           ) : (
             <div className="grid place-content-center sm:col-span-2 lg:col-span-3 py-10 w-full">

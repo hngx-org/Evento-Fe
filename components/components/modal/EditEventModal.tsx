@@ -25,6 +25,7 @@ const nunito = Nunito({
 });
 
 function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
+  console.log(eventDetails);
   const initialState: EventDataProps = {
     title: eventDetails?.title,
     description: eventDetails?.description,
@@ -130,8 +131,8 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
         title,
         description: descriptionContent,
         imageURL,
-        startDate,
-        endDate,
+        startDate: selectedStartDate?.toISOString() ?? startDate,
+        endDate: selectedEndDate?.toISOString() ?? endDate,
         locationType,
         time: startTime,
         location,
@@ -142,6 +143,7 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
         categoryName: categoryName === 'other' ? otherCategory : categoryName,
         ticketType,
         ticketPrice: parseInt(entranceFee),
+        ticketID: eventDetails.tickets[0].ticketID,
       },
       setIsUpdating,
       eventDetails?.eventID,
