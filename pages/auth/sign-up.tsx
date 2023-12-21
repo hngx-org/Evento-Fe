@@ -58,7 +58,7 @@ const SignUp = () => {
         <Homenav />
         <div className="lg:w-[60%] justify-center items-center lg:mx-auto lg:my-auto ">
           <div className="px-3 ">
-            <div className="relative py-4 rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
+            <div className="relative rounded-[16px] bg-white-100 shadow-lg px-3 md:shadow-none">
               <h1 className="text-center font-[600]  text-[28px]">Welcome to Evento</h1>
               <span className="block text-center font-[400] text-[20px] mt-2 mb-6 ">Begin your journey</span>
 
@@ -162,15 +162,6 @@ const SignUp = () => {
           </div>
         </div>
 
-        <div className="fixed -bottom-40 md:hidden z-[-20]">
-          <Image
-            src="/mobile.svg"
-            alt="backgroud_ng_for_mobile"
-            width={140}
-            height={50}
-            className="h-[739.363px] w-[684.675px]"
-          />
-        </div>
         <SucessModal isOpen={modOpen} onClose={isClose} />
       </section>
     </>

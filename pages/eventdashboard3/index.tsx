@@ -211,7 +211,7 @@ const Dashboard3: React.FC = () => {
       ;
       <div className={`mx-auto max-w-[1260px]  md:pl-6 px-[15px] lg:px-0 my-10   ${nunito.className} `}>
         <section className="mb-14 ">
-          <div className={`text-2xl font-medium mb-10 ${montserrat.className} `}>Welcome {userProfile.firstName},</div>
+          <div className={`text-2xl font-medium mb-10 ${montserrat.className}`}>Welcome {userProfile.firstName},</div>
           <div className="upcomingRest flex flex-wrap lg:justify-between gap-8 md:gap-10 w-full ">
             <div className="w-[163px] max-w-[calc(50%-16px)]  md:w-[360px] md:max-w-[calc(50%-40px)]  lg:max-w-none flex flex-shrink-0 justify-between p-6 rounded-lg whitespace-nowrap shadow-[0px_1px_2px_0px_rgba(16,24,40,0.06),0px_1px_3px_0px_rgba(16,24,40,0.10)]">
               <div className="flex flex-col gap-3 justify-between">
