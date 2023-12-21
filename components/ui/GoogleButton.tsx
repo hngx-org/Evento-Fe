@@ -11,7 +11,7 @@ export default function GoogleButton() {
       onClick={() => signIn('google')}
     >
       <Image src="/google.svg" alt="Google icon" width={20} height={20} />
-      <span className="text-center text-stone-900 text-[16px] font-normal leading-normal">Log in with Google</span>
+      <span className="text-center text-stone-900 text-[16px] font-normal leading-normal">Continue with Google</span>
     </Button>
   );
 }
