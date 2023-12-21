@@ -30,6 +30,7 @@ function AuthenticatedHeader() {
     profileImage: '',
   });
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
+  const router = useRouter();
   // console.log(notifications);
 
   useEffect(() => {
@@ -114,10 +115,10 @@ function AuthenticatedHeader() {
   // };
 
   const handleLogout = async () => {
-    const socket = io('https://806f-41-90-184-91.ngrok-free.app');
+    // const socket = io('https://806f-41-90-184-91.ngrok-free.app');
     // setIsLoading(true);
     logoutUser();
-    socket.disconnect();
+    // socket.disconnect();
   };
 
   return (
@@ -216,23 +217,6 @@ function AuthenticatedHeader() {
               </p>
             </div>
             <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
-              <Link href="/explore" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
-                <Profile size={16} color="#3C3C3C" />
-                Explore
-              </Link>
-              {/* <Link
-                href="/event-management"
-                className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2"
-              >
-                <Profile size={16} color="#3C3C3C" />
-                Manage Events
-              </Link> */}
-              <Link href="/create-events" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
-                <Add size={16} color="#3C3C3C" />
-                Create Event
-              </Link>
-            </div>
-            <div className="space-y-6 border-b border-b-Grey-G30 pb-4 pt-2">
               <Link href="/profile" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2">
                 <Profile size={16} color="#3C3C3C" />
                 View Profile
@@ -242,10 +226,10 @@ function AuthenticatedHeader() {
                 Settings
               </Link>
             </div>
-            <Link href="/" className="text-Grey-G500 font-medium text-sm flex items-center gap-2 px-2 py-2">
-              <Button onClick={handleLogout} isLoading={isloading}>
-                <LogoutCurve size={16} color="#3C3C3C" />
-                Logout
+            <Link href="/">
+              <Button onClick={handleLogout} isLoading={isloading} className="px-2 h-9">
+                <LogoutCurve size={18} color="#3C3C3C" />
+                <p className="text-Grey-G500 font-medium text-sm">Logout</p>
               </Button>
             </Link>
           </div>
@@ -274,7 +258,7 @@ function AuthenticatedHeader() {
                   {userProfile.firstName} {userProfile.lastName}
                 </p>
               </div>
-              <div className="space-y-2 border-b border-b-Grey-G30 pb-4">
+              <div className="space-y-2 border-b border-b-Grey-G30 pb-3">
                 <Link href="/profile">
                   <div className="flex items-center gap-2 p-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
                     <Profile size={18} color="#3C3C3C" />
@@ -290,7 +274,7 @@ function AuthenticatedHeader() {
               </div>
               <div className="flex items-center gap-2 cursor-pointer hover:bg-Grey-G20 rounded-lg">
                 <Link href="/">
-                  <Button onClick={handleLogout} isLoading={isloading}>
+                  <Button onClick={handleLogout} isLoading={isloading} className="px-2 h-9">
                     <LogoutCurve size={18} color="#3C3C3C" />
                     <p className="text-Grey-G500 font-medium text-sm">Logout</p>
                   </Button>

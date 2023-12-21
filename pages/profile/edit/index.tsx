@@ -1,12 +1,20 @@
 import { Edit } from 'iconsax-react';
 
 import Button from '@/components/ui/Button';
+import ButtonB from '@/components/ui/NewButton';
 import Input from '@/components/UserProfile/Input';
 import AuthLayout from '@/layout/Authlayout';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Montserrat, Nunito } from 'next/font/google';
-import { UserProfile2, editSocialLinks, editUserProfile, postProfilePicture, socialLinks } from '@/http/profileapi';
+import {
+  UserProfile2,
+  editProfile,
+  editSocialLinks,
+  editUserProfile,
+  postProfilePicture,
+  socialLinks,
+} from '@/http/profileapi';
 import Image from 'next/image';
 import { UserSocials, UserProfile, getUserSocials, getUserProfile } from '@/http/settingsapi';
 
@@ -30,6 +38,7 @@ const EditProfilePage = () => {
     email: '',
     bio: '',
   });
+  // console.log(formData);
   const [socialLinks, setSocialLinks] = useState<UserSocials>({
     websiteURL: 'https://',
     twitterURL: 'https://twitter.com/',
@@ -38,6 +47,7 @@ const EditProfilePage = () => {
   });
   const [reRoute, setReRoute] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getUserProfile(setFormData);
@@ -133,14 +143,34 @@ const EditProfilePage = () => {
   }, []);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
-    // console.log(formData);
-    // console.log(socialLinks);
+    const filteredFormData = Object.fromEntries(Object.entries(formData).filter(([key, value]) => value.trim() !== ''));
 
-    editUserProfile(formData, () => {
+    const socialFieldsWithValues = Object.fromEntries(
+      Object.entries(socialLinks).filter(([key, value]) => {
+        switch (key) {
+          case 'websiteURL':
+            return value.startsWith('https://') && value.length > 'https://'.length;
+          case 'twitterURL':
+            return value.startsWith('https://twitter.com/') && value.length > 'https://twitter.com/'.length;
+          case 'facebookURL':
+            return value.startsWith('https://facebook.com/') && value.length > 'https://facebook.com/'.length;
+          case 'instagramURL':
+            return value.startsWith('https://instagram.com/') && value.length > 'https://instagram.com/'.length;
+          default:
+            return true;
+        }
+      }),
+    );
+
+    editProfile(setLoading, filteredFormData, socialFieldsWithValues, () => {
       setReRoute(true);
     });
 
-    editSocialLinks(socialLinks);
+    // editUserProfile(formData, () => {
+    //   setReRoute(true);
+    // });
+
+    // editSocialLinks(socialLinks);
   };
   return (
     <AuthLayout>
@@ -148,7 +178,6 @@ const EditProfilePage = () => {
         className={` ${nunito.className} flex justify-center w-full h-fit min-h-screen bg-[#F5F5F5] pt-[40px] pb-[55px] md:pt-[64px]   md:pb-[219px] lg:pt-[107px]  lg:pb-[377px] flex-col items-center gap-y-[32px]  overflow-hidden `}
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(socialLinks);
           submitForm(e);
         }}
       >
@@ -290,28 +319,30 @@ const EditProfilePage = () => {
             </div>
           </div>
           <div className="button flex flex-col md:flex-row gap-[32px]  md:self-center">
-            <Button
-              handleClick={() => {
+            <ButtonB
+              onClick={() => {
                 // closeModal();
                 // route back to peofile page
-                console.log('close modal');
                 router.push('/profile');
               }}
-              styles={'!bg-white-100 gap-2 text-primary-100 border border-primary-100 w-full md:w-[187px] py-4  '}
+              className={
+                '!bg-white-100 gap-2 text-primary-100 border border-primary-100 rounded-lg w-full md:w-[187px] h-14'
+              }
               type={'button'}
               title={'edit profile'}
               disabled={false}
             >
               Cancel
-            </Button>
-            <Button
-              styles={' text-white-100  w-full md:w-[187px] py-4 '}
+            </ButtonB>
+            <ButtonB
+              className={'text-white-100 bg-primary-100 rounded-lg w-full md:w-[187px] h-14'}
               type={'submit'}
               title={'save profile'}
               disabled={false}
+              isLoading={loading}
             >
               Save profile
-            </Button>
+            </ButtonB>
           </div>
         </section>
 
