@@ -52,7 +52,7 @@ const SignIn = () => {
 
   return (
     <>
-      <section className="md:w-[80%] md:mx-auto h-[100vh] bg-white-100">
+      <section className="md:w-[80%] md:mx-auto h-[100vh]">
         <Homenav />
         <div className="lg:w-[60%] justify-center items-center lg:mx-auto lg:my-auto ">
           <div className="px-3 ">
@@ -80,9 +80,8 @@ const SignIn = () => {
                   onChange={handleChange}
                   type="email"
                   placeholder="Enter Email Address"
-                  rightIcon={<MdOutlineMail color="#777" />}
                   required
-                  className="mt-1 mb-3 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
                 <label htmlFor="Password" className="font-bold mt-4 ">
@@ -104,7 +103,7 @@ const SignIn = () => {
                       <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                     )
                   }
-                  className="mt-1 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
                 <div className="my-3 flex justify-between ">
                   <label className="flex items-center">
@@ -117,9 +116,13 @@ const SignIn = () => {
                     />
                     <span className="text-md font-medium text-gray-600">Remember Me</span>
                   </label>
-                  <button className="text-orange-600 text-base  hover:underline font-normal leading-normal">
+
+                  <Button
+                    className="text-orange-600 text-base  hover:underline font-normal leading-normal"
+                    href="/auth/forgetpassword"
+                  >
                     Forgot password?
-                  </button>
+                  </Button>
                 </div>
 
                 <Button

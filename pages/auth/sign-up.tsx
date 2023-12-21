@@ -57,7 +57,7 @@ const SignUp = () => {
 
   return (
     <>
-      <section className="md:w-[80%] md:mx-auto h-[100vh] bg-white-100">
+      <section className="md:w-[80%] md:mx-auto h-[100vh]">
         <Homenav />
         <div className="lg:w-[60%] justify-center items-center lg:mx-auto lg:my-auto ">
           <div className="px-3 ">
@@ -85,7 +85,7 @@ const SignUp = () => {
                   onChange={handleChange}
                   rightIcon={<FiUser color="#777" />}
                   required
-                  className="mt-1 mb-3 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
                 <label htmlFor="lastname" className="font-bold">
@@ -100,7 +100,7 @@ const SignUp = () => {
                   onChange={handleChange}
                   rightIcon={<FiUser color="#777" />}
                   required
-                  className="mt-1 mb-3 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
                 <label htmlFor="email" className="font-bold">
@@ -112,9 +112,8 @@ const SignUp = () => {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  rightIcon={<MdOutlineMail color="#777" />}
                   required
-                  className="mt-1 mb-3 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
 
                 <label htmlFor="Password" className="font-bold mt-1">
@@ -136,7 +135,7 @@ const SignUp = () => {
                         <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                       )
                     }
-                    className="mt-1 p-2 w-full text-black h-[60px] border text-md font-medium rounded-md"
+                    className="mt-1 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                   />
                 </PasswordPopover>
 
