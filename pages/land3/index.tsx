@@ -5,7 +5,7 @@ import Image from 'next/image';
 import FrameA from 'public/Home/homev31.svg';
 import top from '../../public/home3.svg';
 import HeroImg from '@/public/assets/eventDashboard3/avartarCards.svg';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/NewButton';
 import Link from 'next/link';
 import { ArrowRight2 } from 'iconsax-react';
 
@@ -26,9 +26,7 @@ function Home() {
           <div className="sm:w-1/2 space-y-5 sm:pr-8">
             <Link href={'/explore'} className="w-fit">
               <Button
-                styles={
-                  '  h-auto py-4 rounded-lg mb-4 item-center bg-white-100 justify-center font-semibold border border-primary-100 flex gap-2 text-primary-100 text-sm md:text-base tracking-[-0.025rem] whitespace-nowrap'
-                }
+                className="h-auto py-4 rounded-lg mb-4 item-center bg-white-100 justify-center font-semibold border border-primary-100 flex gap-2 text-primary-100 text-sm md:text-base tracking-[-0.025rem] whitespace-nowrap"
                 title={''}
               >
                 {btnText}
@@ -49,7 +47,12 @@ function Home() {
               Join over 12,00+ people in creating events{' '}
             </div>
 
-            <Button type="button" title="upload-button" styles="text-white-N0 font-bold text-sm mt-8 px-5 py-4">
+            <Button
+              type="button"
+              title="upload-button"
+              className="text-white-N0 font-bold text-sm mt-8 px-5 py-4 bg-primary-100"
+              href="/auth/sign-up"
+            >
               Create an Event
             </Button>
           </div>
