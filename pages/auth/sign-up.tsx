@@ -83,7 +83,6 @@ const SignUp = () => {
                   placeholder="Enter First Name"
                   value={formData.firstName}
                   onChange={handleChange}
-                  rightIcon={<FiUser color="#777" />}
                   required
                   className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
@@ -98,7 +97,6 @@ const SignUp = () => {
                   placeholder="Enter Last Name"
                   value={formData.lastName}
                   onChange={handleChange}
-                  rightIcon={<FiUser color="#777" />}
                   required
                   className="mt-1 mb-3 p-5 w-full text-black h-[60px] border text-md font-medium rounded-md"
                 />
