@@ -36,11 +36,11 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
   function convertDate(inputDate: string) {
     const dateObj = new Date(inputDate);
     const monthNamesAbbrev = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
+    const year = dateObj.getFullYear();
     const dayAbbrev = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
     const monthAbbrev = monthNamesAbbrev[dateObj.getMonth()];
     const dayOfMonth = dateObj.getDate();
-    return `${dayAbbrev}. ${monthAbbrev} ${dayOfMonth}`;
+    return `${dayAbbrev}. ${monthAbbrev} ${dayOfMonth}${year !== new Date().getFullYear() ? `, ${year}` : ''}`;
   }
 
   function convertTime(time: string) {
@@ -90,7 +90,7 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
           {participants?.length !== 0 && (
             <div className="flex items-center">
               {participants?.map((item, index) => {
-                if (index >= 4) return;
+                if (index >= 3) return;
                 return (
                   <div key={index} className="h-8 w-8 first:ml-0 -ml-1.5 rounded-full overflow-hidden">
                     <Image

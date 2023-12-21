@@ -191,6 +191,7 @@ export interface EventPayload {
   ticketType: string;
   ticketPrice: number;
   entranceFee?: number;
+  ticketID?: string;
 }
 
 export interface EventParticipant {
