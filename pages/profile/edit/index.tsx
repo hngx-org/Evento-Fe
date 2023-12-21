@@ -1,20 +1,22 @@
 import { Edit } from 'iconsax-react';
 
 import Button from '@/components/ui/Button';
+import ButtonB from '@/components/ui/NewButton';
 import Input from '@/components/UserProfile/Input';
 import AuthLayout from '@/layout/Authlayout';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { Montserrat, Nunito } from 'next/font/google';
 import {
-  UserProfile,
   UserProfile2,
+  editProfile,
   editSocialLinks,
   editUserProfile,
   postProfilePicture,
   socialLinks,
 } from '@/http/profileapi';
 import Image from 'next/image';
+import { UserSocials, UserProfile, getUserSocials, getUserProfile } from '@/http/settingsapi';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -30,10 +32,54 @@ const montserrat = Montserrat({
 
 const EditProfilePage = () => {
   const router = useRouter();
-
-  const [formData, setFormData] = useState<UserProfile2>({});
-  const [socialLinks, setSocialLinks] = useState<socialLinks>({});
+  const [formData, setFormData] = useState<UserProfile>({
+    firstName: '',
+    lastName: '',
+    email: '',
+    bio: '',
+  });
+  // console.log(formData);
+  const [socialLinks, setSocialLinks] = useState<UserSocials>({
+    websiteURL: 'https://',
+    twitterURL: 'https://twitter.com/',
+    facebookURL: 'https://facebook.com/',
+    instagramURL: 'https://instagram.com/',
+  });
   const [reRoute, setReRoute] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    getUserProfile(setFormData);
+    getUserSocials(setSocialLinks, setSuccess);
+  }, []);
+
+  useEffect(() => {
+    if (success) {
+      const updatedFormData = { ...socialLinks };
+      for (const key in socialLinks) {
+        if (socialLinks[key as keyof typeof socialLinks] === '') {
+          switch (key) {
+            case 'websiteURL':
+              updatedFormData.websiteURL = 'https://';
+              break;
+            case 'twitterURL':
+              updatedFormData.twitterURL = 'https://twitter.com/';
+              break;
+            case 'facebookURL':
+              updatedFormData.facebookURL = 'https://facebook.com/';
+              break;
+            case 'instagramURL':
+              updatedFormData.instagramURL = 'https://instagram.com/';
+              break;
+            default:
+              break;
+          }
+        }
+      }
+      setSocialLinks(updatedFormData);
+    }
+  }, [success]);
 
   useEffect(() => {
     if (reRoute) {
@@ -53,9 +99,20 @@ const EditProfilePage = () => {
   const handleSocialLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
+    let updatedValue = value;
+    if (name === 'websiteURL' && !value.startsWith('https://')) {
+      updatedValue = 'https://' + value.substring(8);
+    } else if (name === 'twitterURL' && !value.startsWith('https://twitter.com/')) {
+      updatedValue = 'https://twitter.com/' + value.substring(20);
+    } else if (name === 'facebookURL' && !value.startsWith('https://facebook.com/')) {
+      updatedValue = 'https://facebook.com/' + value.substring(21);
+    } else if (name === 'instagramURL' && !value.startsWith('https://instagram.com/')) {
+      updatedValue = 'https://instagram.com/' + value.substring(21);
+    }
+
     setSocialLinks((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: updatedValue,
     }));
   };
 
@@ -69,23 +126,6 @@ const EditProfilePage = () => {
       postProfilePicture(selectedImage);
     }
   };
-  // if (selectedImage) {
-  //   setFormData((prevData) => ({ ...prevData, profileImage: selectedImage }));
-
-  //   // Check if selectedImage is a Blob object
-  //   if (selectedImage instanceof Blob) {
-  //     const imageUrl = URL.createObjectURL(selectedImage);
-  //     setProfilePicURL(imageUrl);
-
-  //     const tempProfilPic = `<Image src=${imageUrl} alt={''} className="relative w-full h-full" />`;
-
-  //     const profilePicContainer = document.getElementById('profilePicContainer');
-
-  //     if (profilePicContainer) {
-  //       profilePicContainer.innerHTML = tempProfilPic;
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     // Fetch user profile data from local storage
@@ -93,24 +133,44 @@ const EditProfilePage = () => {
     if (storedUserProfile) {
       const parsedUserProfile = JSON.parse(storedUserProfile);
       setProfilePicURL(parsedUserProfile.profileImage);
-      setFormData(parsedUserProfile);
+      // setFormData(parsedUserProfile);
     }
-    const storedSocialLinks = localStorage.getItem('socialLinks');
-    if (storedSocialLinks) {
-      const parsedSocialLinks = JSON.parse(storedSocialLinks);
-      setSocialLinks(parsedSocialLinks);
-    }
+    // const storedSocialLinks = localStorage.getItem('socialLinks');
+    // if (storedSocialLinks) {
+    //   const parsedSocialLinks = JSON.parse(storedSocialLinks);
+    //   setSocialLinks(parsedSocialLinks);
+    // }
   }, []);
 
   const submitForm = (e: React.FormEvent<HTMLFormElement> | undefined) => {
-    console.log(formData);
-    console.log(socialLinks);
+    const filteredFormData = Object.fromEntries(Object.entries(formData).filter(([key, value]) => value.trim() !== ''));
 
-    editUserProfile(formData, () => {
+    const socialFieldsWithValues = Object.fromEntries(
+      Object.entries(socialLinks).filter(([key, value]) => {
+        switch (key) {
+          case 'websiteURL':
+            return value.startsWith('https://') && value.length > 'https://'.length;
+          case 'twitterURL':
+            return value.startsWith('https://twitter.com/') && value.length > 'https://twitter.com/'.length;
+          case 'facebookURL':
+            return value.startsWith('https://facebook.com/') && value.length > 'https://facebook.com/'.length;
+          case 'instagramURL':
+            return value.startsWith('https://instagram.com/') && value.length > 'https://instagram.com/'.length;
+          default:
+            return true;
+        }
+      }),
+    );
+
+    editProfile(setLoading, filteredFormData, socialFieldsWithValues, () => {
       setReRoute(true);
     });
 
-    editSocialLinks(socialLinks);
+    // editUserProfile(formData, () => {
+    //   setReRoute(true);
+    // });
+
+    // editSocialLinks(socialLinks);
   };
   return (
     <AuthLayout>
@@ -118,7 +178,6 @@ const EditProfilePage = () => {
         className={` ${nunito.className} flex justify-center w-full h-fit min-h-screen bg-[#F5F5F5] pt-[40px] pb-[55px] md:pt-[64px]   md:pb-[219px] lg:pt-[107px]  lg:pb-[377px] flex-col items-center gap-y-[32px]  overflow-hidden `}
         onSubmit={(e) => {
           e.preventDefault();
-          console.log(socialLinks);
           submitForm(e);
         }}
       >
@@ -160,7 +219,7 @@ const EditProfilePage = () => {
                 <div className=" md:w-[277px] lg:w-[341px] ">
                   {' '}
                   <Input
-                    label="First name "
+                    label="First name"
                     placeholder="Enter Firstname"
                     name="firstName"
                     value={formData.firstName}
@@ -260,28 +319,30 @@ const EditProfilePage = () => {
             </div>
           </div>
           <div className="button flex flex-col md:flex-row gap-[32px]  md:self-center">
-            <Button
-              handleClick={() => {
+            <ButtonB
+              onClick={() => {
                 // closeModal();
                 // route back to peofile page
-                console.log('close modal');
                 router.push('/profile');
               }}
-              styles={'!bg-white-100 gap-2 text-primary-100 border border-primary-100 w-full md:w-[187px] py-4  '}
+              className={
+                '!bg-white-100 gap-2 text-primary-100 border border-primary-100 rounded-lg w-full md:w-[187px] h-14'
+              }
               type={'button'}
               title={'edit profile'}
               disabled={false}
             >
               Cancel
-            </Button>
-            <Button
-              styles={' text-white-100  w-full md:w-[187px] py-4 '}
+            </ButtonB>
+            <ButtonB
+              className={'text-white-100 bg-primary-100 rounded-lg w-full md:w-[187px] h-14'}
               type={'submit'}
               title={'save profile'}
               disabled={false}
+              isLoading={loading}
             >
               Save profile
-            </Button>
+            </ButtonB>
           </div>
         </section>
 

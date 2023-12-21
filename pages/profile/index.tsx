@@ -64,7 +64,7 @@ const UserProfile: React.FC = () => {
     //  send to local storage
     userProfile.coverImage && setCoverPic(userProfile.coverImage);
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
-    localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
+    // localStorage.setItem('socialLinks', JSON.stringify(socialLinks));
   }, [userProfile]);
 
   const [pastEvents, setPastEvents] = useState<eventType[]>([]);
@@ -83,9 +83,9 @@ const UserProfile: React.FC = () => {
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
 
-  useEffect(() => {
-    console.log(userProfile);
-  }, [userProfile]);
+  // useEffect(() => {
+  //   console.log(userProfile);
+  // }, [userProfile]);
 
   const [profilePicURL, setProfilePicURL] = useState('');
   const [coverPic, setCoverPic] = useState('');
