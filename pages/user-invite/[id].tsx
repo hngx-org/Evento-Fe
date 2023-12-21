@@ -145,6 +145,7 @@ const Index = () => {
     imageURL,
     organizer,
     startDate,
+    endDate,
     location,
     Category,
     capacity,
@@ -218,9 +219,18 @@ const Index = () => {
     }
   };
 
+  const isPassed = () => {
+    // endDate < currentTime
+    const currentTime = new Date();
+    const eventEndDate = new Date(endDate);
+    return eventEndDate < currentTime;
+  };
+
   const isRegistered = (): boolean => {
     return participants.some((item: Participant) => item.userID === userId);
   };
+
+  const doNothing = () => {};
 
   if (userId === organizerID) {
     router.push('/event-management/' + eventID);
@@ -328,9 +338,10 @@ const Index = () => {
                       }}
                       isLoading={loading}
                       spinnerColor="#fff"
-                      // onClick={handleRegister}
-                      onClick={handleRegistration}
-                      className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+                      onClick={!isPassed() ? handleRegistration : doNothing}
+                      className={`text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center ${
+                        isPassed() ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#e0580c]'
+                      } border ${isPassed() ? 'bg-gray-300' : 'border-[#e0580c]'}`}
                     >
                       Click to Register
                     </Button>

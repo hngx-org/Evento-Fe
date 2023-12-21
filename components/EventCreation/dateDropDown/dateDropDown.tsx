@@ -6,12 +6,13 @@ import { DayPicker, SelectSingleEventHandler } from 'react-day-picker';
 import { FaAngleDown } from 'react-icons/fa6';
 
 interface Props {
-  setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   fromDate: Date;
   startDate: Date | undefined;
+  id: string;
+  setState: Dispatch<SetStateAction<EventDataProps>>;
 }
 
-function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
+function DateDropDown({ startDate, fromDate, id, setState }: Props) {
   const [showDate, setShowDate] = useState<boolean>(false);
   const wrapper = useRef<HTMLDivElement>(null);
 
@@ -27,6 +28,8 @@ function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
     return () => removeEventListener('click', handleClick);
   }, []);
 
+  console.log;
+
   function convertDate() {
     return startDate?.toLocaleDateString('en-US', {
       weekday: 'short',
@@ -37,7 +40,9 @@ function DateDropDown({ setStartDate, startDate, fromDate }: Props) {
 
   const dateSelector = (date: any) => {
     if (!date) return;
-    setStartDate(date);
+    setState((prevState) => {
+      return { ...prevState, [id]: date };
+    });
     setShowDate(false);
   };
 

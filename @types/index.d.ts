@@ -144,8 +144,8 @@ export interface EventDataProps {
   title: string;
   description: string;
   imageURL: string;
-  startDate: string;
-  endDate: string;
+  startDate: Date;
+  endDate: Date;
   time: string;
   location: string;
   capacity: string;
