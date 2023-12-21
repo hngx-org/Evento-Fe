@@ -10,9 +10,6 @@ import { Eye, EyeSlash, Call } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { MdOutlineMail } from 'react-icons/md';
-import { FiUser } from 'react-icons/fi';
-import { useRouter } from 'next/navigation';
 import SucessModal from '@/components/components/modal/auth/SucessModal';
 
 const SignUp = () => {

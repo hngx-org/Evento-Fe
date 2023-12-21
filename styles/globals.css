@@ -154,6 +154,10 @@ body.mobile-menu-open {
   z-index: 1;
 }
 
-/* profile page */
+.btn-orange {
+  @apply px-4 py-2 text-white-100 bg-orange-500 rounded hover:bg-orange-600 transition duration-300 ease-in-out;
+}
 
-/* dashboard */
+.btn-blue {
+  @apply px-4 py-2 text-white-100 bg-orange-500 rounded hover:bg-orange-500 transition duration-300 ease-in-out;
+}
