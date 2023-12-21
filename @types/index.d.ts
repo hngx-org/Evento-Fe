@@ -329,3 +329,8 @@ export interface AuthOptions {
     redirect(url: string, baseUrl: string): Promise<string>;
   };
 }
+
+export interface ResetPasswordProps {
+  userID: string;
+  token: string;
+}
