@@ -59,7 +59,8 @@ function EditProfile() {
 
   const handleSubmit = () => {
     // console.log('clicked');
-    editUserAccount(formData, setLoading);
+    const filteredData = Object.fromEntries(Object.entries(formData).filter(([key, value]) => value.trim() !== ''));
+    editUserAccount(filteredData, setLoading);
     setTimeout(() => {
       getUserProfile(setFormData);
     }, 3000);

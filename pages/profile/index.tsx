@@ -83,9 +83,9 @@ const UserProfile: React.FC = () => {
     getUserEvents(setPastEvents, setCreatedEvent, setUpcomingEvents);
   }, []);
 
-  useEffect(() => {
-    console.log(userProfile);
-  }, [userProfile]);
+  // useEffect(() => {
+  //   console.log(userProfile);
+  // }, [userProfile]);
 
   const [profilePicURL, setProfilePicURL] = useState('');
   const [coverPic, setCoverPic] = useState('');

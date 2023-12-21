@@ -1,5 +1,8 @@
 import { toast } from 'react-toastify';
 import AuthInstance from './AuthInstance';
+import React from 'react';
+import { UserProfile as UserProfile3 } from './settingsapi';
+import axios from 'axios';
 
 export interface UserProfile2 {
   userID?: string;
@@ -276,5 +279,37 @@ export const getUserCreatedEvents = async (setEvents: React.Dispatch<React.SetSt
   } catch (error) {
     // Handle network error
     // toast.error(`Network error: ${error}`);
+  }
+};
+
+export const editProfile = async (
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>,
+  profileData: UserProfile3,
+  socialData: socialLinks,
+  successCallback: () => void,
+) => {
+  const authToken = getAuthToken();
+  const userId = getUserId();
+  try {
+    setLoading(true);
+    const editUserData = await $AuthHttp.patch(`/user/${userId}/`, profileData, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    const editUserSocials = await $AuthHttp.post(`/user/${userId}/social`, socialData, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    setLoading(false);
+    if (editUserData.status === 200 && editUserSocials.status === 200) {
+      toast.success('profile updated');
+      successCallback();
+    }
+  } catch (err: any) {
+    console.log(err);
+    setLoading(false);
+    toast.error(err.message);
   }
 };
