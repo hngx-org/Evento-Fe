@@ -274,41 +274,20 @@ export const fetchAuthToken = async () => {
   }
 };
 
-export const GoogleLogin = async () => {
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  const oauthUrl = 'https://evento-qo6d.onrender.com/api/v1/google';
+export const resetPassword = async (props: { email: string }) => {
   try {
-    const loginResponse = await axios.get(oauthUrl);
-
-    if (loginResponse.status === 200) {
-      console.log(loginResponse);
-      console.log('Login successful');
-      toast.success('Login successful');
-
-      const token = loginResponse.data.token;
-      const userId = loginResponse.data.user.userID;
-
-      if (token && userId) {
-        console.log('User ID:', userId);
-        console.log('Token:', token);
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('userId', userId);
-      } else {
-        console.error('Error extracting token from login response.');
-        toast.error('An error occurred while extracting the token.');
-      }
+    const res = await $AuthHttp.post('/reset-password', props);
+    if (res?.status === 200) {
+      toast.success('Password reset successful!');
     }
-
-    console.log('Login response', loginResponse);
-    return loginResponse?.data;
+    return res?.data;
   } catch (e: any) {
-    console.log('Login call error from API call', e);
-    if (e?.response?.status === 401) {
-      toast.error('Invalid credentials. Please check your email and password.');
-    } else if (!e?.response) {
-      toast.error('Network error. Please check your internet connection.');
+    if (e?.response?.status === 404) {
+      toast.error('User not found. Please check your email and try again.');
+    } else if (e?.response?.status === 400) {
+      toast.error('Bad request. Please check your input.');
     } else {
-      toast.error('An error occurred during login. Please try again later.');
+      toast.error('An error occurred during password reset. Please try again later.');
     }
     throw e?.response?.data || { message: e.message };
   }
