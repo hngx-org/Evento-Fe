@@ -29,6 +29,8 @@ const options: NextAuthOptions = {
 console.log(request.data)
            
 return '/event-dashboard'
+  // Log the data received from the axios request
+      console.log('Data from the backend:', response);
 
           } return false // else user is not allowed to log in
     },
