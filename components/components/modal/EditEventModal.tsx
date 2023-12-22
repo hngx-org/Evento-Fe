@@ -17,6 +17,7 @@ import TicketTypeDropDown from '@/components/EventCreation/ticketTypeDropDown/ti
 import { updateEvent, uploadImage } from '@/http/createeventapi';
 import Link from 'next/link';
 import { Router, useRouter } from 'next/router';
+import { getCurrentTimeRange } from '@/utils/time';
 
 const nunito = Nunito({
   subsets: ['latin'],
@@ -25,7 +26,6 @@ const nunito = Nunito({
 });
 
 function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
-  console.log(eventDetails);
   const initialState: EventDataProps = {
     title: eventDetails?.title,
     description: eventDetails?.description,
@@ -39,8 +39,8 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
     eventType: eventDetails?.locationType,
     organizerID: eventDetails?.organizerID,
     categoryName: eventDetails?.Category.name,
-    startTime: '12:30',
-    endTime: '12:30',
+    startTime: getCurrentTimeRange(),
+    endTime: getCurrentTimeRange(),
     virtualLocationLink: eventDetails?.virtualLocationLink,
     locationType: eventDetails?.locationType,
     ticketType: eventDetails?.tickets[0].ticketType,
@@ -50,13 +50,19 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
   const [isEdited, setIsEdited] = useState<boolean>(false);
   const [otherCategory, setOtherCategory] = useState('');
   const [descriptionContent, setDescriptionContent] = useState<string>(eventDetails?.description);
-  const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(new Date(eventDetails?.startDate));
-  const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date(eventDetails?.endDate));
   const router = useRouter();
 
   useEffect(() => {
     setIsEdited(compareObjects(data, initialState));
   }, [data, initialState]);
+
+  useEffect(() => {
+    if (data.startDate > data.endDate) {
+      setState((prevState) => {
+        return { ...prevState, endDate: data.startDate };
+      });
+    }
+  }, [data.startDate]);
 
   function compareObjects<T extends Record<string, any>>(obj1: T, obj2: T): boolean {
     const keys1 = Object.keys(obj1) as Array<keyof T>;
@@ -211,7 +217,11 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
                   <DateDropDown
                     startDate={data.endDate}
                     fromDate={
-                      new Date(new Date(data.startDate).getFullYear(), new Date().getMonth(), new Date().getDate())
+                      new Date(
+                        new Date(data.startDate).getFullYear(),
+                        new Date(data.startDate).getMonth(),
+                        new Date(data.startDate).getDate(),
+                      )
                     }
                     id="endDate"
                     setState={setState}

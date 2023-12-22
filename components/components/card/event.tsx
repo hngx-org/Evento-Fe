@@ -29,9 +29,14 @@ interface Props {
   participants?: participantType[];
   time?: string;
   organizerId?: string;
+  tickets: {
+    ticketID: string;
+    ticketPrice: number;
+    ticketType: string;
+  }[];
 }
 
-function EventCard({ id, imagePath, date, title, location, price, participants, time, organizerId }: Props) {
+function EventCard({ id, imagePath, date, title, location, price, participants, time, organizerId, tickets }: Props) {
   const userId = getStoredUserId();
   function convertDate(inputDate: string) {
     const dateObj = new Date(inputDate);
@@ -67,8 +72,7 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
         <div className={`${nunito.className} flex justify-between items-center mb-1`}>
           <span className={`font-bold text-sm text-orange`}>{convertDate(date)}</span>
           <span className="text-primary-100 bg-secondary-100 rounded block px-3 py-1 capitalize">
-            {price !== 'free' && '$'}
-            {price}
+            {tickets[0].ticketType === 'Free' ? 'Free' : '$' + tickets[0].ticketPrice}
           </span>
         </div>
         <h2

@@ -90,13 +90,12 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
         handleCardClick();
       }}
     >
-      <div className="w-[180px] md:w-[285px] lg:w-[300px] h-full shrink-0">
+      <div className="w-[180px] md:w-[285px] lg:w-[300px] h-full relative shrink-0">
         <Image
           src={event.imageURL ? event.imageURL : sampleImage}
           alt={''}
-          width={100}
-          height={100}
-          className={`w-full h-full object-cover ${past ? 'grayscale' : ''}`}
+          fill
+          className={`object-cover ${past ? 'grayscale' : ''}`}
         />
       </div>
 
