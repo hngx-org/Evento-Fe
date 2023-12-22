@@ -22,39 +22,36 @@ const options: NextAuthOptions = {
   ],
 
   callbacks: {
-      async signIn({user,account,profile}:{user: any,account: any, profile?: any}) {
-          const request = await axios.post("https://evento-qo6d.onrender.com/api/v1/login/google",{email: profile.email,picture: profile.picture, name: profile.name})
-          const response = await request.data
-          if (request.data) {
-console.log(request.data)
-localStorage.setItem('authToken', response.data.token);
-      localStorage.setItem('userId', response.data.user.userID);
-           
-return '/event-dashboard'
-  // Log the data received from the axios request
-      console.log('Data from the backend:', response);
+    async signIn({ user, account, profile }: { user: any; account: any; profile?: any }) {
+      const request = await axios.post('https://evento-qo6d.onrender.com/api/v1/login/google', {
+        email: profile.email,
+        picture: profile.picture,
+        name: profile.name,
+      });
+      const response = await request.data;
+      if (request.data) {
+        console.log(request.data);
 
-          } return false // else user is not allowed to log in
+        return '/event-dashboard';
+        // Log the data received from the axios request
+        console.log('Data from the backend:', response);
+      }
+      return false; // else user is not allowed to log in
     },
     async jwt({ token, user, account }: { token: any; user: any; account: any }) {
-     
       if (account) {
-
       }
       return { user, token };
     },
-
 
     async session({ session, token }: { session: any; token: any }) {
       session.id_token = token.id_token;
       return session;
     },
   },
-secret: process.env.NEXT_PUBLIC_SECRET as string
+  secret: process.env.NEXT_PUBLIC_SECRET as string,
 };
 
+const handler: NextApiHandler = NextAuth(options);
 
-
-const handler: NextApiHandler =  NextAuth(options);
-
-export default handler
+export default handler;
