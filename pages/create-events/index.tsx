@@ -43,6 +43,14 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const userId = getStoredUserId();
   const router = useRouter();
 
+  useEffect(() => {
+    if (eventData.startDate > eventData.endDate) {
+      setEventData((prevState) => {
+        return { ...prevState, endDate: eventData.startDate };
+      });
+    }
+  }, [eventData.startDate]);
+
   const nextPage = async () => {
     if (page === 2) {
       const {

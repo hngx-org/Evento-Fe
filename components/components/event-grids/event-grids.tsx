@@ -34,6 +34,7 @@ function EventGrids({ events, title, isLoading }: { title?: string; events: Even
                       participants={item.participants}
                       time={item.time}
                       organizerId={item?.organizerID}
+                      tickets={item?.tickets}
                     />
                   );
                 })}

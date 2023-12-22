@@ -111,6 +111,7 @@ const Index = () => {
     imageURL,
     organizer,
     startDate,
+    endDate,
     location,
     Category,
     capacity,
@@ -184,9 +185,17 @@ const Index = () => {
     }
   };
 
+  const isPassed = () => {
+    const currentTime = new Date();
+    const eventEndDate = new Date(endDate);
+    return eventEndDate < currentTime;
+  };
+
   const isRegistered = (): boolean => {
     return participants.some((item: Participant) => item.userID === userId);
   };
+
+  const doNothing = () => {};
 
   if (userId === organizerID) {
     router.push('/event-management/' + eventID);
@@ -277,8 +286,8 @@ const Index = () => {
               <p>{capacity} persons</p>
             </div>
             <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#12b76a] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
-              <p>Ticket type</p>
-              <p>{tickets[0]?.ticketType}</p>
+              <p>Ticket Price</p>
+              <p>{tickets[0]?.ticketType === 'Free' ? 'Free' : `$${tickets[0]?.ticketPrice}`}</p>
             </div>
           </div>
           <div className="rounded-[12px] border-[0.5px] border-[#c0c0c0] flex flex-col p-[16px] items-start gap-[24px] ">
@@ -303,9 +312,10 @@ const Index = () => {
                     }}
                     isLoading={loading}
                     spinnerColor="#fff"
-                    // onClick={handleRegister}
-                    onClick={handleRegistration}
-                    className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
+                    onClick={!isPassed() ? handleRegistration : doNothing}
+                    className={`text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center ${
+                      isPassed() ? 'bg-gray-300 cursor-not-allowed' : 'bg-[#e0580c]'
+                    } border ${isPassed() ? 'bg-gray-300' : 'border-[#e0580c]'}`}
                   >
                     Click to Register
                   </Button>

@@ -57,13 +57,14 @@ const GridEventCard: React.FC<EventCardProps> = ({ event, past }) => {
       }}
     >
       {
-        <Image
-          src={event.imageURL ? event.imageURL : sampleImage}
-          alt={''}
-          width={100}
-          height={100}
-          className={`w-full h-[180px] object-cover ${past ? 'grayscale' : ''} `}
-        />
+        <div className="relative w-full h-[180px]">
+          <Image
+            src={event.imageURL ? event.imageURL : sampleImage}
+            alt={''}
+            fill
+            className={`object-cover ${past ? 'grayscale' : ''} `}
+          />
+        </div>
       }
 
       {/* item.imageURL === 'https://example.com/image.jpg' ? '/assets/default-banner.jpg' : item.imageURL */}

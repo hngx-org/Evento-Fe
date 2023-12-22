@@ -217,6 +217,11 @@ export interface EventsProps {
   organizerID: string;
   categoryCategoryID: string;
   participants: EventParticipant[];
+  tickets: {
+    ticketID: string;
+    ticketPrice: number;
+    ticketType: string;
+  }[];
 }
 
 export type InputRef = React.RefObject<HTMLInputElement>;

@@ -251,7 +251,7 @@ function Index() {
           <p className="text-[18px] pt-4 pb-4 sm:text-[24px] font-[500] leading-[32px] text-[#000] ">
             About this event
           </p>
-          <div className="text-[16px] sm:text-[20px] font-[400] leading-7 text-[#585858] ">
+          <div className="leading-7 text-[#585858] ">
             <div dangerouslySetInnerHTML={{ __html: event.description }} />
           </div>
         </div>

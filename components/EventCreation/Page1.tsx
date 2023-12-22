@@ -71,7 +71,11 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
                   <DateDropDown
                     startDate={data.endDate}
                     fromDate={
-                      new Date(new Date(data.startDate).getFullYear(), new Date().getMonth(), new Date().getDate())
+                      new Date(
+                        new Date(data.startDate).getFullYear(),
+                        new Date(data.startDate).getMonth(),
+                        new Date(data.startDate).getDate(),
+                      )
                     }
                     id="endDate"
                     setState={setState}
