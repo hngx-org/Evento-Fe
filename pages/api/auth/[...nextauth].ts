@@ -42,6 +42,7 @@ const options: NextAuthOptions = {
       return session;
     },
   },
+secret: process.env.NEXT_PUBLIC_SECRET as string
 };
 
 // NOTE: Your env variables should be set as below not the way you previously set it
