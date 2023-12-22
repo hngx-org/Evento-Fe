@@ -27,6 +27,8 @@ const options: NextAuthOptions = {
           const response = await request.data
           if (request.data) {
 console.log(request.data)
+localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('userId', response.data.user.userID);
            
 return '/event-dashboard'
   // Log the data received from the axios request
