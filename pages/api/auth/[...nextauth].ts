@@ -1,6 +1,7 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
+import { signIn } from 'next-auth/react';
 
 import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
@@ -8,9 +9,8 @@ import axios from 'axios';
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId:
-        process.env.GOOGLE_CLIENT_ID || '30595985933-1bse48dr61tao5v3dgkl7argdr8i2deo.apps.googleusercontent.com',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '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',
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       authorization: {
         params: {
           prompt: 'consent',
@@ -30,8 +30,11 @@ const options: NextAuthOptions = {
       });
       const response = await request.data;
       if (request.data) {
-        // this condition is just to check if the request really went through and if it does, you are free to use any condition of your choice
-        return true; // user is logged in by returning true
+        console.log(request.data);
+
+        return '/event-dashboard';
+        // Log the data received from the axios request
+        console.log('Data from the backend:', response);
       }
       return false; // else user is not allowed to log in
     },
@@ -46,11 +49,8 @@ const options: NextAuthOptions = {
       return session;
     },
   },
+  secret: process.env.NEXT_PUBLIC_SECRET as string,
 };
-
-// NOTE: Your env variables should be set as below not the way you previously set it
-// NEXTAUTH_URL
-// NEXTAUTH_SECRET
 
 const handler: NextApiHandler = NextAuth(options);
 
