@@ -106,7 +106,7 @@ function ItemDropDown({ data, setState, handleChange }: Props) {
           <div className="relative mt-2 inline-block w-full">
             <input
               className="w-full rounded-lg border-[1px] border-[#d7d7d7] placeholder-[#b1b1b1] focus:outline-[#ddab8f] text-base text-[#303030] font-medium p-4"
-              placeholder="Lagos state, Nigeria"
+              placeholder="Lagos, Nigeria"
               type="text"
               id="location"
               value={data.location}

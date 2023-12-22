@@ -6,7 +6,6 @@ import DateDropDown from './dateDropDown/dateDropDown';
 import TimeDropDown from './timeDropDown/timeDropDown';
 import ItemDropDown from './itemDropDown/itemDropDown';
 import TextEditor from '../textEditor/textEditor';
-import { staticSuggestions } from './staticLocations';
 
 interface Page1Props {
   onNext: () => void;
@@ -17,31 +16,13 @@ interface Page1Props {
 }
 
 const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionContent, setDescriptionContent }) => {
-  const [selectedStartDate, setSelectedStartDate] = useState<Date | undefined>(new Date());
-  const [selectedEndDate, setSelectedEndDate] = useState<Date | undefined>(new Date());
   const isAllInputFilled =
     data.title === '' ||
     descriptionContent === '' ||
-    data.startDate === '' ||
     data.startTime === '' ||
     data.endTime === '' ||
-    data.endDate === '' ||
     (data.eventType === 'Physical' && data.location === '') ||
     (data.eventType === 'Virtual' && data.virtualLocationLink === '');
-
-  useEffect(() => {
-    if (!selectedStartDate) return;
-    setState((prevState) => {
-      return { ...prevState, startDate: new Date(selectedStartDate).toISOString() };
-    });
-  }, [selectedStartDate]);
-
-  useEffect(() => {
-    if (!selectedEndDate) return;
-    setState((prevState) => {
-      return { ...prevState, endDate: new Date(selectedEndDate).toISOString() };
-    });
-  }, [selectedEndDate]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value, id } = e.target;
@@ -72,9 +53,10 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
               <div className=" w-full flex flex-row gap-1">
                 <div className="w-full z-[9999]">
                   <DateDropDown
-                    startDate={selectedStartDate}
-                    setStartDate={setSelectedStartDate}
+                    startDate={data.startDate}
                     fromDate={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())}
+                    id="startDate"
+                    setState={setState}
                   />
                 </div>
                 <div className="w-full">
@@ -87,17 +69,12 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">
                   <DateDropDown
-                    startDate={selectedEndDate}
-                    setStartDate={setSelectedEndDate}
+                    startDate={data.endDate}
                     fromDate={
-                      selectedStartDate
-                        ? new Date(
-                            new Date(selectedStartDate).getFullYear(),
-                            new Date().getMonth(),
-                            new Date().getDate(),
-                          )
-                        : new Date()
+                      new Date(new Date(data.startDate).getFullYear(), new Date().getMonth(), new Date().getDate())
                     }
+                    id="endDate"
+                    setState={setState}
                   />
                 </div>
                 <div className="w-full">

@@ -30,8 +30,8 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
     title: eventDetails?.title,
     description: eventDetails?.description,
     imageURL: eventDetails?.imageURL,
-    startDate: eventDetails?.startDate,
-    endDate: eventDetails?.endDate,
+    startDate: new Date(eventDetails?.startDate),
+    endDate: new Date(eventDetails?.endDate),
     time: '',
     location: eventDetails?.location,
     capacity: eventDetails?.capacity.toString(),
@@ -131,8 +131,8 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
         title,
         description: descriptionContent,
         imageURL,
-        startDate: selectedStartDate?.toISOString() ?? startDate,
-        endDate: selectedEndDate?.toISOString() ?? endDate,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
         locationType,
         time: startTime,
         location,
@@ -186,15 +186,17 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
           </div>
 
           <TextEditor descriptionContent={descriptionContent} setDescriptionContent={setDescriptionContent} />
+
           <div className="event-date w-full flex z-20 flex-col gap-2 border-[1px] p-4 border-[#d7d7d7] rounded-lg">
             <div className="flex max-sm:flex-col lg:content-center lg:items-center justify-between gap-1 z-[9999] md:items-center">
               <div className="w-[70px] text-xl font-semibold">Start</div>
               <div className=" w-full flex flex-row gap-1">
                 <div className="w-full z-[9999]">
                   <DateDropDown
-                    startDate={selectedStartDate}
-                    setStartDate={setSelectedStartDate}
+                    startDate={data.startDate}
                     fromDate={new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())}
+                    id="startDate"
+                    setState={setState}
                   />
                 </div>
                 <div className="w-full">
@@ -207,17 +209,12 @@ function EditEventModal({ eventDetails }: { eventDetails: EventManagement }) {
               <div className="w-full flex flex-row gap-1">
                 <div className="w-full">
                   <DateDropDown
-                    startDate={selectedEndDate}
-                    setStartDate={setSelectedEndDate}
+                    startDate={data.endDate}
                     fromDate={
-                      selectedStartDate
-                        ? new Date(
-                            new Date(selectedStartDate).getFullYear(),
-                            new Date().getMonth(),
-                            new Date().getDate(),
-                          )
-                        : new Date()
+                      new Date(new Date(data.startDate).getFullYear(), new Date().getMonth(), new Date().getDate())
                     }
+                    id="endDate"
+                    setState={setState}
                   />
                 </div>
                 <div className="w-full">

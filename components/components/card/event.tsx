@@ -103,9 +103,11 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
                   </div>
                 );
               })}
-              <span className={`${nunito.className} pl-3 text-sm font-medium`}>
-                +{participants?.length} People registered
-              </span>
+              {participants && participants?.length > 3 && (
+                <span className={`${nunito.className} pl-3 text-sm font-medium`}>
+                  +{participants?.length - 3} People registered
+                </span>
+              )}
             </div>
           )}
         </div>

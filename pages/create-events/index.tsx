@@ -7,6 +7,7 @@ import { EventDataProps } from '@/@types';
 import { createEvent } from '@/http/createeventapi';
 import { getStoredUserId } from '@/http/getToken';
 import { useRouter } from 'next/router';
+import { getCurrentTimeRange } from '@/utils/time';
 
 interface Props {}
 
@@ -19,9 +20,9 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
   const [eventData, setEventData] = useState<EventDataProps>({
     title: '',
     description: '',
-    imageURL: '/assets/default-banner.jpg',
-    startDate: '',
-    endDate: '',
+    imageURL: '',
+    startDate: new Date(),
+    endDate: new Date(),
     time: '',
     location: '',
     capacity: '',
@@ -29,8 +30,8 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
     eventType: '',
     organizerID: '',
     categoryName: '',
-    startTime: '12:30',
-    endTime: '12:30',
+    startTime: getCurrentTimeRange(),
+    endTime: getCurrentTimeRange(),
     virtualLocationLink: '',
     locationType: 'Physical',
     ticketType: 'Free',
@@ -65,11 +66,11 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
           title,
           description: descriptionContent,
           imageURL,
-          startDate,
-          endDate,
+          startDate: startDate.toISOString(),
+          endDate: endDate.toISOString(),
           locationType,
           time: startTime,
-          location,
+          location: locationType === 'Physical' ? location : eventData?.virtualLocationLink,
           virtualLocationLink: eventData?.virtualLocationLink,
           capacity: parseInt(capacity),
           eventType,
@@ -94,13 +95,10 @@ const CreateEvents: React.FC<CreateEventsProps> = (props) => {
     switch (page) {
       case 1:
         return 'w-0';
-        break;
       case 2:
         return 'w-1/2';
-        break;
       case 3:
         return 'w-full';
-        break;
       default:
         break;
     }

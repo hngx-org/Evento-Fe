@@ -26,7 +26,7 @@ const Page2: React.FC<Page2Props> = (props) => {
   const [isFileTypeModalOpen, setIsFileTypeModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [isValidFileType, setIsValidFileType] = useState(true);
-  const isAllInputFilled = props.data.capacity === '';
+  const isAllInputFilled = props.data.capacity === '' || props.data.imageURL === '';
 
   const closeImageModal = () => {
     setIsModalImageOpen(false);
@@ -77,22 +77,22 @@ const Page2: React.FC<Page2Props> = (props) => {
     <>
       <section className="page-2 w-full lg:px-[0px] md:px-0 max-sm:px-0 pt-[49.5px] pb-6">
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
-          <div className="relative w-full h-auto border-[1px] border-[#d7d7d7] rounded-3xl mb-12 max-sm:mb-6 ">
+          <div className="relative w-full h-auto border-[1px] border-[#d7d7d7] rounded-3xl mb-12 max-sm:mb-6 overflow-hidden">
             <Image
               className="w-full h-[278px] object-fill"
-              src={props.data.imageURL}
+              src={props.data.imageURL === '' ? '/assets/placeholder-image.webp' : props.data.imageURL}
               alt="event-image"
               width={1280}
               height={800}
               layout="responsive"
             />
 
-            <GalleryEdit
-              className="absolute bottom-[13px] right-4 cursor-pointer"
-              size={24}
-              color="#fefefe"
+            <button
               onClick={() => setIsModalImageOpen(true)}
-            />
+              className="h-10 w-10 grid place-content-center rounded-full absolute bottom-[13px] right-4 cursor-pointer bg-black-main/20"
+            >
+              <GalleryEdit className="" size={24} color="#fefefe" />
+            </button>
 
             {/* Modal */}
             {isModalImageOpen && (
@@ -183,7 +183,7 @@ const Page2: React.FC<Page2Props> = (props) => {
             data={props.data}
             setState={props.setState}
             otherCategory={props.otherCategory}
-            setOtherCategory={props.se}
+            setOtherCategory={props.setOtherCategory}
           />
 
           <CapacityDropDown data={props.data} setState={props.setState} />
