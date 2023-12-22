@@ -26,7 +26,7 @@ const options: NextAuthOptions = {
           const request = await axios.post("https://evento-qo6d.onrender.com/api/v1/login/google",{email: profile.email,picture: profile.picture, name: profile.name})
           const response = await request.data
           if (request.data) {
-            await signIn(google);
+            await signIn('google');
 return '/event-dashboard'
 
           } return false // else user is not allowed to log in
