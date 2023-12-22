@@ -13,7 +13,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: GOOGLE_CLIENT_ID
+      clientId: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
