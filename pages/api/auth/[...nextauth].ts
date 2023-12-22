@@ -5,11 +5,16 @@ import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
 
+
+const GOOGLE_CLIENT_ID = '30595985933-1bse48dr61tao5v3dgkl7argdr8i2deo.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+
+
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '30595985933-1bse48dr61tao5v3dgkl7argdr8i2deo.apps.googleusercontent.com',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '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',
+      clientId: GOOGLE_CLIENT_ID
+      clientSecret: GOOGLE_CLIENT_SECRET,
       authorization: {
         params: {
           prompt: 'consent',
