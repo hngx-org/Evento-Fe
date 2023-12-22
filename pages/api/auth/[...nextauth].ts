@@ -5,16 +5,11 @@ import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
 
-
-const GOOGLE_CLIENT_ID = '30595985933-1bse48dr61tao5v3dgkl7argdr8i2deo.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
-
-
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: GOOGLE_CLIENT_ID,
-      clientSecret: GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID || '30595985933-1bse48dr61tao5v3dgkl7argdr8i2deo.apps.googleusercontent.com',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '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',
       authorization: {
         params: {
           prompt: 'consent',
@@ -51,9 +46,8 @@ const options: NextAuthOptions = {
 
 // NOTE: Your env variables should be set as below not the way you previously set it
 // NEXTAUTH_URL
-// NEXTAUTH_SECRET
+NEXTAUTH_SECRET: 'evento';
 
 const handler: NextApiHandler =  NextAuth(options);
 
 export default handler
-
