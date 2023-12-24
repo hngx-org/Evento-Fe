@@ -340,3 +340,13 @@ export interface ResetPasswordProps {
   userID: string;
   token: string;
 }
+
+
+export interface SessionContextProps {
+        token: string | null;
+        accountId: string | null;
+        roleId: string | null;
+        email: string | null;
+        login: (token: string, accountId: string, roleId: string, email: string) => void;
+        logout: () => void;
+}
