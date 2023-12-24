@@ -345,8 +345,8 @@ export interface ResetPasswordProps {
 export interface SessionContextProps {
         token: string | null;
         accountId: string | null;
-        roleId: string | null;
-        email: string | null;
-        login: (token: string, accountId: string, roleId: string, email: string) => void;
+ //       roleId: string | null;
+ //       email: string | null;
+        login: (token: string, accountId: string ) => void;
         logout: () => void;
 }
