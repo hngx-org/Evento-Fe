@@ -347,6 +347,6 @@ export interface SessionContextProps {
        userId: string | null;
  //       roleId: string | null;
  //       email: string | null;
-        login: (token: string, accountId: string ) => void;
+        login: (token: string, userId: string ) => void;
         logout: () => void;
 }
