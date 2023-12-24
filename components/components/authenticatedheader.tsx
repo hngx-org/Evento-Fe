@@ -3,20 +3,19 @@ import Image from 'next/image';
 import Link from 'next/link';
 import logo from 'public/logo.svg';
 import profile from 'public/profileB.svg';
-import { Add, SearchNormal1, Notification, Profile, Setting4, LogoutCurve, HambergerMenu } from 'iconsax-react';
+import { Add, Notification, Profile, Setting4, LogoutCurve, HambergerMenu } from 'iconsax-react';
 import useVisible from '@/hooks/useVisible';
 import Input from '../ui/Input';
 import logoutUser from '@/hooks/logout';
-import { logoutUser as lgout } from '@/http/authapi';
 import Button from '@ui/NewButton';
 import { useRouter } from 'next/navigation';
 import Notifications from '../ui/notification';
-import { UserProfile, getNotifications, getUserProfile } from '@/http/settingsapi';
-import { io } from 'socket.io-client';
-import { getUserId } from '@/http/profileapi';
+import { UserProfile, getUserProfile } from '@/http/settingsapi';
+import { useSession } from '@/context/sessionProvider';
 import { NotificationProps } from '@/@types';
 
 function AuthenticatedHeader() {
+  const { logout } = useSession();
   const [toggle, setToggle] = useState(false);
   const notificationsRef = useRef<HTMLDivElement | null>(null);
   const [unreadNotifications, setUnreadNotifications] = useState(0);
@@ -35,45 +34,7 @@ function AuthenticatedHeader() {
 
   useEffect(() => {
     getUserProfile(setUserProfile);
-    // getNotifications();
   }, []);
-
-  // useEffect(() => {
-  //   // const socket = io('https://evento-qo6d.onrender.com');
-  //   const socket = io('https://806f-41-90-184-91.ngrok-free.app');
-
-  //   socket.on('connect', () => {
-  //     const userId = getUserId();
-  //     console.log('Connected to Socket server');
-  //     socket.emit('id', { userID: userId, socketId: socket.id });
-  //     socket.emit('userId', userId);
-  //     socket.emit('socketId', socket.id);
-  //   });
-
-  //   socket.on('notifications', (event) => {
-  //     console.log('Received a new notification');
-  //     // console.log('test');
-  //     setNotifications(event);
-  //   });
-
-  //   socket.on('new_event', (event) => {
-  //     // console.log('Received a new notification:', event);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   const body = document.querySelector('body');
-  //   if (toggle) {
-  //     body?.classList.add('mobile-menu-open');
-  //   } else {
-  //     body?.classList.remove('mobile-menu-open');
-  //   }
-  // }, [toggle]);
-
-  // const handleLogout = () => {
-  //   // Call the function when the button is clicked
-  //   Logout();
-  // };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -99,26 +60,9 @@ function AuthenticatedHeader() {
     setNotificationMenu(!notificationMenu);
   };
 
-  // const handleLogout = () => {
-  //   logoutUser();
-  //   try {
-  //     await lgout();
-  //     // Additional logic after successful logout, if needed
-  //   } catch (error) {
-  //     // Handle errors if necessary
-  //   }
-  // };
-  //   setIsLoading(true);
-  //   setTimeout(() => {
-  //     //    window.location.href = 'https://evento-qo6d.onrender.com/api/v1/logout';
-  //   }, 5000);
-  // };
-
   const handleLogout = async () => {
-    // const socket = io('https://806f-41-90-184-91.ngrok-free.app');
-    // setIsLoading(true);
     logoutUser();
-    // socket.disconnect();
+    logout();
   };
 
   return (
@@ -132,25 +76,18 @@ function AuthenticatedHeader() {
             <Link href="/explore" className="text-Grey-G500 font-medium text-base">
               Explore
             </Link>
-            {/* <Link href="/event-management" className="text-Grey-G500 font-medium text-base">
-              Event-Management
-            </Link> */}
+
             <Link href="/create-events" className="text-Grey-G500 font-medium text-base flex items-center gap-2">
               Create Event
               <Add size={20} color="#3C3C3C" />
             </Link>
           </div>
           <div className="hidden lg:flex items-center gap-6">
-            {/* <div className="cursor-pointer" onClick={() => setSearchDropdown(true)}>
-              <SearchNormal1 size={22} color="#3C3C3C" />
-            </div> */}
             <div className="cursor-pointer relative" onClick={handleNotificationsToggle}>
               <Notification size={22} color="#3C3C3C" />
               <div className="w-4 h-4 bg-primary-100 text-white-100 text-xs rounded-full absolute -top-[6px] left-2 flex items-center justify-center">
                 {notifications ? notifications.length : 0}
               </div>
-              {/* <button onClick={handleNotificationsToggle} draggable={false}>
-              </button> */}
             </div>
             <div className="cursor-pointer w-[32px] h-[32px]" onClick={() => setProfileDropdown(true)}>
               <Image
@@ -234,7 +171,7 @@ function AuthenticatedHeader() {
             </Link>
           </div>
         </div>
-        {/* Profile Dropdown Container */}
+
         {profileDropdown && (
           <div
             ref={profileRef}
@@ -283,7 +220,7 @@ function AuthenticatedHeader() {
             </div>
           </div>
         )}
-        {/* Search Dropdown Container */}
+
         {searchDropdown && (
           <div
             ref={searchRef}

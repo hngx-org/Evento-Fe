@@ -1,16 +1,16 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+'use client';
+
+import { NextApiHandler } from 'next';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
-import { signIn } from 'next-auth/react';
-
 import { NextAuthOptions } from 'next-auth';
 import axios from 'axios';
 
 const options: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.NEXT_PUBLIC_CLIENT_ID as string,
+      clientSecret: process.env.NEXT_PUBLIC_CLIENT_SECRET as string,
       authorization: {
         params: {
           prompt: 'consent',
@@ -30,13 +30,12 @@ const options: NextAuthOptions = {
       });
       const response = await request.data;
       if (request.data) {
-        console.log(request.data);
+        const token: string = response.data.token;
+        const userId: string = response.data.user.userID;
 
-        return '/event-dashboard';
-        // Log the data received from the axios request
-        console.log('Data from the backend:', response);
+        return `/loading/${token}/${userId}`;
       }
-      return false; // else user is not allowed to log in
+      return false;
     },
     async jwt({ token, user, account }: { token: any; user: any; account: any }) {
       if (account) {
@@ -54,8 +53,4 @@ const options: NextAuthOptions = {
 
 const handler: NextApiHandler = NextAuth(options);
 
-
 export default handler;
-
-
-
