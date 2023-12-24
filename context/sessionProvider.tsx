@@ -15,9 +15,9 @@ export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) =>
 //        const [roleId, setRoleId] = useState<string | null>(null);
 //        const [email, setEmail] = useState<string | null>(null);
 
-        const login = (newToken: string, newAccountId: string, newRoleId: string, newEmail: string) => {
+        const login = (newToken: string, newUserId: string) => {
                 setToken(newToken);
-                setUserId(newAccountId);
+                setUserId(newUserId);
 //                setRoleId(newRoleId);
   //              setEmail(newEmail);
         };
