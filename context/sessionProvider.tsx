@@ -11,29 +11,29 @@ interface SessionProviderProps {
 
 export const SessionProvider: React.FC<SessionProviderProps> = ({ children }) => {
         const [token, setToken] = useState<string | null>(null);
-        const [accountId, setAccountId] = useState<string | null>(null);
-        const [roleId, setRoleId] = useState<string | null>(null);
-        const [email, setEmail] = useState<string | null>(null);
+        const [userId, setUserId] = useState<string | null>(null);
+//        const [roleId, setRoleId] = useState<string | null>(null);
+//        const [email, setEmail] = useState<string | null>(null);
 
-        const login = (newToken: string, newAccountId: string, newRoleId: string, newEmail: string) => {
+        const login = (newToken: string, newUserId: string) => {
                 setToken(newToken);
-                setAccountId(newAccountId);
-                setRoleId(newRoleId);
-                setEmail(newEmail);
+                setUserId(newUserId);
+//                setRoleId(newRoleId);
+  //              setEmail(newEmail);
         };
 
         const logout = () => {
                 setToken(null);
-                setAccountId(null);
-                setRoleId(null);
-                setEmail(null);
+                setUserId(null);
+           //     setRoleId(null);
+               // setEmail(null);
         };
 
         const contextValue: SessionContextProps = {
                 token,
-                accountId,
-                roleId,
-                email,
+                userId,
+            //    roleId,
+               // email,
                 login,
                 logout
         };
