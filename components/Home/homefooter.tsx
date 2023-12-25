@@ -1,6 +1,16 @@
 import Link from 'next/link';
 import React from 'react';
 import { FacebookIcon, InstagramIcon, TwitterIcon, LinkedinIcon } from '@/public/Home//Socialicons/socialIcons';
+// import {
+//   TwitterShareButton,
+//   XIcon,
+//   FacebookShareButton,
+//   FacebookIcon,
+//   LinkedinShareButton,
+//   LinkedinIcon,
+//   WhatsappShareButton,
+//   WhatsappIcon,
+// } from 'react-share';
 
 const socials = [
   {
