@@ -1,6 +1,5 @@
 import HomeLayout from '@/layout/Homelayout';
 import { Work_Sans } from 'next/font/google';
-import Mainsec from '@/modules/home/Page/Mainsec';
 import Home2 from './land3';
 import withoutAuth from '@/helpers/withoutAuth';
 
@@ -14,7 +13,6 @@ function Home() {
   return (
     <HomeLayout>
       <div className={workSans.className}>
-        {/* <Mainsec /> */}
         <Home2 />
       </div>
     </HomeLayout>

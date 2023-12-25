@@ -102,7 +102,7 @@ const SignUp = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className={`${workSans.className} mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md`}
                 />
 
                 <label htmlFor="lastname" className={`${workSans.className} text-md text-black-main font-medium`}>
@@ -116,7 +116,7 @@ const SignUp = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className={`${workSans.className} mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md`}
                 />
 
                 <label htmlFor="email" className={`${workSans.className} text-md text-black-main font-medium`}>
@@ -129,7 +129,7 @@ const SignUp = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
+                  className={`${workSans.className} mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md`}
                 />
 
                 <label htmlFor="Password" className={`${workSans.className} text-md text-black-main font-medium`}>
@@ -151,7 +151,7 @@ const SignUp = () => {
                         <EyeSlash color="#777" onClick={() => setDefaultInpType('text')} />
                       )
                     }
-                    className="mt-1 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md"
+                    className={`${workSans.className} mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md`}
                   />
                 </PasswordPopover>
 
