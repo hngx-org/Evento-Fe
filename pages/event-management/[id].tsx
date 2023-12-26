@@ -1,5 +1,5 @@
 'use client';
-import { Work_Sans, Nunito } from 'next/font/google';
+import { Work_Sans, Nunito, Montserrat } from 'next/font/google';
 import { EventManagement } from '@/@types';
 import HomeFooter from '@/components/Home/homefooter';
 import Homenav from '@/components/Home/homenav';
@@ -29,10 +29,10 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-const workSans = Work_Sans({
+const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-work-sans',
+  variable: '--font-montserrat',
 });
 
 const nunito = Nunito({
@@ -123,136 +123,166 @@ function Index() {
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
       <div>
-        <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
+        <div
+          className={` ${nunito.className} flex flex-col lg:flex-row gap-6 md:gap-8  md:space-between  w-full px-4 md:px-20 pt-8 pb-4 `}
+        >
           <div>
-            <Image src={event.imageURL} width={528} height={541} alt="Event" />
-            <div className="flex items-center pt-3 gap-4">
-              <Image
-                src={event.organizer.profileImage ? event.organizer.profileImage : App3}
-                width={2.5 * 16}
-                height={2.5 * 16}
-                alt="Host"
-                className="rounded-full"
-              />
-              <p className="text-[20px] font-[500] text-[#1e1e1e] ">
-                {event.organizer.firstName} {event.organizer.lastName}
-              </p>
-            </div>
-          </div>
-          <div className="md:pb-[40px]">
-            <p className="text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px] ">
+            <p
+              className={`${montserrat.className} text-[#1e1e1e] pb-4  text-[30px] sm:text-[40px] font-[600] leading-[52px] md:hidden block`}
+            >
               {event?.title}
             </p>
-            <div className="flex gap-6 pb-6 ">
-              <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Calendar size="50" color="#000000" />
+            <Image
+              src={event.imageURL}
+              width={528}
+              height={541}
+              alt="Event"
+              className="lg:h-[541px] lg:w-[528px] md:w-full aspect-[528/541]"
+            />
+            <div className="flex items-center pt-3 gap-[10px] md:gap-4">
+              <div className="h-10 w-10 rounded-full overflow-hidden">
+                {' '}
+                <Image
+                  src={event.organizer.profileImage ? event.organizer.profileImage : App3}
+                  width={40}
+                  height={40}
+                  alt="Host"
+                  className="h-8 w-8 md:w-10 md:h-10"
+                />
               </div>
-              <div className="flex flex-col gap-1 text-[#1e1e1e]">
-                <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
+
+              <p className="text-[16px] md:text-[20px] font-[500] text-[#1e1e1e] ">
+                {'Hosted by ' + event.organizer.firstName}
+              </p>
+            </div>
+            <div className=" pt-3 block md:hidden">
+              <p className="pt-4 pb-2 text-[24px] font-[600] leading-[32px] text-[#000] ">About this event</p>
+              <div className="leading-7 text-[#585858] ">
+                <div dangerouslySetInnerHTML={{ __html: event.description }} />
+                {/* <div className="text-xl font-normal text-[#585858]">{event.description}</div> */}
+              </div>
+            </div>
+          </div>
+          <div className="md:pb-[40px] flex flex-col">
+            <p
+              className={`${montserrat.className} text-[#1e1e1e] pb-4  text-[30px] sm:text-[40px] font-[600] leading-[52px] hidden md:block `}
+            >
+              {event?.title}
+            </p>
+            <div className={`  flex gap-6 pb-6 `}>
+              <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#A4A4A4] flex-shrink-0 ">
+                <Calendar size="24" color="#000000" />
+              </div>
+              <div className="flex flex-col gap-1 text-[#1E1E1E">
+                <p className="text-[16px] sm:text-[20px]  font-[500] leading-[28px] line-clamp-1 ">
                   {formatDate(event?.startDate)} {event.startDate !== event.endDate && `- ${formatDate(event.endDate)}`}
                 </p>
-                <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">
+                <p className="text-[14px] sm:text-[16px] font-[400] leading-[24px] ">
                   {formatTime(event.startDate)} to {formatTime(event.endDate)}
                 </p>
               </div>
             </div>
             <div className="flex gap-6 pb-4 ">
-              <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Location size="50" color="#000000" />
+              <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#A4A4A4] ">
+                <Location size="24" color="#000000" />
               </div>
-              <div className="flex flex-col text-[#1e1e1e]">
-                <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
+              <div className="flex flex-col text-[#1E1E1E">
+                <p className="text-[16px] sm:text-[20px]  font-[500] leading-[28px] ">
                   Location
                   <Image src={LocPointer} alt="Location Pointer" className="inline" />
                 </p>
-                <p className="text-[12px] sm:text-[16px] font-[400] leading-[24px] ">
+                <p className="text-[14px] sm:text-[16px] font-[400] leading-[24px] ">
                   {event?.locationType === 'Physical' ? event?.location : event?.virtualLocationLink}
                 </p>
               </div>
             </div>
-            <div className="flex flex-wrap md:flex-nowrap gap-4 py-8">
-              <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#360789] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
-                <p>Event Category</p>
+            <div className="flex flex-wrap md:flex-nowrap lg:gap- gap-6  lg:w-fit md:w-full justify-between  py-8">
+              <div className="flex flex-col gap-2 w-full md:w-[194px] p-[16px] border border-[#360789] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+                <p className="text-[20px]  font-[500] leading-[28px]">Event Category</p>
                 <p>{event.Category.name}</p>
               </div>
-              <div className="flex flex-col gap-2 w-[193px] p-[16px] border border-[#e0580c] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
-                <p>Event Capacity</p>
+              <div className="flex flex-col gap-2 w-full md:w-[194px] p-[16px] border border-[#e0580c] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+                <p className="text-[20px]  font-[500] leading-[28px]">Event Capacity</p>
                 <p>{event?.capacity}</p>
               </div>
-              <div className="flex flex-col gap-2 w-[194px] p-[16px] border border-[#12b76a] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
-                <p>Ticket type</p>
+              <div className="flex flex-col gap-2 w-full md:w-[194px] p-[16px] border border-[#12b76a] border-t-1 border-r-[3px] border-b-[3px] border-l-[1px] items-start flex-shrink-0 rounded-[8px] ">
+                <p className="text-[20px]  font-[500] leading-[28px]">Ticket type</p>
                 <p>{event.tickets[0]?.ticketType}</p>
               </div>
             </div>
 
-            <div>
-              <Link
-                href={'/event-management/' + event.eventID + '/edit'}
-                style={{
-                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-                }}
-                className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-              >
-                <Edit2 size="32" color="#FF8A65" />
-                <span className={nunito.className}>Edit Event</span>
-              </Link>
-              <Link
-                href={`/event-management/participants/${event.eventID}`}
-                style={{
-                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
-                }}
-                className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
-              >
-                <Profile2User size="32" color="#FF8A65" />
-                <span className={nunito.className}>View Participants</span>
-              </Link>
-            </div>
-            <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
-              {/* React Share icons */}
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col md:flex-row gap-6 mx-auto">
+                {' '}
+                <Link
+                  href={'/event-management/' + event.eventID + '/edit'}
+                  style={{
+                    boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                  }}
+                  className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[313px]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+                >
+                  <Edit2 size="20" color="#E0580C" />
+                  <span className={nunito.className}>Edit Event</span>
+                </Link>
+                <Link
+                  href={`/event-management/participants/${event.eventID}`}
+                  style={{
+                    boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                  }}
+                  className="text-[16px] text-[#e0580c] font-[500] leading-[24px] w-[313px]  rounded-[8px] py-[16px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+                >
+                  <Profile2User size="20" color="#E0580C" />
+                  <span className={nunito.className}>View Participants</span>
+                </Link>
+              </div>
+              <div className="w-full rounded-md px-4 py-2 flex justify-between items-center ">
+                {/* React Share icons */}
 
-              <FacebookShareButton
-                url={eventLink}
-                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-              >
-                <FacebookIcon size={40} round={true} />
-              </FacebookShareButton>
-              <TwitterShareButton
-                url={eventLink}
-                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-              >
-                <XIcon size={40} round={true} />
-              </TwitterShareButton>
-              <LinkedinShareButton
-                url={eventLink}
-                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-              >
-                <LinkedinIcon size={40} round={true} />
-              </LinkedinShareButton>
-              <WhatsappShareButton
-                url={eventLink}
-                className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-              >
-                <WhatsappIcon size={40} round={true} />
-              </WhatsappShareButton>
+                <FacebookShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 "
+                >
+                  <FacebookIcon size={40} round={true} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 "
+                >
+                  <XIcon size={40} round={true} />
+                </TwitterShareButton>
+                <LinkedinShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 "
+                >
+                  <LinkedinIcon size={40} round={true} />
+                </LinkedinShareButton>
+                <WhatsappShareButton
+                  url={eventLink}
+                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 "
+                >
+                  <WhatsappIcon size={40} round={true} />
+                </WhatsappShareButton>
 
-              <button
-                className="transition-all ease-in-out duration-500 animate-bounce"
-                title="Copy event link"
-                onClick={handleButtonClick}
-              >
-                <FaShareAlt color="#FF8A65" size={24} />
-              </button>
+                <button
+                  className="transition-all ease-in-out duration-500 "
+                  title="Copy event link"
+                  onClick={handleButtonClick}
+                >
+                  <FaShareAlt color="#FF8A65" size={24} />
+                </button>
 
-              {/* You can add more social icons as needed */}
+                {/* You can add more social icons as needed */}
+              </div>
             </div>
           </div>
         </div>
-        <div className="max-w-[1240px] mx-auto p-4 pt-3">
-          <p className="text-[18px] pt-4 pb-4 sm:text-[24px] font-[500] leading-[32px] text-[#000] ">
+        <div className=" pt-3 px-20 hidden md:block">
+          <p className="text-[18px] pt-4 pb-2 sm:text-[24px] font-[500] leading-[32px] text-[#000] ">
             About this event
           </p>
           <div className="leading-7 text-[#585858] ">
             <div dangerouslySetInnerHTML={{ __html: event.description }} />
+            {/* <div className="text-xl font-normal text-[#585858]">{event.description}</div> */}
           </div>
         </div>
       </div>

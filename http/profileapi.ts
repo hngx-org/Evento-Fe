@@ -98,7 +98,7 @@ export const getUserProfile = async (setData: React.Dispatch<React.SetStateActio
     });
 
     setData(getUserData?.data.data);
-    console.log(getUserData?.data.data);
+    // console.log(getUserData?.data.data);
 
     // return getUserData?.data;
   } catch (e: any) {
@@ -236,13 +236,15 @@ export const postCoverPicture = async (localImage: File) => {
         Accept: 'application/json',
       },
     });
+    console.log(response);
 
     if (response.status === 200) {
       // Image successfully uploaded
       console.log('Cover Image uploaded successfully!');
     } else {
       // Handle other status codes
-      console.error('Error uploading image:', response.status, response.statusText);
+
+      console.log('Error uploading image:', response.status, response.statusText);
     }
   } catch (error) {
     // Handle network error

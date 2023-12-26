@@ -72,6 +72,18 @@ const UserProfile: React.FC = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<eventType[]>([]);
   const combinedEvents = [...createdEvents, ...upcomingEvents];
 
+  const openPopup = (url: string) => {
+    const width = 600;
+    const height = 400;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
+
+    window.open(
+      url,
+      'Popup',
+      `toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=${width}, height=${height}, top=${top}, left=${left}`,
+    );
+  };
   useEffect(() => {
     getUserProfile(setUserProfile);
     getSocialLinks(setSocialLinks);
@@ -120,6 +132,7 @@ const UserProfile: React.FC = () => {
       // Log the name of the selected image file
       const coverImageUrl = URL.createObjectURL(selectedImage);
       setCoverPic(coverImageUrl);
+      console.log('cover image upload');
       postCoverPicture(selectedImage);
     }
   };
@@ -136,7 +149,7 @@ const UserProfile: React.FC = () => {
 
           <Button
             handleClick={() => {
-              console.log(socialLinks, socialLinks?.facebookURL);
+              // console.log(socialLinks, socialLinks?.facebookURL);
             }}
             styles={
               '  !rounded-[50%] border border-[#ED9E72] absolute lg:right-20 md:right-[64px] right-[17px] top-4 md:top-6  float-right'
@@ -238,20 +251,35 @@ const UserProfile: React.FC = () => {
                 )}
               </div>
               <div className="socials flex gap-x-[20px] items-center">
-                <a href={socialLinks?.instagramURL} target="_blank" rel="noopener noreferrer">
-                  {/* <InstagramIcon className="" /> */}
-                  {/* <Instagram className="h-8 w-8" /> */}
-                  <RiInstagramFill className="h-8 w-8" />
-                </a>
+                {/* <a
+                  href={socialLinks?.instagramURL || 'www.google.com'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer"
+                > */}
+                {/* <InstagramIcon className="" /> */}
+                {/* <Instagram className="h-8 w-8" /> */}
+                <RiInstagramFill
+                  className="h-8 w-8 cursor-pointer"
+                  onClick={() => {
+                    socialLinks.instagramURL && openPopup(socialLinks.instagramURL);
+                  }}
+                />
+                {/* </a> */}
 
-                <a href={socialLinks?.facebookURL} target="_blank" rel="noopener noreferrer">
-                  {/* <FacebookIcon /> */}
-                  <FaFacebookSquare className="h-8 w-8" />
-                </a>
+                <FaFacebookSquare
+                  className="h-8 w-8 cursor-pointer"
+                  onClick={() => {
+                    socialLinks.facebookURL && openPopup(socialLinks.facebookURL);
+                  }}
+                />
 
-                <a href={socialLinks?.twitterURL} target="_blank" rel="noopener noreferrer">
-                  <FaTwitter className="h-8 w-8" />
-                </a>
+                <FaTwitter
+                  className="h-8 w-8 cursor-pointer"
+                  onClick={() => {
+                    socialLinks.twitterURL && openPopup(socialLinks.twitterURL);
+                  }}
+                />
               </div>
             </div>
           </div>

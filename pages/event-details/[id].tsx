@@ -353,6 +353,7 @@ const Index = () => {
                 >
                   <FacebookIcon size={40} round={true} />
                 </FacebookShareButton>
+
                 <TwitterShareButton
                   url={eventLink}
                   className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
