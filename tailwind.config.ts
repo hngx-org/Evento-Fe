@@ -207,6 +207,8 @@ const config: Config = {
       },
       fontFamily: {
         Worksans: ['Work Sans', 'sans-serif'],
+        montserrat: ['--font-montserrat'],
+        nunito: ['--font-nunito'],
       },
       content: {
         brush: "url('./public/brush.png')",

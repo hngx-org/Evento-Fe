@@ -29,6 +29,19 @@ import {
   WhatsappIcon,
 } from 'react-share';
 import { useEventContext } from '@/context/EventContext';
+import { Montserrat, Nunito } from 'next/font/google';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
 interface Participant {
   userID: string;
@@ -75,25 +88,6 @@ const Index = () => {
   }, []);
 
   const userId = getStoredUserId();
-  // console.log(userId);
-
-  // const RegistrationData = { userId: userId as string, eventId: eventId as string };
-  // // const RegistrationData = JSON.stringify({ userId, eventId });
-
-  // // console.log(RegistrationData);
-
-  // const handleRegister = async () => {
-  //   try {
-  //     setLoading(true);
-  //     await Register({ eventID: RegistrationData.eventId, userID: RegistrationData.userId });
-  //     console.log('sucess');
-  //     console.log('success');
-  //   } catch (error) {
-  //     console.error('Error during Registration', error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   function formatDate(dateISO: string) {
     const date = new Date(dateISO);
@@ -251,7 +245,9 @@ const Index = () => {
     <>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
       <div>
-        <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
+        <div
+          className={`${nunito.className} flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 `}
+        >
           <div className="w-full md:w-2/5 shrink-0">
             <div className="aspect-[528/541] relative rounded-lg overflow-hidden">
               <Image
@@ -283,12 +279,14 @@ const Index = () => {
             </div>
           </div>
           <div className="md:pb-[40px]">
-            <p className="text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px] ">
+            <p
+              className={`${montserrat.className} text-[#1e1e1e] pb-4  text-[30px] sm:text-[40px] font-[600] leading-[52px]`}
+            >
               {title}
             </p>
             <div className="flex gap-6 pb-6 ">
               <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Calendar size="50" color="#000000" />
+                <Calendar size="35" color="#000000" />
               </div>
               <div className="flex flex-col gap-1 text-[#1e1e1e]">
                 <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
@@ -299,7 +297,7 @@ const Index = () => {
             </div>
             <div className="flex gap-6 pb-4 ">
               <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Location size="50" color="#000000" />
+                <Location size="34" color="#000000" />
               </div>
               <div className="flex flex-col text-[#1e1e1e]">
                 <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">

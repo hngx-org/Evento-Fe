@@ -30,7 +30,8 @@ import {
   WhatsappIcon,
 } from 'react-share';
 import { useEventContext } from '@/context/EventContext';
-import { Ticket } from 'iconsax-react';
+import { Calendar, Location, Ticket } from 'iconsax-react';
+import { Montserrat, Nunito } from 'next/font/google';
 
 interface Participant {
   userID: string;
@@ -39,6 +40,18 @@ interface Participant {
   firstName: string;
   lastName: string;
 }
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-montserrat',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
 
 const Index = () => {
   const { shareEventLink } = useEventContext();
@@ -214,7 +227,9 @@ const Index = () => {
   return (
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
-      <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
+      <div
+        className={`${nunito.className} flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 `}
+      >
         <div className="w-full md:w-2/5 shrink-0">
           <div className="aspect-[528/541] relative rounded-lg overflow-hidden">
             <Image
@@ -246,14 +261,15 @@ const Index = () => {
           </div>
         </div>
         <div className="md:pb-[40px]">
-          <p className="text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px] ">{title}</p>
+          <p
+            className={`${montserrat.className} text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px]`}
+          >
+            {title}
+          </p>
           <div className="flex gap-6 pb-6 ">
-            <Image
-              src={date}
-              width={0}
-              alt="Date Icon"
-              className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] "
-            />
+            <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
+              <Calendar size="35" color="#000000" />
+            </div>
             <div className="flex flex-col gap-1 text-[#1e1e1e]">
               <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
                 {formatDate(startDate)}
@@ -262,12 +278,9 @@ const Index = () => {
             </div>
           </div>
           <div className="flex gap-6 pb-4 ">
-            <Image
-              src={Loc}
-              width={0}
-              alt="Date Icon"
-              className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] "
-            />
+            <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
+              <Location size="34" color="#000000" />
+            </div>
             <div className="flex flex-col text-[#1e1e1e]">
               <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
                 Location
@@ -293,7 +306,7 @@ const Index = () => {
           <div className="rounded-[12px] border-[0.5px] border-[#c0c0c0] flex flex-col p-[16px] items-start gap-[24px] ">
             {userId ? (
               <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
-                Register to Continue
+                You have already registered for this event
               </p>
             ) : (
               <p className="text-[16px] sm:text-[20px] font-[400] leading-[28px] text-[#1e1e1e]  ">
