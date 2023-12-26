@@ -24,7 +24,7 @@ export const getUserEvents = async (
       });
 
       const events = response.data.data;
-      console.log(events);
+      // console.log(events);
       const userID = getUserId();
 
       // const filteredEvents = events.filter((event: any) => event.organizerID === 'ab73f292-9267-4167-81f2-d85e9bd950d3');
@@ -92,7 +92,7 @@ export const getUserEvents = async (
       // console.log(createdEvents, upcomingEvents, pastEvents);
 
       if (response.status === 200) {
-        console.log('Events gotten successfully');
+        // console.log('Events gotten successfully');
       } else {
         console.error('Error fetching events', response.status, response.statusText);
       }
