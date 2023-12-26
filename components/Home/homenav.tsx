@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import logo from '../../public/logo.svg';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import AuthModal from '../components/modal/auth/AuthModal';
-import SignUp from '../components/modal/auth/SignUP';
-import useDisclosure from '@/hooks/useDisclosure';
-import SignIn from '../components/modal/auth/SignIn';
+import { Nunito, Chelsea_Market } from 'next/font/google';
 import Button from '@ui/NewButton';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const chelsea = Chelsea_Market({
+  subsets: ['latin'],
+  variable: '--font-chelsea_market',
+  weight: ['400'],
+});
 
 function Homenav() {
   const [isToggle, setToggle] = useState(false);
@@ -17,12 +23,10 @@ function Homenav() {
   };
 
   return (
-    <nav className="w-full py-3  bg-white-100 justify-between items-center px-4  relative z-20">
+    <nav className={`${nunito.className} w-full py-3  bg-white-100 justify-between items-center px-4  relative z-20`}>
       <div className="max-w-[1240px] mx-auto flex items-center justify-between  ">
-        <div className="flex gap-14">
-          <Link href="/">
-            <Image width={120} height={15} src={logo} alt="Evento logo" />
-          </Link>
+        <div className={`${chelsea.className} flex gap-14 text-primary-100 text-[30px] font-medium`}>
+          <Link href="/">EVENTO</Link>
         </div>
         <div className="hidden lg:block md:block">
           <div className="flex gap-7">
@@ -54,7 +58,7 @@ function Homenav() {
                 style={{
                   color: 'white',
                 }}
-                className="px-6 py-3 bg-primary-100 rounded-lg justify-center items-center gap-4 flex text-center  text-base font-bold  leading-normal tracking-tight text-white lg:w-auto w-[100%]"
+                className="px-6 py-3 bg-primary-100 rounded-lg justify-center items-center gap-4 flex text-center text-base font-bold  leading-normal tracking-tight text-white lg:w-auto w-[100%]"
               >
                 <Link href="/auth/sign-up">Create Event</Link>
               </button>
@@ -71,7 +75,6 @@ export default Homenav;
 
 function MenuIcon({ style, toggle, toggler }: { style?: string; toggle?: boolean; toggler: () => void }) {
   if (toggle) {
-    // Close Icon
     return (
       <div className={`${style}`} onClick={toggler}>
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32">
@@ -100,7 +103,6 @@ function MenuIcon({ style, toggle, toggler }: { style?: string; toggle?: boolean
   }
 
   return (
-    // Open Icon
     <div className={`${style}`} onClick={toggler}>
       <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 32 32">
         <g>

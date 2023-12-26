@@ -1,15 +1,17 @@
 'use client';
-import { Work_Sans, Nunito } from 'next/font/google';
+
 import { EventManagement } from '@/@types';
 import HomeFooter from '@/components/Home/homefooter';
 import Homenav from '@/components/Home/homenav';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import { eventDetails } from '@/http/events';
 import { getStoredUserId } from '@/http/getToken';
-import { Calendar, Edit2, Location, Profile2User } from 'iconsax-react';
+import Button from '@ui/NewButton';
+import { Calendar, Edit2, Location, Profile2User, ExportCurve } from 'iconsax-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Montserrat, Nunito } from 'next/font/google';
 import React, { useState } from 'react';
 import { IoArrowBack } from 'react-icons/io5';
 import { useQuery } from 'react-query';
@@ -29,10 +31,10 @@ import {
   WhatsappIcon,
 } from 'react-share';
 
-const workSans = Work_Sans({
+const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-work-sans',
+  variable: '--font-montserrat',
 });
 
 const nunito = Nunito({
@@ -123,7 +125,9 @@ function Index() {
     <div>
       {userId ? <AuthenticatedHeader /> : <Homenav />}
       <div>
-        <div className="flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 ">
+        <div
+          className={`${nunito.className} flex flex-col md:flex-row gap-8 md:space-between items-center max-w-[1240px] mx-auto p-4 pt-8 `}
+        >
           <div>
             <Image src={event.imageURL} width={528} height={541} alt="Event" />
             <div className="flex items-center pt-3 gap-4">
@@ -140,12 +144,14 @@ function Index() {
             </div>
           </div>
           <div className="md:pb-[40px]">
-            <p className="text-[#1e1e1e] pb-4 font-mono text-[30px] sm:text-[40px] font-[600] leading-[52px] ">
+            <p
+              className={`${montserrat.className} text-[#1e1e1e] pb-4 text-[30px] sm:text-[40px] font-[600] leading-[52px] `}
+            >
               {event?.title}
             </p>
             <div className="flex gap-6 pb-6 ">
               <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Calendar size="50" color="#000000" />
+                <Calendar size="35" color="#000000" />
               </div>
               <div className="flex flex-col gap-1 text-[#1e1e1e]">
                 <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
@@ -158,7 +164,7 @@ function Index() {
             </div>
             <div className="flex gap-6 pb-4 ">
               <div className="w-[56px] h-[56px] py-[3px] px-[4px] flex justify-center items-center gap-[10px] rounded-[8px] border border-[#a4a4a4] ">
-                <Location size="50" color="#000000" />
+                <Location size="35" color="#000000" />
               </div>
               <div className="flex flex-col text-[#1e1e1e]">
                 <p className="text-[14px] sm:text-[20px] font-Worksans font-[500] leading-[28px] ">
@@ -196,6 +202,8 @@ function Index() {
                 <Edit2 size="32" color="#FF8A65" />
                 <span className={nunito.className}>Edit Event</span>
               </Link>
+            </div>
+            {/* <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
               <Link
                 href={`/event-management/participants/${event.eventID}`}
                 style={{
@@ -206,10 +214,8 @@ function Index() {
                 <Profile2User size="32" color="#FF8A65" />
                 <span className={nunito.className}>View Participants</span>
               </Link>
-            </div>
-            <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
-              {/* React Share icons */}
 
+              
               <FacebookShareButton
                 url={eventLink}
                 className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
@@ -242,8 +248,28 @@ function Index() {
               >
                 <FaShareAlt color="#FF8A65" size={24} />
               </button>
+            </div> */}
+            <div className="flex gap-2">
+              <Button
+                href={`/event-management/participants/${event.eventID}`}
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%]  rounded-[8px] py-[30px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <Profile2User size="32" color="#FF8A65" />
+                <span className={nunito.className}>View Participants</span>
+              </Button>
 
-              {/* You can add more social icons as needed */}
+              <Button
+                style={{
+                  boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
+                }}
+                className="text-[16px] text-[#e0580c] mt-2 font-[500] leading-[24px] w-[100%] rounded-[8px] py-[30px] px-[20px] flex justify-center items-center gap-4 bg-transparent border border-[#e0580c] "
+              >
+                <ExportCurve size="32" color="#FF8A65" />
+                <span className={nunito.className}>Share Event</span>
+              </Button>
             </div>
           </div>
         </div>

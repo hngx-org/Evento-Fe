@@ -11,6 +11,19 @@ import { FacebookIcon, InstagramIcon, TwitterIcon, LinkedinIcon } from '@/public
 //   WhatsappShareButton,
 //   WhatsappIcon,
 // } from 'react-share';
+import { Nunito, Chelsea_Market } from 'next/font/google';
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
+const chelsea = Chelsea_Market({
+  subsets: ['latin'],
+  variable: '--font-chelsea_market',
+  weight: ['400'],
+});
 
 const socials = [
   {
@@ -33,12 +46,12 @@ const socials = [
 
 export default function HomeFooter() {
   return (
-    <footer className="max-w-[1240px] mx-auto p-4 py-12">
+    <footer className={`${nunito.className} max-w-[1240px] mx-auto p-4 py-12`}>
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-0 border-b border-b-Grey-G30 pb-6">
         <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-12">
           <div>
             <Link className="" href={''}>
-              <h3 className="text-xl font-montserrat font-bold text-primary-100">Evento</h3>
+              <h3 className={`${chelsea.className} text-xl  font-bold text-primary-100`}>Evento</h3>
             </Link>
           </div>
           <div className="flex gap-6">
