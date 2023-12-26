@@ -98,7 +98,7 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
 
   return (
     <div className="px-4 py-8 w-full bg-white-100 rounded-lg">
-      <div className={`flex flex-col gap-8`}>
+      <div className={`flex flex-col gap-8 items-center`}>
         {events?.map((event, index) =>
           isSmallScreen ? (
             <GridEventCard event={event} key={index} past={past} />
