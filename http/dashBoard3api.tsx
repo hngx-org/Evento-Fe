@@ -57,6 +57,7 @@ export const getUserEvents = async (
             return false;
           }),
       ];
+      console.log(pastEvents);
       // console.log(pastEvents);
 
       setPastEvents(pastEvents);

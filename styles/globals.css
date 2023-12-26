@@ -117,6 +117,33 @@ body.mobile-menu-open {
   height: fit-content !important;
 }
 
+.swiper-pagination-bullet {
+  position: relative;
+  width: 50% !important;
+  height: 100% !important;
+  margin: 0;
+  /* font-family: Nunito; */
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+  border-bottom: #c0c0c0 3px solid;
+  transition: ease-in-out;
+  opacity: 1;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-pagination-bullet-active {
+  /* color: #fff; */
+  /* background: #007aff; */
+  border-bottom-color: #e0580c;
+}
+
 .timeline {
   position: relative;
   /* max-width: 1200px; */
