@@ -11,17 +11,11 @@ import { Router } from 'next/router';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { AuthContextProvider } from '@/context/AuthContext';
 import NextAuthProvider from '@/context/NextAuthProviders';
-import { Nunito } from 'next/font/google';
 import { SessionProvider } from '@/context/sessionProvider';
+
 Router.events.on('routeChangeStart', nProgress.start);
 Router.events.on('routeChangeError', nProgress.done);
 Router.events.on('routeChangeComplete', nProgress.done);
-
-const nunito = Nunito({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-nunito',
-});
 
 const queryClient = new QueryClient();
 

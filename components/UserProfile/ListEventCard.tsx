@@ -63,7 +63,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
     const userId = getUserId();
     if (event.organizerID === userId) {
       router.push(`event-management/${event.eventID}`);
-    } else router.push(`/user-invite/${event.eventID}`);
+    } else router.push(`/event/${event.eventID}`);
   };
 
   const handleNavigate = (eventId: string) => {
@@ -71,7 +71,7 @@ const ListEventCard: React.FC<EventCardProps> = ({ event, past }) => {
     if (userId === eventId) {
       router.push(`/event-management/${event.eventID}`);
     } else {
-      router.push(`/user-invite/${event.eventID}`);
+      router.push(`/event/${event.eventID}`);
     }
   };
 

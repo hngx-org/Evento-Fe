@@ -62,7 +62,7 @@ function EventCard({ id, imagePath, date, title, location, price, participants, 
 
   return (
     <Link
-      href={organizerId === userId ? '/event-management/' + id : '/user-invite/' + id}
+      href={organizerId === userId ? '/event-management/' + id : '/event/' + id}
       className={`block border border-Grey-G80/50 card-shadow rounded-lg hover:scale-[1.01]`}
     >
       <div className="relative w-full h-[180px] rounded-t-lg overflow-hidden">

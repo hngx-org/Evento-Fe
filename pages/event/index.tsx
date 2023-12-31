@@ -16,7 +16,7 @@ import Button from '@ui/NewButton';
 
 const Index = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useQuery('get-event-details', () => {
+  const { data, isLoading, error } = useQuery('get-events', () => {
     if (!router.query.id) return;
     const id = typeof router.query.id == 'string' ? router.query.id : router.query.id[0];
     return eventDetails(id);

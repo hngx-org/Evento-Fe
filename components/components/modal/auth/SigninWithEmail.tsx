@@ -48,7 +48,7 @@ function SignIn({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
       setLoading(true);
       const response = await loginUser({ email, password });
       if (response && response.status === 200) {
-        router.push('/event-dashboard');
+        router.push('/dashboard');
       } else {
         console.error('Unexpected response:', response);
       }

@@ -50,7 +50,7 @@ const Page3: React.FC<Page3Props> = ({ eventId }) => {
           </div>
           <div className="w-full flex flex-col content-center ">
             <Link
-              href="/event-dashboard"
+              href="/dashboard"
               className=" w-full max-sm:w-full text-center font-semibold text-[#fdfdfd] text-base leading-6 mb-3 py-4 px-5 bg-[#e0580c] rounded-lg"
             >
               See all events

@@ -16,7 +16,7 @@ function Edit() {
   const id = router.query?.id ? router.query?.id![0] : '';
   const userId = getStoredUserId();
 
-  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+  const { data, isLoading, error } = useQuery(['get-events', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
     }
@@ -43,7 +43,7 @@ function Edit() {
         <div className="flex-1 flex flex-col items-center justify-center gap-4">
           <h4 className="text-2xl font-medium text-center">Event Not Found</h4>
           <Link
-            href="/event-dashboard"
+            href="/dashboard"
             className="flex items-center mx-auto gap-2 py-1.5 px-6 bg-primary-100 w-fit text-white-100 rounded border border-primary-100 hover:bg-transparent hover:text-primary-100 transition-all"
           >
             <IoArrowBack /> Return To Dashboard

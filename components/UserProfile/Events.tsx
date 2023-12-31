@@ -92,7 +92,7 @@ const Events: React.FC<EventProps> = ({ past, events }) => {
     if (userId === eventId) {
       router.push('/event-management');
     } else {
-      router.push('/user-invite');
+      router.push('/event');
     }
   };
 
