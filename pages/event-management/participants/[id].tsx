@@ -30,7 +30,7 @@ export default function Index() {
   const [participantList, setParticipants] = useState<ParticipantsProps[]>([]);
   const [pageOffset, setPageOffset] = useState<number>(1);
   const router = useRouter();
-  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+  const { data, isLoading, error } = useQuery(['get-events', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
     }

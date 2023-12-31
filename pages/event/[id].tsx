@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 import Homenav from '@/components/Home/homenav';
 import Homefooter from '@/components/Home/homefooter';
-import date from '../../public/assets/date.svg';
-import Loc from '../../public/assets/loc.svg';
 import LocPointer from '../../public/assets/locpointer.svg';
+import useUserSession from '@/hooks/useSession';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
@@ -54,6 +53,7 @@ const nunito = Nunito({
 });
 
 const Index = () => {
+  const { signIn } = useUserSession();
   const { shareEventLink } = useEventContext();
   const [loading, setLoading] = useState(false);
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -61,7 +61,7 @@ const Index = () => {
   const [eventID2, setEventID] = useState<string | null>(null);
   const [userID, setUserID] = useState<string | null>(null);
   const router = useRouter();
-  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+  const { data, isLoading, error } = useQuery(['get-events', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
     }
@@ -340,6 +340,7 @@ const Index = () => {
                   boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
                 }}
                 href="/auth/sign-in"
+                onClick={signIn}
                 className="text-[16px] text-[#fefefe] font-[500] leading-[24px] w-[100%] rounded-[8px] py-[16px] px-[20px] flex items-center justify-center bg-[#e0580c] border border-[#e0580c] "
               >
                 Sign In to Register

@@ -3,8 +3,10 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSession } from '@/context/sessionProvider';
+import { useAuth } from '@/context/AuthContext';
 
 const LnkingGoogle: React.FC = () => {
+  const { userCameFrom, userCameFromForOAuth } = useAuth();
   const { login } = useSession();
   const router = useRouter();
   const { token, userId } = router.query;
@@ -20,7 +22,9 @@ const LnkingGoogle: React.FC = () => {
         localStorage.setItem('authToken', token as string);
         localStorage.setItem('userId', userId as string);
 
-        router.push('/event-dashboard');
+        router.push(userCameFrom || '/dashboard');
+      } else {
+        router.push(userCameFromForOAuth || '/auth/sign-in');
       }
     };
 

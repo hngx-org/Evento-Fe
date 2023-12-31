@@ -33,7 +33,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
 
   return (
     <>
-      <section className="page-1 event-dashboard w-full lg:px-[0px] md:px-0 max-sm:px-0 py-4 ">
+      <section className="page-1 dashboard w-full lg:px-[0px] md:px-0 max-sm:px-0 py-4 ">
         <div className="w-full flex flex-col border-[1px] border-[#d7d7d7] rounded-3xl p-10 max-sm:p-0 max-sm:border-none shadow-xl max-sm:shadow-none">
           <div className="event-name w-full ">
             <Input
@@ -97,7 +97,7 @@ const Page1: React.FC<Page1Props> = ({ onNext, data, setState, descriptionConten
           >
             Next
           </button>
-          <Link href={'/event-dashboard'}>
+          <Link href={'/dashboard'}>
             <button className="w-full text-center text-[#e0580c] text-base leading-6 py-4 px-5 bg-[#fdfdfd] border-[1px] border-[#e0580c] font-semibold mt-3 rounded-lg">
               Go back
             </button>

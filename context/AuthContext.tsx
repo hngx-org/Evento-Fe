@@ -47,4 +47,13 @@ export function AuthContextProvider({ children }: { children: React.ReactNode })
   return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
 }
 
-export const useAuth = () => useContext(AuthContext);
+// use this hook in your component to have access to the AuthContext
+export const useAuth = () => {
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  return authContext;
+};

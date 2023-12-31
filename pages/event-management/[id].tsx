@@ -47,7 +47,7 @@ function Index() {
   const { shareEventLink } = useEventContext();
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const router = useRouter();
-  const { data, isLoading, error } = useQuery(['get-event-details', router.query.id], () => {
+  const { data, isLoading, error } = useQuery(['get-events', router.query.id], () => {
     if (!router.query.id) {
       throw new Error('Event ID not provided');
     }

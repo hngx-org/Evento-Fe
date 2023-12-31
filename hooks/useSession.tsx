@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthContext';
 
@@ -11,17 +10,12 @@ const useUserSession = () => {
     handleUserCameFromForOAuth(url);
   };
 
-  const setRouteAndRedirect = (redirectPath: string) => {
-    handleUserCameFrom(url);
-    router.push(redirectPath);
-  };
-
   const signUp = () => {
-    setRouteAndRedirect('/');
+    handleUserCameFrom(url);
   };
 
   const signIn = () => {
-    setRouteAndRedirect('/');
+    handleUserCameFrom(url);
   };
 
   const logout = () => {
@@ -29,7 +23,6 @@ const useUserSession = () => {
 
     if (token) {
       localStorage.removeItem('authToken');
-      toast.success('Logged out', { theme: 'light' });
       handleAuth(undefined);
       router.push('/');
     }

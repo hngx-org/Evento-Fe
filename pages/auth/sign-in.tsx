@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/components/ui/NewButton';
 import Link from 'next/link';
 import Homenav from '@/components/Home/homenav';
@@ -11,6 +11,7 @@ import Cookies from 'js-cookie';
 import GoogleButton from '@ui/GoogleButton';
 import { Montserrat, Nunito, Work_Sans } from 'next/font/google';
 import { useSession } from '@/context/sessionProvider';
+import { useAuth } from '@/context/AuthContext';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -32,12 +33,14 @@ const workSans = Work_Sans({
 
 const SignIn = () => {
   const router = useRouter();
+  const { userCameFrom } = useAuth();
   const [loading, setLoading] = useState(false);
   const [defaultInpType, setDefaultInpType] = useState<'password' | 'text'>('password');
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+
   const { login } = useSession();
 
   const [rememberMe, setRememberMe] = useState(false);
@@ -62,7 +65,7 @@ const SignIn = () => {
       const response = await loginUser({ email, password });
 
       if (response && response.status === 200) {
-        router.push('/event-dashboard');
+        router.push(userCameFrom || '/dashboard');
         const token = response.data.data.token;
         const userId = response.data.data.userId;
         login(token, userId);
