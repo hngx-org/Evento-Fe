@@ -22,7 +22,7 @@ function Select({ options, color, type = 'normal', selected, setSelected, handle
             </span>
           </Listbox.Button>
           <Transition as={Fragment} leave="transition ease-in duration-100" leaveFrom="opacity-100" leaveTo="opacity-0">
-            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white-N0 py-1 text-base shadow-lg border border-Grey-G60 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white-N0 py-1 text-base shadow-lg border border-Grey-G60 focus:outline-none sm:text-sm z-20">
               {options.map((option, personIdx) => (
                 <Listbox.Option
                   key={personIdx}
