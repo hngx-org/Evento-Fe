@@ -40,4 +40,4 @@ jobs:
           git config user.email "ayomikuntemitope246@gmailcom"
           git add .
           git commit -m "Format code using Prettier"
-          git push
+         # git push
