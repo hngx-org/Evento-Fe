@@ -45,6 +45,7 @@ const socials = [
 ];
 
 export default function HomeFooter() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer className={`${nunito.className} max-w-[1240px] mx-auto p-4 py-12`}>
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-0 border-b border-b-Grey-G30 pb-6">
