@@ -34,10 +34,5 @@ jobs:
       - name: Run Prettier
         run: npm run format
 
-      - name: Commit changes
-        run: |
-          git config user.name "pettierbot"
-          git config user.email "ayomikuntemitope246@gmailcom"
-          git add .
-          git commit -m "Format code using Prettier"
-         # git push
+     
+     
