@@ -29,6 +29,8 @@
     "@lucasmogari/react-pagination": "^1.1.4",
     "@material-tailwind/react": "^2.1.4",
     "@next/env": "^14.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
     "@tanstack/react-query": "^5.10.0",
     "@types/nodemailer": "^6.4.14",
@@ -40,9 +42,11 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "formik": "^2.4.5",
+    "html2canvas": "^1.4.1",
     "iconsax-react": "^0.0.8",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",
+    "lucide-react": "^0.312.0",
     "next": "^14.0.3",
     "next-auth": "^4.24.5",
     "next-seo": "^6.4.0",
@@ -67,7 +71,8 @@
     "tailwind-merge": "^2.0.0",
     "typescript-cookie": "^1.0.6",
     "typewriter-effect": "^2.21.0",
-    "usehooks-ts": "^2.9.1"
+    "usehooks-ts": "^2.9.1",
+    "vaul": "^0.8.0"
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",

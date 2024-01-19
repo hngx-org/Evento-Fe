@@ -1,0 +1,39 @@
+  <div
+        className={`${nunito.className} flex border items-center justify-between border-gray-300 p-4 rounded-lg`}
+        ref={qrCodeRef}
+      >
+        {/* Left Section - Event */}
+        <div className="flex-col gap-y-2">
+          <h2 className={`${montserrat.className} font-medium text-[25px] w-[20px] text-primary-100 mt-2`}>Event</h2>
+          <h2 className={`${montserrat.className} font-medium text-[25px] w-[20px] text-primary-100 mt-2`}>Ticket</h2>
+        </div>
+
+        <div className="border-dashed border-r ml-8 border-b border-gray-300"></div>
+
+        {/* Right Section - Event-name, Ticket Table, and QR Code */}
+        <div className="ml-8 flex-col items-center justify-between w-[500px]">
+          <div>
+            <h2>Event-name</h2>
+            <span>Phoenix</span>
+          </div>
+
+          <table className="mt-4 border-collapse border border-gray-300">
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">Row 1, Col 1</td>
+              <td className="border border-gray-300 px-4 py-2">Row 1, Col 2</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">Row 2, Col 1</td>
+              <td className="border border-gray-300 px-4 py-2">Row 2, Col 2</td>
+            </tr>
+            <tr>
+              <td className="border border-gray-300 px-4 py-2">Row 3, Col 1</td>
+              <td className="border border-gray-300 px-4 py-2">Row 3, Col 2</td>
+            </tr>
+          </table>
+        </div>
+        {/* Your QR Code */}
+        <div className="flex items-center justify-center w-34 h-34 mx-auto mt-4">
+          <QRCode value={`UserID: ${userId}, EventID: ${eventId}`} size={34} />
+        </div>
+      </div>
