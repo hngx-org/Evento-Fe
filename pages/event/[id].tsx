@@ -31,6 +31,7 @@ import {
 import { useEventContext } from '@/context/EventContext';
 import { Calendar, Location, Ticket } from 'iconsax-react';
 import { Montserrat, Nunito } from 'next/font/google';
+import ShareInvite from '@/components/share/ShareInvite';
 
 interface Participant {
   userID: string;
@@ -358,45 +359,7 @@ const Index = () => {
                 <Ticket />
                 View Ticket
               </Button>
-              <div className="w-full rounded-md p-4 mt-2 flex justify-between items-center border border-[#e0580c]">
-                {/* React Share icons */}
-
-                <FacebookShareButton
-                  url={eventLink}
-                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-                >
-                  <FacebookIcon size={40} round={true} />
-                </FacebookShareButton>
-
-                <TwitterShareButton
-                  url={eventLink}
-                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-                >
-                  <XIcon size={40} round={true} />
-                </TwitterShareButton>
-                <LinkedinShareButton
-                  url={eventLink}
-                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-                >
-                  <LinkedinIcon size={40} round={true} />
-                </LinkedinShareButton>
-                <WhatsappShareButton
-                  url={eventLink}
-                  className="text-[#e0580c] hover:text-[#FF8A65] cursor-pointer ml-4 animate-bounce"
-                >
-                  <WhatsappIcon size={40} round={true} />
-                </WhatsappShareButton>
-
-                <button
-                  className="transition-all ease-in-out duration-500 animate-bounce"
-                  title="Copy event link"
-                  onClick={handleButtonClick}
-                >
-                  <FaShareAlt color="#FF8A65" size={24} />
-                </button>
-
-                {/* You can add more social icons as needed */}
-              </div>
+              <ShareInvite Id={eventID} />
             </div>
           )}
         </div>

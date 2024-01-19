@@ -30,6 +30,7 @@ import {
   WhatsappShareButton,
   WhatsappIcon,
 } from 'react-share';
+import ShareInvite from '@/components/share/ShareInvite';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -261,7 +262,7 @@ function Index() {
                 <span className={nunito.className}>View Participants</span>
               </Button>
 
-              <Button
+              {/* <Button
                 style={{
                   boxShadow: '0px 1px 2px 0px rgba(16, 24, 40, 0.05)',
                 }}
@@ -269,7 +270,8 @@ function Index() {
               >
                 <ExportCurve size="32" color="#FF8A65" />
                 <span className={nunito.className}>Share Event</span>
-              </Button>
+              </Button> */}
+              <ShareInvite Id={Id} />
             </div>
           </div>
         </div>

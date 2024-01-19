@@ -411,7 +411,7 @@ export default function HomeFooter() {
             );
           })}
         </div>
-        <p className="text-sm font-semibold text-primary-100">  &copy; {currentYear} Evento. All rights reserved.</p>
+        <p className="text-sm font-semibold text-primary-100"> &copy; {currentYear} Evento. All rights reserved.</p>
         <div>
           <Link href={''} className="pr-4 text-gray-500 font-medium">
             Terms of Service

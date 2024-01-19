@@ -347,3 +347,10 @@ export interface SessionContextProps {
   login: (token: string, userId: string) => void;
   logout: () => void;
 }
+
+export interface TicketModalProps {
+  userId: string;
+  eventId: string;
+  isOpen: boolean;
+  onClose: () => void;
+}

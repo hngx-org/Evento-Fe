@@ -45,7 +45,7 @@ npm run check-types ||
 
 echo ''
 
-npm run format
+# npm run format
 
 echo ''
 
