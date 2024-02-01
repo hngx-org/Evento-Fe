@@ -13,6 +13,44 @@ import { getCategories } from '@/http/createeventapi';
 import { getStoredUserId } from '@/http/getToken';
 import AuthenticatedHeader from '@/components/components/authenticatedheader';
 
+import { IoFootballOutline } from 'react-icons/io5';
+import { CiBasketball } from 'react-icons/ci';
+import { FaVolleyballBall, FaTableTennis } from 'react-icons/fa';
+import { GiBoxingGlove, GiWeightLiftingUp } from 'react-icons/gi';
+import { TbPlayHandball, TbSwimming } from 'react-icons/tb';
+import { MdOutlineSportsRugby, MdOutlineGolfCourse, MdSportsCricket, MdOutlineSportsTennis } from 'react-icons/md';
+import { IoBicycle } from 'react-icons/io5';
+import { RiSailboatFill } from 'react-icons/ri';
+import { GrRun } from 'react-icons/gr';
+
+export const catergoryIcon = [
+  { name: 'Basketball', icon: <CiBasketball /> },
+  { name: 'Table Tennis', icon: <FaTableTennis /> },
+  { name: 'Volleyball', icon: <FaVolleyballBall /> },
+  { name: 'Wrestling', icon: <GiBoxingGlove /> },
+  { name: 'Cricket', icon: <MdSportsCricket /> },
+  { name: 'Handball', icon: <TbPlayHandball /> },
+  { name: 'Weightlifting', icon: <GiWeightLiftingUp /> },
+  { name: 'Badminton', icon: <GrRun /> },
+  { name: 'Taekwondo', icon: <GrRun /> },
+  { name: 'Judo', icon: <GrRun /> },
+  { name: 'Tennis', icon: <MdOutlineSportsTennis /> },
+  { name: 'Swimming', icon: <TbSwimming /> },
+  { name: 'Rugby', icon: <MdOutlineSportsRugby /> },
+  { name: 'Cycling', icon: <IoBicycle /> },
+  { name: 'Golf', icon: <MdOutlineGolfCourse /> },
+  { name: 'Dambe', icon: <GrRun /> },
+  { name: 'Canoeing', icon: <RiSailboatFill /> },
+  { name: 'Football', icon: <IoFootballOutline /> },
+  { name: 'Athletics', icon: <GrRun /> },
+  { name: 'Boxing', icon: <GiBoxingGlove /> },
+];
+
+const getCategoryIcon = (categoryTitle: string) => {
+  const category = catergoryIcon.find((cat) => cat.name === categoryTitle);
+  return category ? category.icon : <GrRun />;
+};
+
 const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
@@ -37,9 +75,16 @@ function Home() {
 
   const categoryData = async () => {
     const cats = await getCategories(setCategories);
+    // let catsss: any[] = [];
     if (cats) {
       setCategories([{ name: 'All', categoryID: 'all' }, ...cats]);
+
+      // cats.forEach((element: { name: any }) => {
+      //   catsss.push(element.name);
+      //   return;
+      // });
     }
+    // console.log(catsss);
   };
 
   const userId = getStoredUserId();
@@ -101,7 +146,11 @@ function Home() {
                 return (
                   <Button
                     key={item.categoryID}
-                    leftIcon={<Music color={selectedCategory === item.categoryID ? '#FFF' : '#3C3C3C'} />}
+                    // icons set
+
+                    // leftIcon={<Music color={selectedCategory === item.categoryID ? '#FFF' : '#3C3C3C'} />}
+
+                    leftIcon={getCategoryIcon(item.name)}
                     intent={'secondary'}
                     size={'md'}
                     className={`${
@@ -112,6 +161,7 @@ function Home() {
                     onClick={() => setSelectedCategory(item.categoryID == 'all' ? '' : item.categoryID)}
                   >
                     {item.name}
+                    {/* jknjefd */}
                   </Button>
                 );
               })}

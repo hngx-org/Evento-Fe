@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const HEADER = () => {
   return (
-    <header className="bg-blue-500 p-4">
+    <header className="bg-blue-500 p-4 sticky">
       <nav className="flex items-center justify-between">
         <div className="text-white text-xl font-bold">Evento</div>
         <div className="flex space-x-4">
