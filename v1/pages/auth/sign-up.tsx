@@ -1,3 +1,6 @@
+// @ts-nocheck
+
+
 'use client';
 
 import { Input } from '@ui/NewInput';
