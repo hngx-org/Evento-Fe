@@ -1,6 +1,11 @@
 import type { Metadata } from 'next';
 import '../styles/globals.scss';
-import { nunito, montserrat } from '../fonts';
+import { nunito, montserrat, workSans } from '../fonts';
+import { AuthContextProvider } from '@/context/AuthContext';
+import ThemeProvider from '@/context/ThemeCtx';
+import Theme from '@/components/ThemeButton';
+import StateCtxProvider from '@/context/StateCtx';
+import { SessionProvider } from 'next-auth/react';
 
 export const metadata: Metadata = {
   title: 'Evento',
@@ -14,7 +19,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${montserrat.className} ${nunito.className}`}>{children}</body>
+      <body
+        className={`${nunito.className} ${montserrat.variable} ${workSans.variable} dark:bg-dark-one snap-mandatory `}
+      >
+        <ThemeProvider>
+          <SessionProvider>
+            <StateCtxProvider>
+              <AuthContextProvider>
+                {children}
+                <Theme />
+              </AuthContextProvider>
+            </StateCtxProvider>
+          </SessionProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
