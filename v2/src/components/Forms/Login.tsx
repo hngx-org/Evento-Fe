@@ -48,7 +48,7 @@ const Login = () => {
             setSuccess('Redirecting....');
           }, 1000);
           setTimeout(() => {
-            router.push(DEFAULT_LOGIN_REDIRECT);
+            router.push('/auth/sign-up');
           }, 2000);
         }
       });

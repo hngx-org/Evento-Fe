@@ -125,7 +125,6 @@ export interface UserProfile {
   email: string;
   bio: string;
   coverImage?: string;
-
   profileImage: string;
   displayName: string;
   firstName: string;
@@ -166,3 +165,19 @@ export type eventType = {
   categoryCategoryID?: string;
   participants?: participantType[];
 };
+
+export interface User {
+  userID?: string;
+  email?: string;
+  bio?: string;
+  socialLinks?: socialLinks[];
+  profileImage?: string;
+  displayName?: string;
+  firstName?: string;
+  lastName?: string;
+  slug?: string;
+  role?: string;
+  location?: string;
+  coverImage?: string;
+  isVerified?: boolean;
+}

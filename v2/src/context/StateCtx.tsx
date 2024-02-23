@@ -5,12 +5,22 @@ import { createContext, useContext, useState, Dispatch, SetStateAction, useEffec
 interface StateContextProps {
   openMenu: boolean;
   setopenMenu: Dispatch<SetStateAction<boolean>>;
+  OpenNotification: boolean;
+  setOpenNotification: Dispatch<SetStateAction<boolean>>;
+  OpenProfile: boolean;
+  setOpenProfile: Dispatch<SetStateAction<boolean>>;
 }
 
 const StateContext = createContext<StateContextProps | undefined>(undefined);
 
 const StateCtxProvider = ({ children }: { children: React.ReactNode }) => {
   const [openMenu, setopenMenu] = useState(false);
+  const [OpenNotification, setOpenNotification] = useState(false);
+  const [OpenProfile, setOpenProfile] = useState(false);
+
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator?.userAgent);
+  };
 
   useEffect(() => {
     const t = '%c  Made By \ud83d\udc9a  - HNGX I10 ',
@@ -27,7 +37,10 @@ const StateCtxProvider = ({ children }: { children: React.ReactNode }) => {
     console.log(t, n);
   }, []);
 
-  const value = useMemo(() => ({ openMenu, setopenMenu }), [openMenu]);
+  const value = useMemo(
+    () => ({ openMenu, setopenMenu, OpenNotification, setOpenNotification, OpenProfile, setOpenProfile }),
+    [openMenu, OpenNotification, OpenProfile],
+  );
 
   return <StateContext.Provider value={value}>{children}</StateContext.Provider>;
 };
