@@ -121,3 +121,19 @@ export const ForgetPassword = async (values: z.infer<typeof ForgetPasswordSchema
     }
   }
 };
+
+export const CheckAuth = () => {
+  const authToken = cookies()?.get('access_token')?.value;
+
+  if (!authToken) {
+    return {
+      status: 401, // Change status to 401 for unauthorized
+      error: 'Unauthorized. Missing access token.',
+    };
+  }
+
+  return {
+    status: 200,
+    succes: 'authorized',
+  };
+};

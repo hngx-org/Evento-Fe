@@ -44,11 +44,12 @@ const Login = () => {
         setError(data?.error);
         if (data?.success) {
           console.log('User came from signIn');
+          localStorage.setItem('authenticated', 'true');
           setTimeout(() => {
             setSuccess('Redirecting....');
           }, 1000);
           setTimeout(() => {
-            router.push(DEFAULT_LOGIN_REDIRECT);
+            router.push('/auth/sign-up');
           }, 2000);
         }
       });
