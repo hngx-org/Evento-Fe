@@ -6,7 +6,7 @@ import Button from '../ui/button';
 import Link from 'next/link';
 import { Eye, EyeSlash } from 'iconsax-react';
 import { useForm } from 'react-hook-form';
-import { LoginSchema } from '@/schemas';
+import { SignupSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -14,54 +14,56 @@ import { FormInput } from '../ui/FormInput';
 import { cn } from '@/utils';
 import FormError from './Error';
 import FormSuccess from './Success';
-import { login } from '@/actions/auth';
+import { register } from '@/actions/auth';
 import { useRouter } from 'next/navigation';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+import { useStateCtx } from '@/context/StateCtx';
 import GoogleButton from '../ui/GoogleBtn';
 
-const Login = () => {
+const SignupForm = () => {
   const router = useRouter();
 
   const [success, setSuccess] = useState<string | undefined>('');
   const [error, setError] = useState<string | undefined>('');
   const [defaultInpTypeNew, setDefaultInpTypeNew] = useState<'password' | 'text'>('password');
-
   const [isLoading, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+
+  const form = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
     defaultValues: {
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     },
   });
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+  const onSubmit = (values: z.infer<typeof SignupSchema>) => {
     setError('');
     setSuccess('');
 
     startTransition(() => {
-      login(values).then((data) => {
+      register(values).then((data) => {
         setSuccess(data?.success);
         setError(data?.error);
         if (data?.success) {
-          console.log('User came from signIn');
+          console.log('Initial Signup');
           setTimeout(() => {
             setSuccess('Redirecting....');
           }, 1000);
           setTimeout(() => {
-            router.push(DEFAULT_LOGIN_REDIRECT);
+            // router.push(DEFAULT_LOGIN_REDIRECT);
           }, 2000);
         }
       });
     });
   };
-  useEffect(() => {
-    router.prefetch(DEFAULT_LOGIN_REDIRECT);
-  }, [router]);
+  //   useEffect(() => {
+  //     router.prefetch(DEFAULT_LOGIN_REDIRECT);
+  //   }, [router]);
   return (
     <div className="relative sm:pt-[30px] sm:pb-[24px] rounded-[16px] bg-white-100 dark:bg-dark-one dark:text-gray-300 lg:px-[40px]">
-      <h1 className="text-center font-montserrat font-[600] text-[28px]"> Welcome back !</h1>
+      <h1 className="text-center font-montserrat font-[600] text-[28px]"> Welcome to Evento</h1>
       <span className="block text-center font-[400] text-[20px] mt-2 mb-6 text-dark-400 font-nunito">
-        Login to continue using Evento
+        Sign up to continue using Evento
       </span>
       <GoogleButton />
       <div className="seperator flex items-center space-x-2 my-4 ">
@@ -74,10 +76,52 @@ const Login = () => {
         <form action="" className="flex flex-col z-10 mt-5" onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
             control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-md text-black-main font-medium font-Worksans">First Name</FormLabel>
+                <FormControl>
+                  <div className="flex items-center w-full relative">
+                    <FormInput
+                      disabled={isLoading}
+                      type="text"
+                      {...field}
+                      placeholder="Enter First Name"
+                      className=" mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md font-Worksans"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-md text-black-main font-medium font-Worksans">Last Name</FormLabel>
+                <FormControl>
+                  <div className="flex items-center w-full relative">
+                    <FormInput
+                      disabled={isLoading}
+                      type="text"
+                      {...field}
+                      placeholder="Enter Last Name"
+                      className=" mt-1 mb-3 p-[16px] w-full text-black h-[60px] border text-md font-medium rounded-md font-Worksans"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-md font-medium font-Worksans"> Email Adress</FormLabel>
+                <FormLabel className="text-md text-black-main font-medium font-Worksans"> Email Adress</FormLabel>
                 <FormControl>
                   <div className="flex items-center w-full relative">
                     <FormInput
@@ -146,13 +190,13 @@ const Login = () => {
         </form>
       </Form>
       <span className="text-lg relative block text-center mt-5 md:text-black z-10 font-nunito">
-        Don&apos;t have an account?
-        <Link href="/auth/sign-up" className="ml-1 underline text-primary-100 dark:text-dark-two font-montserrat">
-          Sign up
+        Aready have an account?
+        <Link href="/auth/sign-in" className="ml-1 underline text-primary-100 dark:text-dark-two font-montserrat">
+          Login
         </Link>
       </span>
     </div>
   );
 };
 
-export default Login;
+export default SignupForm;

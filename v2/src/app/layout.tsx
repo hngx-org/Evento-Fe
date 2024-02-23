@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} ${montserrat.variable} ${workSans.variable}`}>
+      <body
+        className={`${nunito.className} ${montserrat.variable} ${workSans.variable} dark:bg-dark-one snap-mandatory `}
+      >
         <ThemeProvider>
           <SessionProvider>
             <StateCtxProvider>

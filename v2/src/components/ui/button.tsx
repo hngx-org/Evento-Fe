@@ -4,12 +4,12 @@ import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 
 const buttonVariants = cva(
-  'relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[16px] font-manropeB text-white-100',
+  'relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[16px] text-white-100',
   {
     variants: {
       variant: {
         default:
-          'bg-gray-900 text-gray-50 hover:bg-gray-900/90 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 disabled:bg-brand-disabled disabled:cursor-not-allowed ',
+          'bg-gray-900 text-gray-50 hover:bg-gray-900/90 dark:bg-dark-two dark:text-gray-900 dark:hover:bg-dark-two/50 disabled:bg-brand-disabled disabled:cursor-not-allowed ',
         destructive:
           'bg-red-500 text-gray-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-gray-50 dark:hover:bg-red-900/90',
         outline:

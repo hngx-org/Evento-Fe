@@ -24,20 +24,20 @@ const HomePage = () => {
         <div className="flex items-center flex-col  sm:flex-row">
           <div className="sm:w-1/2 space-y-5 sm:pr-8">
             <Link href={'/explore'} className="w-fit">
-              <Button className="h-auto py-4 hover:bg-white-100 rounded-lg mb-4 item-center bg-white-100 justify-center md:[20px] font-semibold border border-primary-100 flex gap-2 text-primary-100 text-[16px] tracking-[-0.025rem] whitespace-nowrap">
+              <Button className="h-auto py-4 hover:bg-white-100 rounded-lg mb-4 item-center bg-white-100 dark:border-dark-two dark:border dark:bg-inherit dark:text-dark-two justify-center md:[20px] font-semibold border border-primary-100 flex gap-2 text-primary-100 text-[16px] tracking-[-0.025rem] whitespace-nowrap">
                 {btnText}
-                <ArrowRight2 size="22" color="#E0580C" />
+                <ArrowRight2 size="22" />
               </Button>
             </Link>
-            <h1 className="text-[2.5rem] md:text-[3.1rem] lg:text-[3.25rem] font-bold text-Grey-G700 tracking-[-0.125rem] max-w-[90%] md:max-w-none">
-              Never miss a moment with <span className="text-primary-100">Evento</span>
+            <h1 className="text-[2.5rem] md:text-[3.1rem] lg:text-[3.25rem] font-bold text-Grey-G700 dark:text-gray-300 tracking-[-0.125rem] max-w-[90%] md:max-w-none">
+              Never miss a moment with <span className="text-primary-100 dark:text-dark-two">Evento</span>
             </h1>
             <p
-              className={`text-black-main font-semibold mb-4 sm:w-[100%] lg:w-[80%] md:text-base text-[20px] md:text-[24px] max-w-[90%] md:max-w-none`}
+              className={`text-black-main dark:text-gray-300 font-semibold mb-4 sm:w-[100%] lg:w-[80%] md:text-base text-[20px] md:text-[24px] max-w-[90%] md:max-w-none`}
             >
               Effortlessly organize your schedule an stay on top of your plans.
             </p>
-            <div className="flex text-black-main font-medium mb-4  text-[.6rem] md:text-xs gap-1 md:gap-2 items-center">
+            <div className="flex text-black-main font-medium mb-4 dark:text-gray-300  text-[.6rem] md:text-xs gap-1 md:gap-2 items-center">
               <Image src="/assets/eventDashboard3/avartarCards.svg" alt="" className=" " width={95} height={32} />
               Join over 12,00+ people in creating events{' '}
             </div>

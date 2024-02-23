@@ -33,11 +33,11 @@ export default function HomeFooter() {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="mx-auto px-8 py-12 font-nunito">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-0 border-b border-b-Grey-G30 pb-6">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-5 lg:gap-0 border-b border-b-Grey-G30 dark:border-b-dark-two pb-6 dark:text-gray-300">
         <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-12">
           <div>
             <Link className="" href={''}>
-              <h3 className={`${chelsea.className} text-xl  font-bold text-primary-100`}>Evento</h3>
+              <h3 className={`${chelsea.className} text-xl  font-bold text-primary-100 dark:text-dark-two`}>Evento</h3>
             </Link>
           </div>
           <div className="flex gap-6">
@@ -53,7 +53,7 @@ export default function HomeFooter() {
           </div>
         </div>
         <div className="flex flex-col lg:items-center gap-1">
-          <p className="text-black-fot font-semibold text-sm">Download the app</p>
+          <p className="text-black-fot dark:text-dark-two/90  font-semibold text-sm">Download the app</p>
           <div className="flex gap-3">
             <Link href={''}>
               <svg width="122" height="41" viewBox="0 0 122 41" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -390,7 +390,10 @@ export default function HomeFooter() {
             );
           })}
         </div>
-        <p className="text-sm font-semibold text-primary-100"> &copy; {currentYear} Evento. All rights reserved.</p>
+        <p className="text-sm font-semibold text-primary-100 dark:text-dark-two">
+          {' '}
+          &copy; {currentYear} Evento. All rights reserved.
+        </p>
         <div>
           <Link href={''} className="pr-4 text-gray-500 font-medium">
             Terms of Service
