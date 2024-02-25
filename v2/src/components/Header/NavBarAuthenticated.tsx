@@ -20,7 +20,7 @@ const NavBarAuthenticated = () => {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="flex gap-14 text-primary-100 dark:text-dark-two text-[30px] font-medium font-chelsea"
+            className="flex gap-14 text-primary-100 text-[30px] font-medium font-chelsea"
           >
             EVENTO
           </Link>
@@ -67,7 +67,7 @@ const NavBarAuthenticated = () => {
           </div>
         </div>
       </nav>
-      <ProfileDropDown />
+      {OpenProfile && <ProfileDropDown />}
     </header>
   );
 };

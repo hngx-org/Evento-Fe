@@ -3,7 +3,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { twMerge } from 'tailwind-merge';
 import Link from 'next/link';
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   'relative px-4 py-3 flex items-center justify-center gap-5 w-fit h-[48px] rounded-[16px] text-white-100',
   {
     variants: {

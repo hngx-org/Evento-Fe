@@ -57,7 +57,7 @@ const ProfileDropDown = () => {
             </div>
           </Link>
         </div>
-        <div className="flex items-center gap-2 cursor-pointer text-Grey-G500  dark:text-dark-two rounded-lg px-2">
+        <div className="flex items-center gap-2 h-9 cursor-pointer text-Grey-G500  dark:text-dark-two rounded-lg px-2">
           <Link href="/" className="flex items-center gap-2">
             {/* <Button onClick={handleLogout} isLoading={isloading} className="px-2 h-9"> */}
             <LogoutCurve size={18} />

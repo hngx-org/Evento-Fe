@@ -7,6 +7,7 @@ import Theme from '@/components/ThemeButton';
 import StateCtxProvider from '@/context/StateCtx';
 import { SessionProvider } from 'next-auth/react';
 import UserContextProvider from '@/context/UserCtx';
+import ExploreContextProvider from '@/context/ExploreCtx';
 
 export const metadata: Metadata = {
   title: 'Evento',
@@ -27,10 +28,12 @@ export default function RootLayout({
           <SessionProvider>
             <UserContextProvider>
               <StateCtxProvider>
-                <AuthContextProvider>
-                  {children}
-                  <Theme />
-                </AuthContextProvider>
+                <ExploreContextProvider>
+                  <AuthContextProvider>
+                    {children}
+                    <Theme />
+                  </AuthContextProvider>
+                </ExploreContextProvider>
               </StateCtxProvider>
             </UserContextProvider>
           </SessionProvider>
