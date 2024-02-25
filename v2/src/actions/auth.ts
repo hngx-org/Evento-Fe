@@ -1,11 +1,9 @@
 'use server';
 
 import Calls from './calls';
-import { jwtDecode } from 'jwt-decode';
 import { cookies } from 'next/headers';
 import { ForgetPasswordSchema, LoginSchema, SignupSchema } from '@/schemas';
 import * as z from 'zod';
-import { UserDetails } from '@/types';
 
 const cookie = cookies();
 const BaseUrl = process.env.BASEURL ?? 'https://evento-qo6d.onrender.com/api/v1';
@@ -43,7 +41,7 @@ export const register = async (values: z.infer<typeof SignupSchema>) => {
 };
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
-  console.log(values);
+
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {

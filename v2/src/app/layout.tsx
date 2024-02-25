@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import '../styles/globals.scss';
-import { nunito, montserrat, workSans } from '../fonts';
+import { nunito, montserrat, workSans, chelsea } from '../fonts';
 import { AuthContextProvider } from '@/context/AuthContext';
 import ThemeProvider from '@/context/ThemeCtx';
 import Theme from '@/components/ThemeButton';
 import StateCtxProvider from '@/context/StateCtx';
 import { SessionProvider } from 'next-auth/react';
+import UserContextProvider from '@/context/UserCtx';
+import ExploreContextProvider from '@/context/ExploreCtx';
 
 export const metadata: Metadata = {
   title: 'Evento',
@@ -20,16 +22,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${nunito.className} ${montserrat.variable} ${workSans.variable} dark:bg-dark-one snap-mandatory `}
+        className={`${nunito.className} ${montserrat.variable} ${workSans.variable} ${chelsea.variable} dark:bg-dark-one snap-mandatory `}
       >
         <ThemeProvider>
           <SessionProvider>
-            <StateCtxProvider>
-              <AuthContextProvider>
-                {children}
-                <Theme />
-              </AuthContextProvider>
-            </StateCtxProvider>
+            <UserContextProvider>
+              <StateCtxProvider>
+                <ExploreContextProvider>
+                  <AuthContextProvider>
+                    {children}
+                    <Theme />
+                  </AuthContextProvider>
+                </ExploreContextProvider>
+              </StateCtxProvider>
+            </UserContextProvider>
           </SessionProvider>
         </ThemeProvider>
       </body>

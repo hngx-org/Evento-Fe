@@ -1,0 +1,27 @@
+  <svg
+              className="hidden md:block z-40 absolute top-1/2 translate-y-1/3 lg:-translate-y-1/2 -left-4 lg:left-0 h-[62px] w-[130px] lg:h-[119px] lg:w-[189px]"
+              xmlns="http://www.w3.org/2000/svg"
+              width="189"
+              height="119"
+              viewBox="0 0 189 119"
+              fill="none"
+            >
+              <path
+                d="M-52.9011 60.2781C-26.645 44.2749 7.90156 31.0312 41.8126 36.8524C63.4839 40.5725 82.652 56.605 84.9051 74.2111C87.033 90.8387 80.4022 108.382 59.7678 115.04C49.0124 118.51 37.7107 117.781 30.9112 109.528C20.5232 96.9202 29.9211 76.9181 40.2736 66.3004C72.5816 33.1647 133.111 13.4939 185.198 21.0311"
+                stroke="#E0580C"
+                strokeWidth="3.04636"
+                strokeLinecap="round"
+              />
+              <path
+                d="M153.68 2C161.613 5.78834 179.384 14.8804 186.999 20.9417"
+                stroke="#E0580C"
+                strokeWidth="3.04636"
+                strokeLinecap="round"
+              />
+              <path
+                d="M187 20.9416C179.066 24.7299 161.296 33.8219 153.68 39.8833"
+                stroke="#E0580C"
+                strokeWidth="3.04636"
+                strokeLinecap="round"
+              />
+            </svg>

@@ -1,18 +1,17 @@
-'use client';
-
 import React from 'react';
 import HomeFooter from '@/components/home/Footer';
 import NavBar from '@/components/home/NavBar';
 import NavBarAuthenticated from '@/components/Header/NavBarAuthenticated';
-import { CheckAuthFromLocalStorage } from '@/helpers/auth';
+import { cookies } from 'next/headers';
 
 export default function GeneralTemplate({ children }: { children: React.ReactNode }) {
-  const Authenticated = CheckAuthFromLocalStorage();
+  const isLoggedin = cookies().has('access_token');
+  console.log('LOGGED IN?: ', isLoggedin);
   return (
     <>
-      {Authenticated ? <NavBarAuthenticated /> : <NavBar />}
+      {isLoggedin ? <NavBarAuthenticated /> : <NavBar />}
       {children}
-      {!Authenticated && <HomeFooter />}
+      {!isLoggedin && <HomeFooter />}
     </>
   );
 }

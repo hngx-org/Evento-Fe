@@ -13,6 +13,7 @@ const NotFound = () => {
   const title = `Oops! this page is Gone`;
   const text = `Sorry we can't find this page`;
   const btnText = `Back to homepage`;
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -54,7 +55,7 @@ const NotFound = () => {
             <button
               tabIndex={0}
               aria-label="Go Back"
-              onClick={() => useRouter().back()}
+              onClick={() => router.back()}
               type="button"
               className="w-[200px] h-auto py-4 rounded-lg item-center justify-center bg-primary-100 dark:bg-dark-two  flex gap-2 text-white-100 dark:text-dark-one text-base mt-3"
             >

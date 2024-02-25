@@ -56,113 +56,72 @@ export interface UploadParams {
   file: File;
 }
 
-export interface EventPayload {
-  title: string;
-  description: string;
-  imageURL: string;
-  startDate: string;
-  endDate: string;
-  locationType: 'Physical' | 'Virtual';
-  location?: string;
-  virtualLocationLink?: string;
-  time?: string;
-  capacity: number;
-  eventType: string;
-  organizerID: string;
-  categoryName: string;
-  ticketType: string;
-  ticketPrice: number;
-  entranceFee?: number;
-  ticketID?: string;
-}
-
-export interface EventParticipant {
-  userID: string;
-  email: string;
-  profileImage: string | null;
-  firstName: string;
-  lastName: string;
-}
-
-export interface EventsProps {
-  eventID: string;
-  title: string;
-  description: string;
-  imageURL: string;
-  startDate: string;
-  endDate: string;
-  time: string;
-  location: string;
-  capacity: number;
-  entranceFee: number;
-  eventType: string;
-  organizerID: string;
-  categoryCategoryID: string;
-  participants: EventParticipant[];
-  tickets: {
-    ticketID: string;
-    ticketPrice: number;
-    ticketType: string;
-  }[];
-}
-
-export interface UserProfile2 {
+export interface User {
   userID?: string;
   email?: string;
   bio?: string;
-
-  profileImage?: string | Blob | File;
+  socialLinks?: socialLinks[];
+  profileImage?: string;
   displayName?: string;
   firstName?: string;
   lastName?: string;
   slug?: string;
   role?: string;
   location?: string;
-}
-
-export interface UserProfile {
-  userID: string;
-  email: string;
-  bio: string;
   coverImage?: string;
-
-  profileImage: string;
-  displayName: string;
-  firstName: string;
-  lastName: string;
-  slug: string;
-  role: string;
-  location: string;
-}
-export interface socialLinks {
-  facebookURL?: string;
-  instagramURL?: string;
-  twitterURL?: string;
-  websiteURL?: string;
+  isVerified?: boolean;
 }
 
-export type participantType = {
-  userID: string;
-  email: string;
-  profileImage: string | null;
-  firstName: string;
-  lastName: string;
-};
+export interface Notification {
+  id: number;
+  text: string;
+  read: boolean;
+  date: string;
+}
 
-export type eventType = {
+export interface NotificationsProps {
+  unreadNotifications: (count: number) => void;
+  notificationsRef: React.RefObject<HTMLDivElement>;
+  notifications: NotificationProps[];
+}
+
+interface Participant {
+  userID?: string;
+  email?: string;
+  profileImage?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface Ticket {
+  ticketID: string;
+  ticketType: string;
+  ticketPrice: number;
+}
+
+export interface EventProps {
   eventID?: string;
+  eventSlug?: string;
   title?: string;
   description?: string;
   imageURL?: string;
-  startDate: string;
+  startDate?: string;
   endDate?: string;
-  time?: string;
+  locationType?: string;
   location?: string;
-  locationType: string;
+  virtualLocationLink?: string;
   capacity?: number;
-  entranceFee?: number;
-  eventType?: string;
-  organizerID: string;
+  organizerID?: string;
   categoryCategoryID?: string;
-  participants?: participantType[];
-};
+  participants?: Participant[];
+  Category?: {
+    categoryID?: string;
+    name?: string;
+  };
+  tickets?: Ticket[];
+}
+
+export interface CategoryProps {
+  categoryID: string;
+  name: string;
+}

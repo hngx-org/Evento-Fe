@@ -44,7 +44,6 @@ const Login = () => {
         setError(data?.error);
         if (data?.success) {
           console.log('User came from signIn');
-          localStorage.setItem('authenticated', 'true');
           setTimeout(() => {
             setSuccess('Redirecting....');
           }, 1000);

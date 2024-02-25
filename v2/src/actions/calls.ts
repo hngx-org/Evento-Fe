@@ -5,8 +5,10 @@ import { cookies } from 'next/headers';
 
 const Calls = (
   baseURL: string | undefined = 'https://evento-qo6d.onrender.com/api/v1',
-  authorization?: string,
+  authorization: boolean = false,
 ): AxiosInstance => {
+  const authToken = cookies()?.get('access_token')?.value;
+
   return axios.create({
     baseURL,
     timeout: 300000,
@@ -17,7 +19,7 @@ const Calls = (
       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
       Connection: 'keep-alive',
       credentials: 'include',
-      Authorization: authorization || '',
+      Authorization: authorization ? `Bearer ${authToken}` : undefined,
     },
     withCredentials: true,
   });
