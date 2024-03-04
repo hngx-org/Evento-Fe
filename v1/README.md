@@ -94,7 +94,7 @@ A separate folder called `http` which contains `axios.ts` and `index.ts` files w
 
 Within the `helpers` folder contains **two** different files called `withAuth.tsx` and `withoutAuth.tsx`.
 
-- **WithAuth.tsx** :- is a `HOF` function which wraps every components that needs protection or protected route components. for eg `Dashboard` or any other page that require the user to be loggedIn. All you have to do is import the cusstom handler and wrap your component inside it. i.e
+- **WithAuth.tsx** :- is a `HOF` function which wraps every components that needs protection or protected route components. for eg `Dashboard` or any other page that require the user to be loggedIn. All you have to do is import the custom handler and wrap your component inside it. i.e
 
 ```js
 withAuth(Dashboard);
